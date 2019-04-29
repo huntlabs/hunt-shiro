@@ -1,0 +1,16 @@
+{
+	"name": "unittest",
+    "authors": [
+        "Hunt Labs"
+    ],
+	"description": "All the unittests for hunt-shiro.",
+	"copyright": "Copyright (C) 2018-2019, HuntLabs.net",
+	"homepage": "https://www.huntlabs.net",
+	"license": "Apache-2.0",
+	"dependencies": {
+		"hunt-shiro" :{"path": "../../"}
+	},
+	"versions": [
+		"HUNT_DEBUG"
+	]
+}

@@ -18,7 +18,7 @@
  */
 module hunt.shiro.authz.SimpleAuthorizationInfo;
 
-import java.util.Collection;
+import hunt.collection;
 import java.util.HashSet;
 import java.util.Set;
 

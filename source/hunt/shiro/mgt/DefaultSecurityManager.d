@@ -37,10 +37,9 @@ import hunt.shiro.subject.SubjectContext;
 import hunt.shiro.subject.support.DefaultSubjectContext;
 import hunt.shiro.util.CollectionUtils;
 import hunt.logger;
-import hunt.loggerFactory;
 
 import java.io.Serializable;
-import java.util.Collection;
+import hunt.collection;
 
 /**
  * The Shiro framework's default concrete implementation of the {@link SecurityManager} interface,

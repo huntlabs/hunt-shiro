@@ -21,7 +21,7 @@ module hunt.shiro.util.CollectionUtils;
 import hunt.shiro.subject.PrincipalCollection;
 
 import hunt.util.ArrayHelper;
-import java.util.Collection;
+import hunt.collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;

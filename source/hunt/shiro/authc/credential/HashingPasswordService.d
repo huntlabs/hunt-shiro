@@ -18,6 +18,8 @@
  */
 module hunt.shiro.authc.credential.HashingPasswordService;
 
+import hunt.shiro.authc.credential.PasswordService;
+
 import hunt.shiro.crypto.hash.Hash;
 import hunt.shiro.util.ByteSource;
 

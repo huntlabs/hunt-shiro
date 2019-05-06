@@ -27,7 +27,7 @@ import hunt.shiro.util.PermissionUtils;
 import hunt.shiro.util.StringUtils;
 
 import java.text.ParseException;
-import java.util.Collection;
+import hunt.collection;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;

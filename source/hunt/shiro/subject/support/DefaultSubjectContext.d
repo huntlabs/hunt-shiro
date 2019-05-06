@@ -31,7 +31,6 @@ import hunt.shiro.subject.SubjectContext;
 import hunt.shiro.util.MapContext;
 import hunt.shiro.util.StringUtils;
 import hunt.logger;
-import hunt.loggerFactory;
 
 import java.io.Serializable;
 

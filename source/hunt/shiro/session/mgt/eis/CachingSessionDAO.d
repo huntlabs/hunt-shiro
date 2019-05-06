@@ -26,7 +26,7 @@ import hunt.shiro.session.UnknownSessionException;
 import hunt.shiro.session.mgt.ValidatingSession;
 
 import java.io.Serializable;
-import java.util.Collection;
+import hunt.collection;
 import java.util.Collections;
 
 /**

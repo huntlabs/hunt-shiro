@@ -24,7 +24,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import hunt.logger;
-import hunt.loggerFactory;
 
 /**
  * A set of static helper methods for managing JDBC API objects.

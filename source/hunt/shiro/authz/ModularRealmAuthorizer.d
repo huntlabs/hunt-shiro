@@ -25,7 +25,7 @@ import hunt.shiro.authz.permission.RolePermissionResolverAware;
 import hunt.shiro.realm.Realm;
 import hunt.shiro.subject.PrincipalCollection;
 
-import java.util.Collection;
+import hunt.collection;
 import java.util.List;
 
 

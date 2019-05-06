@@ -23,7 +23,6 @@ import hunt.shiro.session.InvalidSessionException;
 import hunt.shiro.session.StoppedSessionException;
 import hunt.shiro.util.CollectionUtils;
 import hunt.logger;
-import hunt.loggerFactory;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

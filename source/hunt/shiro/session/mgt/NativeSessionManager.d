@@ -17,7 +17,7 @@ module hunt.shiro.session.mgt.NativeSessionManager;
 
 import hunt.shiro.session.InvalidSessionException;
 
-import java.util.Collection;
+import hunt.collection;
 import java.util.Date;
 
 /**

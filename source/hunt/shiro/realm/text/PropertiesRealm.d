@@ -22,7 +22,6 @@ import hunt.shiro.ShiroException;
 import hunt.shiro.io.ResourceUtils;
 import hunt.shiro.util.Destroyable;
 import hunt.logger;
-import hunt.loggerFactory;
 
 import java.io.File;
 import java.io.IOException;

@@ -18,11 +18,12 @@
  */
 module hunt.shiro.authc.credential.SimpleCredentialsMatcher;
 
+import hunt.shiro.authc.credential.CredentialsMatcher;
+
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.codec.CodecSupport;
 import hunt.logger;
-import hunt.loggerFactory;
 
 //import java.security.MessageDigest;
 //import hunt.util.ArrayHelper;

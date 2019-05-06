@@ -25,10 +25,9 @@ import hunt.shiro.session.UnknownSessionException;
 import hunt.shiro.session.mgt.eis.MemorySessionDAO;
 import hunt.shiro.session.mgt.eis.SessionDAO;
 import hunt.logger;
-import hunt.loggerFactory;
 
 import java.io.Serializable;
-import java.util.Collection;
+import hunt.collection;
 import java.util.Collections;
 import java.util.Date;
 

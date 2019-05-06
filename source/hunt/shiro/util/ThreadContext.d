@@ -21,7 +21,6 @@ module hunt.shiro.util.ThreadContext;
 import hunt.shiro.mgt.SecurityManager;
 import hunt.shiro.subject.Subject;
 import hunt.logger;
-import hunt.loggerFactory;
 
 import java.util.Collections;
 import java.util.HashMap;

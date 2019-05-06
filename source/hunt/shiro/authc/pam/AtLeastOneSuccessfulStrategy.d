@@ -18,6 +18,8 @@
  */
 module hunt.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
 
+import hunt.shiro.authc.pam.AbstractAuthenticationStrategy;
+
 import hunt.shiro.authc.AuthenticationException;
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;

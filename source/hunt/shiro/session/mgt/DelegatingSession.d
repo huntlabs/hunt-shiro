@@ -22,7 +22,7 @@ import hunt.shiro.session.InvalidSessionException;
 import hunt.shiro.session.Session;
 
 import java.io.Serializable;
-import java.util.Collection;
+import hunt.collection;
 import java.util.Date;
 
 /**

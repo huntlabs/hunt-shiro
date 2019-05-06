@@ -22,7 +22,6 @@ import hunt.shiro.config.Ini;
 import hunt.shiro.util.CollectionUtils;
 import hunt.shiro.util.StringUtils;
 import hunt.logger;
-import hunt.loggerFactory;
 
 /**
  * A {@link hunt.shiro.realm.Realm Realm} implementation that creates

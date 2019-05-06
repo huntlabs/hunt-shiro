@@ -19,7 +19,7 @@
 module hunt.shiro.session.ProxiedSession;
 
 import java.io.Serializable;
-import java.util.Collection;
+import hunt.collection;
 import java.util.Date;
 
 /**

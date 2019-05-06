@@ -19,7 +19,7 @@
 module hunt.shiro.authz.AuthorizationInfo;
 
 import java.io.Serializable;
-import java.util.Collection;
+import hunt.collection;
 
 /**
  * <code>AuthorizationInfo</code> represents a single Subject's stored authorization data (roles, permissions, etc)

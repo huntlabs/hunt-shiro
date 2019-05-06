@@ -18,10 +18,11 @@
  */
 module hunt.shiro.authc.credential.DefaultPasswordService;
 
+import hunt.shiro.authc.credential.HashingPasswordService;
+
 import hunt.shiro.crypto.hash;
 import hunt.shiro.util.ByteSource;
 import hunt.logger;
-import hunt.loggerFactory;
 
 /**
  * Default implementation of the {@link PasswordService} interface that relies on an internal
@@ -90,7 +91,7 @@ class DefaultPasswordService : HashingPasswordService {
 
         Hash computed = this.hashService.computeHash(request);
 
-        return saved== computed;
+        return saved == computed;
     }
 
     protected void checkHashFormatDurability() {
@@ -98,7 +99,7 @@ class DefaultPasswordService : HashingPasswordService {
         if (!this.hashFormatWarned) {
 
             HashFormat format = this.hashFormat;
-            auto formatCast = cast(ParsableHashFormat)format;
+            ParsableHashFormat formatCast = cast(ParsableHashFormat)format;
             if (!(formatCast !is null) && log.isWarnEnabled()) {
                 string msg = "The configured hashFormat instance [" ~ format.getClass().getName() ~ "] is not a " ~
                         ParsableHashFormat.getClass().getName() ~ " implementation.  This is " ~

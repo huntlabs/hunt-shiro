@@ -24,7 +24,6 @@ import hunt.shiro.subject.Subject;
 import hunt.shiro.subject.support.DefaultSubjectContext;
 import hunt.shiro.subject.support.DelegatingSubject;
 import hunt.logger;
-import hunt.loggerFactory;
 
 import java.lang.reflect.Field;
 

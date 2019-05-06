@@ -18,6 +18,8 @@
  */
 module hunt.shiro.authc.credential.Md2CredentialsMatcher;
 
+import hunt.shiro.authc.credential.HashedCredentialsMatcher;
+
 import hunt.shiro.crypto.hash.AbstractHash;
 import hunt.shiro.crypto.hash.Hash;
 import hunt.shiro.crypto.hash.Md2Hash;

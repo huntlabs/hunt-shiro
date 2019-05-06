@@ -20,7 +20,7 @@ module hunt.shiro.authz.Authorizer;
 
 import hunt.shiro.subject.PrincipalCollection;
 
-import java.util.Collection;
+import hunt.collection;
 import java.util.List;
 
 /**

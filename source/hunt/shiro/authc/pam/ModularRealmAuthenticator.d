@@ -18,14 +18,15 @@
  */
 module hunt.shiro.authc.pam.ModularRealmAuthenticator;
 
+import hunt.shiro.authc.pam.AbstractAuthenticator;
+
 import hunt.shiro.authc;
 import hunt.shiro.realm.Realm;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.CollectionUtils;
 import hunt.logger;
-import hunt.loggerFactory;
 
-import java.util.Collection;
+import hunt.collection;
 
 /**
  * A {@code ModularRealmAuthenticator} delegates account lookups to a pluggable (modular) collection of

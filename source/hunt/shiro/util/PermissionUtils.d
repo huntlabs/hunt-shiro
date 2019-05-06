@@ -22,7 +22,7 @@ import hunt.shiro.authz.Permission;
 import hunt.shiro.authz.permission.PermissionResolver;
 
 import hunt.util.ArrayHelper;
-import java.util.Collection;
+import hunt.collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 

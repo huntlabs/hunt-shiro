@@ -20,7 +20,7 @@ module hunt.shiro.authz.permission.RolePermissionResolver;
 
 import hunt.shiro.authz.Permission;
 
-import java.util.Collection;
+import hunt.collection;
 
 /**
  * A RolePermissionResolver resolves a string value and converts it into a Collection of

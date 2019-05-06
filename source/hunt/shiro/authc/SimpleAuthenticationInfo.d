@@ -26,7 +26,7 @@ import hunt.shiro.subject.SimplePrincipalCollection;
 import hunt.shiro.util.ByteSource;
 
 
-import java.util.Collection;
+import hunt.collection;
 import java.util.HashSet;
 import java.util.Set;
 

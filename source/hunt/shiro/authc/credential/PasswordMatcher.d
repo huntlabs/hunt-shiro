@@ -18,10 +18,12 @@
  */
 module hunt.shiro.authc.credential.PasswordMatcher;
 
+import hunt.shiro.authc.credential.CredentialsMatcher;
+import hunt.shiro.authc.credential.HashingPasswordService;
+
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.crypto.hash.Hash;
-import hunt.shiro.authc.credential.HashingPasswordService;
 import hunt.String;
 /**
  * A {@link CredentialsMatcher} that employs best-practices comparisons for hashed text passwords.

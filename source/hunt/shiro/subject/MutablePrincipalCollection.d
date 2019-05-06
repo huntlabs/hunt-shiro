@@ -18,7 +18,7 @@
  */
 module hunt.shiro.subject.MutablePrincipalCollection;
 
-import java.util.Collection;
+import hunt.collection;
 
 
 /**

@@ -32,7 +32,6 @@ import hunt.shiro.subject.Subject;
 import hunt.shiro.subject.SubjectContext;
 import hunt.shiro.util.ByteSource;
 import hunt.logger;
-import hunt.loggerFactory;
 
 /**
  * Abstract implementation of the {@code RememberMeManager} interface that handles

@@ -18,7 +18,7 @@
  */
 module hunt.shiro.realm.RealmFactory;
 
-import java.util.Collection;
+import hunt.collection;
 
 /**
  * Enables Shiro end-users to configure and initialize one or more {@link Realm Realm} instances

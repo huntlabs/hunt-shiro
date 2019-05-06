@@ -37,9 +37,8 @@ import hunt.shiro.subject.Subject;
 import hunt.shiro.util.CollectionUtils;
 import hunt.shiro.util.StringUtils;
 import hunt.logger;
-import hunt.loggerFactory;
 
-import java.util.Collection;
+import hunt.collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;

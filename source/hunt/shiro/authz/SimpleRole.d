@@ -19,7 +19,7 @@
 module hunt.shiro.authz.SimpleRole;
 
 import java.io.Serializable;
-import java.util.Collection;
+import hunt.collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 

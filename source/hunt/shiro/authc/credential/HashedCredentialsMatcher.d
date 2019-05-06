@@ -18,6 +18,8 @@
  */
 module hunt.shiro.authc.credential.HashedCredentialsMatcher;
 
+import hunt.shiro.authc.credential.SimpleCredentialsMatcher;
+
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.authc.SaltedAuthenticationInfo;

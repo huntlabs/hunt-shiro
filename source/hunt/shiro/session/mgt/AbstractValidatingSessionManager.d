@@ -26,9 +26,8 @@ import hunt.shiro.session.UnknownSessionException;
 import hunt.shiro.util.Destroyable;
 import hunt.shiro.util.LifecycleUtils;
 import hunt.logger;
-import hunt.loggerFactory;
 
-import java.util.Collection;
+import hunt.collection;
 
 
 /**

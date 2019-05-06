@@ -22,10 +22,9 @@ import hunt.shiro.session.Session;
 import hunt.shiro.session.UnknownSessionException;
 import hunt.shiro.util.CollectionUtils;
 import hunt.logger;
-import hunt.loggerFactory;
 
 import java.io.Serializable;
-import java.util.Collection;
+import hunt.collection;
 import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;

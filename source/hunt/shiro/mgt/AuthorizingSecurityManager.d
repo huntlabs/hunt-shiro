@@ -25,7 +25,7 @@ import hunt.shiro.authz.Permission;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.LifecycleUtils;
 
-import java.util.Collection;
+import hunt.collection;
 import java.util.List;
 
 

@@ -19,7 +19,7 @@
 module hunt.shiro.subject.PrincipalCollection;
 
 import java.io.Serializable;
-import java.util.Collection;
+import hunt.collection;
 import java.util.List;
 import java.util.Set;
 

@@ -32,6 +32,7 @@ __dummy.html
 
 examples/*/log.txt
 examples/UnitTest/unittest
+/java/
 
 # others
 mixin_output.d

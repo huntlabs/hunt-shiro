@@ -130,7 +130,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
     protected void applyPermissionResolverToRealms() {
         PermissionResolver resolver = getPermissionResolver();
         Collection!(Realm) realms = getRealms();
-        if (resolver != null && realms != null && !realms.isEmpty()) {
+        if (resolver !is null && realms !is null && !realms.isEmpty()) {
             foreach(Realm realm ; realms) {
                 auto realmCast = cast(PermissionResolverAware)realm;
                 if (realmCast !is null) {
@@ -182,7 +182,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
     protected void applyRolePermissionResolverToRealms() {
         RolePermissionResolver resolver = getRolePermissionResolver();
         Collection!(Realm) realms = getRealms();
-        if (resolver != null && realms != null && !realms.isEmpty()) {
+        if (resolver !is null && realms !is null && !realms.isEmpty()) {
             foreach(Realm realm ; realms) {
                 auto realmCast = cast(RolePermissionResolverAware)realm;
                 if (realmCast !is null) {
@@ -249,7 +249,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      */
      bool[] isPermitted(PrincipalCollection principals, string[] permissions...) {
         assertRealmsConfigured();
-        if (permissions != null && permissions.length > 0) {
+        if (permissions !is null && permissions.length > 0) {
             bool[] isPermitted = new bool[permissions.length];
             for(int i = 0; i < permissions.length; i++) {
                 isPermitted[i] = isPermitted(principals, permissions[i]);
@@ -266,7 +266,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      */
      bool[] isPermitted(PrincipalCollection principals, List!(Permission) permissions) {
         assertRealmsConfigured();
-        if (permissions != null && !permissions.isEmpty()) {
+        if (permissions !is null && !permissions.isEmpty()) {
             bool[] isPermitted = new bool[permissions.size()];
             int i = 0;
             foreach(Permission p ; permissions) {
@@ -285,7 +285,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      */
      bool isPermittedAll(PrincipalCollection principals, string[] permissions...) {
         assertRealmsConfigured();
-        if (permissions != null && permissions.length > 0) {
+        if (permissions !is null && permissions.length > 0) {
             foreach(string perm ; permissions) {
                 if (!isPermitted(principals, perm)) {
                     return false;
@@ -302,7 +302,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      */
      bool isPermittedAll(PrincipalCollection principals, Collection!(Permission) permissions) {
         assertRealmsConfigured();
-        if (permissions != null && !permissions.isEmpty()) {
+        if (permissions !is null && !permissions.isEmpty()) {
             foreach(Permission permission ; permissions) {
                 if (!isPermitted(principals, permission)) {
                     return false;
@@ -340,7 +340,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      */
      void checkPermissions(PrincipalCollection principals, string[] permissions...){
         assertRealmsConfigured();
-        if (permissions != null && permissions.length > 0) {
+        if (permissions !is null && permissions.length > 0) {
             foreach(string perm ; permissions) {
                 checkPermission(principals, perm);
             }
@@ -354,7 +354,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      */
      void checkPermissions(PrincipalCollection principals, Collection!(Permission) permissions){
         assertRealmsConfigured();
-        if (permissions != null) {
+        if (permissions !is null) {
             foreach(Permission permission ; permissions) {
                 checkPermission(principals, permission);
             }
@@ -384,7 +384,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      */
      bool[] hasRoles(PrincipalCollection principals, List!(string) roleIdentifiers) {
         assertRealmsConfigured();
-        if (roleIdentifiers != null && !roleIdentifiers.isEmpty()) {
+        if (roleIdentifiers !is null && !roleIdentifiers.isEmpty()) {
             bool[] hasRoles = new bool[roleIdentifiers.size()];
             int i = 0;
             foreach(string roleId ; roleIdentifiers) {
@@ -427,7 +427,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      */
      void checkRoles(PrincipalCollection principals, Collection!(string) roles){
         //SHIRO-234 - roles.toArray() -> roles.toArray(new string[roles.size()])
-        if (roles != null && !roles.isEmpty()) checkRoles(principals, roles.toArray(new string[roles.size()]));
+        if (roles !is null && !roles.isEmpty()) checkRoles(principals, roles.toArray(new string[roles.size()]));
     }
 
     /**
@@ -435,7 +435,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      */
      void checkRoles(PrincipalCollection principals, string[] roles...){
         assertRealmsConfigured();
-        if (roles != null) {
+        if (roles !is null) {
             foreach(string role ; roles) {
                 checkRole(principals, role);
             }

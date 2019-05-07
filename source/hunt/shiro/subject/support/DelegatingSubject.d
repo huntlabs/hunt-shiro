@@ -102,7 +102,7 @@ class DelegatingSubject : Subject {
         this.principals = principals;
         this.authenticated = authenticated;
         this.host = host;
-        if (session != null) {
+        if (session !is null) {
             this.session = decorate(session);
         }
         this.sessionCreationEnabled = sessionCreationEnabled;
@@ -279,11 +279,11 @@ class DelegatingSubject : Subject {
         if (token instanceof HostAuthenticationToken) {
             host = ((HostAuthenticationToken) token).getHost();
         }
-        if (host != null) {
+        if (host !is null) {
             this.host = host;
         }
         Session session = subject.getSession(false);
-        if (session != null) {
+        if (session !is null) {
             this.session = decorate(session);
         } else {
             this.session = null;
@@ -296,7 +296,7 @@ class DelegatingSubject : Subject {
 
      bool isRemembered() {
         PrincipalCollection principals = getPrincipals();
-        return principals != null && !principals.isEmpty() && !isAuthenticated();
+        return principals !is null && !principals.isEmpty() && !isAuthenticated();
     }
 
     /**
@@ -316,7 +316,7 @@ class DelegatingSubject : Subject {
         version(HUNT_DEBUG) {
             tracef("attempting to get session; create = " ~ create +
                     "; session is null = " ~ (this.session  is null) +
-                    "; session has id = " ~ (this.session != null && session.getId() != null));
+                    "; session has id = " ~ (this.session !is null && session.getId() !is null));
         }
 
         if (this.session  is null && create) {
@@ -445,13 +445,13 @@ class DelegatingSubject : Subject {
      PrincipalCollection getPreviousPrincipals() {
         PrincipalCollection previousPrincipals = null;
         List!(PrincipalCollection) stack = getRunAsPrincipalsStack();
-        int stackSize = stack != null ? stack.size() : 0;
+        int stackSize = stack !is null ? stack.size() : 0;
         if (stackSize > 0) {
             if (stackSize == 1) {
                 previousPrincipals = this.principals;
             } else {
                 //always get the one behind the current:
-                assert stack != null;
+                assert stack !is null;
                 previousPrincipals = stack.get(1);
             }
         }
@@ -465,7 +465,7 @@ class DelegatingSubject : Subject {
 
     private List!(PrincipalCollection) getRunAsPrincipalsStack() {
         Session session = getSession(false);
-        if (session != null) {
+        if (session !is null) {
             return (List!(PrincipalCollection)) session.getAttribute(RUN_AS_PRINCIPALS_SESSION_KEY);
         }
         return null;
@@ -473,7 +473,7 @@ class DelegatingSubject : Subject {
 
     private void clearRunAsIdentities() {
         Session session = getSession(false);
-        if (session != null) {
+        if (session !is null) {
             session.removeAttribute(RUN_AS_PRINCIPALS_SESSION_KEY);
         }
     }

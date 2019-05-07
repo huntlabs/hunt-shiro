@@ -107,7 +107,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param password the password string submitted for authentication
      */
      this(string username, string password) {
-        this(username, password != null ? password.toCharArray() : null, false, null);
+        this(username, password !is null ? password.toCharArray() : null, false, null);
     }
 
     /**
@@ -135,7 +135,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param host     the host name or IP string from where the attempt is occurring
      */
      this(string username, string password, string host) {
-        this(username, password != null ? password.toCharArray() : null, false, host);
+        this(username, password !is null ? password.toCharArray() : null, false, host);
     }
 
     /**
@@ -163,7 +163,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param rememberMe if the user wishes their identity to be remembered across sessions
      */
      this(string username, string password, bool rememberMe) {
-        this(username, password != null ? password.toCharArray() : null, rememberMe, null);
+        this(username, password !is null ? password.toCharArray() : null, rememberMe, null);
     }
 
     /**
@@ -197,7 +197,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param host       the host name or IP string from where the attempt is occurring
      */
      this(string username, string password, bool rememberMe, string host) {
-        this(username, password != null ? password.toCharArray() : null, rememberMe, host);
+        this(username, password !is null ? password.toCharArray() : null, rememberMe, host);
     }
 
     /*--------------------------------------------
@@ -323,7 +323,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
         this.host = null;
         this.rememberMe = false;
 
-        if (this.password != null) {
+        if (this.password !is null) {
             for (int i = 0; i < password.length; i++) {
                 this.password[i] = 0x00;
             }
@@ -342,11 +342,11 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      */
      string toString() {
         StringBuilder sb = new StringBuilder();
-        sb.typeid(append).name);
+        sb.append(typeid(this).name);
         sb.append(" - ");
         sb.append(username);
         sb.append(", rememberMe=").append(rememberMe);
-        if (host != null) {
+        if (host !is null) {
             sb.append(" (").append(host).append(")");
         }
         return sb.toString();

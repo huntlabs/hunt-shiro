@@ -105,7 +105,7 @@ class DomainPermission : WildcardPermission {
     }
 
     protected void setDomain(string domain) {
-        if (this.domain != null && this.domain== domain) {
+        if (this.domain !is null && this.domain== domain) {
             return;
         }
         this.domain = domain;
@@ -117,7 +117,7 @@ class DomainPermission : WildcardPermission {
     }
 
     protected void setActions(Set!(string) actions) {
-        if (this.actions != null && this.actions== actions) {
+        if (this.actions !is null && this.actions== actions) {
             return;
         }
         this.actions = actions;
@@ -129,7 +129,7 @@ class DomainPermission : WildcardPermission {
     }
 
     protected void setTargets(Set!(string) targets) {
-        if (this.targets != null && this.targets== targets) {
+        if (this.targets !is null && this.targets== targets) {
             return;
         }
         this.targets = targets;

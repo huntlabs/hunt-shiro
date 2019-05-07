@@ -71,7 +71,7 @@ class SimpleRole : Serializable {
     }
 
      void addAll(Collection!(Permission) perms) {
-        if (perms != null && !perms.isEmpty()) {
+        if (perms !is null && !perms.isEmpty()) {
             Set!(Permission) permissions = getPermissions();
             if (permissions  is null) {
                 permissions = new LinkedHashSet!(Permission)(perms.size());
@@ -83,7 +83,7 @@ class SimpleRole : Serializable {
 
      bool isPermitted(Permission p) {
         Collection!(Permission) perms = getPermissions();
-        if (perms != null && !perms.isEmpty()) {
+        if (perms !is null && !perms.isEmpty()) {
             foreach(Permission perm ; perms) {
                 if (perm.implies(p)) {
                     return true;
@@ -94,7 +94,7 @@ class SimpleRole : Serializable {
     }
 
      size_t toHash() @trusted nothrow {
-        return (getName() != null ? getName().hashCode() : 0);
+        return (getName() !is null ? getName().hashCode() : 0);
     }
 
      bool opEquals(Object o) {
@@ -105,7 +105,7 @@ class SimpleRole : Serializable {
         if (oCast !is null) {
             SimpleRole sr = oCast;
             //only check name, since role names should be unique across an entire application:
-            return (getName() != null ? getName()== sr.getName() : sr.getName()  is null);
+            return (getName() !is null ? getName()== sr.getName() : sr.getName()  is null);
         }
         return false;
     }

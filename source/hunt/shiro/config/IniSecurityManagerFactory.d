@@ -69,11 +69,11 @@ module hunt.shiro.config.IniSecurityManagerFactory;
 //     }
 
 //      Map!(string, T) getBeans() {
-//         return this.builder != null ? Collections.unmodifiableMap(builder.getObjects()) : null;
+//         return this.builder !is null ? Collections.unmodifiableMap(builder.getObjects()) : null;
 //     }
 
 //      void destroy() {
-//         if(getReflectionBuilder() != null) {
+//         if(getReflectionBuilder() !is null) {
 //             getReflectionBuilder().destroy();
 //         }
 //     }
@@ -159,7 +159,7 @@ module hunt.shiro.config.IniSecurityManagerFactory;
 
 //         if (shouldImplicitlyCreateRealm(ini)) {
 //             Realm realm = createRealm(ini);
-//             if (realm != null) {
+//             if (realm !is null) {
 //                 defaults.put(INI_REALM_NAME, realm);
 //             }
 //         }

@@ -57,7 +57,7 @@ class MapContext : Map!(string, Object), Serializable {
     protected <E> E getTypedValue(string key, Class!(E) type) {
         E found = null;
         Object o = backingMap.get(key);
-        if (o != null) {
+        if (o !is null) {
             if (!type.isAssignableFrom(o.getClass())) {
                 string msg = "Invalid object found in SubjectContext Map under key [" ~ key ~ "].  Expected type " ~
                         "was [" ~ type.getName() ~ "], but the object under that key is of type " ~
@@ -76,7 +76,7 @@ class MapContext : Map!(string, Object), Serializable {
      * @param value the non-null value to store.  If {@code null}, this method does nothing and returns immediately.
      */
     protected void nullSafePut(string key, Object value) {
-        if (value != null) {
+        if (value !is null) {
             put(key, value);
         }
     }

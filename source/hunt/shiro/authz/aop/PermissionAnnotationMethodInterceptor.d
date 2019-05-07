@@ -85,7 +85,7 @@ class PermissionAnnotationMethodInterceptor : AuthorizingAnnotationMethodInterce
      * @return the method invocation's method arguments, or <code>null</code> if there were none.
      *
     protected[] Object getMethodArguments(MethodInvocation invocation) {
-        if (invocation != null) {
+        if (invocation !is null) {
             return invocation.getArguments();
         } else {
             return null;

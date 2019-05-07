@@ -198,7 +198,7 @@ class SimpleSession : ValidatingSession, Serializable {
     }
 
     protected bool isStopped() {
-        return getStopTimestamp() != null;
+        return getStopTimestamp() !is null;
     }
 
     protected void expire() {
@@ -352,7 +352,7 @@ class SimpleSession : ValidatingSession, Serializable {
             SimpleSession other = (SimpleSession) obj;
             Serializable thisId = getId();
             Serializable otherId = other.getId();
-            if (thisId != null && otherId != null) {
+            if (thisId !is null && otherId !is null) {
                 return thisId== otherId;
             } else {
                 //fall back to an attribute based comparison:
@@ -370,13 +370,13 @@ class SimpleSession : ValidatingSession, Serializable {
      * @return true if all the attributes, except the id, are equal to this object's attributes.
      */
     protected bool onEquals(SimpleSession ss) {
-        return (getStartTimestamp() != null ? getStartTimestamp()== ss.getStartTimestamp() : ss.getStartTimestamp()  is null) &&
-                (getStopTimestamp() != null ? getStopTimestamp()== ss.getStopTimestamp() : ss.getStopTimestamp()  is null) &&
-                (getLastAccessTime() != null ? getLastAccessTime()== ss.getLastAccessTime() : ss.getLastAccessTime()  is null) &&
+        return (getStartTimestamp() !is null ? getStartTimestamp()== ss.getStartTimestamp() : ss.getStartTimestamp()  is null) &&
+                (getStopTimestamp() !is null ? getStopTimestamp()== ss.getStopTimestamp() : ss.getStopTimestamp()  is null) &&
+                (getLastAccessTime() !is null ? getLastAccessTime()== ss.getLastAccessTime() : ss.getLastAccessTime()  is null) &&
                 (getTimeout() == ss.getTimeout()) &&
                 (isExpired() == ss.isExpired()) &&
-                (getHost() != null ? getHost()== ss.getHost() : ss.getHost()  is null) &&
-                (getAttributes() != null ? getAttributes()== ss.getAttributes() : ss.getAttributes()  is null);
+                (getHost() !is null ? getHost()== ss.getHost() : ss.getHost()  is null) &&
+                (getAttributes() !is null ? getAttributes()== ss.getAttributes() : ss.getAttributes()  is null);
     }
 
     /**
@@ -391,16 +391,16 @@ class SimpleSession : ValidatingSession, Serializable {
     override
      size_t toHash() @trusted nothrow {
         Serializable id = getId();
-        if (id != null) {
+        if (id !is null) {
             return id.hashCode();
         }
-        size_t toHash() @trusted nothrow = getStartTimestamp() != null ? getStartTimestamp().hashCode() : 0;
-        hashCode = 31 * hashCode + (getStopTimestamp() != null ? getStopTimestamp().hashCode() : 0);
-        hashCode = 31 * hashCode + (getLastAccessTime() != null ? getLastAccessTime().hashCode() : 0);
+        size_t toHash() @trusted nothrow = getStartTimestamp() !is null ? getStartTimestamp().hashCode() : 0;
+        hashCode = 31 * hashCode + (getStopTimestamp() !is null ? getStopTimestamp().hashCode() : 0);
+        hashCode = 31 * hashCode + (getLastAccessTime() !is null ? getLastAccessTime().hashCode() : 0);
         hashCode = 31 * hashCode + Long.valueOf(Math.max(getTimeout(), 0)).hashCode();
         hashCode = 31 * hashCode + bool.valueOf(isExpired()).hashCode();
-        hashCode = 31 * hashCode + (getHost() != null ? getHost().hashCode() : 0);
-        hashCode = 31 * hashCode + (getAttributes() != null ? getAttributes().hashCode() : 0);
+        hashCode = 31 * hashCode + (getHost() !is null ? getHost().hashCode() : 0);
+        hashCode = 31 * hashCode + (getAttributes() !is null ? getAttributes().hashCode() : 0);
         return hashCode;
     }
 
@@ -428,16 +428,16 @@ class SimpleSession : ValidatingSession, Serializable {
         out.defaultWriteObject();
         short alteredFieldsBitMask = getAlteredFieldsBitMask();
         out.writeShort(alteredFieldsBitMask);
-        if (id != null) {
+        if (id !is null) {
             out.writeObject(id);
         }
-        if (startTimestamp != null) {
+        if (startTimestamp !is null) {
             out.writeObject(startTimestamp);
         }
-        if (stopTimestamp != null) {
+        if (stopTimestamp !is null) {
             out.writeObject(stopTimestamp);
         }
-        if (lastAccessTime != null) {
+        if (lastAccessTime !is null) {
             out.writeObject(lastAccessTime);
         }
         if (timeout != 0l) {
@@ -446,7 +446,7 @@ class SimpleSession : ValidatingSession, Serializable {
         if (expired) {
             out.writebool(expired);
         }
-        if (host != null) {
+        if (host !is null) {
             out.writeUTF(host);
         }
         if (!CollectionUtils.isEmpty(attributes)) {
@@ -501,13 +501,13 @@ class SimpleSession : ValidatingSession, Serializable {
      */
     private short getAlteredFieldsBitMask() {
         int bitMask = 0;
-        bitMask = id != null ? bitMask | ID_BIT_MASK : bitMask;
-        bitMask = startTimestamp != null ? bitMask | START_TIMESTAMP_BIT_MASK : bitMask;
-        bitMask = stopTimestamp != null ? bitMask | STOP_TIMESTAMP_BIT_MASK : bitMask;
-        bitMask = lastAccessTime != null ? bitMask | LAST_ACCESS_TIME_BIT_MASK : bitMask;
+        bitMask = id !is null ? bitMask | ID_BIT_MASK : bitMask;
+        bitMask = startTimestamp !is null ? bitMask | START_TIMESTAMP_BIT_MASK : bitMask;
+        bitMask = stopTimestamp !is null ? bitMask | STOP_TIMESTAMP_BIT_MASK : bitMask;
+        bitMask = lastAccessTime !is null ? bitMask | LAST_ACCESS_TIME_BIT_MASK : bitMask;
         bitMask = timeout != 0l ? bitMask | TIMEOUT_BIT_MASK : bitMask;
         bitMask = expired ? bitMask | EXPIRED_BIT_MASK : bitMask;
-        bitMask = host != null ? bitMask | HOST_BIT_MASK : bitMask;
+        bitMask = host !is null ? bitMask | HOST_BIT_MASK : bitMask;
         bitMask = !CollectionUtils.isEmpty(attributes) ? bitMask | ATTRIBUTES_BIT_MASK : bitMask;
         return (short) bitMask;
     }

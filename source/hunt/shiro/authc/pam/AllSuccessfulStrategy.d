@@ -73,7 +73,7 @@ class AllSuccessfulStrategy : AbstractAuthenticationStrategy {
      * </ol>
      */
      AuthenticationInfo afterAttempt(Realm realm, AuthenticationToken token, AuthenticationInfo info, AuthenticationInfo aggregate, Throwable t){
-        if (t != null) {
+        if (t !is null) {
             auto tCast = cast(AuthenticationException) t;
             if (tCast !is null) {
                 //propagate:

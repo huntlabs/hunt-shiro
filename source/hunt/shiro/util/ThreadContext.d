@@ -99,7 +99,7 @@ abstract class ThreadContext {
      */
     private static Object getValue(Object key) {
         Map!(Object, Object) perThreadResources = resources.get();
-        return perThreadResources != null ? perThreadResources.get(key) : null;
+        return perThreadResources !is null ? perThreadResources.get(key) : null;
     }
 
     private static void ensureResourcesInitialized(){
@@ -123,7 +123,7 @@ abstract class ThreadContext {
         }
 
         Object value = getValue(key);
-        if ((value != null) && log.isTraceEnabled()) {
+        if ((value !is null) && log.isTraceEnabled()) {
             string msg = "Retrieved value of type [" ~ typeid(value).name ~ "] for key [" ~
                     key ~ "] " ~ "bound to thread [" ~ Thread.getThis()().getName() ~ "]";
             tracef(msg);
@@ -176,9 +176,9 @@ abstract class ThreadContext {
      */
      static Object remove(Object key) {
         Map!(Object, Object) perThreadResources = resources.get();
-        Object value = perThreadResources != null ? perThreadResources.remove(key) : null;
+        Object value = perThreadResources !is null ? perThreadResources.remove(key) : null;
 
-        if ((value != null) && log.isTraceEnabled()) {
+        if ((value !is null) && log.isTraceEnabled()) {
             string msg = "Removed value of type [" ~ typeid(value).name ~ "] for key [" ~
                     key ~ "]" ~ "from thread [" ~ Thread.getThis()().getName() ~ "]";
             tracef(msg);
@@ -225,7 +225,7 @@ abstract class ThreadContext {
      * it binds it to the thread, i.e.:
      * <p/>
      * <pre>
-     * if (securityManager != null) {
+     * if (securityManager !is null) {
      *     put( SECURITY_MANAGER_KEY, securityManager);
      * }</pre>
      *
@@ -233,7 +233,7 @@ abstract class ThreadContext {
      *                        null, nothing will be done.
      */
      static void bind(SecurityManager securityManager) {
-        if (securityManager != null) {
+        if (securityManager !is null) {
             put(SECURITY_MANAGER_KEY, securityManager);
         }
     }
@@ -281,14 +281,14 @@ abstract class ThreadContext {
      * it binds it to the thread, i.e.:
      * <p/>
      * <pre>
-     * if (subject != null) {
+     * if (subject !is null) {
      *     put( SUBJECT_KEY, subject );
      * }</pre>
      *
      * @param subject the Subject object to bind to the thread.  If the argument is null, nothing will be done.
      */
      static void bind(Subject subject) {
-        if (subject != null) {
+        if (subject !is null) {
             put(SUBJECT_KEY, subject);
         }
     }
@@ -321,7 +321,7 @@ abstract class ThreadContext {
          */
         //@SuppressWarnings({"unchecked"})
         protected Map!(Object, Object) childValue(Map!(Object, Object) parentValue) {
-            if (parentValue != null) {
+            if (parentValue !is null) {
                 return (Map!(Object, Object)) ((HashMap!(Object, Object)) parentValue).clone();
             } else {
                 return null;

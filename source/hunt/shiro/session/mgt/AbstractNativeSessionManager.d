@@ -49,7 +49,7 @@ abstract class AbstractNativeSessionManager : AbstractSessionManager implements 
     }
 
      void setSessionListeners(Collection!(SessionListener) listeners) {
-        this.listeners = listeners != null ? listeners : new ArrayList!(SessionListener)();
+        this.listeners = listeners !is null ? listeners : new ArrayList!(SessionListener)();
     }
 
     //@SuppressWarnings({"UnusedDeclaration"})
@@ -81,7 +81,7 @@ abstract class AbstractNativeSessionManager : AbstractSessionManager implements 
      * @param event the event to publish on the event bus if the event bus exists.
      */
     protected void publishEvent(Object event) {
-        if (this.eventBus != null) {
+        if (this.eventBus !is null) {
             this.eventBus.publish(event);
         }
     }
@@ -129,7 +129,7 @@ abstract class AbstractNativeSessionManager : AbstractSessionManager implements 
 
      Session getSession(SessionKey key){
         Session session = lookupSession(key);
-        return session != null ? createExposedSession(session, key) : null;
+        return session !is null ? createExposedSession(session, key) : null;
     }
 
     private Session lookupSession(SessionKey key){
@@ -253,7 +253,7 @@ abstract class AbstractNativeSessionManager : AbstractSessionManager implements 
      Object removeAttribute(SessionKey sessionKey, Object attributeKey){
         Session s = lookupRequiredSession(sessionKey);
         Object removed = s.removeAttribute(attributeKey);
-        if (removed != null) {
+        if (removed !is null) {
             onChange(s);
         }
         return removed;

@@ -345,7 +345,7 @@ interface Subject {
      * Although the underlying implementation determines exactly how this method functions, most implementations have
      * this method act as the logical equivalent to this code:
      * <pre>
-     * {@link #getPrincipal() getPrincipal()} != null && !{@link #isAuthenticated() isAuthenticated()}</pre>
+     * {@link #getPrincipal() getPrincipal()} !is null && !{@link #isAuthenticated() isAuthenticated()}</pre>
      * <p/>
      * Note as indicated by the above code example, if a {@code Subject} is remembered, they are
      * <em>NOT</em> considered authenticated.  A check against {@link #isAuthenticated() isAuthenticated()} is a more
@@ -672,7 +672,7 @@ interface Subject {
          * @return this {@code Builder} instance for method chaining.
          */
          Builder sessionId(Serializable sessionId) {
-            if (sessionId != null) {
+            if (sessionId !is null) {
                 this.subjectContext.setSessionId(sessionId);
             }
             return this;
@@ -701,7 +701,7 @@ interface Subject {
          * @return this {@code Builder} instance for method chaining.
          */
          Builder session(Session session) {
-            if (session != null) {
+            if (session !is null) {
                 this.subjectContext.setSession(session);
             }
             return this;
@@ -732,7 +732,7 @@ interface Subject {
          * @return this {@code Builder} instance for method chaining.
          */
          Builder principals(PrincipalCollection principals) {
-            if (principals != null && !principals.isEmpty()) {
+            if (principals !is null && !principals.isEmpty()) {
                 this.subjectContext.setPrincipals(principals);
             }
             return this;

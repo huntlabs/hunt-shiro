@@ -166,7 +166,7 @@ abstract class CachingSessionDAO : AbstractSessionDAO implements CacheManagerAwa
     protected Cache!(Serializable, Session) createActiveSessionsCache() {
         Cache!(Serializable, Session) cache = null;
         CacheManager mgr = getCacheManager();
-        if (mgr != null) {
+        if (mgr !is null) {
             string name = getActiveSessionsCacheName();
             cache = mgr.getCache(name);
         }
@@ -195,9 +195,9 @@ abstract class CachingSessionDAO : AbstractSessionDAO implements CacheManagerAwa
      */
     protected Session getCachedSession(Serializable sessionId) {
         Session cached = null;
-        if (sessionId != null) {
+        if (sessionId !is null) {
             Cache!(Serializable, Session) cache = getActiveSessionsCacheLazy();
-            if (cache != null) {
+            if (cache !is null) {
                 cached = getCachedSession(sessionId, cache);
             }
         }
@@ -323,7 +323,7 @@ abstract class CachingSessionDAO : AbstractSessionDAO implements CacheManagerAwa
             return;
         }
         Cache!(Serializable, Session) cache = getActiveSessionsCacheLazy();
-        if (cache != null) {
+        if (cache !is null) {
             cache.remove(id);
         }
     }
@@ -339,7 +339,7 @@ abstract class CachingSessionDAO : AbstractSessionDAO implements CacheManagerAwa
      */
      Collection!(Session) getActiveSessions() {
         Cache!(Serializable, Session) cache = getActiveSessionsCacheLazy();
-        if (cache != null) {
+        if (cache !is null) {
             return cache.values();
         } else {
             return Collections.emptySet();

@@ -170,7 +170,7 @@ class PropertiesRealm : TextConfigurationRealm implements Destroyable, Runnable 
      */
      void destroy() {
         try {
-            if (scheduler != null) {
+            if (scheduler !is null) {
                 scheduler.shutdown();
             }
         } catch (Exception e) {
@@ -333,11 +333,11 @@ class PropertiesRealm : TextConfigurationRealm implements Destroyable, Runnable 
     }
 
     protected bool isUsername(string key) {
-        return key != null && key.startsWith(USERNAME_PREFIX);
+        return key !is null && key.startsWith(USERNAME_PREFIX);
     }
 
     protected bool isRolename(string key) {
-        return key != null && key.startsWith(ROLENAME_PREFIX);
+        return key !is null && key.startsWith(ROLENAME_PREFIX);
     }
 
     protected string getUsername(string key) {

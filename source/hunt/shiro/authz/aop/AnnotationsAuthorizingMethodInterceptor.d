@@ -92,7 +92,7 @@ abstract class AnnotationsAuthorizingMethodInterceptor : AuthorizingMethodInterc
     protected void assertAuthorized(MethodInvocation methodInvocation){
         //default implementation just ensures no deny votes are cast:
         Collection!(AuthorizingAnnotationMethodInterceptor) aamis = getMethodInterceptors();
-        if (aamis != null && !aamis.isEmpty()) {
+        if (aamis !is null && !aamis.isEmpty()) {
             foreach(AuthorizingAnnotationMethodInterceptor aami ; aamis) {
                 if (aami.supports(methodInvocation)) {
                     aami.assertAuthorized(methodInvocation);

@@ -29,12 +29,12 @@ import hunt.shiro.crypto.hash.Hash;
 class Base64Format : HashFormat {
 
     /**
-     * Returns {@code hash != null ? hash.toBase64() : null}.
+     * Returns {@code hash !is null ? hash.toBase64() : null}.
      *
      * @param hash the hash instance to format into a string.
-     * @return {@code hash != null ? hash.toBase64() : null}.
+     * @return {@code hash !is null ? hash.toBase64() : null}.
      */
     string format(Hash hash) {
-        return hash != null ? hash.toBase64() : null;
+        return hash !is null ? hash.toBase64() : null;
     }
 }

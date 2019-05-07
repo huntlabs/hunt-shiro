@@ -59,7 +59,7 @@ class DefaultSessionStorageEvaluator : SessionStorageEvaluator {
      * @return the value of {@link #isSessionStorageEnabled()} and ignores the {@code Subject} argument.
      */
      bool isSessionStorageEnabled(Subject subject) {
-        return (subject != null && subject.getSession(false) != null) || isSessionStorageEnabled();
+        return (subject !is null && subject.getSession(false) !is null) || isSessionStorageEnabled();
     }
 
     /**

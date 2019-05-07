@@ -131,7 +131,7 @@ abstract class AbstractHash : CodecSupport, Hash {
     this(Object source, Object salt, int hashIterations) {
         byte[] sourceBytes = toBytes(source);
         byte[] saltBytes = null;
-        if (salt != null) {
+        if (salt !is null) {
             saltBytes = toBytes(salt);
         }
         byte[] hashedBytes = hash(sourceBytes, saltBytes, hashIterations);
@@ -212,7 +212,7 @@ abstract class AbstractHash : CodecSupport, Hash {
      */
    protected byte[] hash(byte[] bytes, byte[] salt, int hashIterations) {
         MessageDigest digest = getDigest(getAlgorithmName());
-        if (salt != null) {
+        if (salt !is null) {
             digest.reset();
             digest.update(salt);
         }

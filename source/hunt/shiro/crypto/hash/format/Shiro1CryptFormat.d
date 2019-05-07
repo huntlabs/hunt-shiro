@@ -106,7 +106,7 @@ class Shiro1CryptFormat : ModularCryptFormat, ParsableHashFormat {
         int iterations = hash.getIterations();
         StringBuilder sb = new StringBuilder(MCF_PREFIX).append(algorithmName).append(TOKEN_DELIMITER).append(iterations).append(TOKEN_DELIMITER);
 
-        if (salt != null) {
+        if (salt !is null) {
             sb.append(salt.toBase64());
         }
 
@@ -155,7 +155,7 @@ class Shiro1CryptFormat : ModularCryptFormat, ParsableHashFormat {
 
         SimpleHash hash = new SimpleHash(algorithmName);
         hash.setBytes(digest);
-        if (salt != null) {
+        if (salt !is null) {
             hash.setSalt(salt);
         }
         hash.setIterations(iterations);

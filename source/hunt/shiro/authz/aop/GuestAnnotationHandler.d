@@ -48,7 +48,7 @@ class GuestAnnotationHandler : AuthorizingAnnotationHandler {
     /**
      * Ensures that the calling <code>Subject</code> is NOT a <em>user</em>, that is, they do not
      * have an {@link hunt.shiro.subject.Subject#getPrincipal() identity} before continuing.  If they are
-     * a user ({@link hunt.shiro.subject.Subject#getPrincipal() Subject.getPrincipal()} != null), an
+     * a user ({@link hunt.shiro.subject.Subject#getPrincipal() Subject.getPrincipal()} !is null), an
      * <code>AuthorizingException</code> will be thrown indicating that execution is not allowed to continue.
      *
      * @param a the annotation to check for one or more roles
@@ -57,7 +57,7 @@ class GuestAnnotationHandler : AuthorizingAnnotationHandler {
      */
      void assertAuthorized(Annotation a){
         auto aCast = cast(RequiresGuest)a;
-        if (aCast !is null && getSubject().getPrincipal() != null) {
+        if (aCast !is null && getSubject().getPrincipal() !is null) {
             throw new UnauthenticatedException("Attempting to perform a guest-only operation.  The current Subject is " ~
                     "not a guest (they have been authenticated or remembered from a previous login).  Access " ~
                     "denied.");

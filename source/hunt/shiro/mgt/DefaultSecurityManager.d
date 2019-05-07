@@ -177,7 +177,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
         context.setAuthenticated(true);
         context.setAuthenticationToken(token);
         context.setAuthenticationInfo(info);
-        if (existing != null) {
+        if (existing !is null) {
             context.setSubject(existing);
         }
         return createSubject(context);
@@ -201,7 +201,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
 
     protected void rememberMeSuccessfulLogin(AuthenticationToken token, AuthenticationInfo info, Subject subject) {
         RememberMeManager rmm = getRememberMeManager();
-        if (rmm != null) {
+        if (rmm !is null) {
             try {
                 rmm.onSuccessfulLogin(subject, token, info);
             } catch (Exception e) {
@@ -223,7 +223,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
 
     protected void rememberMeFailedLogin(AuthenticationToken token, AuthenticationException ex, Subject subject) {
         RememberMeManager rmm = getRememberMeManager();
-        if (rmm != null) {
+        if (rmm !is null) {
             try {
                 rmm.onFailedLogin(subject, token, ex);
             } catch (Exception e) {
@@ -239,14 +239,14 @@ class DefaultSecurityManager : SessionsSecurityManager {
 
     protected void rememberMeLogout(Subject subject) {
         RememberMeManager rmm = getRememberMeManager();
-        if (rmm != null) {
+        if (rmm !is null) {
             try {
                 rmm.onLogout(subject);
             } catch (Exception e) {
                 version(HUNT_DEBUG) {
                     string msg = "Delegate RememberMeManager instance of type [" ~ typeid(rmm).name +
                             "] threw an exception during onLogout for subject with principals [" ~
-                            (subject != null ? subject.getPrincipals() : null) ~ "]";
+                            (subject !is null ? subject.getPrincipals() : null) ~ "]";
                     warning(msg, e);
                 }
             }
@@ -403,7 +403,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
      */
     //@SuppressWarnings({"unchecked"})
     protected SubjectContext ensureSecurityManager(SubjectContext context) {
-        if (context.resolveSecurityManager() != null) {
+        if (context.resolveSecurityManager() !is null) {
             tracef("Context already contains a SecurityManager instance.  Returning.");
             return context;
         }
@@ -426,7 +426,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
      */
     //@SuppressWarnings({"unchecked"})
     protected SubjectContext resolveSession(SubjectContext context) {
-        if (context.resolveSession() != null) {
+        if (context.resolveSession() !is null) {
             tracef("Context already contains a session.  Returning.");
             return context;
         }
@@ -434,7 +434,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
             //Context couldn't resolve it directly, let's see if we can since we have direct access to 
             //the session manager:
             Session session = resolveContextSession(context);
-            if (session != null) {
+            if (session !is null) {
                 context.setSession(session);
             }
         } catch (InvalidSessionException e) {
@@ -446,7 +446,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
 
     protected Session resolveContextSession(SubjectContext context){
         SessionKey key = getSessionKey(context);
-        if (key != null) {
+        if (key !is null) {
             return getSession(key);
         }
         return null;
@@ -454,7 +454,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
 
     protected SessionKey getSessionKey(SubjectContext context) {
         Serializable sessionId = context.getSessionId();
-        if (sessionId != null) {
+        if (sessionId !is null) {
             return new DefaultSessionKey(sessionId);
         }
         return null;
@@ -523,11 +523,11 @@ class DefaultSecurityManager : SessionsSecurityManager {
             sessionContext.putAll(subjectContext);
         }
         Serializable sessionId = subjectContext.getSessionId();
-        if (sessionId != null) {
+        if (sessionId !is null) {
             sessionContext.setSessionId(sessionId);
         }
         string host = subjectContext.resolveHost();
-        if (host != null) {
+        if (host !is null) {
             sessionContext.setHost(host);
         }
         return sessionContext;
@@ -542,7 +542,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
         beforeLogout(subject);
 
         PrincipalCollection principals = subject.getPrincipals();
-        if (principals != null && !principals.isEmpty()) {
+        if (principals !is null && !principals.isEmpty()) {
             version(HUNT_DEBUG) {
                 tracef("Logging out subject with primary principal {}", principals.getPrimaryPrincipal());
             }
@@ -575,7 +575,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
 
     protected void stopSession(Subject subject) {
         Session s = subject.getSession(false);
-        if (s != null) {
+        if (s !is null) {
             s.stop();
         }
     }
@@ -597,7 +597,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
 
     protected PrincipalCollection getRememberedIdentity(SubjectContext subjectContext) {
         RememberMeManager rmm = getRememberMeManager();
-        if (rmm != null) {
+        if (rmm !is null) {
             try {
                 return rmm.getRememberedPrincipals(subjectContext);
             } catch (Exception e) {

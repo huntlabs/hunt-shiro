@@ -44,7 +44,7 @@ abstract class RealmSecurityManager : CachingSecurityManager {
     /**
      * Default no-arg constructor.
      */
-     RealmSecurityManager() {
+     this() {
         super();
     }
 
@@ -109,10 +109,11 @@ abstract class RealmSecurityManager : CachingSecurityManager {
     protected void applyCacheManagerToRealms() {
         CacheManager cacheManager = getCacheManager();
         Collection!(Realm) realms = getRealms();
-        if (cacheManager != null && realms != null && !realms.isEmpty()) {
+        if (cacheManager !is null && realms !is null && !realms.isEmpty()) {
             foreach(Realm realm ; realms) {
-                if (realm instanceof CacheManagerAware) {
-                    ((CacheManagerAware) realm).setCacheManager(cacheManager);
+                CacheManagerAware ca = cast(CacheManagerAware) realm;
+                if (ca !is null) {
+                    ca.setCacheManager(cacheManager);
                 }
             }
         }
@@ -134,10 +135,11 @@ abstract class RealmSecurityManager : CachingSecurityManager {
     protected void applyEventBusToRealms() {
         EventBus eventBus = getEventBus();
         Collection!(Realm) realms = getRealms();
-        if (eventBus != null && realms != null && !realms.isEmpty()) {
+        if (eventBus !is null && realms !is null && !realms.isEmpty()) {
             foreach(Realm realm ; realms) {
-                if (realm instanceof EventBusAware) {
-                    ((EventBusAware)realm).setEventBus(eventBus);
+                EventBusAware eba = cast(EventBusAware)realm;
+                if (eba !is null) {
+                    eba.setEventBus(eventBus);
                 }
             }
         }

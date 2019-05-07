@@ -120,7 +120,7 @@ abstract class CachingSecurityManager : SecurityManager, Destroyable, CacheManag
      */
     protected void applyEventBusToCacheManager() {
         auto cacheManagerCast = cast(EventBusAware)this.cacheManager;
-        if (this.eventBus != null && this.cacheManager != null && cacheManagerCast !is null) {
+        if (this.eventBus !is null && this.cacheManager !is null && cacheManagerCast !is null) {
             cacheManagerCast.setEventBus(this.eventBus);
         }
     }

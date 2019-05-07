@@ -66,7 +66,7 @@ abstract class CachingRealm : Realm, Nameable, CacheManagerAware, LogoutAware {
      * Note that while in general, caching may be enabled by default, subclasses have control over
      * if specific caching is enabled.
      */
-     CachingRealm() {
+     this() {
         this.cachingEnabled = true;
         this.name = typeid(this).name ~ "_" ~ INSTANCE_COUNT.getAndIncrement();
     }

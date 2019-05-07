@@ -55,7 +55,7 @@ class SimpleAccountRealm : AuthorizingRealm {
     protected final ReadWriteLock USERS_LOCK;
     protected final ReadWriteLock ROLES_LOCK;
 
-     SimpleAccountRealm() {
+     this() {
         this.users = new LinkedHashMap!(string, SimpleAccount)();
         this.roles = new LinkedHashMap!(string, SimpleRole)();
         USERS_LOCK = new ReentrantReadWriteLock();
@@ -65,7 +65,7 @@ class SimpleAccountRealm : AuthorizingRealm {
         setCachingEnabled(false);
     }
 
-     SimpleAccountRealm(string name) {
+     this(string name) {
         this();
         setName(name);
     }
@@ -80,14 +80,14 @@ class SimpleAccountRealm : AuthorizingRealm {
     }
 
      bool accountExists(string username) {
-        return getUser(username) != null;
+        return getUser(username) !is null;
     }
 
      void addAccount(string username, string password) {
         addAccount(username, password, (string[]) null);
     }
 
-     void addAccount(string username, string password, string... roles) {
+     void addAccount(string username, string password, string[] roles...) {
         Set!(string) roleNames = CollectionUtils.asSet(roles);
         SimpleAccount account = new SimpleAccount(username, password, getName(), roleNames, null);
         add(account);
@@ -121,7 +121,7 @@ class SimpleAccountRealm : AuthorizingRealm {
     }
 
      bool roleExists(string name) {
-        return getRole(name) != null;
+        return getRole(name) !is null;
     }
 
      void addRole(string name) {
@@ -158,7 +158,7 @@ class SimpleAccountRealm : AuthorizingRealm {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
         SimpleAccount account = getUser(upToken.getUsername());
 
-        if (account != null) {
+        if (account !is null) {
 
             if (account.isLocked()) {
                 throw new LockedAccountException("Account [" ~ account ~ "] is locked.");

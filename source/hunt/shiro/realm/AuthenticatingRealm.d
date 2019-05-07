@@ -30,9 +30,11 @@ import hunt.shiro.cache.Cache;
 import hunt.shiro.cache.CacheManager;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.Initializable;
+
 import hunt.logger;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import std.string;
+// import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
@@ -108,7 +110,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * the subclass implementation.
  *
  */
-abstract class AuthenticatingRealm : CachingRealm implements Initializable {
+abstract class AuthenticatingRealm : CachingRealm, Initializable {
 
     //TODO - complete JavaDoc
 
@@ -138,25 +140,25 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      * default implementation of the {@link Realm#supports(hunt.shiro.authc.AuthenticationToken)} method to
      * determine whether or not the given authentication token is supported by this realm.
      */
-    private Class<? extends AuthenticationToken> authenticationTokenClass;
+    private TypeInfo_Class authenticationTokenClass;
 
     /*-------------------------------------------
     |         C O N S T R U C T O R S           |
     ============================================*/
-     AuthenticatingRealm() {
+     this() {
         this(null, new SimpleCredentialsMatcher());
     }
 
-     AuthenticatingRealm(CacheManager cacheManager) {
+     this(CacheManager cacheManager) {
         this(cacheManager, new SimpleCredentialsMatcher());
     }
 
-     AuthenticatingRealm(CredentialsMatcher matcher) {
+     this(CredentialsMatcher matcher) {
         this(null, matcher);
     }
 
-     AuthenticatingRealm(CacheManager cacheManager, CredentialsMatcher matcher) {
-        authenticationTokenClass = UsernamePasswordToken.class;
+     this(CacheManager cacheManager, CredentialsMatcher matcher) {
+        authenticationTokenClass = UsernamePasswordToken.classinfo;
 
         //retain backwards compatibility for Shiro 1.1 and earlier.  Setting to true by default will probably cause
         //unexpected results for existing applications:
@@ -168,10 +170,10 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
             this.authenticationCacheName = this.authenticationCacheName ~ "." ~ instanceNumber;
         }
 
-        if (cacheManager != null) {
+        if (cacheManager !is null) {
             setCacheManager(cacheManager);
         }
-        if (matcher != null) {
+        if (matcher !is null) {
             setCredentialsMatcher(matcher);
         }
     }
@@ -235,7 +237,7 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      * @param authenticationTokenClass the class of authentication token instances supported by this realm.
      * @see #getAuthenticationTokenClass getAuthenticationTokenClass() for more explanation.
      */
-     void setAuthenticationTokenClass(Class<? extends AuthenticationToken> authenticationTokenClass) {
+     void setAuthenticationTokenClass(TypeInfo_Class authenticationTokenClass) {
         this.authenticationTokenClass = authenticationTokenClass;
     }
 
@@ -336,7 +338,7 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      void setName(string name) {
         super.setName(name);
         string authcCacheName = this.authenticationCacheName;
-        if (authcCacheName != null && authcCacheName.typeid(startsWith).name)) {
+        if (authcCacheName !is null && authcCacheName.startsWith(typeid(this).name)) {
             //get rid of the default heuristically-created cache name.  Create a more meaningful one
             //based on the application-unique Realm name:
             this.authenticationCacheName = name + DEFAULT_AUTHORIZATION_CACHE_SUFFIX;
@@ -359,7 +361,7 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      * @return true if this authentication realm can process the submitted token instance of the class, false otherwise.
      */
      bool supports(AuthenticationToken token) {
-        return token != null && getAuthenticationTokenClass().isAssignableFrom(token.getClass());
+        return token !is null && getAuthenticationTokenClass().isAssignableFrom(token.getClass());
     }
 
     /**
@@ -448,7 +450,7 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
 
             CacheManager cacheManager = getCacheManager();
 
-            if (cacheManager != null) {
+            if (cacheManager !is null) {
                 string cacheName = getAuthenticationCacheName();
                 tracef("CacheManager [{}] configured.  Building authentication cache '{}'", cacheManager, cacheName);
                 this.authenticationCache = cacheManager.getCache(cacheName);
@@ -470,7 +472,7 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
         AuthenticationInfo info = null;
 
         Cache!(Object, AuthenticationInfo) cache = getAvailableAuthenticationCache();
-        if (cache != null && token != null) {
+        if (cache !is null && token !is null) {
             tracef("Attempting to retrieve the AuthenticationInfo from cache.");
             Object key = getAuthenticationCacheKey(token);
             info = cache.get(key);
@@ -500,7 +502,7 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
         }
 
         Cache!(Object, AuthenticationInfo) cache = getAvailableAuthenticationCache();
-        if (cache != null) {
+        if (cache !is null) {
             Object key = getAuthenticationCacheKey(token);
             cache.put(key, info);
             tracef("Cached AuthenticationInfo for continued authentication.  key=[{}], value=[{}].", key, info);
@@ -556,14 +558,14 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
             //otherwise not cached, perform the lookup:
             info = doGetAuthenticationInfo(token);
             tracef("Looked up AuthenticationInfo [{}] from doGetAuthenticationInfo", info);
-            if (token != null && info != null) {
+            if (token !is null && info !is null) {
                 cacheAuthenticationInfoIfPossible(token, info);
             }
         } else {
             tracef("Using cached authentication info [{}] to perform credentials matching.", info);
         }
 
-        if (info != null) {
+        if (info !is null) {
             assertCredentialsMatch(token, info);
         } else {
             tracef("No AuthenticationInfo found for submitted AuthenticationToken [{}].  Returning null.", token);
@@ -582,7 +584,7 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      */
     protected void assertCredentialsMatch(AuthenticationToken token, AuthenticationInfo info){
         CredentialsMatcher cm = getCredentialsMatcher();
-        if (cm != null) {
+        if (cm !is null) {
             if (!cm.doCredentialsMatch(token, info)) {
                 //not successful - throw an exception to indicate this:
                 string msg = "Submitted credentials for token [" ~ token ~ "] did not match the expected credentials.";
@@ -609,7 +611,7 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      * @return the cache key to use to cache the associated {@link AuthenticationInfo} after a successful authentication.
      */
     protected Object getAuthenticationCacheKey(AuthenticationToken token) {
-        return token != null ? token.getPrincipal() : null;
+        return token !is null ? token.getPrincipal() : null;
     }
 
     /**
@@ -669,7 +671,7 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
         if (!isEmpty(principals)) {
             Cache!(Object, AuthenticationInfo) cache = getAvailableAuthenticationCache();
             //cache instance will be non-null if caching is enabled:
-            if (cache != null) {
+            if (cache !is null) {
                 Object key = getAuthenticationCacheKey(principals);
                 cache.remove(key);
             }

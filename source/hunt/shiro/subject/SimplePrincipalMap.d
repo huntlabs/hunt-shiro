@@ -67,15 +67,15 @@ class SimplePrincipalMap : PrincipalMap {
     }
 
      bool containsKey(Object o) {
-        return this.combinedPrincipals != null && this.combinedPrincipals.containsKey(o);
+        return this.combinedPrincipals !is null && this.combinedPrincipals.containsKey(o);
     }
 
      bool containsValue(Object o) {
-        return this.combinedPrincipals != null && this.combinedPrincipals.containsKey(o);
+        return this.combinedPrincipals !is null && this.combinedPrincipals.containsKey(o);
     }
 
      Object get(Object o) {
-        return this.combinedPrincipals != null && this.combinedPrincipals.containsKey(o);
+        return this.combinedPrincipals !is null && this.combinedPrincipals.containsKey(o);
     }
 
      Object put(string s, Object o) {
@@ -83,7 +83,7 @@ class SimplePrincipalMap : PrincipalMap {
     }
 
      Object remove(Object o) {
-        return this.combinedPrincipals != null ? this.combinedPrincipals.remove(o) : null;
+        return this.combinedPrincipals !is null ? this.combinedPrincipals.remove(o) : null;
     }
 
      void putAll(Map<? extends string, ?> map) {
@@ -147,7 +147,7 @@ class SimplePrincipalMap : PrincipalMap {
                 instances.add(type.cast(value));
             }
         }
-        return instances != null ? instances : Collections.<T>emptyList();
+        return instances !is null ? instances : Collections.<T>emptyList();
     }
 
      List asList() {
@@ -257,7 +257,7 @@ class SimplePrincipalMap : PrincipalMap {
             return null;
         }
         Map!(string,Object) principals = this.realmPrincipals.get(realmName);
-        if (principals != null) {
+        if (principals !is null) {
             return principals.get(principalName);
         }
         return null;
@@ -274,7 +274,7 @@ class SimplePrincipalMap : PrincipalMap {
             return null;
         }
         Map!(string,Object) principals = this.realmPrincipals.get(realmName);
-        if (principals != null) {
+        if (principals !is null) {
             return principals.remove(principalName);
         }
         return null;

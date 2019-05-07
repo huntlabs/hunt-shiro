@@ -29,12 +29,12 @@ import hunt.shiro.crypto.hash.Hash;
 class HexFormat : HashFormat {
 
     /**
-     * Returns {@code hash != null ? hash.toHex() : null}.
+     * Returns {@code hash !is null ? hash.toHex() : null}.
      *
      * @param hash the hash instance to format into a string.
-     * @return {@code hash != null ? hash.toHex() : null}.
+     * @return {@code hash !is null ? hash.toHex() : null}.
      */
     string format(Hash hash) {
-        return hash != null ? hash.toHex() : null;
+        return hash !is null ? hash.toHex() : null;
     }
 }

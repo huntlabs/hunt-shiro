@@ -81,7 +81,7 @@ class PasswordMatcher : CredentialsMatcher {
     }
 
     protected Object getSubmittedPassword(AuthenticationToken token) {
-        return token != null ? token.getCredentials() : null;
+        return token !is null ? token.getCredentials() : null;
     }
 
     private void assertStoredCredentialsType(Object credentials) {
@@ -97,7 +97,7 @@ class PasswordMatcher : CredentialsMatcher {
     }
 
     protected Object getStoredPassword(AuthenticationInfo storedAccountInfo) {
-        Object stored = storedAccountInfo != null ? storedAccountInfo.getCredentials() : null;
+        Object stored = storedAccountInfo !is null ? storedAccountInfo.getCredentials() : null;
         //fix for https://issues.apache.org/jira/browse/SHIRO-363
         // if (stored instanceof[] char) {
         //     stored = new string((char[])stored);

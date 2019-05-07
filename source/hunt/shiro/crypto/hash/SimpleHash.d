@@ -168,7 +168,7 @@ class SimpleHash : AbstractHash {
         this.algorithmName = algorithmName;
         this.iterations = Math.max(DEFAULT_ITERATIONS, hashIterations);
         ByteSource saltBytes = null;
-        if (salt != null) {
+        if (salt !is null) {
             saltBytes = convertSaltToBytes(salt);
             this.salt = saltBytes;
         }
@@ -221,7 +221,7 @@ class SimpleHash : AbstractHash {
     }
 
     private void hash(ByteSource source, ByteSource salt, int hashIterations) {
-        byte[] saltBytes = salt != null ? salt.getBytes() : null;
+        byte[] saltBytes = salt !is null ? salt.getBytes() : null;
         byte[] hashedBytes = hash(source.getBytes(), saltBytes, hashIterations);
         setBytes(hashedBytes);
     }
@@ -335,7 +335,7 @@ class SimpleHash : AbstractHash {
      */
    protected byte[] hash(byte[] bytes, byte[] salt, int hashIterations) {
         MessageDigest digest = getDigest(getAlgorithmName());
-        if (salt != null) {
+        if (salt !is null) {
             digest.reset();
             digest.update(salt);
         }

@@ -455,7 +455,7 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
      * @return <code>principals.hashCode()</code> if they are not null, 0 (zero) otherwise.
      */
      size_t toHash() @trusted nothrow {
-        return (getPrincipals() != null ? getPrincipals().hashCode() : 0);
+        return (getPrincipals() !is null ? getPrincipals().hashCode() : 0);
     }
 
     /**
@@ -474,7 +474,7 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
         if (oCast !is null) {
             SimpleAccount sa = oCast;
             //principal should be unique across the application, so only check this for equality:
-            return (getPrincipals() != null ? getPrincipals()== sa.getPrincipals() : sa.getPrincipals()  is null);
+            return (getPrincipals() !is null ? getPrincipals()== sa.getPrincipals() : sa.getPrincipals()  is null);
         }
         return false;
     }
@@ -486,7 +486,7 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
      * @return the string representation of this Account object.
      */
      string toString() {
-        return getPrincipals() != null ? getPrincipals().toString() : "empty";
+        return getPrincipals() !is null ? getPrincipals().toString() : "empty";
     }
 
 }

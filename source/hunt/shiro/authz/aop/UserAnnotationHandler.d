@@ -31,7 +31,7 @@ import hunt.shiro.authz.annotation.RequiresUser;
  * {@link hunt.shiro.subject.Subject#isAuthenticated() authenticated} <b><em>or</em></b> remembered via remember
  * me services before allowing access.
  * <p>
- * This annotation essentially ensures that <code>subject.{@link hunt.shiro.subject.Subject#getPrincipal() getPrincipal()} != null</code>.
+ * This annotation essentially ensures that <code>subject.{@link hunt.shiro.subject.Subject#getPrincipal() getPrincipal()} !is null</code>.
  *
  */
 class UserAnnotationHandler : AuthorizingAnnotationHandler {

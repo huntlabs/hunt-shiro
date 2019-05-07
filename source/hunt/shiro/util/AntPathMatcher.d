@@ -73,7 +73,7 @@ class AntPathMatcher : PatternMatcher {
      * Default is "/", as in Ant.
      */
      void setPathSeparator(string pathSeparator) {
-        this.pathSeparator = (pathSeparator != null ? pathSeparator : DEFAULT_PATH_SEPARATOR);
+        this.pathSeparator = (pathSeparator !is null ? pathSeparator : DEFAULT_PATH_SEPARATOR);
     }
 
 

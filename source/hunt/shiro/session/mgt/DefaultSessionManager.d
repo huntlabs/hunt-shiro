@@ -138,7 +138,7 @@ class DefaultSessionManager : AbstractValidatingSessionManager implements CacheM
      *
      */
     private void applyCacheManagerToSessionDAO() {
-        if (this.cacheManager != null && this.sessionDAO != null && this.sessionDAO instanceof CacheManagerAware) {
+        if (this.cacheManager !is null && this.sessionDAO !is null && this.sessionDAO instanceof CacheManagerAware) {
             ((CacheManagerAware) this.sessionDAO).setCacheManager(this.cacheManager);
         }
     }
@@ -235,7 +235,7 @@ class DefaultSessionManager : AbstractValidatingSessionManager implements CacheM
 
     protected Collection!(Session) getActiveSessions() {
         Collection!(Session) active = sessionDAO.getActiveSessions();
-        return active != null ? active : Collections.<Session>emptySet();
+        return active !is null ? active : Collections.<Session>emptySet();
     }
 
 }

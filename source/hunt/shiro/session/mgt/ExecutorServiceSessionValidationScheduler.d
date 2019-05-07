@@ -118,7 +118,7 @@ class ExecutorServiceSessionValidationScheduler : SessionValidationScheduler, Ru
     }
 
      void disableSessionValidation() {
-        if (this.service != null) {
+        if (this.service !is null) {
             this.service.shutdownNow();
         }
         this.enabled = false;

@@ -196,7 +196,7 @@ class TextConfigurationRealm : SimpleAccountRealm {
                     account.addRole(rolename);
 
                     SimpleRole role = getRole(rolename);
-                    if (role != null) {
+                    if (role !is null) {
                         account.addObjectPermissions(role.getPermissions());
                     }
                 }
@@ -223,7 +223,7 @@ class TextConfigurationRealm : SimpleAccountRealm {
         Map!(string, string) pairs = new HashMap!(string, string)();
         foreach(string pairString ; keyValuePairs) {
             string[] pair = StringUtils.splitKeyValue(pairString);
-            if (pair != null) {
+            if (pair !is null) {
                 pairs.put(pair[0].trim(), pair[1].trim());
             }
         }

@@ -95,7 +95,7 @@ class SubjectThreadState : ThreadState {
         ThreadContext.remove();
 
         ThreadContext.bind(this.subject);
-        if (securityManager != null) {
+        if (securityManager !is null) {
             ThreadContext.bind(securityManager);
         }
     }

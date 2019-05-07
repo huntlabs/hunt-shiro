@@ -34,9 +34,9 @@ class SimpleSessionFactory : SessionFactory {
      * @return a new {@link SimpleSession SimpleSession} instance
      */
      Session createSession(SessionContext initData) {
-        if (initData != null) {
+        if (initData !is null) {
             string host = initData.getHost();
-            if (host != null) {
+            if (host !is null) {
                 return new SimpleSession(host);
             }
         }

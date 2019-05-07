@@ -81,7 +81,7 @@ class CollectionUtils {
      * @return the size of the specified collection or {@code 0} if the collection is {@code null}.
      */
      static int size(Collection c) {
-        return c != null ? c.size() : 0;
+        return c !is null ? c.size() : 0;
     }
 
     /**
@@ -91,7 +91,7 @@ class CollectionUtils {
      * @return the size of the specified map or {@code 0} if the map is {@code null}.
      */
      static int size(Map m) {
-        return m != null ? m.size() : 0;
+        return m !is null ? m.size() : 0;
     }
 
 

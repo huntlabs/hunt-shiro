@@ -128,8 +128,8 @@ class DefaultHashFormatFactory : HashFormatFactory {
             string test = in1.substring(ModularCryptFormat.TOKEN_DELIMITER.length());
             string[] tokens = test.split("\\" ~ ModularCryptFormat.TOKEN_DELIMITER);
             //the MCF ID is always the first token in the delimited string:
-            string possibleMcfId = (tokens != null && tokens.length > 0) ? tokens[0] : null;
-            if (possibleMcfId != null) {
+            string possibleMcfId = (tokens !is null && tokens.length > 0) ? tokens[0] : null;
+            if (possibleMcfId !is null) {
                 //found a possible MCF ID - test it using our heuristics to see if we can find a corresponding class:
                 clazz = getHashFormatClass(possibleMcfId);
             }
@@ -140,7 +140,7 @@ class DefaultHashFormatFactory : HashFormatFactory {
             clazz = getHashFormatClass(in1);
         }
 
-        if (clazz != null) {
+        if (clazz !is null) {
             //we found a HashFormat class - instantiate it:
             hashFormat = newHashFormatInstance(clazz);
         }
@@ -185,9 +185,9 @@ class DefaultHashFormatFactory : HashFormatFactory {
 
     //     //check to see if the token is a configured FQCN alias.  This is faster than searching packages,
     //     //so we try this first:
-    //     if (this.formatClassNames != null) {
+    //     if (this.formatClassNames !is null) {
     //         string value = this.formatClassNames.get(token);
-    //         if (value != null) {
+    //         if (value !is null) {
     //             //found an alias - see if the value is a class:
     //             clazz = lookupHashFormatClass(value);
     //         }
@@ -196,7 +196,7 @@ class DefaultHashFormatFactory : HashFormatFactory {
     //     //check to see if the token is one of Shiro's provided FQCN aliases (again, faster than searching):
     //     if (clazz  is null) {
     //         ProvidedHashFormat provided = ProvidedHashFormat.byId(token);
-    //         if (provided != null) {
+    //         if (provided !is null) {
     //             clazz = provided.getHashFormatClass();
     //         }
     //     }
@@ -208,10 +208,10 @@ class DefaultHashFormatFactory : HashFormatFactory {
 
     //     if (clazz  is null) {
     //         //token wasn't a FQCN or a FQCN alias - try searching in configured packages:
-    //         if (this.searchPackages != null) {
+    //         if (this.searchPackages !is null) {
     //              foreach(string packageName ; this.searchPackages) {
     //                 clazz = getHashFormatClass(packageName, token);
-    //                 if (clazz != null) {
+    //                 if (clazz !is null) {
     //                     //found it:
     //                     break;
     //                 }
@@ -219,7 +219,7 @@ class DefaultHashFormatFactory : HashFormatFactory {
     //         }
     //     }
 
-    //     if (clazz != null) {
+    //     if (clazz !is null) {
     //         assertHashFormatImpl(clazz);
     //     }
 

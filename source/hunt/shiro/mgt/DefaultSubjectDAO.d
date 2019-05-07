@@ -24,6 +24,7 @@ import hunt.shiro.subject.Subject;
 import hunt.shiro.subject.support.DefaultSubjectContext;
 import hunt.shiro.subject.support.DelegatingSubject;
 
+import hunt.Boolean;
 import hunt.Exceptions;
 import hunt.logger;
 
@@ -87,7 +88,7 @@ class DefaultSubjectDAO : SubjectDAO {
      */
     private SessionStorageEvaluator sessionStorageEvaluator;
 
-     DefaultSubjectDAO() {
+     this() {
         //default implementation allows enabling/disabling session usages at a global level for all subjects:
         this.sessionStorageEvaluator = new DefaultSessionStorageEvaluator();
     }
@@ -245,7 +246,8 @@ implementationMissing(false);
             }
             //otherwise no session and not authenticated - nothing to save
         } else {
-            bool existingAuthc = (bool) session.getAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
+            Boolean r = cast(Boolean) session.getAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
+            bool existingAuthc = r.value;
 
             if (subject.isAuthenticated()) {
                 if (existingAuthc  is null || !existingAuthc) {
@@ -253,7 +255,7 @@ implementationMissing(false);
                 }
                 //otherwise authc state matches - no need to update the session
             } else {
-                if (existingAuthc != null) {
+                if (existingAuthc !is null) {
                     //existing doesn't match the current state - remove it:
                     session.removeAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
                 }
@@ -270,7 +272,7 @@ implementationMissing(false);
      */
     protected void removeFromSession(Subject subject) {
         Session session = subject.getSession(false);
-        if (session != null) {
+        if (session !is null) {
             session.removeAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
             session.removeAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
         }

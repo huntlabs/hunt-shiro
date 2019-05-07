@@ -137,7 +137,7 @@ class DefaultPasswordService : HashingPasswordService {
         //configuration changes.
         HashFormat discoveredFormat = this.hashFormatFactory.getInstance(saved);
         auto discoveredFormatCast = cast(ParsableHashFormat)discoveredFormat;
-        if (discoveredFormat != null && discoveredFormatCast !is null) {
+        if (discoveredFormat !is null && discoveredFormatCast !is null) {
 
             ParsableHashFormat parsableHashFormat = discoveredFormatCast;
             Hash savedHash = parsableHashFormat.parse(saved);

@@ -262,7 +262,7 @@ abstract class AbstractRememberMeManager : RememberMeManager {
      */
     protected bool isRememberMe(AuthenticationToken token) {
         auto tokenCast = cast(RememberMeAuthenticationToken)token;
-        return token != null && (tokenCast !is null) &&
+        return token !is null && (tokenCast !is null) &&
                 tokenCast.isRememberMe();
     }
 
@@ -347,7 +347,7 @@ abstract class AbstractRememberMeManager : RememberMeManager {
      */
     protected byte[] convertPrincipalsToBytes(PrincipalCollection principals) {
         byte[] bytes = serialize(principals);
-        if (getCipherService() != null) {
+        if (getCipherService() !is null) {
             bytes = encrypt(bytes);
         }
         return bytes;
@@ -381,7 +381,7 @@ abstract class AbstractRememberMeManager : RememberMeManager {
         try {
             byte[] bytes = getRememberedSerializedIdentity(subjectContext);
             //SHIRO-138 - only call convertBytesToPrincipals if bytes exist:
-            if (bytes != null && bytes.length > 0) {
+            if (bytes !is null && bytes.length > 0) {
                 principals = convertBytesToPrincipals(bytes, subjectContext);
             }
         } catch (RuntimeException re) {
@@ -414,7 +414,7 @@ abstract class AbstractRememberMeManager : RememberMeManager {
      * @return the de-serialized and possibly decrypted principals
      */
     protected PrincipalCollection convertBytesToPrincipals(byte[] bytes, SubjectContext subjectContext) {
-        if (getCipherService() != null) {
+        if (getCipherService() !is null) {
             bytes = decrypt(bytes);
         }
         return deserialize(bytes);
@@ -461,7 +461,7 @@ abstract class AbstractRememberMeManager : RememberMeManager {
     protected byte[] encrypt(byte[] serialized) {
         byte[] value = serialized;
         CipherService cipherService = getCipherService();
-        if (cipherService != null) {
+        if (cipherService !is null) {
             ByteSource byteSource = cipherService.encrypt(serialized, getEncryptionCipherKey());
             value = byteSource.getBytes();
         }
@@ -477,7 +477,7 @@ abstract class AbstractRememberMeManager : RememberMeManager {
     protected byte[] decrypt(byte[] encrypted) {
         byte[] serialized = encrypted;
         CipherService cipherService = getCipherService();
-        if (cipherService != null) {
+        if (cipherService !is null) {
             ByteSource byteSource = cipherService.decrypt(encrypted, getDecryptionCipherKey());
             serialized = byteSource.getBytes();
         }

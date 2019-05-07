@@ -51,7 +51,7 @@ class JdbcUtils {
      * @param connection the JDBC Connection to close (may be <tt>null</tt>)
      */
      static void closeConnection(Connection connection) {
-        if (connection != null) {
+        if (connection !is null) {
             try {
                 connection.close();
             } catch (SQLException ex) {
@@ -73,7 +73,7 @@ class JdbcUtils {
      * @param statement the JDBC Statement to close (may be <tt>null</tt>)
      */
      static void closeStatement(Statement statement) {
-        if (statement != null) {
+        if (statement !is null) {
             try {
                 statement.close();
             } catch (SQLException ex) {
@@ -95,7 +95,7 @@ class JdbcUtils {
      * @param rs the JDBC ResultSet to close (may be <tt>null</tt>)
      */
      static void closeResultSet(ResultSet rs) {
-        if (rs != null) {
+        if (rs !is null) {
             try {
                 rs.close();
             } catch (SQLException ex) {

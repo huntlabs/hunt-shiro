@@ -88,7 +88,7 @@ class MemorySessionDAO : AbstractSessionDAO {
             throw new NullPointerException("session argument cannot be null.");
         }
         Serializable id = session.getId();
-        if (id != null) {
+        if (id !is null) {
             sessions.remove(id);
         }
     }

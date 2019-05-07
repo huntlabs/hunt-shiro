@@ -114,7 +114,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
         tracef("Attempting to retrieve session with key {}", key);
 
         Session s = retrieveSession(key);
-        if (s != null) {
+        if (s !is null) {
             validate(s, key);
         }
         return s;
@@ -241,7 +241,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
     protected synchronized void disableSessionValidation() {
         beforeSessionValidationDisabled();
         SessionValidationScheduler scheduler = getSessionValidationScheduler();
-        if (scheduler != null) {
+        if (scheduler !is null) {
             try {
                 scheduler.disableSessionValidation();
                 version(HUNT_DEBUG) {
@@ -277,7 +277,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
 
         Collection!(Session) activeSessions = getActiveSessions();
 
-        if (activeSessions != null && !activeSessions.isEmpty()) {
+        if (activeSessions !is null && !activeSessions.isEmpty()) {
             foreach(Session s ; activeSessions) {
                 try {
                     //simulate a lookup key to satisfy the method signature.

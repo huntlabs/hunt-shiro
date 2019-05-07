@@ -212,7 +212,7 @@ class DefaultHashService : ConfigurableHashService {
 
         ByteSource publicSalt = request.getSalt();
 
-        if (publicSalt != null && !publicSalt.isEmpty()) {
+        if (publicSalt !is null && !publicSalt.isEmpty()) {
             //a public salt was explicitly requested to be used - go ahead and use it:
             return publicSalt;
         }
@@ -221,7 +221,7 @@ class DefaultHashService : ConfigurableHashService {
 
         //check to see if we need to generate one:
         ByteSource privateSalt = getPrivateSalt();
-        boolean privateSaltExists = privateSalt != null && !privateSalt.isEmpty();
+        boolean privateSaltExists = privateSalt !is null && !privateSalt.isEmpty();
 
         //If a private salt exists, we must generate a public salt to protect the integrity of the private salt.
         //Or generate it if the instance is explicitly configured to do so:
@@ -244,11 +244,11 @@ class DefaultHashService : ConfigurableHashService {
      */
     protected ByteSource combine(ByteSource privateSalt, ByteSource publicSalt) {
 
-        byte[] privateSaltBytes = privateSalt != null ? privateSalt.getBytes() : null;
-        int privateSaltLength = privateSaltBytes != null ? privateSaltBytes.length : 0;
+        byte[] privateSaltBytes = privateSalt !is null ? privateSalt.getBytes() : null;
+        int privateSaltLength = privateSaltBytes !is null ? privateSaltBytes.length : 0;
 
-        byte[] publicSaltBytes = publicSalt != null ? publicSalt.getBytes() : null;
-        int extraBytesLength = publicSaltBytes != null ? publicSaltBytes.length : 0;
+        byte[] publicSaltBytes = publicSalt !is null ? publicSalt.getBytes() : null;
+        int extraBytesLength = publicSaltBytes !is null ? publicSaltBytes.length : 0;
 
         int length = privateSaltLength + extraBytesLength;
 
@@ -260,11 +260,11 @@ class DefaultHashService : ConfigurableHashService {
 
         int i = 0;
         for (int j = 0; j < privateSaltLength; j++) {
-            assert(privateSaltBytes != null);
+            assert(privateSaltBytes !is null);
             combined[i++] = privateSaltBytes[j];
         }
         for (int j = 0; j < extraBytesLength; j++) {
-            assert(publicSaltBytes != null);
+            assert(publicSaltBytes !is null);
             combined[i++] = publicSaltBytes[j];
         }
 

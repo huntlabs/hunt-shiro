@@ -58,9 +58,9 @@ class FirstSuccessfulStrategy : AbstractAuthenticationStrategy {
      * since this strategy mandates that only the info from the first successfully authenticated realm be used.
      */
     protected AuthenticationInfo merge(AuthenticationInfo info, AuthenticationInfo aggregate) {
-        if (aggregate != null && isEmpty(aggregate.getPrincipals())) {
+        if (aggregate !is null && isEmpty(aggregate.getPrincipals())) {
             return aggregate;
         }
-        return info != null ? info : aggregate;
+        return info !is null ? info : aggregate;
     }
 }

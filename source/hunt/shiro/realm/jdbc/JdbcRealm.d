@@ -244,7 +244,7 @@ class JdbcRealm : AuthorizingRealm {
 
             info = new SimpleAuthenticationInfo(username, password.toCharArray(), getName());
             
-            if (salt != null) {
+            if (salt !is null) {
                 info.setCredentialsSalt(ByteSource.Util.bytes(salt));
             }
 
@@ -374,7 +374,7 @@ class JdbcRealm : AuthorizingRealm {
                 string roleName = rs.getString(1);
 
                 // Add the role to the list of names if it isn't null
-                if (roleName != null) {
+                if (roleName !is null) {
                     roleNames.add(roleName);
                 } else {
                     version(HUNT_DEBUG) {

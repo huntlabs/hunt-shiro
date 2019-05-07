@@ -57,7 +57,7 @@ interface HashService {
      * <h3>Salt Notice</h3>
      *
      * If a salt accompanies the return value
-     * (i.e. <code>returnedHash.{@link hunt.shiro.crypto.hash.Hash#getSalt() getSalt()} != null</code>), this
+     * (i.e. <code>returnedHash.{@link hunt.shiro.crypto.hash.Hash#getSalt() getSalt()} !is null</code>), this
      * same exact salt <b><em>MUST</em></b> be presented back to the {@code HashService} if hash
      * comparison/verification will be performed at a later time (for example, for password hash or file checksum
      * comparison).

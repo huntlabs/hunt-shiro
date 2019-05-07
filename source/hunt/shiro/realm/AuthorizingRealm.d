@@ -19,17 +19,17 @@
 module hunt.shiro.realm.AuthorizingRealm;
 
 import hunt.shiro.authc.credential.CredentialsMatcher;
-import hunt.shiro.authz.*;
-import hunt.shiro.authz.permission.*;
-import hunt.shiro.cache.Cache;
-import hunt.shiro.cache.CacheManager;
+import hunt.shiro.authz;
+import hunt.shiro.authz.permission;
+// import hunt.shiro.cache.Cache;
+// import hunt.shiro.cache.CacheManager;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.CollectionUtils;
 import hunt.shiro.util.Initializable;
 import hunt.logger;
 
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
+// import java.util.*;
+// import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
@@ -50,10 +50,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * @see hunt.shiro.authz.SimpleAuthorizationInfo
  */
-abstract class AuthorizingRealm : AuthenticatingRealm
-        implements Authorizer, Initializable, PermissionResolverAware, RolePermissionResolverAware {
-
-    //TODO - complete JavaDoc
+abstract class AuthorizingRealm : AuthenticatingRealm,
+        Authorizer, Initializable, PermissionResolverAware, RolePermissionResolverAware {
 
     /*-------------------------------------------
     |             C O N S T A N T S             |
@@ -99,8 +97,8 @@ abstract class AuthorizingRealm : AuthenticatingRealm
 
      AuthorizingRealm(CacheManager cacheManager, CredentialsMatcher matcher) {
         super();
-        if (cacheManager != null) setCacheManager(cacheManager);
-        if (matcher != null) setCredentialsMatcher(matcher);
+        if (cacheManager !is null) setCacheManager(cacheManager);
+        if (matcher !is null) setCredentialsMatcher(matcher);
 
         this.authorizationCachingEnabled = true;
         this.permissionResolver = new WildcardPermissionResolver();
@@ -119,10 +117,10 @@ abstract class AuthorizingRealm : AuthenticatingRealm
      void setName(string name) {
         super.setName(name);
         string authzCacheName = this.authorizationCacheName;
-        if (authzCacheName != null && authzCacheName.typeid(startsWith).name)) {
+        if (authzCacheName !is null && authzCacheName.startsWith(typeid(this).name)) {
             //get rid of the default class-name based cache name.  Create a more meaningful one
             //based on the application-unique Realm name:
-            this.authorizationCacheName = name + DEFAULT_AUTHORIZATION_CACHE_SUFFIX;
+            this.authorizationCacheName = name ~ DEFAULT_AUTHORIZATION_CACHE_SUFFIX;
         }
     }
 
@@ -234,7 +232,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm
 
             CacheManager cacheManager = getCacheManager();
 
-            if (cacheManager != null) {
+            if (cacheManager !is null) {
                 string cacheName = getAuthorizationCacheName();
                 version(HUNT_DEBUG) {
                     tracef("CacheManager [" ~ cacheManager ~ "] has been configured.  Building " ~
@@ -318,7 +316,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm
         }
 
         Cache!(Object, AuthorizationInfo) cache = getAvailableAuthorizationCache();
-        if (cache != null) {
+        if (cache !is null) {
             version(HUNT_DEBUG) {
                 tracef("Attempting to retrieve the AuthorizationInfo from cache.");
             }
@@ -338,7 +336,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm
             // Call template method if the info was not found in a cache
             info = doGetAuthorizationInfo(principals);
             // If the info is not null and the cache has been created, then cache the authorization info.
-            if (info != null && cache != null) {
+            if (info !is null && cache !is null) {
                 version(HUNT_DEBUG) {
                     tracef("Caching authorization info for principals: [" ~ principals ~ "].");
                 }
@@ -379,7 +377,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm
 
         Cache!(Object, AuthorizationInfo) cache = getAvailableAuthorizationCache();
         //cache instance will be non-null if caching is enabled:
-        if (cache != null) {
+        if (cache !is null) {
             Object key = getAuthorizationCacheKey(principals);
             cache.remove(key);
         }
@@ -400,7 +398,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm
     protected Collection!(Permission) getPermissions(AuthorizationInfo info) {
         Set!(Permission) permissions = new HashSet!(Permission)();
 
-        if (info != null) {
+        if (info !is null) {
             Collection!(Permission) perms = info.getObjectPermissions();
             if (!CollectionUtils.isEmpty(perms)) {
                 permissions.addAll(perms);
@@ -426,7 +424,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm
     private Collection!(Permission) resolvePermissions(Collection!(string) stringPerms) {
         Collection!(Permission) perms = Collections.emptySet();
         PermissionResolver resolver = getPermissionResolver();
-        if (resolver != null && !CollectionUtils.isEmpty(stringPerms)) {
+        if (resolver !is null && !CollectionUtils.isEmpty(stringPerms)) {
             perms = new LinkedHashSet!(Permission)(stringPerms.size());
             foreach(string strPermission ; stringPerms) {
                 Permission permission = resolver.resolvePermission(strPermission);
@@ -439,7 +437,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm
     private Collection!(Permission) resolveRolePermissions(Collection!(string) roleNames) {
         Collection!(Permission) perms = Collections.emptySet();
         RolePermissionResolver resolver = getRolePermissionResolver();
-        if (resolver != null && !CollectionUtils.isEmpty(roleNames)) {
+        if (resolver !is null && !CollectionUtils.isEmpty(roleNames)) {
             perms = new LinkedHashSet!(Permission)(roleNames.size());
             foreach(string roleName ; roleNames) {
                 Collection!(Permission) resolved = resolver.resolvePermissionsInRole(roleName);
@@ -464,7 +462,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm
     //visibility changed from private to protected per SHIRO-332
     protected bool isPermitted(Permission permission, AuthorizationInfo info) {
         Collection!(Permission) perms = getPermissions(info);
-        if (perms != null && !perms.isEmpty()) {
+        if (perms !is null && !perms.isEmpty()) {
             foreach(Permission perm ; perms) {
                 if (perm.implies(permission)) {
                     return true;
@@ -489,7 +487,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm
 
     protected[] bool isPermitted(List!(Permission) permissions, AuthorizationInfo info) {
         bool[] result;
-        if (permissions != null && !permissions.isEmpty()) {
+        if (permissions !is null && !permissions.isEmpty()) {
             int size = permissions.size();
             result = new bool[size];
             int i = 0;
@@ -503,7 +501,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm
     }
 
      bool isPermittedAll(PrincipalCollection subjectIdentifier, string[] permissions...) {
-        if (permissions != null && permissions.length > 0) {
+        if (permissions !is null && permissions.length > 0) {
             Collection!(Permission) perms = new ArrayList!(Permission)(permissions.length);
             foreach(string permString ; permissions) {
                 perms.add(getPermissionResolver().resolvePermission(permString));
@@ -515,11 +513,11 @@ abstract class AuthorizingRealm : AuthenticatingRealm
 
      bool isPermittedAll(PrincipalCollection principal, Collection!(Permission) permissions) {
         AuthorizationInfo info = getAuthorizationInfo(principal);
-        return info != null && isPermittedAll(permissions, info);
+        return info !is null && isPermittedAll(permissions, info);
     }
 
     protected bool isPermittedAll(Collection!(Permission) permissions, AuthorizationInfo info) {
-        if (permissions != null && !permissions.isEmpty()) {
+        if (permissions !is null && !permissions.isEmpty()) {
             foreach(Permission p ; permissions) {
                 if (!isPermitted(p, info)) {
                     return false;
@@ -547,7 +545,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm
     }
 
      void checkPermissions(PrincipalCollection subjectIdentifier, string[] permissions...){
-        if (permissions != null) {
+        if (permissions !is null) {
             foreach(string permString ; permissions) {
                 checkPermission(subjectIdentifier, permString);
             }
@@ -560,7 +558,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm
     }
 
     protected void checkPermissions(Collection!(Permission) permissions, AuthorizationInfo info) {
-        if (permissions != null && !permissions.isEmpty()) {
+        if (permissions !is null && !permissions.isEmpty()) {
             foreach(Permission p ; permissions) {
                 checkPermission(p, info);
             }
@@ -573,13 +571,13 @@ abstract class AuthorizingRealm : AuthenticatingRealm
     }
 
     protected bool hasRole(string roleIdentifier, AuthorizationInfo info) {
-        return info != null && info.getRoles() != null && info.getRoles().contains(roleIdentifier);
+        return info !is null && info.getRoles() !is null && info.getRoles().contains(roleIdentifier);
     }
 
      bool[] hasRoles(PrincipalCollection principal, List!(string) roleIdentifiers) {
         AuthorizationInfo info = getAuthorizationInfo(principal);
-        bool[] result = new bool[roleIdentifiers != null ? roleIdentifiers.size() : 0];
-        if (info != null) {
+        bool[] result = new bool[roleIdentifiers !is null ? roleIdentifiers.size() : 0];
+        if (info !is null) {
             result = hasRoles(roleIdentifiers, info);
         }
         return result;
@@ -587,7 +585,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm
 
     protected[] bool hasRoles(List!(string) roleIdentifiers, AuthorizationInfo info) {
         bool[] result;
-        if (roleIdentifiers != null && !roleIdentifiers.isEmpty()) {
+        if (roleIdentifiers !is null && !roleIdentifiers.isEmpty()) {
             int size = roleIdentifiers.size();
             result = new bool[size];
             int i = 0;
@@ -602,11 +600,11 @@ abstract class AuthorizingRealm : AuthenticatingRealm
 
      bool hasAllRoles(PrincipalCollection principal, Collection!(string) roleIdentifiers) {
         AuthorizationInfo info = getAuthorizationInfo(principal);
-        return info != null && hasAllRoles(roleIdentifiers, info);
+        return info !is null && hasAllRoles(roleIdentifiers, info);
     }
 
     private bool hasAllRoles(Collection!(string) roleIdentifiers, AuthorizationInfo info) {
-        if (roleIdentifiers != null && !roleIdentifiers.isEmpty()) {
+        if (roleIdentifiers !is null && !roleIdentifiers.isEmpty()) {
             foreach(string roleName ; roleIdentifiers) {
                 if (!hasRole(roleName, info)) {
                     return false;
@@ -638,7 +636,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm
     }
 
     protected void checkRoles(Collection!(string) roles, AuthorizationInfo info) {
-        if (roles != null && !roles.isEmpty()) {
+        if (roles !is null && !roles.isEmpty()) {
             foreach(string roleName ; roles) {
                 checkRole(roleName, info);
             }

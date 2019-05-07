@@ -257,7 +257,7 @@ class SimpleAuthenticationInfo : MergableAuthenticationInfo, SaltedAuthenticatio
         SimpleAuthenticationInfo that = oCast;
 
         //noinspection RedundantIfStatement
-        if (principals != null ? !principals== that.principals : that.principals != null) return false;
+        if (principals !is null ? !principals== that.principals : that.principals !is null) return false;
 
         return true;
     }
@@ -268,7 +268,7 @@ class SimpleAuthenticationInfo : MergableAuthenticationInfo, SaltedAuthenticatio
      * @return the hashcode of the internal {@link #getPrincipals() principals} instance.
      */
      size_t toHash() @trusted nothrow {
-        return (principals != null ? principals.hashCode() : 0);
+        return (principals !is null ? principals.hashCode() : 0);
     }
 
     /**

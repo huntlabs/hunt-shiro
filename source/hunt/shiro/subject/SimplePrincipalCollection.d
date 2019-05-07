@@ -121,7 +121,7 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
     }
 
      void addAll(PrincipalCollection principals) {
-        if (principals.getRealmNames() != null) {
+        if (principals.getRealmNames() !is null) {
             foreach(string realmName ; principals.getRealmNames()) {
                 foreach(Object principal ; principals.fromRealm(realmName)) {
                     add(principal, realmName);
@@ -212,7 +212,7 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
 
      void clear() {
         this.cachedToString = null;
-        if (realmPrincipals != null) {
+        if (realmPrincipals !is null) {
             realmPrincipals.clear();
             realmPrincipals = null;
         }
@@ -228,13 +228,13 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
         }
         if (o instanceof SimplePrincipalCollection) {
             SimplePrincipalCollection other = (SimplePrincipalCollection) o;
-            return this.realmPrincipals != null ? this.realmPrincipals== other.realmPrincipals : other.realmPrincipals  is null;
+            return this.realmPrincipals !is null ? this.realmPrincipals== other.realmPrincipals : other.realmPrincipals  is null;
         }
         return false;
     }
 
      size_t toHash() @trusted nothrow {
-        if (this.realmPrincipals != null && !realmPrincipals.isEmpty()) {
+        if (this.realmPrincipals !is null && !realmPrincipals.isEmpty()) {
             return realmPrincipals.hashCode();
         }
         return super.hashCode();

@@ -40,7 +40,7 @@ class PermissionUtils {
 
      static Set!(string) toPermissionStrings(string permissionsString) {
         string[] tokens = StringUtils.split(permissionsString);
-        if (tokens != null && tokens.length > 0) {
+        if (tokens !is null && tokens.length > 0) {
             return new LinkedHashSet!(string)(ArrayHelper.asList(tokens));
         }
         return null;

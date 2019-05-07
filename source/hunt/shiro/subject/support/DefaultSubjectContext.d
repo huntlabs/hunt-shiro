@@ -146,14 +146,14 @@ class DefaultSubjectContext : MapContext implements SubjectContext {
         if (isEmpty(principals)) {
             //check to see if they were just authenticated:
             AuthenticationInfo info = getAuthenticationInfo();
-            if (info != null) {
+            if (info !is null) {
                 principals = info.getPrincipals();
             }
         }
 
         if (isEmpty(principals)) {
             Subject subject = getSubject();
-            if (subject != null) {
+            if (subject !is null) {
                 principals = subject.getPrincipals();
             }
         }
@@ -161,7 +161,7 @@ class DefaultSubjectContext : MapContext implements SubjectContext {
         if (isEmpty(principals)) {
             //try the session:
             Session session = resolveSession();
-            if (session != null) {
+            if (session !is null) {
                 principals = (PrincipalCollection) session.getAttribute(PRINCIPALS_SESSION_KEY);
             }
         }
@@ -183,7 +183,7 @@ class DefaultSubjectContext : MapContext implements SubjectContext {
         if (session  is null) {
             //try the Subject if it exists:
             Subject existingSubject = getSubject();
-            if (existingSubject != null) {
+            if (existingSubject !is null) {
                 session = existingSubject.getSession(false);
             }
         }
@@ -201,7 +201,7 @@ class DefaultSubjectContext : MapContext implements SubjectContext {
 
      bool isAuthenticated() {
         bool authc = getTypedValue(AUTHENTICATED, bool.class);
-        return authc != null && authc;
+        return authc !is null && authc;
     }
 
      void setAuthenticated(bool authc) {
@@ -214,14 +214,14 @@ class DefaultSubjectContext : MapContext implements SubjectContext {
             //see if there is an AuthenticationInfo object.  If so, the very presence of one indicates a successful
             //authentication attempt:
             AuthenticationInfo info = getAuthenticationInfo();
-            authc = info != null;
+            authc = info !is null;
         }
         if (!authc) {
             //fall back to a session check:
             Session session = resolveSession();
-            if (session != null) {
+            if (session !is null) {
                 bool sessionAuthc = (bool) session.getAttribute(AUTHENTICATED_SESSION_KEY);
-                authc = sessionAuthc != null && sessionAuthc;
+                authc = sessionAuthc !is null && sessionAuthc;
             }
         }
 
@@ -267,7 +267,7 @@ class DefaultSubjectContext : MapContext implements SubjectContext {
 
         if (host  is null) {
             Session session = resolveSession();
-            if (session != null) {
+            if (session !is null) {
                 host = session.getHost();
             }
         }

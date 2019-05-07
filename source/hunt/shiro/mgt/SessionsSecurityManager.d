@@ -57,7 +57,7 @@ abstract class SessionsSecurityManager : AuthorizingSecurityManager {
      * Default no-arg constructor, internally creates a suitable default {@link SessionManager SessionManager} delegate
      * instance.
      */
-     SessionsSecurityManager() {
+     this() {
         super();
         this.sessionManager = new DefaultSessionManager();
         applyCacheManagerToSessionManager();
@@ -125,8 +125,9 @@ abstract class SessionsSecurityManager : AuthorizingSecurityManager {
      * instance implements the {@link CacheManagerAware CacheManagerAware} interface.
      */
     protected void applyCacheManagerToSessionManager() {
-        if (this.sessionManager instanceof CacheManagerAware) {
-            ((CacheManagerAware) this.sessionManager).setCacheManager(getCacheManager());
+        CacheManagerAware cma = cast(CacheManagerAware) this.sessionManager;
+        if (cma !is null) {
+            cma.setCacheManager(getCacheManager());
         }
     }
 
@@ -140,8 +141,9 @@ abstract class SessionsSecurityManager : AuthorizingSecurityManager {
      */
     protected void applyEventBusToSessionManager() {
         EventBus eventBus = getEventBus();
-        if (eventBus != null && this.sessionManager instanceof EventBusAware) {
-            ((EventBusAware)this.sessionManager).setEventBus(eventBus);
+        EventBusAware eba = cast(EventBusAware)this.sessionManager;
+        if (eventBus !is null && eba !is null) {
+            eba.setEventBus(eventBus);
         }
     }
 

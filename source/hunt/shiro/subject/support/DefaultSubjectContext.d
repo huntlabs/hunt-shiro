@@ -44,35 +44,35 @@ import java.io.Serializable;
  */
 class DefaultSubjectContext : MapContext implements SubjectContext {
 
-    private enum string SECURITY_MANAGER = DefaultSubjectContext.class.getName() ~ ".SECURITY_MANAGER";
+    private enum string SECURITY_MANAGER = typeid(DefaultSubjectContext).name ~ ".SECURITY_MANAGER";
 
-    private enum string SESSION_ID = DefaultSubjectContext.class.getName() ~ ".SESSION_ID";
+    private enum string SESSION_ID = typeid(DefaultSubjectContext).name ~ ".SESSION_ID";
 
-    private enum string AUTHENTICATION_TOKEN = DefaultSubjectContext.class.getName() ~ ".AUTHENTICATION_TOKEN";
+    private enum string AUTHENTICATION_TOKEN = typeid(DefaultSubjectContext).name ~ ".AUTHENTICATION_TOKEN";
 
-    private enum string AUTHENTICATION_INFO = DefaultSubjectContext.class.getName() ~ ".AUTHENTICATION_INFO";
+    private enum string AUTHENTICATION_INFO = typeid(DefaultSubjectContext).name ~ ".AUTHENTICATION_INFO";
 
-    private enum string SUBJECT = DefaultSubjectContext.class.getName() ~ ".SUBJECT";
+    private enum string SUBJECT = typeid(DefaultSubjectContext).name ~ ".SUBJECT";
 
-    private enum string PRINCIPALS = DefaultSubjectContext.class.getName() ~ ".PRINCIPALS";
+    private enum string PRINCIPALS = typeid(DefaultSubjectContext).name ~ ".PRINCIPALS";
 
-    private enum string SESSION = DefaultSubjectContext.class.getName() ~ ".SESSION";
+    private enum string SESSION = typeid(DefaultSubjectContext).name ~ ".SESSION";
 
-    private enum string AUTHENTICATED = DefaultSubjectContext.class.getName() ~ ".AUTHENTICATED";
+    private enum string AUTHENTICATED = typeid(DefaultSubjectContext).name ~ ".AUTHENTICATED";
 
-    private enum string HOST = DefaultSubjectContext.class.getName() ~ ".HOST";
+    private enum string HOST = typeid(DefaultSubjectContext).name ~ ".HOST";
 
-     enum string SESSION_CREATION_ENABLED = DefaultSubjectContext.class.getName() ~ ".SESSION_CREATION_ENABLED";
+     enum string SESSION_CREATION_ENABLED = typeid(DefaultSubjectContext).name ~ ".SESSION_CREATION_ENABLED";
 
     /**
      * The session key that is used to store subject principals.
      */
-     enum string PRINCIPALS_SESSION_KEY = DefaultSubjectContext.class.getName() ~ "_PRINCIPALS_SESSION_KEY";
+     enum string PRINCIPALS_SESSION_KEY = typeid(DefaultSubjectContext).name ~ "_PRINCIPALS_SESSION_KEY";
 
     /**
      * The session key that is used to store whether or not the user is authenticated.
      */
-     enum string AUTHENTICATED_SESSION_KEY = DefaultSubjectContext.class.getName() ~ "_AUTHENTICATED_SESSION_KEY";
+     enum string AUTHENTICATED_SESSION_KEY = typeid(DefaultSubjectContext).name ~ "_AUTHENTICATED_SESSION_KEY";
 
 
 

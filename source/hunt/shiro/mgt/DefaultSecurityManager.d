@@ -206,7 +206,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
                 rmm.onSuccessfulLogin(subject, token, info);
             } catch (Exception e) {
                 version(HUNT_DEBUG) {
-                    string msg = "Delegate RememberMeManager instance of type [" ~ rmm.getClass().getName() +
+                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(rmm).name +
                             "] threw an exception during onSuccessfulLogin.  RememberMe services will not be " ~
                             "performed for account [" ~ info.toString() ~ "].";
                     warning(msg, e);
@@ -214,8 +214,8 @@ class DefaultSecurityManager : SessionsSecurityManager {
             }
         } else {
             version(HUNT_DEBUG) {
-                tracef("This " ~ getClass().getName() ~ " instance does not have a " ~
-                        "[" ~ RememberMeManager.class.getName() ~ "] instance configured.  RememberMe services " ~
+                tracef("This " ~ typeid(this).name ~ " instance does not have a " ~
+                        "[" ~ typeid(RememberMeManager).name ~ "] instance configured.  RememberMe services " ~
                         "will not be performed for account [" ~ info ~ "].");
             }
         }
@@ -228,7 +228,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
                 rmm.onFailedLogin(subject, token, ex);
             } catch (Exception e) {
                 version(HUNT_DEBUG) {
-                    string msg = "Delegate RememberMeManager instance of type [" ~ rmm.getClass().getName() +
+                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(rmm).name +
                             "] threw an exception during onFailedLogin for AuthenticationToken [" ~
                             token ~ "].";
                     warning(msg, e);
@@ -244,7 +244,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
                 rmm.onLogout(subject);
             } catch (Exception e) {
                 version(HUNT_DEBUG) {
-                    string msg = "Delegate RememberMeManager instance of type [" ~ rmm.getClass().getName() +
+                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(rmm).name +
                             "] threw an exception during onLogout for subject with principals [" ~
                             (subject != null ? subject.getPrincipals() : null) ~ "]";
                     warning(msg, e);
@@ -602,7 +602,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
                 return rmm.getRememberedPrincipals(subjectContext);
             } catch (Exception e) {
                 version(HUNT_DEBUG) {
-                    string msg = "Delegate RememberMeManager instance of type [" ~ rmm.getClass().getName() +
+                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(rmm).name +
                             "] threw an exception during getRememberedPrincipals().";
                     warning(msg, e);
                 }

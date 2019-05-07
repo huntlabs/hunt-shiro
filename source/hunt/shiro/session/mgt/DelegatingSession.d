@@ -63,7 +63,7 @@ class DelegatingSession : Session, Serializable {
             throw new IllegalArgumentException("sessionKey argument cannot be null.");
         }
         if (key.getSessionId()  is null) {
-            string msg = "The " ~ DelegatingSession.class.getName() ~ " implementation requires that the " ~
+            string msg = "The " ~ typeid(DelegatingSession).name ~ " implementation requires that the " ~
                     "SessionKey argument returns a non-null sessionId to support the " ~
                     "Session.getId() invocations.";
             throw new IllegalArgumentException(msg);

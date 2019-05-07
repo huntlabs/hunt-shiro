@@ -106,7 +106,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm
         this.permissionResolver = new WildcardPermissionResolver();
 
         int instanceNumber = INSTANCE_COUNT.getAndIncrement();
-        this.authorizationCacheName = getClass().getName() + DEFAULT_AUTHORIZATION_CACHE_SUFFIX;
+        this.authorizationCacheName = typeid(this).name + DEFAULT_AUTHORIZATION_CACHE_SUFFIX;
         if (instanceNumber > 0) {
             this.authorizationCacheName = this.authorizationCacheName ~ "." ~ instanceNumber;
         }
@@ -119,7 +119,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm
      void setName(string name) {
         super.setName(name);
         string authzCacheName = this.authorizationCacheName;
-        if (authzCacheName != null && authzCacheName.startsWith(getClass().getName())) {
+        if (authzCacheName != null && authzCacheName.typeid(startsWith).name)) {
             //get rid of the default class-name based cache name.  Create a more meaningful one
             //based on the application-unique Realm name:
             this.authorizationCacheName = name + DEFAULT_AUTHORIZATION_CACHE_SUFFIX;

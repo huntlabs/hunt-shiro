@@ -100,8 +100,8 @@ class DefaultPasswordService : HashingPasswordService {
             HashFormat format = this.hashFormat;
             ParsableHashFormat formatCast = cast(ParsableHashFormat)format;
             if (!(formatCast !is null) && log.isWarnEnabled()) {
-                string msg = "The configured hashFormat instance [" ~ format.getClass().getName() ~ "] is not a " ~
-                        ParsableHashFormat.getClass().getName() ~ " implementation.  This is " ~
+                string msg = "The configured hashFormat instance [" ~ typeid(format).name ~ "] is not a " ~
+                        typeid(ParsableHashFormat).name ~ " implementation.  This is " ~
                         "required if you wish to support backwards compatibility for saved password checking (almost " ~
                         "always desirable).  Without a " ~ ParsableHashFormat.getClass().getSimpleName() ~ " instance, " ~
                         "any hashService configuration changes will break previously hashed/saved passwords.";

@@ -52,8 +52,8 @@ class AllSuccessfulStrategy : AbstractAuthenticationStrategy {
      */
      AuthenticationInfo beforeAttempt(Realm realm, AuthenticationToken token, AuthenticationInfo info){
         if (!realm.supports(token)) {
-            string msg = "Realm [" ~ realm ~ "] of type [" ~ realm.getClass().getName() ~ "] does not support " ~
-                    " the submitted AuthenticationToken [" ~ token ~ "].  The [" ~ getClass().getName() +
+            string msg = "Realm [" ~ realm ~ "] of type [" ~ typeid(realm).name ~ "] does not support " ~
+                    " the submitted AuthenticationToken [" ~ token ~ "].  The [" ~ typeid(this).name +
                     "] implementation requires all configured realm(s) to support and be able to process the submitted " ~
                     "AuthenticationToken.";
             throw new UnsupportedTokenException(msg);
@@ -80,7 +80,7 @@ class AllSuccessfulStrategy : AbstractAuthenticationStrategy {
                 throw (tCast);
             } else {
                 string msg = "Unable to acquire account data from realm [" ~ realm ~ "].  The [" ~
-                        getClass().getName() ~ " implementation requires all configured realm(s) to operate successfully " ~
+                        typeid(this).name ~ " implementation requires all configured realm(s) to operate successfully " ~
                         "for a successful authentication.";
                 throw new AuthenticationException(msg, t);
             }

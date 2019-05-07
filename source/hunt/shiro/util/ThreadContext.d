@@ -48,8 +48,8 @@ abstract class ThreadContext {
      */
 
 
-     enum string SECURITY_MANAGER_KEY = ThreadContext.class.getName() ~ "_SECURITY_MANAGER_KEY";
-     enum string SUBJECT_KEY = ThreadContext.class.getName() ~ "_SUBJECT_KEY";
+     enum string SECURITY_MANAGER_KEY = typeid(ThreadContext).name ~ "_SECURITY_MANAGER_KEY";
+     enum string SUBJECT_KEY = typeid(ThreadContext).name ~ "_SUBJECT_KEY";
 
     private static final ThreadLocal!(Map!(Object, Object)) resources = new InheritableThreadLocalMap!(Map!(Object, Object))();
 
@@ -124,7 +124,7 @@ abstract class ThreadContext {
 
         Object value = getValue(key);
         if ((value != null) && log.isTraceEnabled()) {
-            string msg = "Retrieved value of type [" ~ value.getClass().getName() ~ "] for key [" ~
+            string msg = "Retrieved value of type [" ~ typeid(value).name ~ "] for key [" ~
                     key ~ "] " ~ "bound to thread [" ~ Thread.getThis()().getName() ~ "]";
             tracef(msg);
         }
@@ -160,7 +160,7 @@ abstract class ThreadContext {
         resources.get().put(key, value);
 
         version(HUNT_DEBUG) {
-            string msg = "Bound value of type [" ~ value.getClass().getName() ~ "] for key [" ~
+            string msg = "Bound value of type [" ~ typeid(value).name ~ "] for key [" ~
                     key ~ "] to thread " ~ "[" ~ Thread.getThis()().getName() ~ "]";
             tracef(msg);
         }
@@ -179,7 +179,7 @@ abstract class ThreadContext {
         Object value = perThreadResources != null ? perThreadResources.remove(key) : null;
 
         if ((value != null) && log.isTraceEnabled()) {
-            string msg = "Removed value of type [" ~ value.getClass().getName() ~ "] for key [" ~
+            string msg = "Removed value of type [" ~ typeid(value).name ~ "] for key [" ~
                     key ~ "]" ~ "from thread [" ~ Thread.getThis()().getName() ~ "]";
             tracef(msg);
         }

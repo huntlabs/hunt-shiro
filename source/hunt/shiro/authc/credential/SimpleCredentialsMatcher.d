@@ -94,8 +94,8 @@ class SimpleCredentialsMatcher : CodecSupport, CredentialsMatcher {
     protected bool equals(Object tokenCredentials, Object accountCredentials) {
         version(HUNT_DEBUG) {
             tracef("Performing credentials equality check for tokenCredentials of type [" ~
-                    tokenCredentials.getClass().getName() ~ " and accountCredentials of type [" ~
-                    accountCredentials.getClass().getName() ~ "]");
+                    typeid(tokenCredentials).name ~ " and accountCredentials of type [" ~
+                    typeid(accountCredentials).name ~ "]");
         }
         if (isByteSource(tokenCredentials) && isByteSource(accountCredentials)) {
             version(HUNT_DEBUG) {

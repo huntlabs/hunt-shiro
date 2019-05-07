@@ -163,7 +163,7 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
         this.authenticationCachingEnabled = false;
 
         int instanceNumber = INSTANCE_COUNT.getAndIncrement();
-        this.authenticationCacheName = getClass().getName() + DEFAULT_AUTHORIZATION_CACHE_SUFFIX;
+        this.authenticationCacheName = typeid(this).name + DEFAULT_AUTHORIZATION_CACHE_SUFFIX;
         if (instanceNumber > 0) {
             this.authenticationCacheName = this.authenticationCacheName ~ "." ~ instanceNumber;
         }
@@ -336,7 +336,7 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      void setName(string name) {
         super.setName(name);
         string authcCacheName = this.authenticationCacheName;
-        if (authcCacheName != null && authcCacheName.startsWith(getClass().getName())) {
+        if (authcCacheName != null && authcCacheName.typeid(startsWith).name)) {
             //get rid of the default heuristically-created cache name.  Create a more meaningful one
             //based on the application-unique Realm name:
             this.authenticationCacheName = name + DEFAULT_AUTHORIZATION_CACHE_SUFFIX;
@@ -591,7 +591,7 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
         } else {
             throw new AuthenticationException("A CredentialsMatcher must be configured in order to verify " ~
                     "credentials during authentication.  If you do not wish for credentials to be examined, you " ~
-                    "can configure an " ~ AllowAllCredentialsMatcher.class.getName() ~ " instance.");
+                    "can configure an " ~ typeid(AllowAllCredentialsMatcher).name ~ " instance.");
         }
     }
 

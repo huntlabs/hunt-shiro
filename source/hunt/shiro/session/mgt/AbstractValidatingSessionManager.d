@@ -183,10 +183,10 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
         if (session instanceof ValidatingSession) {
             ((ValidatingSession) session).validate();
         } else {
-            string msg = "The " ~ getClass().getName() ~ " implementation only supports validating " ~
-                    "Session implementations of the " ~ ValidatingSession.class.getName() ~ " interface.  " ~
+            string msg = "The " ~ typeid(this).name ~ " implementation only supports validating " ~
+                    "Session implementations of the " ~ typeid(ValidatingSession).name ~ " interface.  " ~
                     "Please either implement this interface in your session implementation or override the " ~
-                    AbstractValidatingSessionManager.class.getName() ~ ".doValidate(Session) method to perform validation.";
+                    typeid(AbstractValidatingSessionManager).name ~ ".doValidate(Session) method to perform validation.";
             throw new IllegalStateException(msg);
         }
     }
@@ -213,7 +213,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
         scheduler = new ExecutorServiceSessionValidationScheduler(this);
         scheduler.setInterval(getSessionValidationInterval());
         version(HUNT_DEBUG) {
-            tracef("Created default SessionValidationScheduler instance of type [" ~ scheduler.getClass().getName() ~ "].");
+            tracef("Created default SessionValidationScheduler instance of type [" ~ typeid(scheduler).name ~ "].");
         }
         return scheduler;
     }

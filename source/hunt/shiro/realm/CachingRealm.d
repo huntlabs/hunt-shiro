@@ -68,7 +68,7 @@ abstract class CachingRealm : Realm, Nameable, CacheManagerAware, LogoutAware {
      */
      CachingRealm() {
         this.cachingEnabled = true;
-        this.name = getClass().getName() ~ "_" ~ INSTANCE_COUNT.getAndIncrement();
+        this.name = typeid(this).name ~ "_" ~ INSTANCE_COUNT.getAndIncrement();
     }
 
     /**

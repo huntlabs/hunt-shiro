@@ -32,8 +32,8 @@ import java.util.Map;
 class DefaultSessionContext : MapContext implements SessionContext {
 
 
-    private enum string HOST = DefaultSessionContext.class.getName() ~ ".HOST";
-    private enum string SESSION_ID = DefaultSessionContext.class.getName() ~ ".SESSION_ID";
+    private enum string HOST = typeid(DefaultSessionContext).name ~ ".HOST";
+    private enum string SESSION_ID = typeid(DefaultSessionContext).name ~ ".SESSION_ID";
 
      DefaultSessionContext() {
         super();

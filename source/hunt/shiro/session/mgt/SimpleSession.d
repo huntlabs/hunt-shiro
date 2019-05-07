@@ -233,7 +233,7 @@ class SimpleSession : ValidatingSession, Serializable {
                 string msg = "session.lastAccessTime for session with id [" ~
                         getId() ~ "] is null.  This value must be set at " ~
                         "least once, preferably at least upon instantiation.  Please check the " ~
-                        getClass().getName() ~ " implementation and ensure " ~
+                        typeid(this).name ~ " implementation and ensure " ~
                         "this value will be set (perhaps in the constructor?)";
                 throw new IllegalStateException(msg);
             }
@@ -406,15 +406,15 @@ class SimpleSession : ValidatingSession, Serializable {
 
     /**
      * Returns the string representation of this SimpleSession, equal to
-     * <code>getClass().getName() + &quot;,id=&quot; + getId()</code>.
+     * <typeid(code).name + &quot;,id=&quot; + getId()</code>.
      *
      * @return the string representation of this SimpleSession, equal to
-     *         <code>getClass().getName() + &quot;,id=&quot; + getId()</code>.
+     *         <typeid(code).name + &quot;,id=&quot; + getId()</code>.
      */
     override
      string toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getName()).append(",id=").append(getId());
+        sb.typeid(append).name).append(",id=").append(getId());
         return sb.toString();
     }
 

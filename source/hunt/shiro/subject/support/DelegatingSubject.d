@@ -71,7 +71,7 @@ class DelegatingSubject : Subject {
 
 
     private enum string RUN_AS_PRINCIPALS_SESSION_KEY =
-            DelegatingSubject.class.getName() ~ ".RUN_AS_PRINCIPALS_SESSION_KEY";
+            typeid(DelegatingSubject).name ~ ".RUN_AS_PRINCIPALS_SESSION_KEY";
 
     protected PrincipalCollection principals;
     protected bool authenticated;
@@ -192,7 +192,7 @@ class DelegatingSubject : Subject {
             string msg = "This subject is anonymous - it does not have any identifying principals and " ~
                     "authorization operations require an identity to check against.  A Subject instance will " ~
                     "acquire these identifying principals automatically after a successful login is performed " ~
-                    "be executing " ~ Subject.class.getName() ~ ".login(AuthenticationToken) or when 'Remember Me' " ~
+                    "be executing " ~ typeid(Subject).name ~ ".login(AuthenticationToken) or when 'Remember Me' " ~
                     "functionality is enabled by the SecurityManager.  This exception can also occur when a " ~
                     "previously logged-in Subject has logged out which " ~
                     "makes it anonymous again.  Because an identity is currently not known due to any of these " ~
@@ -326,7 +326,7 @@ class DelegatingSubject : Subject {
                 string msg = "Session creation has been disabled for the current subject.  This exception indicates " ~
                         "that there is either a programming error (using a session when it should never be " ~
                         "used) or that Shiro's configuration needs to be adjusted to allow Sessions to be created " ~
-                        "for the current Subject.  See the " ~ DisabledSessionException.class.getName() ~ " JavaDoc " ~
+                        "for the current Subject.  See the " ~ typeid(DisabledSessionException).name ~ " JavaDoc " ~
                         "for more.";
                 throw new DisabledSessionException(msg);
             }
@@ -430,7 +430,7 @@ class DelegatingSubject : Subject {
         if (!hasPrincipals()) {
             string msg = "This subject does not yet have an identity.  Assuming the identity of another " ~
                     "Subject is only allowed for Subjects with an existing identity.  Try logging this subject in " ~
-                    "first, or using the " ~ Subject.Builder.class.getName() ~ " to build ad hoc Subject instances " ~
+                    "first, or using the " ~ Subject.typeid(Builder).name ~ " to build ad hoc Subject instances " ~
                     "with identities as necessary.";
             throw new IllegalStateException(msg);
         }

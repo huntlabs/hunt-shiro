@@ -140,7 +140,7 @@ module hunt.shiro.config.IniFactorySupport;
 //             tracef("No populated Ini available.  Creating a default instance.");
 //             instance = createDefaultInstance();
 //             if (instance  is null) {
-//                 string msg = getClass().getName() ~ " implementation did not return a default instance in " ~
+//                 string msg = typeid(this).name ~ " implementation did not return a default instance in " ~
 //                         "the event of a null/empty Ini configuration.  This is required to support the " ~
 //                         "Factory interface.  Please check your implementation.";
 //                 throw new IllegalStateException(msg);
@@ -149,7 +149,7 @@ module hunt.shiro.config.IniFactorySupport;
 //             tracef("Creating instance from Ini [" ~ ini ~ "]");
 //             instance = createInstance(ini);
 //             if (instance  is null) {
-//                 string msg = getClass().getName() ~ " implementation did not return a constructed instance from " ~
+//                 string msg = typeid(this).name ~ " implementation did not return a constructed instance from " ~
 //                         "the createInstance(Ini) method implementation.";
 //                 throw new IllegalStateException(msg);
 //             }

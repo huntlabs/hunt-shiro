@@ -204,13 +204,13 @@ module hunt.shiro.config.IniSecurityManagerFactory;
 //                 Realm realm = (Realm) value;
 //                 //set the name if null:
 //                 string existingName = realm.getName();
-//                 if (existingName  is null || existingName.startsWith(realm.getClass().getName())) {
+//                 if (existingName  is null || existingName.startsWith(typeid(realm).name)) {
 //                     if (realm instanceof Nameable) {
 //                         ((Nameable) realm).setName(name);
 //                         tracef("Applied name '{}' to Nameable realm instance {}", name, realm);
 //                     } else {
 //                         info("Realm does not implement the {} interface.  Configured name will not be applied.",
-//                                 Nameable.class.getName());
+//                                 typeid(Nameable).name);
 //                     }
 //                 }
 //                 realms.add(realm);
@@ -225,7 +225,7 @@ module hunt.shiro.config.IniSecurityManagerFactory;
 //             throw new NullPointerException("securityManager instance cannot be null");
 //         }
 //         if (!(securityManager instanceof RealmSecurityManager)) {
-//             string msg = "securityManager instance is not a " ~ RealmSecurityManager.class.getName() +
+//             string msg = "securityManager instance is not a " ~ typeid(RealmSecurityManager).name +
 //                     " instance.  This is required to access or configure realms on the instance.";
 //             throw new ConfigurationException(msg);
 //         }

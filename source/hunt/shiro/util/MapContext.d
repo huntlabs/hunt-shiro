@@ -61,7 +61,7 @@ class MapContext : Map!(string, Object), Serializable {
             if (!type.isAssignableFrom(o.getClass())) {
                 string msg = "Invalid object found in SubjectContext Map under key [" ~ key ~ "].  Expected type " ~
                         "was [" ~ type.getName() ~ "], but the object under that key is of type " ~
-                        "[" ~ o.getClass().getName() ~ "].";
+                        "[" ~ typeid(o).name ~ "].";
                 throw new IllegalArgumentException(msg);
             }
             found = (E) o;

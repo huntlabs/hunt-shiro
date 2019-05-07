@@ -342,7 +342,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      */
      string toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getName());
+        sb.typeid(append).name);
         sb.append(" - ");
         sb.append(username);
         sb.append(", rememberMe=").append(rememberMe);

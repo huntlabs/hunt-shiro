@@ -28,7 +28,7 @@ import java.io.Serializable;
 /**
  * An abstract {@code SessionDAO} implementation that performs some sanity checks on session creation and reading and
  * allows for pluggable Session ID generation strategies if desired.  The {@code SessionDAO}
- * {@link SessionDAO#update update} and {@link SessionDAO#delete delete} methods are left to
+ * {@link SessionDAO#update update} and {@link SessionDAO#remove remove} methods are left to
  * subclasses.
  * <h3>Session ID Generation</h3>
  * This class also allows for plugging in a {@link SessionIdGenerator} for custom ID generation strategies.  This is

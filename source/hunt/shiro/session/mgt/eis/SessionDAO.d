@@ -29,7 +29,7 @@ import hunt.collection;
  * Data Access Object design pattern specification to enable {@link Session} access to an
  * EIS (Enterprise Information System).  It provides your four typical CRUD methods:
  * {@link #create}, {@link #readSession(java.io.Serializable)}, {@link #update(hunt.shiro.session.Session)},
- * and {@link #delete(hunt.shiro.session.Session)}.
+ * and {@link #remove(hunt.shiro.session.Session)}.
  * <p/>
  * The remaining {@link #getActiveSessions()} method exists as a support mechanism to pre-emptively orphaned sessions,
  * typically by {@link hunt.shiro.session.mgt.ValidatingSessionManager ValidatingSessionManager}s), and should
@@ -92,9 +92,9 @@ interface SessionDAO {
      * existed a session EIS record with the identifier of
      * {@link Session#getId() session.getId()}, then this method does nothing.
      *
-     * @param session the session to delete.
+     * @param session the session to remove.
      */
-    void delete(Session session);
+    void remove(Session session);
 
     /**
      * Returns all sessions in the EIS that are considered active, meaning all sessions that

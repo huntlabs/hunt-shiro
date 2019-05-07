@@ -83,7 +83,7 @@ class MemorySessionDAO : AbstractSessionDAO {
         storeSession(session.getId(), session);
     }
 
-     void delete(Session session) {
+     void remove(Session session) {
         if (session  is null) {
             throw new NullPointerException("session argument cannot be null.");
         }

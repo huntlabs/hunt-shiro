@@ -384,13 +384,13 @@ class DefaultSecurityManager : SessionsSecurityManager {
      * Removes (or 'unbinds') the Subject's state from the application, typically called during {@link #logout}..
      * <p/>
      * This implementation merely delegates to the internal {@link #setSubjectDAO(SubjectDAO) subjectDAO} and calls
-     * {@link SubjectDAO#delete(hunt.shiro.subject.Subject) delete(subject)}.
+     * {@link SubjectDAO#remove(hunt.shiro.subject.Subject) remove(subject)}.
      *
      * @param subject the subject for which state will be removed
-     * @see SubjectDAO#delete(hunt.shiro.subject.Subject)
+     * @see SubjectDAO#remove(hunt.shiro.subject.Subject)
      */
-    protected void delete(Subject subject) {
-        this.subjectDAO.delete(subject);
+    protected void remove(Subject subject) {
+        this.subjectDAO.remove(subject);
     }
 
     /**
@@ -554,7 +554,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
         }
 
         try {
-            delete(subject);
+            remove(subject);
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 string msg = "Unable to cleanly unbind Subject.  Ignoring (logging out).";
@@ -583,16 +583,16 @@ class DefaultSecurityManager : SessionsSecurityManager {
     /**
      * Unbinds or removes the Subject's state from the application, typically called during {@link #logout}.
      * <p/>
-     * This has been deprecated in Shiro 1.2 in favor of the {@link #delete(hunt.shiro.subject.Subject) delete}
+     * This has been deprecated in Shiro 1.2 in favor of the {@link #remove(hunt.shiro.subject.Subject) remove}
      * method.  The implementation has been updated to invoke that method.
      *
      * @param subject the subject to unbind from the application as it will no longer be used.
-     * deprecated("") in Shiro 1.2 in favor of {@link #delete(hunt.shiro.subject.Subject)}
+     * deprecated("") in Shiro 1.2 in favor of {@link #remove(hunt.shiro.subject.Subject)}
      */
     deprecated("")
     //@SuppressWarnings({"UnusedDeclaration"})
     protected void unbind(Subject subject) {
-        delete(subject);
+        remove(subject);
     }
 
     protected PrincipalCollection getRememberedIdentity(SubjectContext subjectContext) {

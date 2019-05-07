@@ -295,17 +295,17 @@ abstract class CachingSessionDAO : AbstractSessionDAO implements CacheManagerAwa
      * Removes the specified session from any cache and then permanently deletes the session from the EIS by
      * delegating to {@link #doDelete}.
      *
-     * @param session the session to remove from caches and permanently delete from the EIS.
+     * @param session the session to remove from caches and permanently remove from the EIS.
      */
-     void delete(Session session) {
+     void remove(Session session) {
         uncache(session);
         doDelete(session);
     }
 
     /**
-     * Subclass implementation hook to permanently delete the given Session from the underlying EIS.
+     * Subclass implementation hook to permanently remove the given Session from the underlying EIS.
      *
-     * @param session the session instance to permanently delete from the EIS.
+     * @param session the session instance to permanently remove from the EIS.
      */
     protected abstract void doDelete(Session session);
 

@@ -278,7 +278,7 @@ class DefaultSubjectDAO : SubjectDAO {
      *
      * @param subject the Subject instance for which any persistent state should be deleted.
      */
-     void delete(Subject subject) {
+     void remove(Subject subject) {
         removeFromSession(subject);
     }
 }

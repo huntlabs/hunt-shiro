@@ -110,7 +110,7 @@ class DefaultSessionManager : AbstractValidatingSessionManager implements CacheM
      * Sets whether or not sessions should be automatically deleted after they are discovered to be invalid.  Default
      * value is {@code true} to ensure no orphans will exist in the underlying data store.
      * <h4>WARNING</h4>
-     * Only set this value to {@code false} if you are manually going to delete sessions yourself by some process
+     * Only set this value to {@code false} if you are manually going to remove sessions yourself by some process
      * (quartz, cron, etc) external to Shiro's control.  See the
      * {@link #isDeleteInvalidSessions() isDeleteInvalidSessions()} JavaDoc for more.
      *
@@ -183,7 +183,7 @@ class DefaultSessionManager : AbstractValidatingSessionManager implements CacheM
     override
     protected void afterStopped(Session session) {
         if (isDeleteInvalidSessions()) {
-            delete(session);
+            remove(session);
         }
     }
 
@@ -197,7 +197,7 @@ class DefaultSessionManager : AbstractValidatingSessionManager implements CacheM
     override
     protected void afterExpired(Session session) {
         if (isDeleteInvalidSessions()) {
-            delete(session);
+            remove(session);
         }
     }
 
@@ -229,8 +229,8 @@ class DefaultSessionManager : AbstractValidatingSessionManager implements CacheM
         return sessionDAO.readSession(sessionId);
     }
 
-    protected void delete(Session session) {
-        sessionDAO.delete(session);
+    protected void remove(Session session) {
+        sessionDAO.remove(session);
     }
 
     protected Collection!(Session) getActiveSessions() {

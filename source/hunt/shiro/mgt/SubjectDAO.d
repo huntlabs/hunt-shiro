@@ -48,10 +48,10 @@ interface SubjectDAO {
     Subject save(Subject subject);
 
     /**
-     * Removes any persisted state for the specified {@code Subject} instance.  This is a delete operation such that
+     * Removes any persisted state for the specified {@code Subject} instance.  This is a remove operation such that
      * the Subject's state will not be accessible at a later time.
      *
      * @param subject the Subject instance for which any persistent state should be deleted.
      */
-    void delete(Subject subject);
+    void remove(Subject subject);
 }

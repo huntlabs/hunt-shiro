@@ -42,7 +42,6 @@ import hunt.util.ArrayHelper;
  * This class and its subclasses support hashing with additional capabilities of salting and multiple iterations via
  * overloaded constructors.
  *
- * @since 0.9
  * deprecated("") in Shiro 1.1 in favor of using the concrete {@link SimpleHash} implementation directly.
  */
 deprecated("")

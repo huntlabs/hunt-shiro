@@ -61,7 +61,6 @@ module hunt.shiro.authz.Permission;
  * investigate this class before trying to implement your own <code>Permission</code>s.
  *
  * @see hunt.shiro.authz.permission.WildcardPermission WildcardPermission
- * @since 0.2
  */
 interface Permission {
 

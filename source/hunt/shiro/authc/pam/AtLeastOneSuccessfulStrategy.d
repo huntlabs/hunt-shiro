@@ -39,7 +39,6 @@ import hunt.shiro.subject.PrincipalCollection;
  * {@link FirstSuccessfulStrategy FirstSuccessfulAuthenticationStrategy} instead.
  *
  * @see FirstSuccessfulStrategy FirstSuccessfulAuthenticationStrategy
- * @since 0.2
  */
 class AtLeastOneSuccessfulStrategy : AbstractAuthenticationStrategy {
 

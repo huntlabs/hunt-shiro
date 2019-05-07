@@ -33,7 +33,6 @@ import java.util.Set;
  * instantiate based on the input argument and returns a new instance of the discovered class.  The heuristics are
  * detailed in the {@link #getInstance(string) getInstance} method documentation.
  *
- * @since 1.2
  */
 class DefaultHashFormatFactory : HashFormatFactory {
 

@@ -43,7 +43,6 @@ import java.util.Collections;
  * caching behavior and delegates the actual EIS operations to respective do* methods to be implemented by
  * subclasses (doCreate, doRead, etc).
  *
- * @since 0.2
  */
 abstract class CachingSessionDAO : AbstractSessionDAO implements CacheManagerAware {
 
@@ -222,7 +221,6 @@ abstract class CachingSessionDAO : AbstractSessionDAO implements CacheManagerAwa
      *
      * @param session   the session to cache
      * @param sessionId the session id, to be used as the cache entry key.
-     * @since 1.0
      */
     protected void cache(Session session, Serializable sessionId) {
         if (session  is null || sessionId  is null) {

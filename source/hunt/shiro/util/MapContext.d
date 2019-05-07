@@ -27,7 +27,6 @@ import java.util.*;
  *
  * @see hunt.shiro.subject.SubjectContext SubjectContext
  * @see hunt.shiro.session.mgt.SessionContext SessionContext
- * @since 1.0
  */
 class MapContext : Map!(string, Object), Serializable {
 

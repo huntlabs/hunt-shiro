@@ -26,7 +26,6 @@ import java.util.UUID;
 /**
  * {@link SessionIdGenerator} that generates string values of JDK {@link java.util.UUID}'s as the session IDs.
  *
- * @since 1.0
  */
 class JavaUuidSessionIdGenerator : SessionIdGenerator {
 

@@ -46,7 +46,6 @@ import java.util.Map;
  * those needs by providing additional realm-specific accessor/mutator methods.
  *
  * @author Les Hazlewood
- * @since 1.2
  */
 interface PrincipalMap : PrincipalCollection, Map!(string,Object) {
 

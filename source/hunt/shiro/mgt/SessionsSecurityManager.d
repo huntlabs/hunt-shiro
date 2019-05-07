@@ -44,7 +44,6 @@ import hunt.shiro.util.LifecycleUtils;
  * In keeping with the other classes in this hierarchy and Shiro's desire to minimize configuration whenever
  * possible, suitable default instances for all dependencies will be created upon instantiation.
  *
- * @since 0.9
  */
 abstract class SessionsSecurityManager : AuthorizingSecurityManager {
 
@@ -111,7 +110,6 @@ abstract class SessionsSecurityManager : AuthorizingSecurityManager {
     /**
      * Sets any configured EventBus on the SessionManager if necessary.
      *
-     * @since 1.3
      */
     override
     protected void afterEventBusSet() {
@@ -139,7 +137,6 @@ abstract class SessionsSecurityManager : AuthorizingSecurityManager {
      * Note: This implementation only injects the EventBus into the SessionManager if the SessionManager
      * instance implements the {@link EventBusAware EventBusAware} interface.
      *
-     * @since 1.3
      */
     protected void applyEventBusToSessionManager() {
         EventBus eventBus = getEventBus();

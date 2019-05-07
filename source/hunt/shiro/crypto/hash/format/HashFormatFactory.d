@@ -19,7 +19,6 @@
 module hunt.shiro.crypto.hash.format.HashFormatFactory;
 
 /**
- * @since 1.2
  */
 interface HashFormatFactory {
 

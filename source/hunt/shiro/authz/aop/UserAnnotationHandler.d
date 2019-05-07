@@ -33,7 +33,6 @@ import hunt.shiro.authz.annotation.RequiresUser;
  * <p>
  * This annotation essentially ensures that <code>subject.{@link hunt.shiro.subject.Subject#getPrincipal() getPrincipal()} != null</code>.
  *
- * @since 0.9.0
  */
 class UserAnnotationHandler : AuthorizingAnnotationHandler {
 

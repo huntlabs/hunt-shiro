@@ -22,7 +22,6 @@ module hunt.shiro.session.SessionListenerAdapter;
  * Simple adapter implementation of the {@link SessionListener} interface, effectively providing
  * no-op implementations of all methods.
  *
- * @since 1.0
  */
 class SessionListenerAdapter : SessionListener {
 

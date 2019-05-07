@@ -37,7 +37,6 @@ import java.util.Map;
  * {@code SecurityUtils.}{@link hunt.shiro.SecurityUtils#getSubject() getSubject()} calls that might occur during
  * the thread's execution.
  *
- * @since 1.0
  */
 class SubjectThreadState : ThreadState {
 

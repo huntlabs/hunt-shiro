@@ -122,7 +122,6 @@ import hunt.shiro.util.StringUtils;
 class HashedCredentialsMatcher : SimpleCredentialsMatcher {
 
     /**
-     * @since 1.1
      */
     private string hashAlgorithm;
     private int hashIterations;
@@ -146,7 +145,6 @@ class HashedCredentialsMatcher : SimpleCredentialsMatcher {
      * credentials.
      * @param hashAlgorithmName the {@code Hash} {@link hunt.shiro.crypto.hash.Hash#getAlgorithmName() algorithmName}
      *                          to use when performing hashes for credentials matching.
-     * @since 1.1
      */
      this(string hashAlgorithmName) {
         this();
@@ -162,7 +160,6 @@ class HashedCredentialsMatcher : SimpleCredentialsMatcher {
      *
      * @return the {@code Hash} {@link hunt.shiro.crypto.hash.Hash#getAlgorithmName() algorithmName} to use
      *         when performing hashes for credentials matching.
-     * @since 1.1
      */
      string getHashAlgorithmName() {
         return hashAlgorithm;
@@ -174,7 +171,6 @@ class HashedCredentialsMatcher : SimpleCredentialsMatcher {
      *
      * @param hashAlgorithmName the {@code Hash} {@link hunt.shiro.crypto.hash.Hash#getAlgorithmName() algorithmName}
      *                          to use when performing hashes for credentials matching.
-     * @since 1.1
      */
      void setHashAlgorithmName(string hashAlgorithmName) {
         this.hashAlgorithm = hashAlgorithmName;
@@ -421,7 +417,6 @@ class HashedCredentialsMatcher : SimpleCredentialsMatcher {
      *
      * @return the required {@link #getHashAlgorithmName() hashAlgorithmName} property
      * @throws IllegalStateException if the property has not been set prior to calling this method.
-     * @since 1.1
      */
     private string assertHashAlgorithmName(){
         string hashAlgorithmName = getHashAlgorithmName();

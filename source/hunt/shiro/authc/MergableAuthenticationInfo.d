@@ -31,7 +31,6 @@ import hunt.shiro.authc.AuthenticationInfo;
  * returned at the end of the authentication process, giving the impression of a single underlying
  * realm/data source.
  *
- * @since 0.9
  */
 interface MergableAuthenticationInfo : AuthenticationInfo {
 

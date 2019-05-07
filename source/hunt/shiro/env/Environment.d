@@ -31,7 +31,6 @@ import hunt.shiro.mgt.SecurityManager;
  * For example, the most obvious component accessible via an {@code Environment} instance is the application's
  * {@link #getSecurityManager() securityManager}.
  *
- * @since 1.2
  */
 interface Environment {
 

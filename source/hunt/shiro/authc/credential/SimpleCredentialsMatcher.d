@@ -38,7 +38,6 @@ import hunt.logger;
  * instead by the {@link hunt.shiro.authc.credential.HashedCredentialsMatcher HashedCredentialsMatcher}.
  *
  * @see hunt.shiro.authc.credential.HashedCredentialsMatcher
- * @since 0.9
  */
 class SimpleCredentialsMatcher : CodecSupport, CredentialsMatcher {
 

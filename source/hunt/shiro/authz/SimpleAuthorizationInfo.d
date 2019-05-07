@@ -27,7 +27,6 @@ import java.util.Set;
  * attributes.
  *
  * @see hunt.shiro.realm.AuthorizingRealm
- * @since 0.9
  */
 class SimpleAuthorizationInfo : AuthorizationInfo {
 

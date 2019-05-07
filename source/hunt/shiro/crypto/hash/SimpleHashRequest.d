@@ -23,7 +23,6 @@ import hunt.shiro.util.ByteSource;
 /**
  * Simple implementation of {@link HashRequest} that can be used when interacting with a {@link HashService}.
  *
- * @since 1.2
  */
 class SimpleHashRequest : HashRequest {
 

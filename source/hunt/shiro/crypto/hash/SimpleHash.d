@@ -38,7 +38,6 @@ import hunt.util.ArrayHelper;
  * As of Shiro 1.1, this class effectively replaces the (now-deprecated) {@link AbstractHash} class.  It subclasses
  * {@code AbstractHash} only to retain backwards-compatibility.
  *
- * @since 1.1
  */
 class SimpleHash : AbstractHash {
 
@@ -185,7 +184,6 @@ class SimpleHash : AbstractHash {
      *
      * @param source the source object to be hashed.
      * @return the source's bytes in the form of a {@code ByteSource} instance.
-     * @since 1.2
      */
     protected ByteSource convertSourceToBytes(Object source) {
         return toByteSource(source);
@@ -199,7 +197,6 @@ class SimpleHash : AbstractHash {
      *
      * @param salt the salt to be use for the hash.
      * @return the salt's bytes in the form of a {@code ByteSource} instance.
-     * @since 1.2
      */
     protected ByteSource convertSaltToBytes(Object salt) {
         return toByteSource(salt);
@@ -210,7 +207,6 @@ class SimpleHash : AbstractHash {
      *
      * @param o the Object to convert into a {@code ByteSource} instance.
      * @return the {@code ByteSource} representation of the specified object's bytes.
-     * @since 1.2
      */
     protected ByteSource toByteSource(Object o) {
         if (o  is null) {
@@ -272,7 +268,6 @@ class SimpleHash : AbstractHash {
      * invoked when re-constructing a hash instance from an already-hashed value.
      *
      * @param iterations the number of hash iterations used to previously create the hash/digest.
-     * @since 1.2
      */
     void setIterations(int iterations) {
         this.iterations = Math.max(DEFAULT_ITERATIONS, iterations);
@@ -285,7 +280,6 @@ class SimpleHash : AbstractHash {
      * ever be invoked when re-constructing a hash instance from an already-hashed value.
      *
      * @param salt the salt used to previously create the hash/digest.
-     * @since 1.2
      */
     void setSalt(ByteSource salt) {
         this.salt = salt;

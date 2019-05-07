@@ -28,7 +28,6 @@ import java.util.Set;
  * in separate columns (e.g. 'domain', 'actions' and 'targets' columns), which can be used in querying
  * strategies.
  *
- * @since 1.0
  */
 class DomainPermission : WildcardPermission {
 

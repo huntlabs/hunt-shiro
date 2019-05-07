@@ -38,7 +38,6 @@ module hunt.shiro.util.ThreadState;
  * }</b>
  * </pre>
  *
- * @since 1.0
  */
 interface ThreadState {
 

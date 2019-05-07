@@ -28,7 +28,6 @@ import hunt.shiro.aop.AnnotationResolver;
  * <p>
  * This annotation essentially ensures that <code>subject.{@link hunt.shiro.subject.Subject#getPrincipal() getPrincipal()} != null</code>.
  *
- * @since 0.9.0
  */
 class UserAnnotationMethodInterceptor : AuthorizingAnnotationMethodInterceptor {
 
@@ -45,7 +44,6 @@ class UserAnnotationMethodInterceptor : AuthorizingAnnotationMethodInterceptor {
     /**
      *
      * @param resolver
-     * @since 1.1
      */
      this(AnnotationResolver resolver) {
         super(new UserAnnotationHandler(), resolver);

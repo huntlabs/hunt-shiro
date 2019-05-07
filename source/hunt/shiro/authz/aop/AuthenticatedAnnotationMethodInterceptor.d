@@ -26,7 +26,6 @@ import hunt.shiro.aop.AnnotationResolver;
  * <code>Subject</code>.{@link hunt.shiro.subject.Subject#isAuthenticated() isAuthenticated()} before invoking
  * the method.
  *
- * @since 0.9.0
  */
 class AuthenticatedAnnotationMethodInterceptor : AuthorizingAnnotationMethodInterceptor {
 
@@ -41,7 +40,6 @@ class AuthenticatedAnnotationMethodInterceptor : AuthorizingAnnotationMethodInte
 
     /**
      * @param resolver
-     * @since 1.1
      */
      this(AnnotationResolver resolver) {
         super(new AuthenticatedAnnotationHandler(), resolver);

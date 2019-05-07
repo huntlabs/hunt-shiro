@@ -21,7 +21,6 @@ module hunt.shiro.util.AbstractFactory;
 /**
  * TODO - Class JavaDoc
  *
- * @since 1.0
  */
 abstract class AbstractFactory!(T) implements Factory!(T) {
 

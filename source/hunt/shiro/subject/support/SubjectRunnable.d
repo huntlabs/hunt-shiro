@@ -52,7 +52,6 @@ import hunt.shiro.util.ThreadState;
  *
  * @see Subject#associateWith(Runnable)
  * @see hunt.shiro.concurrent.SubjectAwareExecutor SubjectAwareExecutor
- * @since 1.0
  */
 class SubjectRunnable : Runnable {
 

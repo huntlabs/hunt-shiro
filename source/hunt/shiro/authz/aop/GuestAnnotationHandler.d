@@ -32,7 +32,6 @@ import hunt.shiro.authz.aop.AuthorizingAnnotationHandler;
  * <p>
  * This annotation essentially ensures that <code>subject.{@link hunt.shiro.subject.Subject#getPrincipal() getPrincipal()}  is null</code>.
  *
- * @since 0.9.0
  */
 class GuestAnnotationHandler : AuthorizingAnnotationHandler {
 

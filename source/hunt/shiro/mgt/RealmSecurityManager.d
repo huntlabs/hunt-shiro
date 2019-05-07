@@ -33,7 +33,6 @@ import hunt.collection;
  * {@link hunt.shiro.realm.Realm}s.  All actual {@code SecurityManager} method implementations are left to
  * subclasses.
  *
- * @since 0.9
  */
 abstract class RealmSecurityManager : CachingSecurityManager {
 
@@ -54,7 +53,6 @@ abstract class RealmSecurityManager : CachingSecurityManager {
      * the {@link #setRealms} method.
      *
      * @param realm the realm to set for a single-realm application.
-     * @since 0.2
      */
      void setRealm(Realm realm) {
         if (realm  is null) {
@@ -132,7 +130,6 @@ abstract class RealmSecurityManager : CachingSecurityManager {
      * {@link #setRealms setRealms} methods to allow these newly available realms to be given the EventBus
      * already in use.
      *
-     * @since 1.3
      */
     protected void applyEventBusToRealms() {
         EventBus eventBus = getEventBus();

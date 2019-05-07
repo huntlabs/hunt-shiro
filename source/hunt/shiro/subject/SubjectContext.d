@@ -54,7 +54,6 @@ import java.util.Map;
  *
  * @see hunt.shiro.mgt.SecurityManager#createSubject SecurityManager.createSubject
  * @see hunt.shiro.mgt.SubjectFactory SubjectFactory
- * @since 1.0
  */
 interface SubjectContext : Map!(string, Object) {
 
@@ -195,7 +194,6 @@ interface SubjectContext : Map!(string, Object) {
      *
      * @return {@code true} if the constructed {@code Subject} should be allowed to create sessions, {@code false}
      * otherwise.
-     * @since 1.2
      */
     bool isSessionCreationEnabled();
 
@@ -205,7 +203,6 @@ interface SubjectContext : Map!(string, Object) {
      *
      * @param enabled whether or not the constructed {@code Subject} instance should be allowed to create a session,
      * {@code false} otherwise.
-     * @since 1.2
      */
     void setSessionCreationEnabled(bool enabled);
 

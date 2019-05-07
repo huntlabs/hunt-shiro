@@ -23,7 +23,6 @@ module hunt.shiro.session.mgt.SessionValidationScheduler;
  * basis.  This interface is used as a delegate for session validation by the {@link hunt.shiro.session.mgt.DefaultSessionManager}
  *
  * @see hunt.shiro.session.mgt.DefaultSessionManager#setSessionValidationScheduler(SessionValidationScheduler)
- * @since 0.1
  */
 interface SessionValidationScheduler {
 

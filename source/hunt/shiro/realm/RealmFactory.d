@@ -32,7 +32,6 @@ import hunt.collection;
  * <p>The <code>Realm</code> instances returned will used to construct the application's
  * {@link hunt.shiro.mgt.SecurityManager SecurityManager} instance.
  *
- * @since 0.9
  */
 interface RealmFactory {
 

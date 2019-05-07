@@ -29,7 +29,6 @@ import hunt.shiro.session.Session;
  * Validation is usually an exercise of determining when the session was last accessed or modified and determining if
  * that time is longer than a specified allowed duration.
  * 
- * @since 0.9
  */
 interface ValidatingSession : Session {
 

@@ -32,7 +32,6 @@ import java.util.Date;
  * {@code javax.servlet.http.HttpSession} or Stateful Session EJB's, which many times
  * unnecessarily coupled applications to web or ejb technologies.
  *
- * @since 0.1
  */
 interface Session {
 
@@ -77,7 +76,6 @@ interface Session {
      *
      * @return the time in milliseconds the session may remain idle before expiring.
      * @throws InvalidSessionException if the session has been stopped or expired prior to calling this method.
-     * @since 0.2
      */
     long getTimeout();
 
@@ -95,7 +93,6 @@ interface Session {
      *
      * @param maxIdleTimeInMillis the time in milliseconds that the session may remain idle before expiring.
      * @throws InvalidSessionException if the session has been stopped or expired prior to calling this method.
-     * @since 0.2
      */
     void setTimeout(long maxIdleTimeInMillis);
 
@@ -166,7 +163,6 @@ interface Session {
      * @return the keys of all attributes stored under this session, or an empty collection if
      *         there are no session attributes.
      * @throws InvalidSessionException if this session has stopped or expired prior to calling this method.
-     * @since 0.2
      */
     Collection!(Object) getAttributeKeys();
 

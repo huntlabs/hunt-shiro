@@ -32,7 +32,6 @@ import hunt.shiro.authz.aop.AuthorizingAnnotationHandler;
  * declared, and if so, performs a permission check to see if the calling <code>Subject</code> is allowed continued
  * access.
  *
- * @since 0.9.0
  */
 class PermissionAnnotationHandler : AuthorizingAnnotationHandler {
 

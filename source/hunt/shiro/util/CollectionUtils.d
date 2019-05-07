@@ -31,7 +31,6 @@ import java.util.Set;
 /**
  * Static helper class for use dealing with Collections.
  *
- * @since 0.9
  */
 class CollectionUtils {
 
@@ -58,7 +57,6 @@ class CollectionUtils {
      * @param c the collection to check
      * @return {@code true} if the specified {@code Collection} is {@code null} or {@link Collection#isEmpty empty},
      *         {@code false} otherwise.
-     * @since 1.0
      */
      static bool isEmpty(Collection c) {
         return c  is null || c.isEmpty();
@@ -71,7 +69,6 @@ class CollectionUtils {
      * @param m the {@code Map} to check
      * @return {@code true} if the specified {@code Map} is {@code null} or {@link Map#isEmpty empty},
      *         {@code false} otherwise.
-     * @since 1.0
      */
      static bool isEmpty(Map m) {
         return m  is null || m.isEmpty();
@@ -82,7 +79,6 @@ class CollectionUtils {
      *
      * @param c the collection to check
      * @return the size of the specified collection or {@code 0} if the collection is {@code null}.
-     * @since 1.2
      */
      static int size(Collection c) {
         return c != null ? c.size() : 0;
@@ -93,7 +89,6 @@ class CollectionUtils {
      *
      * @param m the map to check
      * @return the size of the specified map or {@code 0} if the map is {@code null}.
-     * @since 1.2
      */
      static int size(Map m) {
         return m != null ? m.size() : 0;
@@ -107,7 +102,6 @@ class CollectionUtils {
      * @param principals the principals to check.
      * @return {@code true} if the specified {@code PrincipalCollection} is {@code null} or
      *         {@link PrincipalCollection#isEmpty empty}, {@code false} otherwise.
-     * @since 1.0
      * deprecated("") Use PrincipalCollection.isEmpty() directly.
      */
     deprecated("")

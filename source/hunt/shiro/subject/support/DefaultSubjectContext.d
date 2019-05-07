@@ -41,7 +41,6 @@ import java.io.Serializable;
  * in the backing map, it might check to see if there is a subject or session in the map and attempt to acquire the
  * principals from those objects).
  *
- * @since 1.0
  */
 class DefaultSubjectContext : MapContext implements SubjectContext {
 

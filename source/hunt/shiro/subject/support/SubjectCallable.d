@@ -55,7 +55,6 @@ import java.util.concurrent.Callable;
  *
  * @see Subject#associateWith(Callable)
  * @see hunt.shiro.concurrent.SubjectAwareExecutorService SubjectAwareExecutorService
- * @since 1.0
  */
 class SubjectCallable!(V) implements Callable!(V) {
 

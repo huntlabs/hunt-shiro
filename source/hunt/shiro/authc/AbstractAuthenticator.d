@@ -37,7 +37,6 @@ import hunt.collection;
  * In most cases, the only thing a subclass needs to do (via its {@link #doAuthenticate} implementation)
  * is perform the actual principal/credential verification process for the submitted {@code AuthenticationToken}.
  *
- * @since 0.1
  */
 abstract class AbstractAuthenticator : Authenticator, LogoutAware {
 

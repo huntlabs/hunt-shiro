@@ -29,7 +29,6 @@ import java.io.Serializable;
  * {@code Subject}'s session via the {@link hunt.shiro.subject.Subject#getSession} method.  This interface and
  * its usages are best suited for framework development.
  *
- * @since 1.0
  */
 interface SessionKey {
 

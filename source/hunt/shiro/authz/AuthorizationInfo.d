@@ -53,7 +53,6 @@ import hunt.collection;
  *
  * @see hunt.shiro.authc.AuthenticationInfo AuthenticationInfo
  * @see hunt.shiro.authc.Account
- * @since 0.9
  */
 interface AuthorizationInfo : Serializable {
 

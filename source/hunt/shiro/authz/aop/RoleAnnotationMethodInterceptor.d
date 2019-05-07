@@ -26,7 +26,6 @@ import hunt.shiro.authz.annotation.RequiresRoles;
  * Checks to see if a @{@link RequiresRoles RequiresRoles} annotation is declared, and if so, performs
  * a role check to see if the calling <code>Subject</code> is allowed to invoke the method.
  *
- * @since 0.9
  */
 class RoleAnnotationMethodInterceptor : AuthorizingAnnotationMethodInterceptor {
 
@@ -40,7 +39,6 @@ class RoleAnnotationMethodInterceptor : AuthorizingAnnotationMethodInterceptor {
 
     /**
      * @param resolver
-     * @since 1.1
      */
      this(AnnotationResolver resolver) {
         super(new RoleAnnotationHandler(), resolver);

@@ -36,7 +36,6 @@ import java.util.Set;
  * credentials.
  *
  * @see hunt.shiro.realm.AuthenticatingRealm
- * @since 0.9
  */
 class SimpleAuthenticationInfo : MergableAuthenticationInfo, SaltedAuthenticationInfo {
 
@@ -52,7 +51,6 @@ class SimpleAuthenticationInfo : MergableAuthenticationInfo, SaltedAuthenticatio
     /**
      * Any salt used in hashing the credentials.
      *
-     * @since 1.1
      */
     protected ByteSource credentialsSalt;
 
@@ -90,7 +88,6 @@ class SimpleAuthenticationInfo : MergableAuthenticationInfo, SaltedAuthenticatio
      * @param credentialsSalt   the salt used when hashing the given hashedCredentials
      * @param realmName         the realm from where the principal and credentials were acquired.
      * @see hunt.shiro.authc.credential.HashedCredentialsMatcher HashedCredentialsMatcher
-     * @since 1.1
      */
      this(Object principal, Object hashedCredentials, ByteSource credentialsSalt, string realmName) {
         this.principals = new SimplePrincipalCollection(principal, realmName);
@@ -118,7 +115,6 @@ class SimpleAuthenticationInfo : MergableAuthenticationInfo, SaltedAuthenticatio
      * @param hashedCredentials the hashed credentials that verify the principals.
      * @param credentialsSalt   the salt used when hashing the hashedCredentials.
      * @see hunt.shiro.authc.credential.HashedCredentialsMatcher HashedCredentialsMatcher
-     * @since 1.1
      */
      this(PrincipalCollection principals, Object hashedCredentials, ByteSource credentialsSalt) {
         this.principals = new SimplePrincipalCollection(principals);
@@ -164,7 +160,6 @@ class SimpleAuthenticationInfo : MergableAuthenticationInfo, SaltedAuthenticatio
      *
      * @return the salt used to hash the credentials, or {@code null} if no salt was used or credentials were not
      *         hashed at all.
-     * @since 1.1
      */
      ByteSource getCredentialsSalt() {
         return credentialsSalt;
@@ -181,7 +176,6 @@ class SimpleAuthenticationInfo : MergableAuthenticationInfo, SaltedAuthenticatio
      *
      * @param salt the salt used to hash the credentials, or {@code null} if no salt was used or credentials were not
      *             hashed at all.
-     * @since 1.1
      */
      void setCredentialsSalt(ByteSource salt) {
         this.credentialsSalt = salt;

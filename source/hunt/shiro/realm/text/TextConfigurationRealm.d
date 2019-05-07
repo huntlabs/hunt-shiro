@@ -46,7 +46,6 @@ import java.util.Set;
  * User and user-to-role definitions are specified via the {@link #setUserDefinitions} method and
  * Role-to-permission definitions are specified via the {@link #setRoleDefinitions} method.
  *
- * @since 0.9
  */
 class TextConfigurationRealm : SimpleAccountRealm {
 
@@ -62,7 +61,6 @@ class TextConfigurationRealm : SimpleAccountRealm {
     /**
      * Will call 'processDefinitions' on startup.
      *
-     * @since 1.2
      * @see <a href="https://issues.apache.org/jira/browse/SHIRO-223">SHIRO-223</a>
      */
     override

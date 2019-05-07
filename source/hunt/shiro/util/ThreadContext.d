@@ -40,7 +40,6 @@ import java.util.Map;
  * execution, respectively (i.e. individually explicitly or all via the <tt>clear</tt> method).</p>
  *
  * @see #remove()
- * @since 0.1
  */
 abstract class ThreadContext {
 
@@ -80,7 +79,6 @@ abstract class ThreadContext {
      * call the {@link #getResources()} method, which will give you the existing state.
      *
      * @param newResources the resources to replace the existing {@link #getResources() resources}.
-     * @since 1.0
      */
      static void setResources(Map!(Object, Object) newResources) {
         if (CollectionUtils.isEmpty(newResources)) {
@@ -98,7 +96,6 @@ abstract class ThreadContext {
      * @param key the map key to use to lookup the value
      * @return the value bound in the {@code ThreadContext} under the specified {@code key}, or {@code null} if there
      *         is no value for that {@code key}.
-     * @since 1.0
      */
     private static Object getValue(Object key) {
         Map!(Object, Object) perThreadResources = resources.get();
@@ -196,7 +193,6 @@ abstract class ThreadContext {
      * This method is meant to be the final 'clean up' operation that is called at the end of thread execution to
      * prevent thread corruption in pooled thread environments.
      *
-     * @since 1.0
      */
      static void remove() {
         resources.remove();
@@ -215,7 +211,6 @@ abstract class ThreadContext {
      * from the thread.  To remove it, one must call {@link #unbindSecurityManager() unbindSecurityManager()} instead.
      *
      * @return the Subject object bound to the thread, or <tt>null</tt> if there isn't one bound.
-     * @since 0.9
      */
      static SecurityManager getSecurityManager() {
         return (SecurityManager) get(SECURITY_MANAGER_KEY);
@@ -236,7 +231,6 @@ abstract class ThreadContext {
      *
      * @param securityManager the application's SecurityManager instance to bind to the thread.  If the argument is
      *                        null, nothing will be done.
-     * @since 0.9
      */
      static void bind(SecurityManager securityManager) {
         if (securityManager != null) {
@@ -257,7 +251,6 @@ abstract class ThreadContext {
      *
      * @return the application's SecurityManager instance previously bound to the thread, or <tt>null</tt> if there
      *         was none bound.
-     * @since 0.9
      */
      static SecurityManager unbindSecurityManager() {
         return (SecurityManager) remove(SECURITY_MANAGER_KEY);
@@ -274,7 +267,6 @@ abstract class ThreadContext {
      * from the thread.  To remove it, one must call {@link #unbindSubject() unbindSubject()} instead.
      *
      * @return the Subject object bound to the thread, or <tt>null</tt> if there isn't one bound.
-     * @since 0.2
      */
      static Subject getSubject() {
         return (Subject) get(SUBJECT_KEY);
@@ -294,7 +286,6 @@ abstract class ThreadContext {
      * }</pre>
      *
      * @param subject the Subject object to bind to the thread.  If the argument is null, nothing will be done.
-     * @since 0.2
      */
      static void bind(Subject subject) {
         if (subject != null) {
@@ -314,7 +305,6 @@ abstract class ThreadContext {
      * thread execution), you should use the {@link #getSubject() getSubject()} method for that purpose.
      *
      * @return the Subject object previously bound to the thread, or <tt>null</tt> if there was none bound.
-     * @since 0.2
      */
      static Subject unbindSubject() {
         return (Subject) remove(SUBJECT_KEY);

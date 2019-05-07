@@ -28,7 +28,6 @@ import java.util.Map;
  * Default implementation of the {@link SessionContext} interface which provides getters and setters that
  * wrap interaction with the underlying backing context map.
  *
- * @since 1.0
  */
 class DefaultSessionContext : MapContext implements SessionContext {
 

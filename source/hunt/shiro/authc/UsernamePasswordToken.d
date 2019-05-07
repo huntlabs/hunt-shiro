@@ -40,7 +40,6 @@ module hunt.shiro.authc.UsernamePasswordToken;
  * <p>To avoid this possibility of later memory access, the application developer should always call
  * {@link #clear() clear()} after using the token to perform a login attempt.</p>
  *
- * @since 0.1
  */
 class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationToken {
 
@@ -118,7 +117,6 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param username the username submitted for authentication
      * @param password the password string submitted for authentication
      * @param host     the host name or IP string from where the attempt is occurring
-     * @since 0.2
      */
      this(string username, char[] password, string host) {
         this(username, password, false, host);
@@ -135,7 +133,6 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param username the username submitted for authentication
      * @param password the password string submitted for authentication
      * @param host     the host name or IP string from where the attempt is occurring
-     * @since 1.0
      */
      this(string username, string password, string host) {
         this(username, password != null ? password.toCharArray() : null, false, host);
@@ -148,7 +145,6 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param username   the username submitted for authentication
      * @param password   the password string submitted for authentication
      * @param rememberMe if the user wishes their identity to be remembered across sessions
-     * @since 0.9
      */
      this(string username, char[] password, bool rememberMe) {
         this(username, password, rememberMe, null);
@@ -165,7 +161,6 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param username   the username submitted for authentication
      * @param password   the password string submitted for authentication
      * @param rememberMe if the user wishes their identity to be remembered across sessions
-     * @since 0.9
      */
      this(string username, string password, bool rememberMe) {
         this(username, password != null ? password.toCharArray() : null, rememberMe, null);
@@ -179,7 +174,6 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param password   the password character array submitted for authentication
      * @param rememberMe if the user wishes their identity to be remembered across sessions
      * @param host       the host name or IP string from where the attempt is occurring
-     * @since 1.0
      */
      this(string username, char[] password, bool rememberMe, string host) {
         this.username = username;
@@ -201,7 +195,6 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param password   the password string submitted for authentication
      * @param rememberMe if the user wishes their identity to be remembered across sessions
      * @param host       the host name or IP string from where the attempt is occurring
-     * @since 1.0
      */
      this(string username, string password, bool rememberMe, string host) {
         this(username, password != null ? password.toCharArray() : null, rememberMe, host);
@@ -277,7 +270,6 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      *
      * @return the host from where the authentication attempt occurs, or <tt>null</tt> if it is unknown or
      *         explicitly omitted.
-     * @since 1.0
      */
      string getHost() {
         return host;
@@ -291,7 +283,6 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * allows <tt>null</tt> hosts to allow localhost and proxy server environments).</p>
      *
      * @param host the host name or IP string from where the attempt is occurring
-     * @since 1.0
      */
      void setHost(string host) {
         this.host = host;
@@ -303,7 +294,6 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      *
      * @return <tt>true</tt> if the submitting user wishes their identity (principal(s)) to be remembered
      *         across sessions, <tt>false</tt> otherwise (<tt>false</tt> by default).
-     * @since 0.9
      */
      bool isRememberMe() {
         return rememberMe;
@@ -315,7 +305,6 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      *
      * @param rememberMe value indicating if the user wishes their identity (principal(s)) to be remembered across
      *                   sessions.
-     * @since 0.9
      */
      void setRememberMe(bool rememberMe) {
         this.rememberMe = rememberMe;

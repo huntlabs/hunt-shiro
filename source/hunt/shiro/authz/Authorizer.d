@@ -43,7 +43,6 @@ import java.util.List;
  * <p>These overloaded *Permission methods <em>do</em> forego type-safety for the benefit of convenience and simplicity,
  * so you should choose which ones to use based on your preferences and needs.
  *
- * @since 0.1
  */
 interface Authorizer {
 
@@ -58,7 +57,6 @@ interface Authorizer {
      * @param permission the string representation of a Permission that is being checked.
      * @return true if the corresponding Subject/user is permitted, false otherwise.
      * @see #isPermitted(PrincipalCollection principals,Permission permission)
-     * @since 0.9
      */
     bool isPermitted(PrincipalCollection principals, string permission);
 
@@ -88,7 +86,6 @@ interface Authorizer {
      *         permissions in the given list.  A true value at an index indicates the user is permitted for
      *         for the associated <tt>Permission</tt> string in the list.  A false value at an index
      *         indicates otherwise.
-     * @since 0.9
      */
     bool[] isPermitted(PrincipalCollection subjectPrincipal, string[] permissions...);
 
@@ -123,7 +120,6 @@ interface Authorizer {
      * @param permissions      the string representations of the Permissions that are being checked.
      * @return true if the user has all of the specified permissions, false otherwise.
      * @see #isPermittedAll(PrincipalCollection,Collection)
-     * @since 0.9
      */
     bool isPermittedAll(PrincipalCollection subjectPrincipal, string[] permissions...);
 
@@ -153,7 +149,6 @@ interface Authorizer {
      * @param permission       the string representation of the Permission to check.
      * @throws AuthorizationException
      *          if the user does not have the permission.
-     * @since 0.9
      */
     void checkPermission(PrincipalCollection subjectPrincipal, string permission);
 
@@ -184,7 +179,6 @@ interface Authorizer {
      * @param subjectPrincipal the application-specific subject/user identifier.
      * @param permissions      the string representations of Permissions to check.
      * @throws AuthorizationException if the user does not have all of the given permissions.
-     * @since 0.9
      */
     void checkPermissions(PrincipalCollection subjectPrincipal, string[] permissions...);
 

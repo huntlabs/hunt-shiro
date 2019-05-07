@@ -64,7 +64,6 @@ import hunt.shiro.util.ByteSource;
  * <b>*</b>By default, the {@link #getPrivateSalt() privateSalt} is null, since a sensible default cannot be used that
  * isn't easily compromised (because Shiro is an open-source project and any default could be easily seen and used).
  *
- * @since 1.2
  */
 class DefaultHashService : ConfigurableHashService {
 

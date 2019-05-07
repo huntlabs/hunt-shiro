@@ -34,7 +34,6 @@ import hunt.shiro.util.ByteSource;
  * @see Sha256Hash
  * @see Sha384Hash
  * @see Sha512Hash
- * @since 0.9
  */
 interface Hash : ByteSource {
 
@@ -44,7 +43,6 @@ interface Hash : ByteSource {
      * The name is expected to be a {@link java.security.MessageDigest MessageDigest} algorithm name.
      *
      * @return the the name of the algorithm used to hash the input source, for example, {@code SHA-256}, {@code MD5}, etc.
-     * @since 1.1
      */
     string getAlgorithmName();
 
@@ -52,7 +50,6 @@ interface Hash : ByteSource {
      * Returns a salt used to compute the hash or {@code null} if no salt was used.
      *
      * @return a salt used to compute the hash or {@code null} if no salt was used.
-     * @since 1.2
      */
     ByteSource getSalt();
 
@@ -60,7 +57,6 @@ interface Hash : ByteSource {
      * Returns the number of hash iterations used to compute the hash.
      *
      * @return the number of hash iterations used to compute the hash.
-     * @since 1.2
      */
     int getIterations();
 

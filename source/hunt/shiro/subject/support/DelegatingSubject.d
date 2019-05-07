@@ -65,7 +65,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * stateless architectures.  This implementation plays a part in the stateless programming
  * paradigm and should be used whenever possible.
  *
- * @since 0.1
  */
 class DelegatingSubject : Subject {
 
@@ -79,7 +78,6 @@ class DelegatingSubject : Subject {
     protected string host;
     protected Session session;
     /**
-     * @since 1.2
      */
     protected bool sessionCreationEnabled;
 
@@ -305,7 +303,6 @@ class DelegatingSubject : Subject {
      * Returns {@code true} if this Subject is allowed to create sessions, {@code false} otherwise.
      *
      * @return {@code true} if this Subject is allowed to create sessions, {@code false} otherwise.
-     * @since 1.2
      */
     protected bool isSessionCreationEnabled() {
         return this.sessionCreationEnabled;

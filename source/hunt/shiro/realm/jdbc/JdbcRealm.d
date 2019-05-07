@@ -57,7 +57,6 @@ import java.util.Set;
  * <p/>
  * This realm supports caching by extending from {@link hunt.shiro.realm.AuthorizingRealm}.
  *
- * @since 0.2
  */
 class JdbcRealm : AuthorizingRealm {
 

@@ -51,7 +51,6 @@ import java.util.concurrent.Executor;
  * your codebase.
  *
  * @see SubjectAwareExecutorService
- * @since 1.0
  */
 class SubjectAwareExecutor : Executor {
 

@@ -27,7 +27,6 @@ module hunt.shiro.authz.permission.PermissionResolverAware;
  * are the ones performing permission checks and need to know how to resolve Strings into
  * {@link hunt.shiro.authz.Permission Permission} instances.
  *
- * @since 0.9
  */
 interface PermissionResolverAware {
 

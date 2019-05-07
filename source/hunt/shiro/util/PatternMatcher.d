@@ -24,8 +24,7 @@ module hunt.shiro.util.PatternMatcher;
  * Different implementations can support different pattern types, for example, Ant style path expressions, or
  * regular expressions, or other types of text based patterns.
  *
- * @see hunt.shiro.util.AntPathMatcher AntPathMatcher
- * @since 0.9 RC2
+ * @see hunt.shiro.util.AntPathMatcher AntPathMatcher RC2
  */
 interface PatternMatcher {
 

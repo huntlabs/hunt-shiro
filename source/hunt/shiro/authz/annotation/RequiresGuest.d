@@ -35,7 +35,6 @@ module hunt.shiro.authz.annotation.RequiresGuest;
  * @see RequiresAuthentication
  * @see RequiresUser
  *
- * @since 0.9.0
  */
 // @Target({ElementType.TYPE, ElementType.METHOD})
 // @Retention(RetentionPolicy.RUNTIME)

@@ -26,7 +26,6 @@ module hunt.shiro.authc.UnknownAccountException;
  * at the discretion of those responsible for designing the view and what happens when this
  * exception occurs.
  *
- * @since 0.1
  */
 class UnknownAccountException : AccountException {
 

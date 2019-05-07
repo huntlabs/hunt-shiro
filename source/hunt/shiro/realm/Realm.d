@@ -58,7 +58,6 @@ import hunt.shiro.authc.AuthenticationToken;
  * @see hunt.shiro.realm.AuthenticatingRealm AuthenticatingRealm
  * @see hunt.shiro.realm.AuthorizingRealm AuthorizingRealm
  * @see hunt.shiro.authc.pam.ModularRealmAuthenticator ModularRealmAuthenticator
- * @since 0.1
  */
 interface Realm {
 

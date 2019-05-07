@@ -48,7 +48,6 @@ module hunt.shiro.crypto.hash.HashService;
  * save(result);
  * </pre>
  *
- * @since 1.2
  */
 interface HashService {
 

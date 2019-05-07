@@ -36,7 +36,6 @@ import java.util.*;
  * Simple {@link hunt.shiro.session.Session} JavaBeans-compatible POJO implementation, intended to be used on the
  * business/server tier.
  *
- * @since 0.1
  */
 class SimpleSession : ValidatingSession, Serializable {
 
@@ -208,7 +207,6 @@ class SimpleSession : ValidatingSession, Serializable {
     }
 
     /**
-     * @since 0.9
      */
      bool isValid() {
         return !isStopped() && !isExpired();
@@ -370,7 +368,6 @@ class SimpleSession : ValidatingSession, Serializable {
      *
      * @param ss the SimpleSession instance to compare for equality.
      * @return true if all the attributes, except the id, are equal to this object's attributes.
-     * @since 1.0
      */
     protected bool onEquals(SimpleSession ss) {
         return (getStartTimestamp() != null ? getStartTimestamp()== ss.getStartTimestamp() : ss.getStartTimestamp()  is null) &&
@@ -390,7 +387,6 @@ class SimpleSession : ValidatingSession, Serializable {
      * avoid the more expensive attributes-based calculation.
      *
      * @return this object's hashCode
-     * @since 1.0
      */
     override
      size_t toHash() @trusted nothrow {
@@ -414,7 +410,6 @@ class SimpleSession : ValidatingSession, Serializable {
      *
      * @return the string representation of this SimpleSession, equal to
      *         <code>getClass().getName() + &quot;,id=&quot; + getId()</code>.
-     * @since 1.0
      */
     override
      string toString() {
@@ -428,7 +423,6 @@ class SimpleSession : ValidatingSession, Serializable {
      *
      * @param out output stream used for Object serialization.
      * @throws IOException if any of this object's fields cannot be written to the stream.
-     * @since 1.0
      */
     private void writeObject(ObjectOutputStream out){
         out.defaultWriteObject();
@@ -466,7 +460,6 @@ class SimpleSession : ValidatingSession, Serializable {
      * @param in the input stream to use for reading data to populate this object.
      * @throws IOException            if the input stream cannot be used.
      * @throws ClassNotFoundException if a required class needed for instantiation is not available in the present JVM
-     * @since 1.0
      */
     //@SuppressWarnings({"unchecked"})
     private void readObject(ObjectInputStream in){
@@ -505,7 +498,6 @@ class SimpleSession : ValidatingSession, Serializable {
      * index, fields that are null and/or retain class default values have 0.
      *
      * @return a bit mask used during serialization indicating which fields have been serialized.
-     * @since 1.0
      */
     private short getAlteredFieldsBitMask() {
         int bitMask = 0;
@@ -530,7 +522,6 @@ class SimpleSession : ValidatingSession, Serializable {
      * @param fieldBitMask the field bit mask constant identifying which bit to inspect (corresponds to a class attribute).
      * @return {@code true} if the given {@code bitMask} argument indicates that the specified field has been
      *         serialized and therefore should be read during deserialization, {@code false} otherwise.
-     * @since 1.0
      */
     private static bool isFieldPresent(short bitMask, int fieldBitMask) {
         return (bitMask & fieldBitMask) != 0;

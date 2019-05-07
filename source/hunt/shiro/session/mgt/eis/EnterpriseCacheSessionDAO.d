@@ -47,7 +47,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * be done for the {@link #doReadSession}, {@link #doUpdate} and {@link #doDelete} method implementations.  This class
  * implements those methods as required by the parent class, but they essentially do nothing.
  *
- * @since 1.0
  */
 class EnterpriseCacheSessionDAO : CachingSessionDAO {
 

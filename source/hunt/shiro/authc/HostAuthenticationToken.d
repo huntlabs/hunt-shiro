@@ -22,7 +22,6 @@ module hunt.shiro.authc.HostAuthenticationToken;
  * A {@code HostAuthenticationToken} retains the host information from where
  * an authentication attempt originates.
  *
- * @since 1.0
  */
 interface HostAuthenticationToken : AuthenticationToken {
 

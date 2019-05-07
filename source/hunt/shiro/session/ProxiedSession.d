@@ -29,7 +29,6 @@ import java.util.Date;
  * This class is mostly useful for framework subclassing to intercept certain <code>Session</code> calls
  * and perform additional logic.
  *
- * @since 0.9
  */
 class ProxiedSession : Session {
 

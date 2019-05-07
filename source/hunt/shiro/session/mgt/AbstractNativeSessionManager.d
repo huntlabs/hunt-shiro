@@ -35,7 +35,6 @@ import hunt.collection;
  * {@link SessionListener SessionListener}s and application of the
  * {@link #getGlobalSessionTimeout() globalSessionTimeout}.
  *
- * @since 1.0
  */
 abstract class AbstractNativeSessionManager : AbstractSessionManager implements NativeSessionManager, EventBusAware {
 
@@ -62,7 +61,6 @@ abstract class AbstractNativeSessionManager : AbstractSessionManager implements 
      * Returns the EventBus used to publish SessionEvents.
      *
      * @return the EventBus used to publish SessionEvents.
-     * @since 1.3
      */
     protected EventBus getEventBus() {
         return eventBus;
@@ -72,7 +70,6 @@ abstract class AbstractNativeSessionManager : AbstractSessionManager implements 
      * Sets the EventBus to use to publish SessionEvents.
      *
      * @param eventBus the EventBus to use to publish SessionEvents.
-     * @since 1.3
      */
      void setEventBus(EventBus eventBus) {
         this.eventBus = eventBus;
@@ -82,7 +79,6 @@ abstract class AbstractNativeSessionManager : AbstractSessionManager implements 
      * Publishes events on the event bus if the event bus is non-null, otherwise does nothing.
      *
      * @param event the event to publish on the event bus if the event bus exists.
-     * @since 1.3
      */
     protected void publishEvent(Object event) {
         if (this.eventBus != null) {

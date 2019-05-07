@@ -60,7 +60,6 @@ import hunt.collection;
  * @see AtLeastOneSuccessfulStrategy
  * @see AllSuccessfulStrategy
  * @see FirstSuccessfulStrategy
- * @since 0.1
  */
 class ModularRealmAuthenticator : AbstractAuthenticator {
 
@@ -127,7 +126,6 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
      * is the {@link hunt.shiro.authc.pam.AtLeastOneSuccessfulStrategy}.
      *
      * @return the {@code AuthenticationStrategy} utilized by this modular authenticator during a log-in attempt.
-     * @since 0.2
      */
      AuthenticationStrategy getAuthenticationStrategy() {
         return authenticationStrategy;
@@ -138,7 +136,6 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
      * This object is only used when two or more Realms are configured.
      *
      * @param authenticationStrategy the strategy implementation to use during log-in attempts.
-     * @since 0.2
      */
      void setAuthenticationStrategy(AuthenticationStrategy authenticationStrategy) {
         this.authenticationStrategy = authenticationStrategy;

@@ -37,7 +37,6 @@ import hunt.shiro.realm.Realm;
  * <tt>AuthenticationInfo</tt> for the token, this implementation will immediately fail the log-in attempt for the
  * associated subject (user).
  *
- * @since 0.2
  */
 class AllSuccessfulStrategy : AbstractAuthenticationStrategy {
 

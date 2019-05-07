@@ -29,7 +29,6 @@ import hunt.shiro.crypto.hash.Sha512Hash;
  * {@code HashedCredentialsMatcher} implementation that expects the stored {@code AuthenticationInfo} credentials to be
  * SHA-512 hashed.
  *
- * @since 0.9
  * deprecated("") since 1.1 - use the HashedCredentialsMatcher directly and set its
  *             {@link HashedCredentialsMatcher#setHashAlgorithmName(string) hashAlgorithmName} property.
  */

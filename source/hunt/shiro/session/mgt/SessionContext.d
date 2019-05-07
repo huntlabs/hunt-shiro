@@ -37,7 +37,6 @@ import java.util.Map;
  *
  * @see hunt.shiro.session.mgt.SessionManager#start SessionManager.start(SessionContext)
  * @see hunt.shiro.session.mgt.SessionFactory SessionFactory
- * @since 1.0
  */
 interface SessionContext : Map!(string, Object) {
 
@@ -67,7 +66,6 @@ interface SessionContext : Map!(string, Object) {
      *
      * @param host the originating host name or IP address (as a string) from where the {@code Subject} is
      *             initiating the {@code Session}.
-     * @since 1.0
      */
     void setHost(string host);
 

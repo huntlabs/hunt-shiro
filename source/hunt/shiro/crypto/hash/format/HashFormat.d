@@ -31,7 +31,6 @@ import hunt.shiro.crypto.hash.Hash;
  *
  * @see ParsableHashFormat
  *
- * @since 1.2
  */
 interface HashFormat {
 

@@ -49,7 +49,6 @@ import hunt.shiro.authz.annotation.Logical;
  * <em>who</em> is executing the the functionality).
  *
  * @see hunt.shiro.subject.Subject#hasRole(string)
- * @since 0.1
  */
 // @Target({ElementType.TYPE, ElementType.METHOD})
 // @Retention(RetentionPolicy.RUNTIME)
@@ -63,7 +62,6 @@ public interface RequiresRoles {
     
     /**
      * The logical operation for the permission check in case multiple roles are specified. AND is the default
-     * @since 1.1.0
      */
     //Logical logical() default Logical.AND; 
     Logical logical();

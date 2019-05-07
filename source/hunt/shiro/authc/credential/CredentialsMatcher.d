@@ -36,7 +36,6 @@ import hunt.shiro.authc.AuthenticationToken;
  * @see AllowAllCredentialsMatcher
  * @see Md5CredentialsMatcher
  * @see Sha1CredentialsMatcher
- * @since 0.1
  */
 interface CredentialsMatcher {
 

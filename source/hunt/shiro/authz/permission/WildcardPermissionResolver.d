@@ -25,7 +25,6 @@ import hunt.shiro.authz.Permission;
  * <tt>PermissionResolver</tt> implementation that returns a new {@link WildcardPermission WildcardPermission}
  * based on the input string.
  *
- * @since 0.9
  */
 class WildcardPermissionResolver : PermissionResolver {
 

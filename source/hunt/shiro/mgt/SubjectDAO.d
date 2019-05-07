@@ -33,7 +33,6 @@ import hunt.shiro.subject.Subject;
  * application (e.g. via {@link hunt.shiro.SecurityUtils#getSubject() SecurityUtils.getSubject()}).
  *
  * @see DefaultSubjectDAO
- * @since 1.2
  */
 interface SubjectDAO {
 

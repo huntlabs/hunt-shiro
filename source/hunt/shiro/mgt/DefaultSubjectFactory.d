@@ -29,7 +29,6 @@ import hunt.shiro.subject.support.DelegatingSubject;
  * Default {@link SubjectFactory SubjectFactory} implementation that creates {@link hunt.shiro.subject.support.DelegatingSubject DelegatingSubject}
  * instances.
  *
- * @since 1.0
  */
 class DefaultSubjectFactory : SubjectFactory {
 

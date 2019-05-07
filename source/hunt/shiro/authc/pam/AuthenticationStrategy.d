@@ -38,7 +38,6 @@ import hunt.collection;
  * @see AllSuccessfulStrategy
  * @see AtLeastOneSuccessfulStrategy
  * @see FirstSuccessfulStrategy
- * @since 0.2
  */
 interface AuthenticationStrategy {
 

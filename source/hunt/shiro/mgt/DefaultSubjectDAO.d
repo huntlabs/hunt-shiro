@@ -75,7 +75,6 @@ import java.lang.reflect.Field;
  * @see #isSessionStorageEnabled(hunt.shiro.subject.Subject)
  * @see SessionStorageEvaluator
  * @see DefaultSessionStorageEvaluator
- * @since 1.2
  */
 class DefaultSubjectDAO : SubjectDAO {
 

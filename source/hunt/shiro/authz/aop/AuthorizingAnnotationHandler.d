@@ -27,7 +27,6 @@ import hunt.shiro.authz.AuthorizationException;
  * An AnnotationHandler that executes authorization (access control) behavior based on directive(s) found in a
  * JSR-175 Annotation.
  *
- * @since 0.9.0
  */
 abstract class  AuthorizingAnnotationHandler : AnnotationHandler {
 

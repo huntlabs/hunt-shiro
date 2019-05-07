@@ -25,7 +25,6 @@ import hunt.shiro.authz.AuthorizationException;
 /**
  * Basic abstract class to support intercepting methods that perform authorization (access control) checks.
  *
- * @since 0.9
  */
 abstract class AuthorizingMethodInterceptor : MethodInterceptorSupport {
 

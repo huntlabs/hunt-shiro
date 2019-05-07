@@ -31,7 +31,6 @@ import hunt.shiro.authz.Permission;
  * those respective entities will have the ability to do anything.  As such, an instance of this class
  * is typically only assigned only to "root" or "administrator" users or roles.
  *
- * @since 0.1
  */
 class AllPermission : Permission, Serializable {
 

@@ -27,7 +27,6 @@ import hunt.shiro.session.Session;
  * application, and is typically injected into the {@link hunt.shiro.mgt.SecurityManager SecurityManager} or a
  * {@link SessionManager}.
  *
- * @since 1.0
  */
 interface SessionFactory {
 
@@ -36,7 +35,6 @@ interface SessionFactory {
      *
      * @param initData the initialization data to be used during {@link Session} creation.
      * @return a new {@code Session} instance.
-     * @since 1.0
      */
     Session createSession(SessionContext initData);
 }

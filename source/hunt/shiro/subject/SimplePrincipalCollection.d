@@ -32,7 +32,6 @@ import java.util.*;
  * A simple implementation of the {@link MutablePrincipalCollection} interface that tracks principals internally
  * by storing them in a {@link LinkedHashMap}.
  *
- * @since 0.9
  */
 //@SuppressWarnings({"unchecked"})
 class SimplePrincipalCollection : MutablePrincipalCollection {
@@ -245,7 +244,6 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
      * Returns a simple string representation suitable for printing.
      *
      * @return a simple string representation suitable for printing.
-     * @since 1.0
      */
      string toString() {
         if (this.cachedToString  is null) {

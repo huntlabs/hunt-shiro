@@ -99,7 +99,6 @@ import hunt.collection;
  * this could be used in your application.  However, the Shiro team likes to standardize some common usages shown
  * above to help people get started and provide consistency in the Shiro community.
  *
- * @since 0.9
  */
 //class WildcardPermission : Permission, Serializable {
 class WildcardPermission : Permission {
@@ -183,7 +182,6 @@ class WildcardPermission : Permission {
 
     /**
      * Sets the pre-split string parts of this <code>WildcardPermission</code>.
-     * @since 1.3.0
      * @param parts pre-split string parts.
      */
     protected void setParts(List!(Set!(string)) parts) {

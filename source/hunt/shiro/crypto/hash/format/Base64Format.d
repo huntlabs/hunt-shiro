@@ -25,7 +25,6 @@ import hunt.shiro.crypto.hash.Hash;
  * anything else (salt, iterations, etc).  This implementation is mostly provided as a convenience for
  * command-line hashing.
  *
- * @since 1.2
  */
 class Base64Format : HashFormat {
 

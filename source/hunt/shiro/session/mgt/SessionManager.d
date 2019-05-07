@@ -25,7 +25,6 @@ import hunt.shiro.session.SessionException;
  * A SessionManager manages the creation, maintenance, and clean-up of all application
  * {@link hunt.shiro.session.Session Session}s.
  *
- * @since 0.1
  */
 interface SessionManager {
 
@@ -42,7 +41,6 @@ interface SessionManager {
      *                {@link SessionFactory} when instantiating the internal {@code Session} instance.
      * @return the newly created session.
      * @see SessionFactory#createSession(SessionContext)
-     * @since 1.0
      */
     Session start(SessionContext context);
 
@@ -55,7 +53,6 @@ interface SessionManager {
      * @return the {@code Session} instance corresponding to the given lookup key or {@code null} if no session
      *         could be acquired.
      * @throws SessionException if a session was found but it was invalid (stopped/expired).
-     * @since 1.0
      */
     Session getSession(SessionKey key);
 }

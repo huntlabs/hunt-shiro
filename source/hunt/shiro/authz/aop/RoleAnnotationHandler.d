@@ -30,7 +30,6 @@ import hunt.util.ArrayHelper;
  * Checks to see if a @{@link hunt.shiro.authz.annotation.RequiresRoles RequiresRoles} annotation is declared, and if so, performs
  * a role check to see if the calling <code>Subject</code> is allowed to proceed.
  *
- * @since 0.9.0
  */
 class RoleAnnotationHandler : AuthorizingAnnotationHandler {
 

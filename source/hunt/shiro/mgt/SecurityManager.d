@@ -52,7 +52,6 @@ import hunt.shiro.subject.SubjectContext;
  * Framework developers on the other hand might find working with an actual SecurityManager useful.
  *
  * @see hunt.shiro.mgt.DefaultSecurityManager
- * @since 0.2
  */
 interface SecurityManager : Authenticator, Authorizer, SessionManager {
 
@@ -72,7 +71,6 @@ interface SecurityManager : Authenticator, Authorizer, SessionManager {
      * @param authenticationToken the token representing the Subject's principal(s) and credential(s)
      * @return the subject instance reflecting the authenticated state after a successful attempt
      * @throws AuthenticationException if the login attempt failed.
-     * @since 1.0
      */
     Subject login(Subject subject, AuthenticationToken authenticationToken);
 
@@ -87,7 +85,6 @@ interface SecurityManager : Authenticator, Authorizer, SessionManager {
      * Framework developers on the other hand might find calling this method directly useful in certain cases.
      *
      * @param subject the subject to log out.
-     * @since 1.0
      */
     void logout(Subject subject);
 
@@ -107,7 +104,6 @@ interface SecurityManager : Authenticator, Authorizer, SessionManager {
      * @return the {@code Subject} instance reflecting the specified initialization data.
      * @see SubjectFactory#createSubject(SubjectContext)
      * @see Subject.Builder
-     * @since 1.0
      */
     Subject createSubject(SubjectContext context);
 

@@ -46,7 +46,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * User accounts and roles are stored in two {@code Map}s in memory, so it is expected that the total number of either
  * is not sufficiently large.
  *
- * @since 0.1
  */
 class SimpleAccountRealm : AuthorizingRealm {
 

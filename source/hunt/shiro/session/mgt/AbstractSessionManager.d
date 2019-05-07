@@ -25,7 +25,6 @@ import hunt.shiro.session.Session;
  * application-wide {@link #getGlobalSessionTimeout() globalSessionTimeout}.  Default global session timeout is
  * {@code 30} minutes.
  *
- * @since 0.1
  */
 //TODO - deprecate this class (see SHIRO-240):
 //This is only here to make available a common attribute 'globalSessionTimeout' to subclasses, particularly to make it

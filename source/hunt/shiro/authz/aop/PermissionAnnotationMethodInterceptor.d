@@ -23,7 +23,6 @@ import hunt.shiro.aop.AnnotationResolver;
 /**
  * Checks to see if a @{@link hunt.shiro.authz.annotation.RequiresPermissions RequiresPermissions} annotation is declared, and if so, performs
  * a permission check to see if the calling <code>Subject</code> is allowed to call the method.
- * @since 0.9
  */
 class PermissionAnnotationMethodInterceptor : AuthorizingAnnotationMethodInterceptor {
 
@@ -42,7 +41,6 @@ class PermissionAnnotationMethodInterceptor : AuthorizingAnnotationMethodInterce
 
     /**
      * @param resolver
-     * @since 1.1
      */
      this(AnnotationResolver resolver) {
         super( new PermissionAnnotationHandler(), resolver);

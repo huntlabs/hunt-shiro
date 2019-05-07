@@ -34,7 +34,6 @@ module hunt.shiro.authc.Authenticator;
  * @see hunt.shiro.mgt.SecurityManager
  * @see AbstractAuthenticator AbstractAuthenticator
  * @see hunt.shiro.authc.pam.ModularRealmAuthenticator ModularRealmAuthenticator
- * @since 0.1
  */
 interface Authenticator {
 

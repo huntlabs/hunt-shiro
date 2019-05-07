@@ -55,7 +55,6 @@ import java.io.Serializable;
  * @see RememberMeAuthenticationToken
  * @see HostAuthenticationToken
  * @see UsernamePasswordToken
- * @since 0.1
  */
 interface AuthenticationToken : Serializable {
 

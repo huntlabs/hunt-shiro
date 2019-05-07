@@ -27,7 +27,6 @@ import hunt.shiro.ShiroException;
  * <p/>
  * If thrown, the causing exception will always be accessible via the {@link #getCause() getCause()} method.
  *
- * @since 1.0
  */
 class ExecutionException : ShiroException {
 

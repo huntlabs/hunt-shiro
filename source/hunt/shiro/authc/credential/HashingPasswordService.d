@@ -27,7 +27,6 @@ import hunt.shiro.util.ByteSource;
  * A {@code HashingPasswordService} is a {@link PasswordService} that performs password encryption and comparisons
  * based on cryptographic {@link Hash}es.
  *
- * @since 1.2
  */
 interface HashingPasswordService : PasswordService {
 

@@ -24,7 +24,6 @@ import hunt.collection;
 /**
  * A {@link PrincipalCollection} that allows modification.
  *
- * @since 0.9
  */
 interface MutablePrincipalCollection : PrincipalCollection {
 

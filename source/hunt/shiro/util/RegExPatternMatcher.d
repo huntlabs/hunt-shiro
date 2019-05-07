@@ -25,7 +25,6 @@ import java.util.regex.Matcher;
  * {@code PatternMatcher} implementation that uses standard {@link java.util.regex} objects.
  *
  * @see Pattern
- * @since 1.0
  */
 class RegExPatternMatcher : PatternMatcher {
 

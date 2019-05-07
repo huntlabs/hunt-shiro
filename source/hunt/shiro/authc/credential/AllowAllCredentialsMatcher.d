@@ -26,7 +26,6 @@ import hunt.shiro.authc.AuthenticationToken;
  * are passed in.  This can be used for testing or when credentials are implicitly trusted for a particular
  * {@link hunt.shiro.realm.Realm Realm}.
  *
- * @since 0.2
  */
 class AllowAllCredentialsMatcher : CredentialsMatcher {
 

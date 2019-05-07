@@ -33,7 +33,6 @@ import java.util.List;
  * A <tt>ModularRealmAuthorizer</tt> is an <tt>Authorizer</tt> implementation that consults one or more configured
  * {@link Realm Realm}s during an authorization operation.
  *
- * @since 0.2
  */
 class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissionResolverAware {
 
@@ -96,7 +95,6 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      *
      * @return the PermissionResolver to be used on <em>all</em> configured realms, or <code>null</code (the default)
      *         if realm instances will each configure their own permission resolver.
-     * @since 1.0
      */
      PermissionResolver getPermissionResolver() {
         return this.permissionResolver;
@@ -128,7 +126,6 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * It is also called after setting one or more realms via the {@link #setRealms setRealms} method to allow these
      * newly available realms to be given the <code>PermissionResolver</code> already in use.
      *
-     * @since 1.0
      */
     protected void applyPermissionResolverToRealms() {
         PermissionResolver resolver = getPermissionResolver();
@@ -149,7 +146,6 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      *
      * @return the RolePermissionResolver to be used on <em>all</em> configured realms, or <code>null</code (the default)
      *         if realm instances will each configure their own role permission resolver.
-     * @since 1.0
      */
      RolePermissionResolver getRolePermissionResolver() {
         return this.rolePermissionResolver;
@@ -182,7 +178,6 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * It is also called after setting one or more realms via the {@link #setRealms setRealms} method to allow these
      * newly available realms to be given the <code>RolePermissionResolver</code> already in use.
      *
-     * @since 1.0
      */
     protected void applyRolePermissionResolverToRealms() {
         RolePermissionResolver resolver = getRolePermissionResolver();

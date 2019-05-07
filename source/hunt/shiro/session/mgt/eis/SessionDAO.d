@@ -37,7 +37,6 @@ import hunt.collection;
  * implementations will often return a subset of the total active sessions and perform validation a little more
  * frequently, rather than return a massive set and infrequently validate.
  *
- * @since 0.1
  */
 interface SessionDAO {
 

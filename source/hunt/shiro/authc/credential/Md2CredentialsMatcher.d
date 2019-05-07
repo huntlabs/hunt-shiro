@@ -35,7 +35,6 @@ import hunt.shiro.crypto.hash.Md2Hash;
  * two, if your application mandates high security, use the SHA-256 (or higher) hashing algorithms and their
  * supporting <code>CredentialsMatcher</code> implementations.</p>
  *
- * @since 0.9
  * deprecated("") since 1.1 - use the HashedCredentialsMatcher directly and set its
  *             {@link HashedCredentialsMatcher#setHashAlgorithmName(string) hashAlgorithmName} property.
  */

@@ -28,7 +28,6 @@ import java.util.Random;
  * Generates session IDs by using a {@link Random} instance to generate random IDs. The default {@code Random}
  * implementation is a {@link java.security.SecureRandom SecureRandom} with the {@code SHA1PRNG} algorithm.
  *
- * @since 1.0
  */
 class RandomSessionIdGenerator : SessionIdGenerator {
 

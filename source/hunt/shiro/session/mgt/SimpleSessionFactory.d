@@ -23,7 +23,6 @@ import hunt.shiro.session.Session;
 /**
  * {@code SessionFactory} implementation that generates {@link SimpleSession} instances.
  *
- * @since 1.0
  */
 class SimpleSessionFactory : SessionFactory {
 

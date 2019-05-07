@@ -39,7 +39,6 @@ import hunt.logger;
  * This class also supports setting the {@link #setResourcePath(string) resourcePath} property to create account
  * data from an .ini resource.  This will only be used if there isn't already account data in the Realm.
  *
- * @since 1.0
  */
 class IniRealm : TextConfigurationRealm {
 

@@ -33,7 +33,6 @@ import hunt.collection;
  * contains principal and credential and authorization information (roles and permissions) as instance variables and
  * exposes them via getters and setters using standard JavaBean notation.
  *
- * @since 0.1
  */
 class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationInfo {
 
@@ -93,7 +92,6 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
      * @param credentialsSalt   the salt used when hashing the credentials
      * @param realmName         the name of the realm that accesses this account data
      * @see hunt.shiro.authc.credential.HashedCredentialsMatcher HashedCredentialsMatcher
-     * @since 1.1
      */
      this(Object principal, Object hashedCredentials, ByteSource credentialsSalt, string realmName) {
         auto principalCast = cast(PrincipalCollection)principal;
@@ -133,7 +131,6 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
      * @param hashedCredentials the hashed credentials that verify identity for the account
      * @param credentialsSalt   the salt used when hashing the credentials
      * @see hunt.shiro.authc.credential.HashedCredentialsMatcher HashedCredentialsMatcher
-     * @since 1.1
      */
      this(PrincipalCollection principals, Object hashedCredentials, ByteSource credentialsSalt) {
         this.authcInfo = new SimpleAuthenticationInfo(principals, hashedCredentials, credentialsSalt);
@@ -255,7 +252,6 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
      *
      * @return the salt used to hash this Account's credentials (eg for password hashing), or {@code null} if no salt
      *         was used or credentials were not hashed at all.
-     * @since 1.1
      */
      ByteSource getCredentialsSalt() {
         return this.authcInfo.getCredentialsSalt();
@@ -267,7 +263,6 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
      *
      * @param salt the salt to use to hash this Account's credentials (eg for password hashing), or {@code null} if no
      *             salt is used or credentials are not hashed at all.
-     * @since 1.1
      */
      void setCredentialsSalt(ByteSource salt) {
         this.authcInfo.setCredentialsSalt(salt);

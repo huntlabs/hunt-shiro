@@ -30,7 +30,6 @@ import hunt.collection;
  * Abstract base implementation for Shiro's concrete <code>AuthenticationStrategy</code>
  * implementations.
  *
- * @since 0.9
  */
 abstract class AbstractAuthenticationStrategy : AuthenticationStrategy {
 

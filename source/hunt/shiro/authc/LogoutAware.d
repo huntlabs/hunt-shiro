@@ -28,7 +28,6 @@ import hunt.shiro.subject.PrincipalCollection;
  * <p>All of Shiro's concrete Realm implementations implement this interface as a convenience for those wishing
  * to subclass them.
  *
- * @since 0.9
  */
 interface LogoutAware {
 

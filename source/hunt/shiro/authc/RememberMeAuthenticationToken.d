@@ -27,7 +27,6 @@ module hunt.shiro.authc.RememberMeAuthenticationToken;
  * differences of what it means to be remembered vs. authenticated.
  *
  * @see hunt.shiro.subject.Subject#isRemembered()
- * @since 0.9
  */
 interface RememberMeAuthenticationToken : AuthenticationToken {
 

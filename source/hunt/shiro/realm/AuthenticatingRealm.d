@@ -107,7 +107,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * (highly recommended for authentication data), ensure that the return values from those two methods are identical in
  * the subclass implementation.
  *
- * @since 0.2
  */
 abstract class AuthenticatingRealm : CachingRealm implements Initializable {
 
@@ -120,7 +119,6 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
     /**
      * The default suffix appended to the realm name used for caching authentication data.
      *
-     * @since 1.2
      */
     private enum string DEFAULT_AUTHORIZATION_CACHE_SUFFIX = ".authenticationCache";
 
@@ -252,7 +250,6 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      * @param authenticationCache an explicit {@link Cache} instance to use for authentication caching or
      *                            {@code null} if the cache should possibly be obtained another way.
      * @see #isAuthenticationCachingEnabled()
-     * @since 1.2
      */
      void setAuthenticationCache(Cache!(Object, AuthenticationInfo) authenticationCache) {
         this.authenticationCache = authenticationCache;
@@ -266,7 +263,6 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      *         set.
      * @see #setAuthenticationCache(hunt.shiro.cache.Cache)
      * @see #isAuthenticationCachingEnabled()
-     * @since 1.2
      */
      Cache!(Object, AuthenticationInfo) getAuthenticationCache() {
         return this.authenticationCache;
@@ -285,7 +281,6 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      * @return the name of a {@link Cache} to lookup from any available {@link #getCacheManager() cacheManager} if
      *         a cache is not explicitly configured via {@link #setAuthenticationCache(hunt.shiro.cache.Cache)}.
      * @see #isAuthenticationCachingEnabled()
-     * @since 1.2
      */
      string getAuthenticationCacheName() {
         return this.authenticationCacheName;
@@ -302,7 +297,6 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      *                                {@link #getCacheManager() cacheManager} if a cache is not explicitly configured
      *                                via {@link #setAuthenticationCache(hunt.shiro.cache.Cache)}.
      * @see #isAuthenticationCachingEnabled()
-     * @since 1.2
      */
      void setAuthenticationCacheName(string authenticationCacheName) {
         this.authenticationCacheName = authenticationCacheName;
@@ -389,7 +383,6 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      * <p/>
      * This method finishes by calling {@link #onInit()} is to allow subclasses to perform any init behavior desired.
      *
-     * @since 1.2
      */
      final void init() {
         //trigger obtaining the authorization cache if possible
@@ -401,7 +394,6 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      * Template method for subclasses to implement any initialization logic.  Called from
      * {@link #init()}.
      *
-     * @since 1.2
      */
     protected void onInit() {
     }
@@ -409,7 +401,6 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
     /**
      * This implementation attempts to acquire an authentication cache if one is not already configured.
      *
-     * @since 1.2
      */
     protected void afterCacheManagerSet() {
         //trigger obtaining the authorization cache if possible
@@ -448,7 +439,6 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      * The class attribute is then returned.
      *
      * @return an available cache instance to be used for authentication caching or {@code null} if one is not available.
-     * @since 1.2
      */
     private Cache!(Object, AuthenticationInfo) getAuthenticationCacheLazy() {
 
@@ -475,7 +465,6 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      * @param token the token submitted during the authentication attempt.
      * @return any cached AuthenticationInfo corresponding to the specified token or {@code null} if there currently
      *         isn't any cached data.
-     * @since 1.2
      */
     private AuthenticationInfo getCachedAuthenticationInfo(AuthenticationToken token) {
         AuthenticationInfo info = null;
@@ -502,7 +491,6 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      *
      * @param token the authentication token submitted which resulted in a successful authentication attempt.
      * @param info  the AuthenticationInfo to cache as a result of the successful authentication attempt.
-     * @since 1.2
      */
     private void cacheAuthenticationInfoIfPossible(AuthenticationToken token, AuthenticationInfo info) {
         if (!isAuthenticationCachingEnabled(token, info)) {
@@ -532,7 +520,6 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      *              {@link #doGetAuthenticationInfo(hunt.shiro.authc.AuthenticationToken)}
      * @return {@code true} if authentication caching should be utilized based on the specified
      *         {@link AuthenticationToken} and/or {@link AuthenticationInfo}, {@code false} otherwise.
-     * @since 1.2
      */
     protected bool isAuthenticationCachingEnabled(AuthenticationToken token, AuthenticationInfo info) {
         return isAuthenticationCachingEnabled();
@@ -620,7 +607,6 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      *
      * @param token the authentication token for which any successful authentication will be cached.
      * @return the cache key to use to cache the associated {@link AuthenticationInfo} after a successful authentication.
-     * @since 1.2
      */
     protected Object getAuthenticationCacheKey(AuthenticationToken token) {
         return token != null ? token.getPrincipal() : null;
@@ -638,7 +624,6 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      *
      * @param principals the principals of the account for which to set or remove cached {@code AuthenticationInfo}.
      * @return the cache key to use when looking up cached {@link AuthenticationInfo} instances.
-     * @since 1.2
      */
     protected Object getAuthenticationCacheKey(PrincipalCollection principals) {
         return getAvailablePrincipal(principals);
@@ -650,7 +635,6 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      * If overriding in a subclass, be sure to call {@code super.doClearCache} to ensure this behavior is maintained.
      *
      * @param principals principals the principals of the account for which to clear any cached data.
-     * @since 1.2
      */
     override
     protected void doClearCache(PrincipalCollection principals) {
@@ -680,7 +664,6 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
      *
      * @param principals the principals of the account for which to clear the cached AuthorizationInfo.
      * @see #clearCache(hunt.shiro.subject.PrincipalCollection)
-     * @since 1.2
      */
     protected void clearCachedAuthenticationInfo(PrincipalCollection principals) {
         if (!isEmpty(principals)) {

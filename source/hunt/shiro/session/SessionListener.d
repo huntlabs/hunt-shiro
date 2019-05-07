@@ -22,7 +22,6 @@ module hunt.shiro.session.SessionListener;
  * Interface to be implemented by components that wish to be notified of events that occur during a
  * {@link Session Session}'s life cycle.
  *
- * @since 0.9
  */
 interface SessionListener {
 

@@ -21,7 +21,6 @@ module hunt.shiro.env.NamedObjectEnvironment;
 /**
  * An environment that supports object lookup by name.
  *
- * @since 1.2
  */
 interface NamedObjectEnvironment : Environment {
 

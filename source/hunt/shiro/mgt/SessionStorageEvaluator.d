@@ -43,7 +43,6 @@ import hunt.shiro.subject.Subject;
  * @see Subject#getSession()
  * @see Subject#getSession(bool)
  * @see DefaultSessionStorageEvaluator
- * @since 1.2
  */
 interface SessionStorageEvaluator {
 

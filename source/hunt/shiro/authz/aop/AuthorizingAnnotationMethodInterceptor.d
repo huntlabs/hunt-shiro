@@ -28,7 +28,6 @@ import hunt.shiro.authz.AuthorizationException;
  * An <tt>AnnotationMethodInterceptor</tt> that asserts the calling code is authorized to execute the method
  * before allowing the invocation to continue by inspecting code annotations to perform an access control check.
  *
- * @since 0.1
  */
 abstract class AuthorizingAnnotationMethodInterceptor : AnnotationMethodInterceptor
 {
@@ -47,7 +46,6 @@ abstract class AuthorizingAnnotationMethodInterceptor : AnnotationMethodIntercep
      *
      * @param handler
      * @param resolver
-     * @since 1.1
      */
      this( AuthorizingAnnotationHandler handler,
                                                    AnnotationResolver resolver) {

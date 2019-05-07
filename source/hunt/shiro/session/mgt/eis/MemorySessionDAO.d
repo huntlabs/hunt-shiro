@@ -50,7 +50,6 @@ import java.util.concurrent.ConcurrentMap;
  * {@code Cache} usage to avoid this problem.
  *
  * @see CachingSessionDAO
- * @since 0.1
  */
 class MemorySessionDAO : AbstractSessionDAO {
 

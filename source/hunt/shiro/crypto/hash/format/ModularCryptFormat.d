@@ -24,7 +24,6 @@ module hunt.shiro.crypto.hash.format.ModularCryptFormat;
  *
  * @see <a href="http://en.wikipedia.org/wiki/Crypt_(Unix)">Crypt (unix)</a>
  * @see <a href="http://www.tummy.com/journals/entries/jafo_20110117_054918">MCF Journal Entry</a>
- * @since 1.2
  */
 interface ModularCryptFormat : HashFormat {
 

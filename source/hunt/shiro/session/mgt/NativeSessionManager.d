@@ -25,7 +25,6 @@ import java.util.Date;
  * for the creation, persistence and removal of {@link hunt.shiro.session.Session Session} instances and their
  * lifecycles.
  *
- * @since 1.0
  */
 interface NativeSessionManager : SessionManager {
 

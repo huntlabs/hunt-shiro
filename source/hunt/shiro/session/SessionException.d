@@ -25,7 +25,6 @@ import hunt.shiro.ShiroException;
  * General security exception attributed to problems during interaction with the system during
  * a session.
  *
- * @since 0.1
  */
 class SessionException : ShiroException {
 

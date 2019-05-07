@@ -53,7 +53,6 @@ import java.io.Serializable;
  *
  * @see hunt.shiro.authz.AuthorizationInfo AuthorizationInfo
  * @see Account
- * @since 0.9
  */
 interface AuthenticationInfo : Serializable {
 

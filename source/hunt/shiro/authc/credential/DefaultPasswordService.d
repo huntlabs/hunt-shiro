@@ -33,7 +33,6 @@ import hunt.logger;
  * All hashing operations are performed by the internal {@link #getHashService() hashService}.  After the hash
  * is computed, it is formatted into a string value via the internal {@link #getHashFormat() hashFormat}.
  *
- * @since 1.2
  */
 class DefaultPasswordService : HashingPasswordService {
 

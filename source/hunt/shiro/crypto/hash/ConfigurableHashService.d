@@ -24,7 +24,6 @@ import hunt.shiro.util.ByteSource;
 /**
  * A {@code HashService} that allows configuration of its strategy via JavaBeans-compatible setter methods.
  *
- * @since 1.2
  */
 interface ConfigurableHashService : HashService {
 

@@ -32,7 +32,6 @@ import hunt.logger;
  * {@link ScheduledExecutorService} to call {@link ValidatingSessionManager#validateSessions()} every
  * <em>{@link #getInterval interval}</em> milliseconds.
  *
- * @since 0.9
  */
 class ExecutorServiceSessionValidationScheduler : SessionValidationScheduler, Runnable {
 

@@ -32,7 +32,6 @@ import hunt.String;
  * comparison.  This class is essentially a bridge between the generic CredentialsMatcher interface and the
  * more specific {@code PasswordService} component.
  *
- * @since 1.2
  */
 class PasswordMatcher : CredentialsMatcher {
 

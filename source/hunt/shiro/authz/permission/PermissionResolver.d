@@ -45,7 +45,6 @@ import hunt.shiro.authz.Permission;
  * @see hunt.shiro.authz.ModularRealmAuthorizer#setPermissionResolver(PermissionResolver) ModularRealmAuthorizer.setPermissionResolver
  * @see hunt.shiro.realm.AuthorizingRealm#setPermissionResolver(PermissionResolver) AuthorizingRealm.setPermissionResolver
  * @see PermissionResolverAware PermissionResolverAware
- * @since 0.9
  */
 interface PermissionResolver {
 

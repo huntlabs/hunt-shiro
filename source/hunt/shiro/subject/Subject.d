@@ -55,7 +55,6 @@ import java.util.concurrent.Callable;
  * These overloaded *Permission methods forgo type-safety for the benefit of convenience and simplicity,
  * so you should choose which ones to use based on your preferences and needs.
  *
- * @since 0.1
  */
 interface Subject {
 
@@ -115,7 +114,6 @@ interface Subject {
      * @param permission the string representation of a Permission that is being checked.
      * @return true if this Subject is permitted, false otherwise.
      * @see #isPermitted(Permission permission)
-     * @since 0.9
      */
     bool isPermitted(string permission);
 
@@ -143,7 +141,6 @@ interface Subject {
      *         permissions in the given list.  A true value at an index indicates this Subject is permitted for
      *         for the associated {@code Permission} string in the list.  A false value at an index
      *         indicates otherwise.
-     * @since 0.9
      */
     bool[] isPermitted(string[] permissions...);
 
@@ -175,7 +172,6 @@ interface Subject {
      * @param permissions the string representations of the Permissions that are being checked.
      * @return true if this Subject has all of the specified permissions, false otherwise.
      * @see #isPermittedAll(Collection)
-     * @since 0.9
      */
     bool isPermittedAll(string[] permissions...);
 
@@ -202,7 +198,6 @@ interface Subject {
      * @param permission the string representation of the Permission to check.
      * @throws hunt.shiro.authz.AuthorizationException
      *          if the user does not have the permission.
-     * @since 0.9
      */
     void checkPermission(string permission);
 
@@ -232,7 +227,6 @@ interface Subject {
      *
      * @param permissions the string representations of Permissions to check.
      * @throws AuthorizationException if this Subject does not have all of the given permissions.
-     * @since 0.9
      */
     void checkPermissions(string[] permissions...);
 
@@ -309,7 +303,6 @@ interface Subject {
      * @param roleIdentifiers roleIdentifiers the application-specific role identifiers to check (usually role ids or role names).
      * @throws AuthorizationException hunt.shiro.authz.AuthorizationException
      *          if this Subject does not have all of the specified roles.
-     * @since 1.1.0
      */
     void checkRoles(string... roleIdentifiers);
 
@@ -327,7 +320,6 @@ interface Subject {
      *              Authentication subsystem for verification.
      * @throws hunt.shiro.authc.AuthenticationException
      *          if the authentication attempt fails.
-     * @since 0.9
      */
     void login(AuthenticationToken token);
 
@@ -341,7 +333,6 @@ interface Subject {
      *
      * @return {@code true} if this Subject proved their identity during their current session
      *         by providing valid credentials matching those known to the system, {@code false} otherwise.
-     * @since 0.9
      */
     bool isAuthenticated();
 
@@ -393,7 +384,6 @@ interface Subject {
      *
      * @return {@code true} if this {@code Subject}'s identity (aka {@link #getPrincipals() principals}) is
      *         remembered from a successful authentication during a previous session, {@code false} otherwise.
-     * @since 1.0
      */
     bool isRemembered();
 
@@ -403,7 +393,6 @@ interface Subject {
      *
      * @return the application {@code Session} associated with this Subject.
      * @see #getSession(bool)
-     * @since 0.2
      */
     Session getSession();
 
@@ -421,7 +410,6 @@ interface Subject {
      * @param create bool argument determining if a new session should be created or not if there is no existing session.
      * @return the application {@code Session} associated with this {@code Subject} or {@code null} based
      *         on the above described logic.
-     * @since 0.2
      */
     Session getSession(bool create);
 
@@ -452,7 +440,6 @@ interface Subject {
      * @param <V>      the type of return value the {@code Callable} will return
      * @return the resulting object returned by the {@code Callable}'s execution.
      * @throws ExecutionException if the {@code Callable}'s {@link Callable#call call} method.
-     * @since 1.0
      */
     <V> V execute(Callable!(V) callable);
 
@@ -466,7 +453,6 @@ interface Subject {
      * exceptions.
      *
      * @param runnable the {@code Runnable} to associate with this {@code Subject} and then execute.
-     * @since 1.0
      */
     void execute(Runnable runnable);
 
@@ -482,7 +468,6 @@ interface Subject {
      * @param callable the callable to execute as this {@code Subject}
      * @param <V>      the {@code Callable}s return value type
      * @return a {@code Callable} that can be run as this {@code Subject}.
-     * @since 1.0
      */
     <V> Callable!(V) associateWith(Callable!(V) callable);
 
@@ -502,7 +487,6 @@ interface Subject {
      * @param runnable the runnable to execute as this {@code Subject}
      * @return a {@code Runnable} that can be run as this {@code Subject} on another thread.
      * @see #associateWith (java.util.concurrent.Callable)
-     * @since 1.0
      */
     Runnable associateWith(Runnable runnable);
 
@@ -524,7 +508,6 @@ interface Subject {
      * @param principals the identity to 'run as', aka the identity to <em>assume</em> indefinitely.
      * @throws NullPointerException  if the specified principals collection is {@code null} or empty.
      * @throws IllegalStateException if this {@code Subject} does not yet have an identity of its own.
-     * @since 1.0
      */
     void runAs(PrincipalCollection principals);
 
@@ -536,7 +519,6 @@ interface Subject {
      * @return {@code true} if this {@code Subject} is 'running as' another identity other than its original one or
      *         {@code false} otherwise (normal {@code Subject} state).
      * @see #runAs
-     * @since 1.0
      */
     bool isRunAs();
 
@@ -549,7 +531,6 @@ interface Subject {
      *         {@link #runAs runAs} identity, or {@code null} if this {@code Subject} is not operating under an assumed
      *         identity (normal state).
      * @see #runAs
-     * @since 1.0
      */
     PrincipalCollection getPreviousPrincipals();
 
@@ -563,7 +544,6 @@ interface Subject {
      * @return the 'run as' (assumed) identity being released or {@code null} if this {@code Subject} is not operating
      *         under an assumed identity.
      * @see #runAs
-     * @since 1.0
      */
     PrincipalCollection releaseRunAs();
 
@@ -602,7 +582,6 @@ interface Subject {
      * will not automatically return the same instance as what is returned by the builder.  It is up to the framework
      * developer to bind the built {@code Subject} for continued use if desired.
      *
-     * @since 1.0
      */
      static class Builder {
 
@@ -769,7 +748,6 @@ interface Subject {
          * @param enabled whether or not the created Subject instance can create a new {@code Session} if one does not
          *                already exist.
          * @return this {@code Builder} instance for method chaining.
-         * @since 1.2
          */
          Builder sessionCreationEnabled(bool enabled) {
             this.subjectContext.setSessionCreationEnabled(enabled);

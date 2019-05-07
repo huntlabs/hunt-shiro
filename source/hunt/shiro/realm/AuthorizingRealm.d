@@ -49,7 +49,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * majority of Realm cases.
  *
  * @see hunt.shiro.authz.SimpleAuthorizationInfo
- * @since 0.2
  */
 abstract class AuthorizingRealm : AuthenticatingRealm
         implements Authorizer, Initializable, PermissionResolverAware, RolePermissionResolverAware {
@@ -654,7 +653,6 @@ abstract class AuthorizingRealm : AuthenticatingRealm
      * If overriding in a subclass, be sure to call {@code super.doClearCache} to ensure this behavior is maintained.
      *
      * @param principals the principals of the account for which to clear any cached AuthorizationInfo
-     * @since 1.2
      */
     override
     protected void doClearCache(PrincipalCollection principals) {

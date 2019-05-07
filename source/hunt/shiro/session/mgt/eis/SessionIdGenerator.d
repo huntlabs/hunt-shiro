@@ -36,7 +36,6 @@ import java.io.Serializable;
  *
  * @see hunt.shiro.session.mgt.eis.JavaUuidSessionIdGenerator JavaUuidSessionIdGenerator
  * @see hunt.shiro.session.mgt.eis.RandomSessionIdGenerator RandomSessionIdGenerator
- * @since 1.0
  */
 interface SessionIdGenerator {
 

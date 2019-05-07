@@ -67,7 +67,6 @@ import hunt.shiro.util.ByteSource;
  *
  * @see DefaultPasswordService
  * @see PasswordMatcher
- * @since 1.2
  */
 interface PasswordService {
 

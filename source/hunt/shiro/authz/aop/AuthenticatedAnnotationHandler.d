@@ -28,7 +28,6 @@ import hunt.shiro.authz.annotation.RequiresAuthentication;
  * Handles {@link RequiresAuthentication RequiresAuthentication} annotations and ensures the calling subject is
  * authenticated before allowing access.
  *
- * @since 0.9.0
  */
 class AuthenticatedAnnotationHandler : AuthorizingAnnotationHandler {
 

@@ -42,7 +42,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @see #clearCache(hunt.shiro.subject.PrincipalCollection)
  * @see #onLogout(hunt.shiro.subject.PrincipalCollection)
  * @see #getAvailablePrincipal(hunt.shiro.subject.PrincipalCollection)
- * @since 0.9
  */
 abstract class CachingRealm : Realm, Nameable, CacheManagerAware, LogoutAware {
 
@@ -145,7 +144,6 @@ abstract class CachingRealm : Realm, Nameable, CacheManagerAware, LogoutAware {
      * @param principals the application-specific Subject/user identifier that is logging out.
      * @see #clearCache(hunt.shiro.subject.PrincipalCollection)
      * @see #getAvailablePrincipal(hunt.shiro.subject.PrincipalCollection)
-     * @since 1.2
      */
      void onLogout(PrincipalCollection principals) {
         clearCache(principals);
@@ -162,7 +160,6 @@ abstract class CachingRealm : Realm, Nameable, CacheManagerAware, LogoutAware {
      * to {@link #doClearCache(hunt.shiro.subject.PrincipalCollection)}.
      *
      * @param principals the principals of the account for which to clear any cached data.
-     * @since 1.2
      */
     protected void clearCache(PrincipalCollection principals) {
         if (!isEmpty(principals)) {
@@ -175,7 +172,6 @@ abstract class CachingRealm : Realm, Nameable, CacheManagerAware, LogoutAware {
      * This implementation does nothing - it is a template to be overridden by subclasses if necessary.
      *
      * @param principals principals the principals of the account for which to clear any cached data.
-     * @since 1.2
      */
     protected void doClearCache(PrincipalCollection principals) {
     }
@@ -196,7 +192,6 @@ abstract class CachingRealm : Realm, Nameable, CacheManagerAware, LogoutAware {
      * @param principals the PrincipalCollection holding all principals (from all realms) associated with a single Subject.
      * @return the 'primary' principal attributed to this particular realm, or the fallback 'master' principal if it
      *         exists, or if not {@code null}.
-     * @since 1.2
      */
     protected Object getAvailablePrincipal(PrincipalCollection principals) {
         Object primary = null;

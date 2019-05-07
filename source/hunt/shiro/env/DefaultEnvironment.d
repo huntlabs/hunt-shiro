@@ -29,7 +29,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * Simple/default {@code Environment} implementation that stores Shiro objects as key-value pairs in a
  * {@link java.util.Map Map} instance.  The key is the object name, the value is the object itself.
  *
- * @since 1.2
  */
 class DefaultEnvironment : NamedObjectEnvironment, Destroyable {
 

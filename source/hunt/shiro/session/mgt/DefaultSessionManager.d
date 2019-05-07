@@ -35,7 +35,6 @@ import java.util.Date;
  * Default business-tier implementation of a {@link ValidatingSessionManager}.  All session CRUD operations are
  * delegated to an internal {@link SessionDAO}.
  *
- * @since 0.1
  */
 class DefaultSessionManager : AbstractValidatingSessionManager implements CacheManagerAware {
 
@@ -71,7 +70,6 @@ class DefaultSessionManager : AbstractValidatingSessionManager implements CacheM
      * is a {@link SimpleSessionFactory}.
      *
      * @return the {@code SessionFactory} used to generate new {@link Session} instances.
-     * @since 1.0
      */
      SessionFactory getSessionFactory() {
         return sessionFactory;
@@ -82,7 +80,6 @@ class DefaultSessionManager : AbstractValidatingSessionManager implements CacheM
      * is a {@link SimpleSessionFactory}.
      *
      * @param sessionFactory the {@code SessionFactory} used to generate new {@link Session} instances.
-     * @since 1.0
      */
      void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -104,7 +101,6 @@ class DefaultSessionManager : AbstractValidatingSessionManager implements CacheM
      *
      * @return {@code true} if sessions should be automatically deleted after they are discovered to be invalid,
      *         {@code false} if invalid sessions will be manually deleted by some process external to Shiro's control.
-     * @since 1.0
      */
      bool isDeleteInvalidSessions() {
         return deleteInvalidSessions;
@@ -120,7 +116,6 @@ class DefaultSessionManager : AbstractValidatingSessionManager implements CacheM
      *
      * @param deleteInvalidSessions whether or not sessions should be automatically deleted after they are discovered
      *                              to be invalid.
-     * @since 1.0
      */
     //@SuppressWarnings({"UnusedDeclaration"})
      void setDeleteInvalidSessions(bool deleteInvalidSessions) {
@@ -141,7 +136,6 @@ class DefaultSessionManager : AbstractValidatingSessionManager implements CacheM
      * setting a {@code SessionDAO} via the {@link #setSessionDAO} method to allow it to be propagated
      * in either case.
      *
-     * @since 1.0
      */
     private void applyCacheManagerToSessionDAO() {
         if (this.cacheManager != null && this.sessionDAO != null && this.sessionDAO instanceof CacheManagerAware) {

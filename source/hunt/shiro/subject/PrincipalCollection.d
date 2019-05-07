@@ -35,7 +35,6 @@ import java.util.Set;
  * @see #getPrimaryPrincipal()
  * @see #fromRealm(string realmName)
  * @see #getRealmNames()
- * @since 0.9
  */
 interface PrincipalCollection : Iterable, Serializable {
 
@@ -72,7 +71,6 @@ interface PrincipalCollection : Iterable, Serializable {
      * implementation.
      *
      * @return the primary principal used to uniquely identify the owning account/Subject
-     * @since 1.0
      */
     Object getPrimaryPrincipal();
 

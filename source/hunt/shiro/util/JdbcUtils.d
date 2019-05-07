@@ -32,7 +32,6 @@ import hunt.logger;
  * They were copied here to prevent Spring dependencies in the Shiro core API.  The original license conditions
  * (Apache 2.0) have been maintained.
  *
- * @since 0.2
  */
 class JdbcUtils {
 

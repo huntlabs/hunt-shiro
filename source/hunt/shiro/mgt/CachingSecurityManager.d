@@ -18,6 +18,7 @@
  */
 module hunt.shiro.mgt.CachingSecurityManager;
 
+
 import hunt.shiro.cache.CacheManager;
 import hunt.shiro.cache.CacheManagerAware;
 import hunt.shiro.event.EventBus;
@@ -35,7 +36,6 @@ import hunt.shiro.util.LifecycleUtils;
  * instantiation.  As caching strategies can vary greatly depending on an application's needs, a {@code CacheManager}
  * instance must be explicitly configured if caching across the framework is to be enabled.
  *
- * @since 0.9
  */
 abstract class CachingSecurityManager : SecurityManager, Destroyable, CacheManagerAware, EventBusAware {
 
@@ -46,7 +46,6 @@ abstract class CachingSecurityManager : SecurityManager, Destroyable, CacheManag
 
     /**
      * The EventBus to use to use to publish and receive events of interest during Shiro's lifecycle.
-     * @since 1.3
      */
     private EventBus eventBus;
 
@@ -96,7 +95,6 @@ abstract class CachingSecurityManager : SecurityManager, Destroyable, CacheManag
      * Returns the {@code EventBus} used by this SecurityManager and potentially any of its children components.
      *
      * @return the {@code EventBus} used by this SecurityManager and potentially any of its children components.
-     * @since 1.3
      */
      EventBus getEventBus() {
         return eventBus;
@@ -112,7 +110,6 @@ abstract class CachingSecurityManager : SecurityManager, Destroyable, CacheManag
      *
      * @param eventBus the EventBus used by this {@code SecurityManager} and potentially any of its
      *                     children components.
-     * @since 1.3
      */
      void setEventBus(EventBus eventBus) {
         this.eventBus = eventBus;
@@ -120,12 +117,11 @@ abstract class CachingSecurityManager : SecurityManager, Destroyable, CacheManag
     }
 
     /**
-     * @since 1.3
      */
     protected void applyEventBusToCacheManager() {
         auto cacheManagerCast = cast(EventBusAware)this.cacheManager;
         if (this.eventBus != null && this.cacheManager != null && cacheManagerCast !is null) {
-            ().setEventBus(this.eventBus);
+            cacheManagerCast.setEventBus(this.eventBus);
         }
     }
 
@@ -133,7 +129,6 @@ abstract class CachingSecurityManager : SecurityManager, Destroyable, CacheManag
      * Template callback to notify subclasses that an {@link EventBus EventBus} has been set and is available for use
      * via the {@link #getEventBus() getEventBus()} method.
      *
-     * @since 1.3
      */
     protected void afterEventBusSet() {
         applyEventBusToCacheManager();

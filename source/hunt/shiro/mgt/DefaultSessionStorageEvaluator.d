@@ -25,7 +25,6 @@ import hunt.shiro.subject.Subject;
  * storing Subject state.  See the {@link #isSessionStorageEnabled(hunt.shiro.subject.Subject)}
  * method for exact behavior.
  *
- * @since 1.2
  */
 class DefaultSessionStorageEvaluator : SessionStorageEvaluator {
 

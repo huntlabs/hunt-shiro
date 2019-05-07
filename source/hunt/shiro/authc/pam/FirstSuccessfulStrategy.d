@@ -35,7 +35,6 @@ import hunt.collection;
  * which one meets your needs better.
  *
  * @see AtLeastOneSuccessfulStrategy AtLeastOneSuccessfulAuthenticationStrategy
- * @since 0.9
  */
 class FirstSuccessfulStrategy : AbstractAuthenticationStrategy {
 

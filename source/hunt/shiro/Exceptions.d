@@ -14,7 +14,7 @@ class AuthenticationException : ShiroException {
 /**
  * Exception thrown if there is a problem during authorization (access control check).
  */
-class AuthorizationException : ShiroException
+class AuthorizationException : ShiroException {
     mixin BasicExceptionCtors;
 }
 
@@ -39,7 +39,7 @@ class EnvironmentException : ShiroException {
  * Thrown by {@link PermissionResolver#resolvePermission(string)} when the string being parsed is not
  * valid for that resolver.
  */
-class InvalidPermissionStringException : ShiroException
+class InvalidPermissionStringException : ShiroException {
     mixin BasicExceptionCtors;
 }
 
@@ -70,7 +70,6 @@ class CredentialsException : AuthenticationException {
  * supported by one or more configured {@link hunt.shiro.realm.Realm Realm}s.
  *
  * @see hunt.shiro.authc.pam.AuthenticationStrategy
- * @since 0.2
  */
 class UnsupportedTokenException : AuthenticationException {
     mixin BasicExceptionCtors;
@@ -99,7 +98,6 @@ class ExcessiveAttemptsException : AccountException {
  * invoking the authentication might catch this exception and redirect the user to an appropriate
  * view to allow them to update their password or other credentials mechanism.
  *
- * @since 0.1
  */
 class ExpiredCredentialsException : CredentialsException {
     mixin BasicExceptionCtors;
@@ -116,7 +114,6 @@ class ExpiredCredentialsException : CredentialsException {
  * the user know if they entered incorrect credentials is at the discretion of those
  * responsible for defining the view and what happens when this exception occurs.
  *
- * @since 0.1
  */
 class IncorrectCredentialsException : CredentialsException {
     mixin BasicExceptionCtors;
@@ -131,7 +128,6 @@ class IncorrectCredentialsException : CredentialsException {
  * authentication attempts take place during a specific period of time (perhaps indicating a
  * hacking attempt).
  *
- * @since 0.1
  */
 class LockedAccountException : DisabledAccountException {
     mixin BasicExceptionCtors;
@@ -159,7 +155,6 @@ class DisabledSessionException : SessionException {
  * stopped explicitly due to inactivity (i.e. time-out), as opposed to stopping due to log-out or
  * other reason.
  *
- * @since 0.1
  */
 class ExpiredSessionException : StoppedSessionException {
     mixin BasicExceptionCtors;
@@ -234,7 +229,6 @@ class UnauthorizedException : AuthorizationException {
  * or if the client has been enabled access but is not permitted to perform a particular operation
  * or access a particular resource.
  *
- * @since 0.1
  */
 class HostUnauthorizedException : UnauthorizedException {
     mixin BasicExceptionCtors;

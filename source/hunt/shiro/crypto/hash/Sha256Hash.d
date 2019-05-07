@@ -30,7 +30,6 @@ import hunt.shiro.codec.Hex;
  * <b>JDK Version Note</b> - Attempting to instantiate this class on JREs prior to version 1.4.0 will throw
  * an {@link IllegalStateException IllegalStateException}
  *
- * @since 0.9
  */
 class Sha256Hash : SimpleHash {
 

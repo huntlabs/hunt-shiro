@@ -29,7 +29,6 @@ import hunt.shiro.subject.SubjectContext;
  * A RememberMeManager is responsible for remembering a Subject's identity across that Subject's sessions with
  * the application.
  *
- * @since 0.9
  */
 interface RememberMeManager {
 
@@ -43,7 +42,6 @@ interface RememberMeManager {
      * @param subjectContext the contextual data, usually provided by a {@link Subject.Builder} implementation, that
      *                       is being used to construct a {@link Subject} instance.
      * @return he remembered principals or {@code null} if none could be acquired.
-     * @since 1.0
      */
     PrincipalCollection getRememberedPrincipals(SubjectContext subjectContext);
 
@@ -55,7 +53,6 @@ interface RememberMeManager {
      *
      * @param subjectContext the contextual data, usually provided by a {@link Subject.Builder} implementation, that
      *                       is being used to construct a {@link Subject} instance.
-     * @since 1.0
      */
     void forgetIdentity(SubjectContext subjectContext);
 
@@ -66,7 +63,6 @@ interface RememberMeManager {
      * @param subject the subject that executed a successful authentication attempt
      * @param token   the authentication token submitted resulting in a successful authentication attempt
      * @param info    the authenticationInfo returned as a result of the successful authentication attempt
-     * @since 1.0
      */
     void onSuccessfulLogin(Subject subject, AuthenticationToken token, AuthenticationInfo info);
 
@@ -77,7 +73,6 @@ interface RememberMeManager {
      * @param subject the subject that executed the failed authentication attempt
      * @param token   the authentication token submitted resulting in the failed authentication attempt
      * @param ae      the authentication exception thrown as a result of the failed authentication attempt
-     * @since 1.0
      */
     void onFailedLogin(Subject subject, AuthenticationToken token, AuthenticationException ae);
 
@@ -86,7 +81,6 @@ interface RememberMeManager {
      * principals for the Subject.
      *
      * @param subject the subject logging out.
-     * @since 1.0
      */
     void onLogout(Subject subject);
 }

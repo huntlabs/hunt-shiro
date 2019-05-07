@@ -23,7 +23,6 @@ module hunt.shiro.crypto.hash.format.ProvidedHashFormat;
 /**
  * An enum representing Shiro's default provided {@link HashFormat} implementations.
  *
- * @since 1.2
  */
 public enum ProvidedHashFormat {
 

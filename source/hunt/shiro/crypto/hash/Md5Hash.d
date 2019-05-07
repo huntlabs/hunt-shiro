@@ -28,7 +28,6 @@ import hunt.shiro.codec.Hex;
  * See the {@link SimpleHash SimpleHash} parent class JavaDoc for a detailed explanation of Hashing
  * techniques and how the overloaded constructors function.
  *
- * @since 0.9
  */
 class Md5Hash : SimpleHash {
 

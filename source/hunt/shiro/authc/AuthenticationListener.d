@@ -23,7 +23,6 @@ import hunt.shiro.subject.PrincipalCollection;
 /**
  * An {@code AuthenticationListener} listens for notifications while {@code Subject}s authenticate with the system.
  *
- * @since 0.9
  */
 interface AuthenticationListener {
 

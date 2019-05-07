@@ -36,7 +36,6 @@ import hunt.shiro.util.ByteSource;
  *
  * @see hunt.shiro.authc.credential.HashedCredentialsMatcher
  *
- * @since 1.1
  */
 interface SaltedAuthenticationInfo : AuthenticationInfo {
 

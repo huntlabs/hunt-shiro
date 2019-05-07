@@ -69,7 +69,6 @@ import hunt.collection;
  * {@code hunt.shiro.web.DefaultWebSecurityManager} implementation, which
  * <em>does</em> support {@code RememberMe} services by default at startup.
  *
- * @since 0.2
  */
 class DefaultSecurityManager : SessionsSecurityManager {
 
@@ -134,7 +133,6 @@ class DefaultSecurityManager : SessionsSecurityManager {
      * @return the {@code SubjectDAO} responsible for persisting Subject state, typically used after login or when an
      *         Subject identity is discovered (eg after RememberMe services).
      * @see DefaultSubjectDAO
-     * @since 1.2
      */
      SubjectDAO getSubjectDAO() {
         return subjectDAO;
@@ -148,7 +146,6 @@ class DefaultSecurityManager : SessionsSecurityManager {
      * @param subjectDAO the {@code SubjectDAO} responsible for persisting Subject state, typically used after login or when an
      *                   Subject identity is discovered (eg after RememberMe services).
      * @see DefaultSubjectDAO
-     * @since 1.2
      */
      void setSubjectDAO(SubjectDAO subjectDAO) {
         this.subjectDAO = subjectDAO;
@@ -326,7 +323,6 @@ class DefaultSecurityManager : SessionsSecurityManager {
      * @see #resolvePrincipals(hunt.shiro.subject.SubjectContext)
      * @see #doCreateSubject(hunt.shiro.subject.SubjectContext)
      * @see #save(hunt.shiro.subject.Subject)
-     * @since 1.0
      */
      Subject createSubject(SubjectContext subjectContext) {
         //create a copy so we don't modify the argument's backing map:
@@ -366,7 +362,6 @@ class DefaultSecurityManager : SessionsSecurityManager {
      * @return a {@code Subject} instance reflecting the data in the specified {@code SubjectContext} data map.
      * @see #getSubjectFactory()
      * @see SubjectFactory#createSubject(hunt.shiro.subject.SubjectContext)
-     * @since 1.2
      */
     protected Subject doCreateSubject(SubjectContext context) {
         return getSubjectFactory().createSubject(context);
@@ -380,7 +375,6 @@ class DefaultSecurityManager : SessionsSecurityManager {
      *
      * @param subject the subject for which state will potentially be persisted
      * @see SubjectDAO#save(hunt.shiro.subject.Subject)
-     * @since 1.2
      */
     protected void save(Subject subject) {
         this.subjectDAO.save(subject);
@@ -394,7 +388,6 @@ class DefaultSecurityManager : SessionsSecurityManager {
      *
      * @param subject the subject for which state will be removed
      * @see SubjectDAO#delete(hunt.shiro.subject.Subject)
-     * @since 1.2
      */
     protected void delete(Subject subject) {
         this.subjectDAO.delete(subject);
@@ -407,7 +400,6 @@ class DefaultSecurityManager : SessionsSecurityManager {
      *
      * @param context the subject context data that may contain a SecurityManager instance.
      * @return The SubjectContext to use to pass to a {@link SubjectFactory} for subject creation.
-     * @since 1.0
      */
     //@SuppressWarnings({"unchecked"})
     protected SubjectContext ensureSecurityManager(SubjectContext context) {
@@ -431,7 +423,6 @@ class DefaultSecurityManager : SessionsSecurityManager {
      *
      * @param context the subject context data that may resolve a Session instance.
      * @return The context to use to pass to a {@link SubjectFactory} for subject creation.
-     * @since 1.0
      */
     //@SuppressWarnings({"unchecked"})
     protected SubjectContext resolveSession(SubjectContext context) {
@@ -486,7 +477,6 @@ class DefaultSecurityManager : SessionsSecurityManager {
      * @param context the subject context data that may provide (directly or indirectly through one of its values) a
      *                {@link PrincipalCollection} identity.
      * @return The Subject context to use to pass to a {@link SubjectFactory} for subject creation.
-     * @since 1.0
      */
     //@SuppressWarnings({"unchecked"})
     protected SubjectContext resolvePrincipals(SubjectContext context) {
@@ -557,8 +547,9 @@ class DefaultSecurityManager : SessionsSecurityManager {
                 tracef("Logging out subject with primary principal {}", principals.getPrimaryPrincipal());
             }
             Authenticator authc = getAuthenticator();
-            if (authc instanceof LogoutAware) {
-                ((LogoutAware) authc).onLogout(principals);
+            LogoutAware la = cast(LogoutAware) authc;
+            if (la !is null) {
+                la.onLogout(principals);
             }
         }
 

@@ -41,7 +41,6 @@ import java.io.Serializable;
  * ID is also an auto-generated primary key), they can simply ignore the {@code SessionIdGenerator} concept
  * entirely and just return the data store's ID from the {@link #doCreate} implementation.
  *
- * @since 1.0
  */
 abstract class AbstractSessionDAO : SessionDAO {
 

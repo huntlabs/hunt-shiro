@@ -43,7 +43,6 @@ import hunt.shiro.authz.annotation.Logical;
  * an {@link hunt.shiro.authz.AuthorizationException AuthorizationException} will be thrown.
  *
  * @see hunt.shiro.subject.Subject#checkPermission
- * @since 0.1
  */
 // @Target({ElementType.TYPE, ElementType.METHOD})
 // @Retention(RetentionPolicy.RUNTIME)
@@ -57,7 +56,6 @@ public interface RequiresPermissions {
     
     /**
      * The logical operation for the permission checks in case multiple roles are specified. AND is the default
-     * @since 1.1.0
      */
     //Logical logical() default Logical.AND; 
     Logical logical(); 

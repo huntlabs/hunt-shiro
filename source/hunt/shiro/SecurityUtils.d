@@ -26,7 +26,6 @@ import hunt.shiro.util.ThreadContext;
 /**
  * Accesses the currently accessible {@code Subject} for the calling code depending on runtime environment.
  *
- * @since 0.2
  */
 abstract class SecurityUtils {
 

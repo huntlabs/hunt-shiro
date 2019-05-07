@@ -83,7 +83,6 @@ import hunt.shiro.util.StringUtils;
  * @see ModularCryptFormat
  * @see ParsableHashFormat
  *
- * @since 1.2
  */
 class Shiro1CryptFormat : ModularCryptFormat, ParsableHashFormat {
 

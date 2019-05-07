@@ -50,7 +50,6 @@ import hunt.collection;
  * Notice there is no use of the Shiro API in the 2nd code block, encouraging the principle of loose coupling across
  * your codebase.
  *
- * @since 1.0
  */
 // class SubjectAwareExecutorService : SubjectAwareExecutor, ExecutorService {
 

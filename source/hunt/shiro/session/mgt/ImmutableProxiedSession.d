@@ -38,7 +38,6 @@ import hunt.shiro.session.Session;
  * </ul>
  * Any other method invocation not listed above will result in a corresponding call to the underlying <code>Session</code>.
  *
- * @since 0.9
  */
 class ImmutableProxiedSession : ProxiedSession {
 

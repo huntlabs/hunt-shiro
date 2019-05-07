@@ -58,7 +58,6 @@ import hunt.logger;
  * {@code CipherService}'s {@link hunt.shiro.crypto.AesCipherService#generateNewKey() generateNewKey} method
  * and using that result as the {@link #setCipherKey cipherKey} configuration attribute.
  *
- * @since 0.9
  */
 abstract class AbstractRememberMeManager : RememberMeManager {
 

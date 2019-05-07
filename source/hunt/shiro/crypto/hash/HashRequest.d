@@ -26,7 +26,6 @@ import hunt.shiro.util.ByteSource;
  * {@link HashRequest.Builder} more convenient.
  *
  * @see HashRequest.Builder
- * @since 1.2
  */
 interface HashRequest {
 
@@ -80,7 +79,6 @@ interface HashRequest {
      * A Builder class representing the Builder design pattern for constructing {@link HashRequest} instances.
      *
      * @see SimpleHashRequest
-     * @since 1.2
      */
     static class Builder {
 

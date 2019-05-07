@@ -84,7 +84,7 @@ class SimpleAccountRealm : AuthorizingRealm {
     }
 
      void addAccount(string username, string password) {
-        addAccount(username, password, (string[]) null);
+        addAccount(username, password, cast(string[]) null);
     }
 
      void addAccount(string username, string password, string[] roles...) {
@@ -155,16 +155,16 @@ class SimpleAccountRealm : AuthorizingRealm {
     }
 
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token){
-        UsernamePasswordToken upToken = (UsernamePasswordToken) token;
+        UsernamePasswordToken upToken = cast(UsernamePasswordToken) token;
         SimpleAccount account = getUser(upToken.getUsername());
 
         if (account !is null) {
 
             if (account.isLocked()) {
-                throw new LockedAccountException("Account [" ~ account ~ "] is locked.");
+                throw new LockedAccountException("Account [" ~ account.toString() ~ "] is locked.");
             }
             if (account.isCredentialsExpired()) {
-                string msg = "The credentials for account [" ~ account ~ "] are expired";
+                string msg = "The credentials for account [" ~ account.toString() ~ "] are expired";
                 throw new ExpiredCredentialsException(msg);
             }
 

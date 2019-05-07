@@ -93,7 +93,7 @@ class AllSuccessfulStrategy : AbstractAuthenticationStrategy {
             throw new UnknownAccountException(msg);
         }
 
-        tracef("Account successfully authenticated using realm [{}]", realm);
+        tracef("Account successfully authenticated using realm [%s]", realm);
 
         // If non-null account is returned, then the realm was able to authenticate the
         // user - so merge the account with any accumulated before:

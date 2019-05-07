@@ -207,9 +207,9 @@ module hunt.shiro.config.IniSecurityManagerFactory;
 //                 if (existingName  is null || existingName.startsWith(typeid(realm).name)) {
 //                     if (realm instanceof Nameable) {
 //                         ((Nameable) realm).setName(name);
-//                         tracef("Applied name '{}' to Nameable realm instance {}", name, realm);
+//                         tracef("Applied name '%s' to Nameable realm instance %s", name, realm);
 //                     } else {
-//                         info("Realm does not implement the {} interface.  Configured name will not be applied.",
+//                         info("Realm does not implement the %s interface.  Configured name will not be applied.",
 //                                 typeid(Nameable).name);
 //                     }
 //                 }

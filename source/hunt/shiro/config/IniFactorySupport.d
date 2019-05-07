@@ -115,7 +115,7 @@ module hunt.shiro.config.IniFactorySupport;
 //     protected Ini resolveIni() {
 //         Ini ini = getIni();
 //         if (CollectionUtils.isEmpty(ini)) {
-//             tracef("Null or empty Ini instance.  Falling back to the default {} file.", DEFAULT_INI_RESOURCE_PATH);
+//             tracef("Null or empty Ini instance.  Falling back to the default %s file.", DEFAULT_INI_RESOURCE_PATH);
 //             ini = loadDefaultClassPathIni();
 //         }
 //         return ini;

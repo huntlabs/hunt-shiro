@@ -21,17 +21,21 @@ module hunt.shiro.realm.text.PropertiesRealm;
 import hunt.shiro.ShiroException;
 import hunt.shiro.io.ResourceUtils;
 import hunt.shiro.util.Destroyable;
-import hunt.logger;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.Properties;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import hunt.Exceptions;
+import hunt.logger;
+import hunt.util.Common;
+
+
+// import java.io.File;
+// import java.io.IOException;
+// import java.io.InputStream;
+// import java.util.Enumeration;
+// import java.util.Properties;
+// import java.util.concurrent.ExecutorService;
+// import java.util.concurrent.Executors;
+// import java.util.concurrent.ScheduledExecutorService;
+// import java.util.concurrent.TimeUnit;
 
 /**
  * A {@link TextConfigurationRealm} that defers all logic to the parent class, but just enables
@@ -79,9 +83,7 @@ import java.util.concurrent.TimeUnit;
  * role.contractor = application:use:timesheet</code>
  *
  */
-class PropertiesRealm : TextConfigurationRealm implements Destroyable, Runnable {
-
-    //TODO - complete JavaDoc
+class PropertiesRealm : TextConfigurationRealm, Destroyable, Runnable {
 
     /*-------------------------------------------
     |             C O N S T A N T S             |
@@ -102,7 +104,7 @@ class PropertiesRealm : TextConfigurationRealm implements Destroyable, Runnable 
     protected long fileLastModified;
     protected int reloadIntervalSeconds = DEFAULT_RELOAD_INTERVAL_SECONDS;
 
-     PropertiesRealm() {
+    this() {
         super();
     }
 
@@ -185,7 +187,8 @@ class PropertiesRealm : TextConfigurationRealm implements Destroyable, Runnable 
     protected void startReloadThread() {
         if (this.reloadIntervalSeconds > 0) {
             this.scheduler = Executors.newSingleThreadScheduledExecutor();
-            ((ScheduledExecutorService) this.scheduler).scheduleAtFixedRate(this, reloadIntervalSeconds, reloadIntervalSeconds, TimeUnit.SECONDS);
+            (cast(ScheduledExecutorService) this.scheduler)
+            .scheduleAtFixedRate(this, reloadIntervalSeconds, reloadIntervalSeconds, TimeUnit.SECONDS);
         }
     }
 
@@ -216,35 +219,36 @@ class PropertiesRealm : TextConfigurationRealm implements Destroyable, Runnable 
     private Properties loadProperties(string resourcePath) {
         Properties props = new Properties();
 
-        InputStream is = null;
+        // InputStream is = null;
         try {
+            implementationMissing(false);
 
-            version(HUNT_DEBUG) {
-                tracef("Opening input stream for path [" ~ resourcePath ~ "]...");
-            }
+        //     version(HUNT_DEBUG) {
+        //         tracef("Opening input stream for path [" ~ resourcePath ~ "]...");
+        //     }
 
-            is = ResourceUtils.getInputStreamForPath(resourcePath);
-            if (useXmlFormat) {
+        //     is = ResourceUtils.getInputStreamForPath(resourcePath);
+        //     if (useXmlFormat) {
 
-                version(HUNT_DEBUG) {
-                    tracef("Loading properties from path [" ~ resourcePath ~ "] in XML format...");
-                }
+        //         version(HUNT_DEBUG) {
+        //             tracef("Loading properties from path [" ~ resourcePath ~ "] in XML format...");
+        //         }
 
-                props.loadFromXML(is);
-            } else {
+        //         props.loadFromXML(is);
+        //     } else {
 
-                version(HUNT_DEBUG) {
-                    tracef("Loading properties from path [" ~ resourcePath ~ "]...");
-                }
+        //         version(HUNT_DEBUG) {
+        //             tracef("Loading properties from path [" ~ resourcePath ~ "]...");
+        //         }
 
-                props.load(is);
-            }
+        //         props.load(is);
+        //     }
 
         } catch (IOException e) {
             throw new ShiroException("Error reading properties path [" ~ resourcePath ~ "].  " ~
                     "Initializing of the realm from this file failed.", e);
         } finally {
-            ResourceUtils.close(is);
+            // ResourceUtils.close(is);
         }
 
         return props;
@@ -300,28 +304,29 @@ class PropertiesRealm : TextConfigurationRealm implements Destroyable, Runnable 
         StringBuilder userDefs = new StringBuilder();
         StringBuilder roleDefs = new StringBuilder();
 
-        Enumeration!(string) propNames = (Enumeration!(string)) properties.propertyNames();
+        implementationMissing(false);
+        // Enumeration!(string) propNames = (Enumeration!(string)) properties.propertyNames();
 
-        while (propNames.hasMoreElements()) {
+        // while (propNames.hasMoreElements()) {
 
-            string key = propNames.nextElement().trim();
-            string value = properties.getProperty(key).trim();
-            version(HUNT_DEBUG) {
-                tracef("Processing properties line - key: [" ~ key ~ "], value: [" ~ value ~ "].");
-            }
+        //     string key = propNames.nextElement().trim();
+        //     string value = properties.getProperty(key).trim();
+        //     version(HUNT_DEBUG) {
+        //         tracef("Processing properties line - key: [" ~ key ~ "], value: [" ~ value ~ "].");
+        //     }
 
-            if (isUsername(key)) {
-                string username = getUsername(key);
-                userDefs.append(username).append(" = ").append(value).append("\n");
-            } else if (isRolename(key)) {
-                string rolename = getRolename(key);
-                roleDefs.append(rolename).append(" = ").append(value).append("\n");
-            } else {
-                string msg = "Encountered unexpected key/value pair.  All keys must be prefixed with either '" ~
-                        USERNAME_PREFIX ~ "' or '" ~ ROLENAME_PREFIX ~ "'.";
-                throw new IllegalStateException(msg);
-            }
-        }
+        //     if (isUsername(key)) {
+        //         string username = getUsername(key);
+        //         userDefs.append(username).append(" = ").append(value).append("\n");
+        //     } else if (isRolename(key)) {
+        //         string rolename = getRolename(key);
+        //         roleDefs.append(rolename).append(" = ").append(value).append("\n");
+        //     } else {
+        //         string msg = "Encountered unexpected key/value pair.  All keys must be prefixed with either '" ~
+        //                 USERNAME_PREFIX ~ "' or '" ~ ROLENAME_PREFIX ~ "'.";
+        //         throw new IllegalStateException(msg);
+        //     }
+        // }
 
         setUserDefinitions(userDefs.toString());
         setRoleDefinitions(roleDefs.toString());

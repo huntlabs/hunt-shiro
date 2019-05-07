@@ -189,7 +189,7 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
             throw new IllegalArgumentException("Method argument (authentication token) cannot be null.");
         }
 
-        tracef("Authentication attempt received for token [{}]", token);
+        tracef("Authentication attempt received for token [%s]", token);
 
         AuthenticationInfo info;
         try {
@@ -229,7 +229,7 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
             throw ae;
         }
 
-        tracef("Authentication successful for token [{}].  Returned account [{}]", token, info);
+        tracef("Authentication successful for token [%s].  Returned account [%s]", token, info);
 
         notifySuccess(token, info);
 

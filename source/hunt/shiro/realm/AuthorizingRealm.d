@@ -83,19 +83,19 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
     |         C O N S T R U C T O R S           |
     ============================================*/
 
-     AuthorizingRealm() {
+     this() {
         this(null, null);
     }
 
-     AuthorizingRealm(CacheManager cacheManager) {
+     this(CacheManager cacheManager) {
         this(cacheManager, null);
     }
 
-     AuthorizingRealm(CredentialsMatcher matcher) {
+     this(CredentialsMatcher matcher) {
         this(null, matcher);
     }
 
-     AuthorizingRealm(CacheManager cacheManager, CredentialsMatcher matcher) {
+     this(CacheManager cacheManager, CredentialsMatcher matcher) {
         super();
         if (cacheManager !is null) setCacheManager(cacheManager);
         if (matcher !is null) setCredentialsMatcher(matcher);
@@ -485,7 +485,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
         return isPermitted(permissions, info);
     }
 
-    protected[] bool isPermitted(List!(Permission) permissions, AuthorizationInfo info) {
+    protected bool[] isPermitted(List!(Permission) permissions, AuthorizationInfo info) {
         bool[] result;
         if (permissions !is null && !permissions.isEmpty()) {
             int size = permissions.size();
@@ -539,7 +539,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
 
     protected void checkPermission(Permission permission, AuthorizationInfo info) {
         if (!isPermitted(permission, info)) {
-            string msg = "User is not permitted [" ~ permission ~ "]";
+            string msg = "User is not permitted [" ~ permission.toString() ~ "]";
             throw new UnauthorizedException(msg);
         }
     }
@@ -583,7 +583,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
         return result;
     }
 
-    protected[] bool hasRoles(List!(string) roleIdentifiers, AuthorizationInfo info) {
+    protected bool[] hasRoles(List!(string) roleIdentifiers, AuthorizationInfo info) {
         bool[] result;
         if (roleIdentifiers !is null && !roleIdentifiers.isEmpty()) {
             int size = roleIdentifiers.size();
@@ -631,7 +631,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
         checkRoles(roles, info);
     }
 
-     void checkRoles(PrincipalCollection principal, string... roles){
+     void checkRoles(PrincipalCollection principal, string[] roles... ){
         checkRoles(principal, ArrayHelper.asList(roles));
     }
 

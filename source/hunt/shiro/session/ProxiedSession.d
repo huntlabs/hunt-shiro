@@ -35,103 +35,103 @@ class ProxiedSession : Session {
     /**
      * The proxied instance
      */
-    protected final Session delegate;
+    protected final Session session;
 
     /**
      * Constructs an instance that proxies the specified <code>target</code>.  Subclasses may access this
-     * target via the <code>protected final 'delegate'</code> attribute, i.e. <code>this.delegate</code>.
+     * target via the <code>protected final 'session'</code> attribute, i.e. <code>this.session</code>.
      *
      * @param target the specified target <code>Session</code> to proxy.
      */
-     ProxiedSession(Session target) {
+     this(Session target) {
         if (target  is null) {
             throw new IllegalArgumentException("Target session to proxy cannot be null.");
         }
-        delegate = target;
+        session = target;
     }
 
     /**
      * Immediately delegates to the underlying proxied session.
      */
      Serializable getId() {
-        return delegate.getId();
+        return session.getId();
     }
 
     /**
      * Immediately delegates to the underlying proxied session.
      */
      Date getStartTimestamp() {
-        return delegate.getStartTimestamp();
+        return session.getStartTimestamp();
     }
 
     /**
      * Immediately delegates to the underlying proxied session.
      */
      Date getLastAccessTime() {
-        return delegate.getLastAccessTime();
+        return session.getLastAccessTime();
     }
 
     /**
      * Immediately delegates to the underlying proxied session.
      */
      long getTimeout(){
-        return delegate.getTimeout();
+        return session.getTimeout();
     }
 
     /**
      * Immediately delegates to the underlying proxied session.
      */
      void setTimeout(long maxIdleTimeInMillis){
-        delegate.setTimeout(maxIdleTimeInMillis);
+        session.setTimeout(maxIdleTimeInMillis);
     }
 
     /**
      * Immediately delegates to the underlying proxied session.
      */
      string getHost() {
-        return delegate.getHost();
+        return session.getHost();
     }
 
     /**
      * Immediately delegates to the underlying proxied session.
      */
      void touch(){
-        delegate.touch();
+        session.touch();
     }
 
     /**
      * Immediately delegates to the underlying proxied session.
      */
      void stop(){
-        delegate.stop();
+        session.stop();
     }
 
     /**
      * Immediately delegates to the underlying proxied session.
      */
      Collection!(Object) getAttributeKeys(){
-        return delegate.getAttributeKeys();
+        return session.getAttributeKeys();
     }
 
     /**
      * Immediately delegates to the underlying proxied session.
      */
      Object getAttribute(Object key){
-        return delegate.getAttribute(key);
+        return session.getAttribute(key);
     }
 
     /**
      * Immediately delegates to the underlying proxied session.
      */
      void setAttribute(Object key, Object value){
-        delegate.setAttribute(key, value);
+        session.setAttribute(key, value);
     }
 
     /**
      * Immediately delegates to the underlying proxied session.
      */
      Object removeAttribute(Object key){
-        return delegate.removeAttribute(key);
+        return session.removeAttribute(key);
     }
 
 }

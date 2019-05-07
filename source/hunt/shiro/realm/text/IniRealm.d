@@ -50,7 +50,7 @@ class IniRealm : TextConfigurationRealm {
     private string resourcePath;
     private Ini ini; //reference added in 1.2 for SHIRO-322
 
-     IniRealm() {
+     this() {
         super();
     }
 
@@ -67,7 +67,7 @@ class IniRealm : TextConfigurationRealm {
      *
      * @param ini the Ini instance which will be inspected to create accounts, groups and permissions for this realm.
      */
-     IniRealm(Ini ini) {
+     this(Ini ini) {
         this();
         processDefinitions(ini);
     }
@@ -86,7 +86,7 @@ class IniRealm : TextConfigurationRealm {
      * @param resourcePath the resource path of the Ini config which will be inspected to create accounts, groups and
      *                     permissions for this realm.
      */
-     IniRealm(string resourcePath) {
+     this(string resourcePath) {
         this();
         Ini ini = Ini.fromResourcePath(resourcePath);
         this.ini = ini;
@@ -137,7 +137,7 @@ class IniRealm : TextConfigurationRealm {
                 warning("Users or Roles are already populated.  Configured Ini instance will be ignored.");
             }
             if (StringUtils.hasText(resourcePath)) {
-                warning("Users or Roles are already populated.  resourcePath '{}' will be ignored.", resourcePath);
+                warning("Users or Roles are already populated.  resourcePath '%s' will be ignored.", resourcePath);
             }
             
             tracef("Instance is already populated with users or roles.  No additional user/role population " ~
@@ -149,7 +149,7 @@ class IniRealm : TextConfigurationRealm {
             tracef("No INI instance configuration present.  Checking resourcePath...");
             
             if (StringUtils.hasText(resourcePath)) {
-                tracef("Resource path {} defined.  Creating INI instance.", resourcePath);
+                tracef("Resource path %s defined.  Creating INI instance.", resourcePath);
                 ini = Ini.fromResourcePath(resourcePath);
                 if (!CollectionUtils.isEmpty(ini)) {
                     setIni(ini);
@@ -168,22 +168,22 @@ class IniRealm : TextConfigurationRealm {
 
     private void processDefinitions(Ini ini) {
         if (CollectionUtils.isEmpty(ini)) {
-            warning("{} defined, but the ini instance is null or empty.", getClass().getSimpleName());
+            warning("%s defined, but the ini instance is null or empty.", getClass().getSimpleName());
             return;
         }
 
         Ini.Section rolesSection = ini.getSection(ROLES_SECTION_NAME);
         if (!CollectionUtils.isEmpty(rolesSection)) {
-            tracef("Discovered the [{}] section.  Processing...", ROLES_SECTION_NAME);
+            tracef("Discovered the [%s] section.  Processing...", ROLES_SECTION_NAME);
             processRoleDefinitions(rolesSection);
         }
 
         Ini.Section usersSection = ini.getSection(USERS_SECTION_NAME);
         if (!CollectionUtils.isEmpty(usersSection)) {
-            tracef("Discovered the [{}] section.  Processing...", USERS_SECTION_NAME);
+            tracef("Discovered the [%s] section.  Processing...", USERS_SECTION_NAME);
             processUserDefinitions(usersSection);
         } else {
-            info("{} defined, but there is no [{}] section defined.  This realm will not be populated with any " ~
+            info("%s defined, but there is no [%s] section defined.  This realm will not be populated with any " ~
                     "users and it is assumed that they will be populated programatically.  Users must be defined " ~
                     "for this Realm instance to be useful.", getClass().getSimpleName(), USERS_SECTION_NAME);
         }

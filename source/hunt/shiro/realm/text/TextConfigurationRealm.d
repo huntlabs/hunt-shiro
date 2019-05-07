@@ -51,10 +51,10 @@ class TextConfigurationRealm : SimpleAccountRealm {
 
     //TODO - complete JavaDoc
 
-    private volatile string userDefinitions;
-    private volatile string roleDefinitions;
+    private string userDefinitions;
+    private string roleDefinitions;
 
-     TextConfigurationRealm() {
+    this() {
         super();
     }
 

@@ -146,7 +146,7 @@ class DefaultSubjectDAO : SubjectDAO {
         if (isSessionStorageEnabled(subject)) {
             saveToSession(subject);
         } else {
-            tracef("Session storage of subject state for Subject [{}] has been disabled: identity and " ~
+            tracef("Session storage of subject state for Subject [%s] has been disabled: identity and " ~
                     "authentication state are expected to be initialized on every request or invocation.", subject);
         }
 

@@ -205,7 +205,7 @@ class JdbcRealm : AuthorizingRealm {
 
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token){
 
-        UsernamePasswordToken upToken = (UsernamePasswordToken) token;
+        UsernamePasswordToken upToken = cast(UsernamePasswordToken) token;
         string username = upToken.getUsername();
 
         // Null username is invalid
@@ -263,7 +263,7 @@ class JdbcRealm : AuthorizingRealm {
         return info;
     }
 
-    private[] string getPasswordForUser(Connection conn, string username){
+    private string[] getPasswordForUser(Connection conn, string username){
 
         string[] result;
         bool returningSeparatedSalt = false;
@@ -325,7 +325,7 @@ class JdbcRealm : AuthorizingRealm {
             throw new AuthorizationException("PrincipalCollection method argument cannot be null.");
         }
 
-        string username = (string) getAvailablePrincipal(principals);
+        string username = cast(string) getAvailablePrincipal(principals);
 
         Connection conn = null;
         Set!(string) roleNames = null;

@@ -36,11 +36,7 @@ import java.util.Date;
  * delegated to an internal {@link SessionDAO}.
  *
  */
-class DefaultSessionManager : AbstractValidatingSessionManager implements CacheManagerAware {
-
-    //TODO - complete JavaDoc
-
-
+class DefaultSessionManager : AbstractValidatingSessionManager, CacheManagerAware {
 
     private SessionFactory sessionFactory;
 
@@ -50,7 +46,7 @@ class DefaultSessionManager : AbstractValidatingSessionManager implements CacheM
 
     private bool deleteInvalidSessions;
 
-     DefaultSessionManager() {
+    this() {
         this.deleteInvalidSessions = true;
         this.sessionFactory = new SimpleSessionFactory();
         this.sessionDAO = new MemorySessionDAO();
@@ -146,7 +142,7 @@ class DefaultSessionManager : AbstractValidatingSessionManager implements CacheM
     protected Session doCreateSession(SessionContext context) {
         Session s = newSessionInstance(context);
         version(HUNT_DEBUG) {
-            tracef("Creating session for host {}", s.getHost());
+            tracef("Creating session for host %s", s.getHost());
         }
         create(s);
         return s;
@@ -208,7 +204,7 @@ class DefaultSessionManager : AbstractValidatingSessionManager implements CacheM
     protected Session retrieveSession(SessionKey sessionKey){
         Serializable sessionId = getSessionId(sessionKey);
         if (sessionId  is null) {
-            tracef("Unable to resolve session ID from SessionKey [{}].  Returning null to indicate a " ~
+            tracef("Unable to resolve session ID from SessionKey [%s].  Returning null to indicate a " ~
                     "session could not be found.", sessionKey);
             return null;
         }

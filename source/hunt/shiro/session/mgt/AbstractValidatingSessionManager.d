@@ -34,18 +34,15 @@ import hunt.collection;
  * Default business-tier implementation of the {@link ValidatingSessionManager} interface.
  *
  */
-abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
-        implements ValidatingSessionManager, Destroyable {
-
-    //TODO - complete JavaDoc
-
+abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager,
+        ValidatingSessionManager, Destroyable {
 
 
     /**
      * The default interval at which sessions will be validated (1 hour);
      * This can be overridden by calling {@link #setSessionValidationInterval(long)}
      */
-     static final long DEFAULT_SESSION_VALIDATION_INTERVAL = MILLIS_PER_HOUR;
+    enum DEFAULT_SESSION_VALIDATION_INTERVAL = MILLIS_PER_HOUR;
 
     protected bool sessionValidationSchedulerEnabled;
 
@@ -56,12 +53,12 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
 
     protected long sessionValidationInterval;
 
-     AbstractValidatingSessionManager() {
+    this() {
         this.sessionValidationSchedulerEnabled = true;
         this.sessionValidationInterval = DEFAULT_SESSION_VALIDATION_INTERVAL;
     }
 
-     bool isSessionValidationSchedulerEnabled() {
+    bool isSessionValidationSchedulerEnabled() {
         return sessionValidationSchedulerEnabled;
     }
 
@@ -111,7 +108,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
     protected final Session doGetSession(final SessionKey key){
         enableSessionValidationIfNecessary();
 
-        tracef("Attempting to retrieve session with key {}", key);
+        tracef("Attempting to retrieve session with key %s", key);
 
         Session s = retrieveSession(key);
         if (s !is null) {
@@ -149,7 +146,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
     }
 
     protected void onExpiration(Session s, ExpiredSessionException ese, SessionKey key) {
-        tracef("Session with id [{}] has expired.", s.getId());
+        tracef("Session with id [%s] has expired.", s.getId());
         try {
             onExpiration(s);
             notifyExpiration(s);
@@ -166,11 +163,12 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
     }
 
     protected void onInvalidation(Session s, InvalidSessionException ise, SessionKey key) {
-        if (ise instanceof ExpiredSessionException) {
-            onExpiration(s, (ExpiredSessionException) ise, key);
+        ExpiredSessionException ee = cast(ExpiredSessionException) ise;
+        if (ee !is null) {
+            onExpiration(s, ee, key);
             return;
         }
-        tracef("Session with id [{}] is invalid.", s.getId());
+        tracef("Session with id [%s] is invalid.", s.getId());
         try {
             onStop(s);
             notifyStop(s);
@@ -180,13 +178,15 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
     }
 
     protected void doValidate(Session session){
-        if (session instanceof ValidatingSession) {
-            ((ValidatingSession) session).validate();
+        ValidatingSession vs = cast(ValidatingSession) session;
+        if (vs !is null) {
+            vs.validate();
         } else {
             string msg = "The " ~ typeid(this).name ~ " implementation only supports validating " ~
                     "Session implementations of the " ~ typeid(ValidatingSession).name ~ " interface.  " ~
                     "Please either implement this interface in your session implementation or override the " ~
-                    typeid(AbstractValidatingSessionManager).name ~ ".doValidate(Session) method to perform validation.";
+                    typeid(AbstractValidatingSessionManager).name ~ 
+                    ".doValidate(Session) method to perform validation.";
             throw new IllegalStateException(msg);
         }
     }
@@ -286,7 +286,8 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
                     validate(s, key);
                 } catch (InvalidSessionException e) {
                     version(HUNT_DEBUG) {
-                        bool expired = (e instanceof ExpiredSessionException);
+                        ExpiredSessionException ee = cast(ExpiredSessionException)e;
+                        bool expired = ee !is null;
                         string msg = "Invalidated session with id [" ~ s.getId() ~ "]" ~
                                 (expired ? " (expired)" : " (stopped)");
                         tracef(msg);

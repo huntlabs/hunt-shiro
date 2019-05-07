@@ -544,7 +544,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
         PrincipalCollection principals = subject.getPrincipals();
         if (principals !is null && !principals.isEmpty()) {
             version(HUNT_DEBUG) {
-                tracef("Logging out subject with primary principal {}", principals.getPrimaryPrincipal());
+                tracef("Logging out subject with primary principal %s", principals.getPrimaryPrincipal());
             }
             Authenticator authc = getAuthenticator();
             LogoutAware la = cast(LogoutAware) authc;

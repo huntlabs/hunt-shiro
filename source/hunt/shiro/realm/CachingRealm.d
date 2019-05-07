@@ -164,7 +164,7 @@ abstract class CachingRealm : Realm, Nameable, CacheManagerAware, LogoutAware {
     protected void clearCache(PrincipalCollection principals) {
         if (!isEmpty(principals)) {
             doClearCache(principals);
-            tracef("Cleared cache entries for account with principals [{}]", principals);
+            tracef("Cleared cache entries for account with principals [%s]", principals);
         }
     }
 

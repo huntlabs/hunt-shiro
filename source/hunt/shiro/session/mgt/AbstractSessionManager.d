@@ -34,18 +34,18 @@ import hunt.shiro.session.Session;
 //need a globalSessionTimeout property, making this class unnecessary.
 abstract class AbstractSessionManager : SessionManager {
 
-    protected static final long MILLIS_PER_SECOND = 1000;
-    protected static final long MILLIS_PER_MINUTE = 60 * MILLIS_PER_SECOND;
-    protected static final long MILLIS_PER_HOUR = 60 * MILLIS_PER_MINUTE;
+    protected enum long MILLIS_PER_SECOND = 1000;
+    protected enum long MILLIS_PER_MINUTE = 60 * MILLIS_PER_SECOND;
+    protected enum long MILLIS_PER_HOUR = 60 * MILLIS_PER_MINUTE;
 
     /**
      * Default main session timeout value, equal to {@code 30} minutes.
      */
-     static final long DEFAULT_GLOBAL_SESSION_TIMEOUT = 30 * MILLIS_PER_MINUTE;
+    enum long DEFAULT_GLOBAL_SESSION_TIMEOUT = 30 * MILLIS_PER_MINUTE;
 
     private long globalSessionTimeout = DEFAULT_GLOBAL_SESSION_TIMEOUT;
 
-     AbstractSessionManager() {
+    this() {
     }
 
     /**

@@ -36,15 +36,13 @@ import hunt.collection;
  * {@link #getGlobalSessionTimeout() globalSessionTimeout}.
  *
  */
-abstract class AbstractNativeSessionManager : AbstractSessionManager implements NativeSessionManager, EventBusAware {
-
-
+abstract class AbstractNativeSessionManager : AbstractSessionManager, NativeSessionManager, EventBusAware {
 
     private EventBus eventBus;
 
     private Collection!(SessionListener) listeners;
 
-     AbstractNativeSessionManager() {
+    this() {
         this.listeners = new ArrayList!(SessionListener)();
     }
 
@@ -71,7 +69,7 @@ abstract class AbstractNativeSessionManager : AbstractSessionManager implements 
      *
      * @param eventBus the EventBus to use to publish SessionEvents.
      */
-     void setEventBus(EventBus eventBus) {
+    void setEventBus(EventBus eventBus) {
         this.eventBus = eventBus;
     }
 
@@ -86,7 +84,7 @@ abstract class AbstractNativeSessionManager : AbstractSessionManager implements 
         }
     }
 
-     Session start(SessionContext context) {
+    Session start(SessionContext context) {
         Session session = createSession(context);
         applyGlobalSessionTimeout(session);
         onStart(session, context);

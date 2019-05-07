@@ -200,7 +200,7 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
         AuthenticationInfo aggregate = strategy.beforeAllAttempts(realms, token);
 
         version(HUNT_DEBUG) {
-            tracef("Iterating through {} realms for PAM authentication", realms.size());
+            tracef("Iterating through %s realms for PAM authentication", realms.size());
         }
 
         foreach(Realm realm ; realms) {
@@ -209,7 +209,7 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
 
             if (realm.supports(token)) {
 
-                tracef("Attempting to authenticate token [{}] using realm [{}]", token, realm);
+                tracef("Attempting to authenticate token [%s] using realm [%s]", token, realm);
 
                 AuthenticationInfo info = null;
                 Throwable t = null;
@@ -226,7 +226,7 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
                 aggregate = strategy.afterAttempt(realm, token, info, aggregate, t);
 
             } else {
-                tracef("Realm [{}] does not support token {}.  Skipping realm.", realm, token);
+                tracef("Realm [%s] does not support token %s.  Skipping realm.", realm, token);
             }
         }
 

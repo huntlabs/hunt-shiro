@@ -43,6 +43,15 @@ class InvalidPermissionStringException : ShiroException {
     mixin BasicExceptionCtors;
 }
 
+/**
+ * General security exception attributed to problems during interaction with the system during
+ * a session.
+ *
+ */
+class SessionException : ShiroException {
+    mixin BasicExceptionCtors;
+}
+
 class UnavailableSecurityManagerException : ShiroException {
     mixin BasicExceptionCtors;
 }

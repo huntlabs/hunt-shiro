@@ -21,30 +21,32 @@ module hunt.shiro.session.mgt.DefaultSessionContext;
 import hunt.shiro.util.MapContext;
 import hunt.shiro.util.StringUtils;
 
-import java.io.Serializable;
-import java.util.Map;
+import hunt.String;
+
+// import java.io.Serializable;
+// import java.util.Map;
 
 /**
  * Default implementation of the {@link SessionContext} interface which provides getters and setters that
  * wrap interaction with the underlying backing context map.
  *
  */
-class DefaultSessionContext : MapContext implements SessionContext {
+class DefaultSessionContext : MapContext, SessionContext {
 
 
     private enum string HOST = typeid(DefaultSessionContext).name ~ ".HOST";
     private enum string SESSION_ID = typeid(DefaultSessionContext).name ~ ".SESSION_ID";
 
-     DefaultSessionContext() {
+    this() {
         super();
     }
 
-     DefaultSessionContext(Map!(string, Object) map) {
+    this(Map!(string, Object) map) {
         super(map);
     }
 
      string getHost() {
-        return getTypedValue(HOST, string.class);
+        return getTypedValue(HOST, typeid(String));
     }
 
      void setHost(string host) {
@@ -54,7 +56,7 @@ class DefaultSessionContext : MapContext implements SessionContext {
     }
 
      Serializable getSessionId() {
-        return getTypedValue(SESSION_ID, Serializable.class);
+        return getTypedValue(SESSION_ID, typeid(Serializable));
     }
 
      void setSessionId(Serializable sessionId) {

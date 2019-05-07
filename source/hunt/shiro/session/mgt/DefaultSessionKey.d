@@ -27,10 +27,10 @@ class DefaultSessionKey : SessionKey, Serializable {
 
     private Serializable sessionId;
 
-     DefaultSessionKey() {
+    this() {
     }
 
-     DefaultSessionKey(Serializable sessionId) {
+    this(Serializable sessionId) {
         this.sessionId = sessionId;
     }
 

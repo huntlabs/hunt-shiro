@@ -452,7 +452,7 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
 
             if (cacheManager !is null) {
                 string cacheName = getAuthenticationCacheName();
-                tracef("CacheManager [{}] configured.  Building authentication cache '{}'", cacheManager, cacheName);
+                tracef("CacheManager [%s] configured.  Building authentication cache '%s'", cacheManager, cacheName);
                 this.authenticationCache = cacheManager.getCache(cacheName);
             }
         }
@@ -477,9 +477,9 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
             Object key = getAuthenticationCacheKey(token);
             info = cache.get(key);
             if (info  is null) {
-                tracef("No AuthorizationInfo found in cache for key [{}]", key);
+                tracef("No AuthorizationInfo found in cache for key [%s]", key);
             } else {
-                tracef("Found cached AuthorizationInfo for key [{}]", key);
+                tracef("Found cached AuthorizationInfo for key [%s]", key);
             }
         }
 
@@ -496,7 +496,7 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
      */
     private void cacheAuthenticationInfoIfPossible(AuthenticationToken token, AuthenticationInfo info) {
         if (!isAuthenticationCachingEnabled(token, info)) {
-            tracef("AuthenticationInfo caching is disabled for info [{}].  Submitted token: [{}].", info, token);
+            tracef("AuthenticationInfo caching is disabled for info [%s].  Submitted token: [%s].", info, token);
             //return quietly, caching is disabled for this token/info pair:
             return;
         }
@@ -505,7 +505,7 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
         if (cache !is null) {
             Object key = getAuthenticationCacheKey(token);
             cache.put(key, info);
-            tracef("Cached AuthenticationInfo for continued authentication.  key=[{}], value=[{}].", key, info);
+            tracef("Cached AuthenticationInfo for continued authentication.  key=[%s], value=[%s].", key, info);
         }
     }
 
@@ -557,18 +557,18 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
         if (info  is null) {
             //otherwise not cached, perform the lookup:
             info = doGetAuthenticationInfo(token);
-            tracef("Looked up AuthenticationInfo [{}] from doGetAuthenticationInfo", info);
+            tracef("Looked up AuthenticationInfo [%s] from doGetAuthenticationInfo", info);
             if (token !is null && info !is null) {
                 cacheAuthenticationInfoIfPossible(token, info);
             }
         } else {
-            tracef("Using cached authentication info [{}] to perform credentials matching.", info);
+            tracef("Using cached authentication info [%s] to perform credentials matching.", info);
         }
 
         if (info !is null) {
             assertCredentialsMatch(token, info);
         } else {
-            tracef("No AuthenticationInfo found for submitted AuthenticationToken [{}].  Returning null.", token);
+            tracef("No AuthenticationInfo found for submitted AuthenticationToken [%s].  Returning null.", token);
         }
 
         return info;

@@ -111,7 +111,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
     protected final Session doGetSession(final SessionKey key){
         enableSessionValidationIfNecessary();
 
-        log.trace("Attempting to retrieve session with key {}", key);
+        tracef("Attempting to retrieve session with key {}", key);
 
         Session s = retrieveSession(key);
         if (s != null) {
@@ -149,7 +149,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
     }
 
     protected void onExpiration(Session s, ExpiredSessionException ese, SessionKey key) {
-        log.trace("Session with id [{}] has expired.", s.getId());
+        tracef("Session with id [{}] has expired.", s.getId());
         try {
             onExpiration(s);
             notifyExpiration(s);
@@ -170,7 +170,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
             onExpiration(s, (ExpiredSessionException) ise, key);
             return;
         }
-        log.trace("Session with id [{}] is invalid.", s.getId());
+        tracef("Session with id [{}] is invalid.", s.getId());
         try {
             onStop(s);
             notifyStop(s);
@@ -207,13 +207,13 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
     protected SessionValidationScheduler createSessionValidationScheduler() {
         ExecutorServiceSessionValidationScheduler scheduler;
 
-        if (log.isDebugEnabled()) {
+        version(HUNT_DEBUG) {
             tracef("No sessionValidationScheduler set.  Attempting to create default instance.");
         }
         scheduler = new ExecutorServiceSessionValidationScheduler(this);
         scheduler.setInterval(getSessionValidationInterval());
-        if (log.isTraceEnabled()) {
-            log.trace("Created default SessionValidationScheduler instance of type [" ~ scheduler.getClass().getName() ~ "].");
+        version(HUNT_DEBUG) {
+            tracef("Created default SessionValidationScheduler instance of type [" ~ scheduler.getClass().getName() ~ "].");
         }
         return scheduler;
     }
@@ -227,7 +227,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
         // it is possible that that a scheduler was already created and set via 'setSessionValidationScheduler()'
         // but would not have been enabled/started yet
         if (!scheduler.isEnabled()) {
-            if (log.isInfoEnabled()) {
+            version(HUNT_DEBUG) {
                 info("Enabling session validation scheduler...");
             }
             scheduler.enableSessionValidation();
@@ -244,11 +244,11 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
         if (scheduler != null) {
             try {
                 scheduler.disableSessionValidation();
-                if (log.isInfoEnabled()) {
+                version(HUNT_DEBUG) {
                     info("Disabled session validation scheduler.");
                 }
             } catch (Exception e) {
-                if (log.isDebugEnabled()) {
+                version(HUNT_DEBUG) {
                     string msg = "Unable to disable SessionValidationScheduler.  Ignoring (shutting down)...";
                     tracef(msg, e);
                 }
@@ -269,7 +269,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
      * @see ValidatingSessionManager#validateSessions()
      */
      void validateSessions() {
-        if (log.isInfoEnabled()) {
+        version(HUNT_DEBUG) {
             info("Validating all active sessions...");
         }
 
@@ -285,7 +285,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
                     SessionKey key = new DefaultSessionKey(s.getId());
                     validate(s, key);
                 } catch (InvalidSessionException e) {
-                    if (log.isDebugEnabled()) {
+                    version(HUNT_DEBUG) {
                         bool expired = (e instanceof ExpiredSessionException);
                         string msg = "Invalidated session with id [" ~ s.getId() ~ "]" ~
                                 (expired ? " (expired)" : " (stopped)");
@@ -296,7 +296,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager
             }
         }
 
-        if (log.isInfoEnabled()) {
+        version(HUNT_DEBUG) {
             string msg = "Finished session validation.";
             if (invalidCount > 0) {
                 msg += "  [" ~ invalidCount ~ "] sessions were stopped.";

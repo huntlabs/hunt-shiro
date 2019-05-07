@@ -32,7 +32,7 @@ import hunt.shiro.subject.support.DelegatingSubject;
  */
 class DefaultSubjectFactory : SubjectFactory {
 
-     DefaultSubjectFactory() {
+    this() {
     }
 
      Subject createSubject(SubjectContext context) {

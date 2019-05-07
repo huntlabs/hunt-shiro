@@ -174,7 +174,7 @@ class PropertiesRealm : TextConfigurationRealm implements Destroyable, Runnable 
                 scheduler.shutdown();
             }
         } catch (Exception e) {
-            if (log.isInfoEnabled()) {
+            version(HUNT_DEBUG) {
                 info("Unable to cleanly shutdown Scheduler.  Ignoring (shutting down)...", e);
             }
         } finally {
@@ -193,7 +193,7 @@ class PropertiesRealm : TextConfigurationRealm implements Destroyable, Runnable 
         try {
             reloadPropertiesIfNecessary();
         } catch (Exception e) {
-            if (log.isErrorEnabled()) {
+            version(HUNT_DEBUG) {
                 log.error("Error while reloading property files for realm.", e);
             }
         }
@@ -205,7 +205,7 @@ class PropertiesRealm : TextConfigurationRealm implements Destroyable, Runnable 
                     "It must be set prior to this realm being initialized.");
         }
 
-        if (log.isDebugEnabled()) {
+        version(HUNT_DEBUG) {
             tracef("Loading user security information from file [" ~ resourcePath ~ "]...");
         }
 
@@ -219,21 +219,21 @@ class PropertiesRealm : TextConfigurationRealm implements Destroyable, Runnable 
         InputStream is = null;
         try {
 
-            if (log.isDebugEnabled()) {
+            version(HUNT_DEBUG) {
                 tracef("Opening input stream for path [" ~ resourcePath ~ "]...");
             }
 
             is = ResourceUtils.getInputStreamForPath(resourcePath);
             if (useXmlFormat) {
 
-                if (log.isDebugEnabled()) {
+                version(HUNT_DEBUG) {
                     tracef("Loading properties from path [" ~ resourcePath ~ "] in XML format...");
                 }
 
                 props.loadFromXML(is);
             } else {
 
-                if (log.isDebugEnabled()) {
+                version(HUNT_DEBUG) {
                     tracef("Loading properties from path [" ~ resourcePath ~ "]...");
                 }
 
@@ -282,7 +282,7 @@ class PropertiesRealm : TextConfigurationRealm implements Destroyable, Runnable 
                     "It must be set prior to this realm being initialized.");
         }
 
-        if (log.isDebugEnabled()) {
+        version(HUNT_DEBUG) {
             tracef("Loading user security information from file [" ~ resourcePath ~ "]...");
         }
 
@@ -306,8 +306,8 @@ class PropertiesRealm : TextConfigurationRealm implements Destroyable, Runnable 
 
             string key = propNames.nextElement().trim();
             string value = properties.getProperty(key).trim();
-            if (log.isTraceEnabled()) {
-                log.trace("Processing properties line - key: [" ~ key ~ "], value: [" ~ value ~ "].");
+            version(HUNT_DEBUG) {
+                tracef("Processing properties line - key: [" ~ key ~ "], value: [" ~ value ~ "].");
             }
 
             if (isUsername(key)) {

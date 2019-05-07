@@ -444,7 +444,7 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
 
         if (this.authenticationCache  is null) {
 
-            log.trace("No authenticationCache instance set.  Checking for a cacheManager...");
+            tracef("No authenticationCache instance set.  Checking for a cacheManager...");
 
             CacheManager cacheManager = getCacheManager();
 
@@ -471,13 +471,13 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
 
         Cache!(Object, AuthenticationInfo) cache = getAvailableAuthenticationCache();
         if (cache != null && token != null) {
-            log.trace("Attempting to retrieve the AuthenticationInfo from cache.");
+            tracef("Attempting to retrieve the AuthenticationInfo from cache.");
             Object key = getAuthenticationCacheKey(token);
             info = cache.get(key);
             if (info  is null) {
-                log.trace("No AuthorizationInfo found in cache for key [{}]", key);
+                tracef("No AuthorizationInfo found in cache for key [{}]", key);
             } else {
-                log.trace("Found cached AuthorizationInfo for key [{}]", key);
+                tracef("Found cached AuthorizationInfo for key [{}]", key);
             }
         }
 
@@ -503,7 +503,7 @@ abstract class AuthenticatingRealm : CachingRealm implements Initializable {
         if (cache != null) {
             Object key = getAuthenticationCacheKey(token);
             cache.put(key, info);
-            log.trace("Cached AuthenticationInfo for continued authentication.  key=[{}], value=[{}].", key, info);
+            tracef("Cached AuthenticationInfo for continued authentication.  key=[{}], value=[{}].", key, info);
         }
     }
 

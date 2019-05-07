@@ -145,8 +145,8 @@ class DefaultSessionManager : AbstractValidatingSessionManager implements CacheM
 
     protected Session doCreateSession(SessionContext context) {
         Session s = newSessionInstance(context);
-        if (log.isTraceEnabled()) {
-            log.trace("Creating session for host {}", s.getHost());
+        version(HUNT_DEBUG) {
+            tracef("Creating session for host {}", s.getHost());
         }
         create(s);
         return s;
@@ -164,7 +164,7 @@ class DefaultSessionManager : AbstractValidatingSessionManager implements CacheM
      * @param session the Session instance to persist to the underlying EIS.
      */
     protected void create(Session session) {
-        if (log.isDebugEnabled()) {
+        version(HUNT_DEBUG) {
             tracef("Creating new EIS record for new session instance [" ~ session ~ "]");
         }
         sessionDAO.create(session);

@@ -81,7 +81,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
     /**
      * Default no-arg constructor.
      */
-     DefaultSecurityManager() {
+     this() {
         super();
         this.subjectFactory = new DefaultSubjectFactory();
         this.subjectDAO = new DefaultSubjectDAO();
@@ -92,7 +92,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
      *
      * @param singleRealm the single realm used by this SecurityManager.
      */
-     DefaultSecurityManager(Realm singleRealm) {
+     this(Realm singleRealm) {
         this();
         setRealm(singleRealm);
     }
@@ -102,7 +102,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
      *
      * @param realms the realm instances backing this SecurityManager.
      */
-     DefaultSecurityManager(Collection!(Realm) realms) {
+     this(Collection!(Realm) realms) {
         this();
         setRealms(realms);
     }
@@ -205,16 +205,16 @@ class DefaultSecurityManager : SessionsSecurityManager {
             try {
                 rmm.onSuccessfulLogin(subject, token, info);
             } catch (Exception e) {
-                if (log.isWarnEnabled()) {
+                version(HUNT_DEBUG) {
                     string msg = "Delegate RememberMeManager instance of type [" ~ rmm.getClass().getName() +
                             "] threw an exception during onSuccessfulLogin.  RememberMe services will not be " ~
-                            "performed for account [" ~ info ~ "].";
-                    log.warn(msg, e);
+                            "performed for account [" ~ info.toString() ~ "].";
+                    warning(msg, e);
                 }
             }
         } else {
-            if (log.isTraceEnabled()) {
-                log.trace("This " ~ getClass().getName() ~ " instance does not have a " ~
+            version(HUNT_DEBUG) {
+                tracef("This " ~ getClass().getName() ~ " instance does not have a " ~
                         "[" ~ RememberMeManager.class.getName() ~ "] instance configured.  RememberMe services " ~
                         "will not be performed for account [" ~ info ~ "].");
             }
@@ -227,11 +227,11 @@ class DefaultSecurityManager : SessionsSecurityManager {
             try {
                 rmm.onFailedLogin(subject, token, ex);
             } catch (Exception e) {
-                if (log.isWarnEnabled()) {
+                version(HUNT_DEBUG) {
                     string msg = "Delegate RememberMeManager instance of type [" ~ rmm.getClass().getName() +
                             "] threw an exception during onFailedLogin for AuthenticationToken [" ~
                             token ~ "].";
-                    log.warn(msg, e);
+                    warning(msg, e);
                 }
             }
         }
@@ -243,11 +243,11 @@ class DefaultSecurityManager : SessionsSecurityManager {
             try {
                 rmm.onLogout(subject);
             } catch (Exception e) {
-                if (log.isWarnEnabled()) {
+                version(HUNT_DEBUG) {
                     string msg = "Delegate RememberMeManager instance of type [" ~ rmm.getClass().getName() +
                             "] threw an exception during onLogout for subject with principals [" ~
                             (subject != null ? subject.getPrincipals() : null) ~ "]";
-                    log.warn(msg, e);
+                    warning(msg, e);
                 }
             }
         }
@@ -272,7 +272,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
             try {
                 onFailedLogin(token, ae, subject);
             } catch (Exception e) {
-                if (log.isInfoEnabled()) {
+                version(HUNT_DEBUG) {
                     info("onFailedLogin method threw an " ~
                             "exception.  Logging and propagating original AuthenticationException.", e);
                 }
@@ -404,10 +404,10 @@ class DefaultSecurityManager : SessionsSecurityManager {
     //@SuppressWarnings({"unchecked"})
     protected SubjectContext ensureSecurityManager(SubjectContext context) {
         if (context.resolveSecurityManager() != null) {
-            log.trace("Context already contains a SecurityManager instance.  Returning.");
+            tracef("Context already contains a SecurityManager instance.  Returning.");
             return context;
         }
-        log.trace("No SecurityManager found in context.  Adding self reference.");
+        tracef("No SecurityManager found in context.  Adding self reference.");
         context.setSecurityManager(this);
         return context;
     }
@@ -484,7 +484,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
         PrincipalCollection principals = context.resolvePrincipals();
 
         if (isEmpty(principals)) {
-            log.trace("No identity (PrincipalCollection) found in the context.  Looking for a remembered identity.");
+            tracef("No identity (PrincipalCollection) found in the context.  Looking for a remembered identity.");
 
             principals = getRememberedIdentity(context);
 
@@ -510,7 +510,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
                 // bindPrincipalsToSession(principals, context);
 
             } else {
-                log.trace("No remembered identity found.  Returning original context.");
+                tracef("No remembered identity found.  Returning original context.");
             }
         }
 
@@ -543,7 +543,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
 
         PrincipalCollection principals = subject.getPrincipals();
         if (principals != null && !principals.isEmpty()) {
-            if (log.isDebugEnabled()) {
+            version(HUNT_DEBUG) {
                 tracef("Logging out subject with primary principal {}", principals.getPrimaryPrincipal());
             }
             Authenticator authc = getAuthenticator();
@@ -556,7 +556,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
         try {
             remove(subject);
         } catch (Exception e) {
-            if (log.isDebugEnabled()) {
+            version(HUNT_DEBUG) {
                 string msg = "Unable to cleanly unbind Subject.  Ignoring (logging out).";
                 tracef(msg, e);
             }
@@ -564,7 +564,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
             try {
                 stopSession(subject);
             } catch (Exception e) {
-                if (log.isDebugEnabled()) {
+                version(HUNT_DEBUG) {
                     string msg = "Unable to cleanly stop Session for Subject [" ~ subject.getPrincipal() ~ "] " ~
                             "Ignoring (logging out).";
                     tracef(msg, e);
@@ -601,10 +601,10 @@ class DefaultSecurityManager : SessionsSecurityManager {
             try {
                 return rmm.getRememberedPrincipals(subjectContext);
             } catch (Exception e) {
-                if (log.isWarnEnabled()) {
+                version(HUNT_DEBUG) {
                     string msg = "Delegate RememberMeManager instance of type [" ~ rmm.getClass().getName() +
                             "] threw an exception during getRememberedPrincipals().";
-                    log.warn(msg, e);
+                    warning(msg, e);
                 }
             }
         }

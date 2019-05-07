@@ -92,13 +92,13 @@ class SimpleCredentialsMatcher : CodecSupport, CredentialsMatcher {
      * @return {@code true} if the {@code tokenCredentials} are equal to the {@code accountCredentials}.
      */
     protected bool equals(Object tokenCredentials, Object accountCredentials) {
-        if (log.isDebugEnabled()) {
+        version(HUNT_DEBUG) {
             tracef("Performing credentials equality check for tokenCredentials of type [" ~
                     tokenCredentials.getClass().getName() ~ " and accountCredentials of type [" ~
                     accountCredentials.getClass().getName() ~ "]");
         }
         if (isByteSource(tokenCredentials) && isByteSource(accountCredentials)) {
-            if (log.isDebugEnabled()) {
+            version(HUNT_DEBUG) {
                 tracef("Both credentials arguments can be easily converted to byte ArrayHelper.  Performing " ~
                         "array equals comparison");
             }

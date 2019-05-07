@@ -199,8 +199,8 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
 
         AuthenticationInfo aggregate = strategy.beforeAllAttempts(realms, token);
 
-        if (log.isTraceEnabled()) {
-            log.trace("Iterating through {} realms for PAM authentication", realms.size());
+        version(HUNT_DEBUG) {
+            tracef("Iterating through {} realms for PAM authentication", realms.size());
         }
 
         foreach(Realm realm ; realms) {
@@ -209,7 +209,7 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
 
             if (realm.supports(token)) {
 
-                log.trace("Attempting to authenticate token [{}] using realm [{}]", token, realm);
+                tracef("Attempting to authenticate token [{}] using realm [{}]", token, realm);
 
                 AuthenticationInfo info = null;
                 Throwable t = null;
@@ -217,7 +217,7 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
                     info = realm.getAuthenticationInfo(token);
                 } catch (Throwable throwable) {
                     t = throwable;
-                    if (log.isDebugEnabled()) {
+                    version(HUNT_DEBUG) {
                         string msg = "Realm [" ~ realm ~ "] threw an exception during a multi-realm authentication attempt:";
                         tracef(msg, t);
                     }

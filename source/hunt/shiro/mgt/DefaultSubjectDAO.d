@@ -23,9 +23,11 @@ import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.subject.Subject;
 import hunt.shiro.subject.support.DefaultSubjectContext;
 import hunt.shiro.subject.support.DelegatingSubject;
+
+import hunt.Exceptions;
 import hunt.logger;
 
-import java.lang.reflect.Field;
+// import java.lang.reflect.Field;
 
 /**
  * Default {@code SubjectDAO} implementation that stores Subject state in the Subject's Session by default (but this
@@ -143,7 +145,7 @@ class DefaultSubjectDAO : SubjectDAO {
         if (isSessionStorageEnabled(subject)) {
             saveToSession(subject);
         } else {
-            log.trace("Session storage of subject state for Subject [{}] has been disabled: identity and " ~
+            tracef("Session storage of subject state for Subject [{}] has been disabled: identity and " ~
                     "authentication state are expected to be initialized on every request or invocation.", subject);
         }
 
@@ -178,50 +180,51 @@ class DefaultSubjectDAO : SubjectDAO {
     protected void mergePrincipals(Subject subject) {
         //merge PrincipalCollection state:
 
-        PrincipalCollection currentPrincipals = null;
+implementationMissing(false);
+        // PrincipalCollection currentPrincipals = null;
 
-        //SHIRO-380: added if/else block - need to retain original (source) principals
-        //This technique (reflection) is only temporary - a proper long term solution needs to be found,
-        //but this technique allowed an immediate fix that is API point-version forwards and backwards compatible
-        //
-        //A more comprehensive review / cleaning of runAs should be performed for Shiro 1.3 / 2.0 +
-        if (subject.isRunAs() && subject instanceof DelegatingSubject) {
-            try {
-                Field field = DelegatingSubject.class.getDeclaredField("principals");
-                field.setAccessible(true);
-                currentPrincipals = (PrincipalCollection)field.get(subject);
-            } catch (Exception e) {
-                throw new IllegalStateException("Unable to access DelegatingSubject principals property.", e);
-            }
-        }
-        if (currentPrincipals  is null || currentPrincipals.isEmpty()) {
-            currentPrincipals = subject.getPrincipals();
-        }
+        // //SHIRO-380: added if/else block - need to retain original (source) principals
+        // //This technique (reflection) is only temporary - a proper long term solution needs to be found,
+        // //but this technique allowed an immediate fix that is API point-version forwards and backwards compatible
+        // //
+        // //A more comprehensive review / cleaning of runAs should be performed for Shiro 1.3 / 2.0 +
+        // if (subject.isRunAs() && subject instanceof DelegatingSubject) {
+        //     try {
+        //         Field field = DelegatingSubject.class.getDeclaredField("principals");
+        //         field.setAccessible(true);
+        //         currentPrincipals = cast(PrincipalCollection)field.get(subject);
+        //     } catch (Exception e) {
+        //         throw new IllegalStateException("Unable to access DelegatingSubject principals property.", e);
+        //     }
+        // }
+        // if (currentPrincipals  is null || currentPrincipals.isEmpty()) {
+        //     currentPrincipals = subject.getPrincipals();
+        // }
 
-        Session session = subject.getSession(false);
+        // Session session = subject.getSession(false);
 
-        if (session  is null) {
-            if (!isEmpty(currentPrincipals)) {
-                session = subject.getSession();
-                session.setAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY, currentPrincipals);
-            }
-            // otherwise no session and no principals - nothing to save
-        } else {
-            PrincipalCollection existingPrincipals =
-                    (PrincipalCollection) session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+        // if (session  is null) {
+        //     if (!isEmpty(currentPrincipals)) {
+        //         session = subject.getSession();
+        //         session.setAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY, currentPrincipals);
+        //     }
+        //     // otherwise no session and no principals - nothing to save
+        // } else {
+        //     PrincipalCollection existingPrincipals =
+        //             (PrincipalCollection) session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
 
-            if (isEmpty(currentPrincipals)) {
-                if (!isEmpty(existingPrincipals)) {
-                    session.removeAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-                }
-                // otherwise both are null or empty - no need to update the session
-            } else {
-                if (!currentPrincipals== existingPrincipals) {
-                    session.setAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY, currentPrincipals);
-                }
-                // otherwise they're the same - no need to update the session
-            }
-        }
+        //     if (isEmpty(currentPrincipals)) {
+        //         if (!isEmpty(existingPrincipals)) {
+        //             session.removeAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+        //         }
+        //         // otherwise both are null or empty - no need to update the session
+        //     } else {
+        //         if (!currentPrincipals== existingPrincipals) {
+        //             session.setAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY, currentPrincipals);
+        //         }
+        //         // otherwise they're the same - no need to update the session
+        //     }
+        // }
     }
 
     /**

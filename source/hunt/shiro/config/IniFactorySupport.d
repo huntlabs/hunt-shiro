@@ -95,7 +95,7 @@ module hunt.shiro.config.IniFactorySupport;
 //             ini = new Ini();
 //             ini.loadFromPath(DEFAULT_INI_RESOURCE_PATH);
 //             if (CollectionUtils.isEmpty(ini)) {
-//                 log.warn("shiro.ini found at the root of the classpath, but it did not contain any data.");
+//                 warning("shiro.ini found at the root of the classpath, but it did not contain any data.");
 //             }
 //         }
 //         return ini;

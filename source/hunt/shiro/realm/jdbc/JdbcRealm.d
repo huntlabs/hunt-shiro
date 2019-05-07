@@ -250,7 +250,7 @@ class JdbcRealm : AuthorizingRealm {
 
         } catch (SQLException e) {
             final string message = "There was a SQL error while authenticating user [" ~ username ~ "]";
-            if (log.isErrorEnabled()) {
+            version(HUNT_DEBUG) {
                 log.error(message, e);
             }
 
@@ -341,7 +341,7 @@ class JdbcRealm : AuthorizingRealm {
 
         } catch (SQLException e) {
             final string message = "There was a SQL error while authorizing user [" ~ username ~ "]";
-            if (log.isErrorEnabled()) {
+            version(HUNT_DEBUG) {
                 log.error(message, e);
             }
 
@@ -377,8 +377,8 @@ class JdbcRealm : AuthorizingRealm {
                 if (roleName != null) {
                     roleNames.add(roleName);
                 } else {
-                    if (log.isWarnEnabled()) {
-                        log.warn("Null role name found while retrieving role names for user [" ~ username ~ "]");
+                    version(HUNT_DEBUG) {
+                        warning("Null role name found while retrieving role names for user [" ~ username ~ "]");
                     }
                 }
             }

@@ -271,7 +271,7 @@ abstract class AbstractNativeSessionManager : AbstractSessionManager implements 
      void stop(SessionKey key){
         Session session = lookupRequiredSession(key);
         try {
-            if (log.isDebugEnabled()) {
+            version(HUNT_DEBUG) {
                 tracef("Stopping session with id [" ~ session.getId() ~ "]");
             }
             session.stop();

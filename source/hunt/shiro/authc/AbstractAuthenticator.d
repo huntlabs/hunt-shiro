@@ -189,7 +189,7 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
             throw new IllegalArgumentException("Method argument (authentication token) cannot be null.");
         }
 
-        log.trace("Authentication attempt received for token [{}]", token);
+        tracef("Authentication attempt received for token [{}]", token);
 
         AuthenticationInfo info;
         try {
@@ -211,17 +211,17 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
                 string msg = "Authentication failed for token submission [" ~ token ~ "].  Possible unexpected " ~
                         "error? (Typical or expected login exceptions should extend from AuthenticationException).";
                 ae = new AuthenticationException(msg, t);
-                if (log.isWarnEnabled())
-                    log.warn(msg, t);
+                version(HUNT_DEBUG)
+                    warning(msg, t);
             }
             try {
                 notifyFailure(token, ae);
             } catch (Throwable t2) {
-                if (log.isWarnEnabled()) {
+                version(HUNT_DEBUG) {
                     string msg = "Unable to send notification for failed authentication attempt - listener error?.  " ~
                             "Please check your AuthenticationListener implementation(s).  Logging sending exception " ~
                             "and propagating original AuthenticationException instead...";
-                    log.warn(msg, t2);
+                    warning(msg, t2);
                 }
             }
 

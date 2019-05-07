@@ -313,8 +313,8 @@ class DelegatingSubject : Subject {
     }
 
      Session getSession(bool create) {
-        if (log.isTraceEnabled()) {
-            log.trace("attempting to get session; create = " ~ create +
+        version(HUNT_DEBUG) {
+            tracef("attempting to get session; create = " ~ create +
                     "; session is null = " ~ (this.session  is null) +
                     "; session has id = " ~ (this.session != null && session.getId() != null));
         }
@@ -331,7 +331,7 @@ class DelegatingSubject : Subject {
                 throw new DisabledSessionException(msg);
             }
 
-            log.trace("Starting session for host {}", getHost());
+            tracef("Starting session for host {}", getHost());
             SessionContext sessionContext = createSessionContext();
             Session session = this.securityManager.start(sessionContext);
             this.session = decorate(session);

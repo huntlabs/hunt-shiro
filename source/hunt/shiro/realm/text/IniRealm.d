@@ -134,10 +134,10 @@ class IniRealm : TextConfigurationRealm {
                 
         if (!CollectionUtils.isEmpty(this.users) || !CollectionUtils.isEmpty(this.roles)) {
             if (!CollectionUtils.isEmpty(ini)) {
-                log.warn("Users or Roles are already populated.  Configured Ini instance will be ignored.");
+                warning("Users or Roles are already populated.  Configured Ini instance will be ignored.");
             }
             if (StringUtils.hasText(resourcePath)) {
-                log.warn("Users or Roles are already populated.  resourcePath '{}' will be ignored.", resourcePath);
+                warning("Users or Roles are already populated.  resourcePath '{}' will be ignored.", resourcePath);
             }
             
             tracef("Instance is already populated with users or roles.  No additional user/role population " ~
@@ -168,7 +168,7 @@ class IniRealm : TextConfigurationRealm {
 
     private void processDefinitions(Ini ini) {
         if (CollectionUtils.isEmpty(ini)) {
-            log.warn("{} defined, but the ini instance is null or empty.", getClass().getSimpleName());
+            warning("{} defined, but the ini instance is null or empty.", getClass().getSimpleName());
             return;
         }
 

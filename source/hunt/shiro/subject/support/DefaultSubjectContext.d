@@ -95,14 +95,14 @@ class DefaultSubjectContext : MapContext implements SubjectContext {
      SecurityManager resolveSecurityManager() {
         SecurityManager securityManager = getSecurityManager();
         if (securityManager  is null) {
-            if (log.isDebugEnabled()) {
+            version(HUNT_DEBUG) {
                 tracef("No SecurityManager available in subject context map.  " ~
                         "Falling back to SecurityUtils.getSecurityManager() lookup.");
             }
             try {
                 securityManager = SecurityUtils.getSecurityManager();
             } catch (UnavailableSecurityManagerException e) {
-                if (log.isDebugEnabled()) {
+                version(HUNT_DEBUG) {
                     tracef("No SecurityManager available via SecurityUtils.  Heuristics exhausted.", e);
                 }
             }

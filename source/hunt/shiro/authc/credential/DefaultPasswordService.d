@@ -105,7 +105,7 @@ class DefaultPasswordService : HashingPasswordService {
                         "required if you wish to support backwards compatibility for saved password checking (almost " ~
                         "always desirable).  Without a " ~ ParsableHashFormat.getClass().getSimpleName() ~ " instance, " ~
                         "any hashService configuration changes will break previously hashed/saved passwords.";
-                log.warn(msg);
+                warning(msg);
                 this.hashFormatWarned = true;
             }
         }

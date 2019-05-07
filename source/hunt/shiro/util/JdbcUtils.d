@@ -55,11 +55,11 @@ class JdbcUtils {
             try {
                 connection.close();
             } catch (SQLException ex) {
-                if (log.isDebugEnabled()) {
+                version(HUNT_DEBUG) {
                     tracef("Could not close JDBC Connection", ex);
                 }
             } catch (Throwable ex) {
-                if (log.isDebugEnabled()) {
+                version(HUNT_DEBUG) {
                     tracef("Unexpected exception on closing JDBC Connection", ex);
                 }
             }
@@ -77,11 +77,11 @@ class JdbcUtils {
             try {
                 statement.close();
             } catch (SQLException ex) {
-                if (log.isDebugEnabled()) {
+                version(HUNT_DEBUG) {
                     tracef("Could not close JDBC Statement", ex);
                 }
             } catch (Throwable ex) {
-                if (log.isDebugEnabled()) {
+                version(HUNT_DEBUG) {
                     tracef("Unexpected exception on closing JDBC Statement", ex);
                 }
             }
@@ -99,11 +99,11 @@ class JdbcUtils {
             try {
                 rs.close();
             } catch (SQLException ex) {
-                if (log.isDebugEnabled()) {
+                version(HUNT_DEBUG) {
                     tracef("Could not close JDBC ResultSet", ex);
                 }
             } catch (Throwable ex) {
-                if (log.isDebugEnabled()) {
+                version(HUNT_DEBUG) {
                     tracef("Unexpected exception on closing JDBC ResultSet", ex);
                 }
             }

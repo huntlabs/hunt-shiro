@@ -228,7 +228,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm
 
         if (this.authorizationCache  is null) {
 
-            if (log.isDebugEnabled()) {
+            version(HUNT_DEBUG) {
                 tracef("No authorizationCache instance set.  Checking for a cacheManager...");
             }
 
@@ -236,13 +236,13 @@ abstract class AuthorizingRealm : AuthenticatingRealm
 
             if (cacheManager != null) {
                 string cacheName = getAuthorizationCacheName();
-                if (log.isDebugEnabled()) {
+                version(HUNT_DEBUG) {
                     tracef("CacheManager [" ~ cacheManager ~ "] has been configured.  Building " ~
                             "authorization cache named [" ~ cacheName ~ "]");
                 }
                 this.authorizationCache = cacheManager.getCache(cacheName);
             } else {
-                if (log.isDebugEnabled()) {
+                version(HUNT_DEBUG) {
                     tracef("No cache or cacheManager properties have been set.  Authorization cache cannot " ~
                             "be obtained.");
                 }
@@ -313,22 +313,22 @@ abstract class AuthorizingRealm : AuthenticatingRealm
 
         AuthorizationInfo info = null;
 
-        if (log.isTraceEnabled()) {
-            log.trace("Retrieving AuthorizationInfo for principals [" ~ principals ~ "]");
+        version(HUNT_DEBUG) {
+            tracef("Retrieving AuthorizationInfo for principals [" ~ principals ~ "]");
         }
 
         Cache!(Object, AuthorizationInfo) cache = getAvailableAuthorizationCache();
         if (cache != null) {
-            if (log.isTraceEnabled()) {
-                log.trace("Attempting to retrieve the AuthorizationInfo from cache.");
+            version(HUNT_DEBUG) {
+                tracef("Attempting to retrieve the AuthorizationInfo from cache.");
             }
             Object key = getAuthorizationCacheKey(principals);
             info = cache.get(key);
-            if (log.isTraceEnabled()) {
+            version(HUNT_DEBUG) {
                 if (info  is null) {
-                    log.trace("No AuthorizationInfo found in cache for principals [" ~ principals ~ "]");
+                    tracef("No AuthorizationInfo found in cache for principals [" ~ principals ~ "]");
                 } else {
-                    log.trace("AuthorizationInfo found in cache for principals [" ~ principals ~ "]");
+                    tracef("AuthorizationInfo found in cache for principals [" ~ principals ~ "]");
                 }
             }
         }
@@ -339,8 +339,8 @@ abstract class AuthorizingRealm : AuthenticatingRealm
             info = doGetAuthorizationInfo(principals);
             // If the info is not null and the cache has been created, then cache the authorization info.
             if (info != null && cache != null) {
-                if (log.isTraceEnabled()) {
-                    log.trace("Caching authorization info for principals: [" ~ principals ~ "].");
+                version(HUNT_DEBUG) {
+                    tracef("Caching authorization info for principals: [" ~ principals ~ "].");
                 }
                 Object key = getAuthorizationCacheKey(principals);
                 cache.put(key, info);

@@ -285,7 +285,7 @@ abstract class AbstractRememberMeManager : RememberMeManager {
         if (isRememberMe(token)) {
             rememberIdentity(subject, token, info);
         } else {
-            if (log.isDebugEnabled()) {
+            version(HUNT_DEBUG) {
                 tracef("AuthenticationToken did not indicate RememberMe is requested.  " ~
                         "RememberMe functionality will not be executed for corresponding account.");
             }
@@ -439,13 +439,13 @@ abstract class AbstractRememberMeManager : RememberMeManager {
      */
     protected PrincipalCollection onRememberedPrincipalFailure(RuntimeException e, SubjectContext context) {
 
-        if (log.isWarnEnabled()) {
+        version(HUNT_DEBUG) {
             string message = "There was a failure while trying to retrieve remembered principals.  This could be due to a " ~
                     "configuration problem or corrupted principals.  This could also be due to a recently " ~
                     "changed encryption key, if you are using a shiro.ini file, this property would be " ~
                     "'securityManager.rememberMeManager.cipherKey' see: http://shiro.apache.org/web.html#Web-RememberMeServices. " ~
                     "The remembered identity will be forgotten and not used for this request.";
-            log.warn(message);
+            warning(message);
         }
         forgetIdentity(context);
         //propagate - security manager implementation will handle and warn appropriately

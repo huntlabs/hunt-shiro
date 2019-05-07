@@ -117,16 +117,16 @@ abstract class ThreadContext {
      *         no value exists for the specified <code>key</code>
      */
      static Object get(Object key) {
-        if (log.isTraceEnabled()) {
+        version(HUNT_DEBUG) {
             string msg = "get() - in thread [" ~ Thread.getThis()().getName() ~ "]";
-            log.trace(msg);
+            tracef(msg);
         }
 
         Object value = getValue(key);
         if ((value != null) && log.isTraceEnabled()) {
             string msg = "Retrieved value of type [" ~ value.getClass().getName() ~ "] for key [" ~
                     key ~ "] " ~ "bound to thread [" ~ Thread.getThis()().getName() ~ "]";
-            log.trace(msg);
+            tracef(msg);
         }
         return value;
     }
@@ -159,10 +159,10 @@ abstract class ThreadContext {
         ensureResourcesInitialized();
         resources.get().put(key, value);
 
-        if (log.isTraceEnabled()) {
+        version(HUNT_DEBUG) {
             string msg = "Bound value of type [" ~ value.getClass().getName() ~ "] for key [" ~
                     key ~ "] to thread " ~ "[" ~ Thread.getThis()().getName() ~ "]";
-            log.trace(msg);
+            tracef(msg);
         }
     }
 
@@ -181,7 +181,7 @@ abstract class ThreadContext {
         if ((value != null) && log.isTraceEnabled()) {
             string msg = "Removed value of type [" ~ value.getClass().getName() ~ "] for key [" ~
                     key ~ "]" ~ "from thread [" ~ Thread.getThis()().getName() ~ "]";
-            log.trace(msg);
+            tracef(msg);
         }
 
         return value;

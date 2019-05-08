@@ -23,8 +23,8 @@ import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.mgt.SecurityManager;
 import hunt.shiro.session.Session;
 
-import java.io.Serializable;
-import java.util.Map;
+import hunt.util.Common;
+import hunt.collection.Map;
 
 /**
  * A {@code SubjectContext} is a 'bucket' of data presented to a {@link SecurityManager} which interprets

@@ -22,7 +22,7 @@ import hunt.shiro.mgt.SecurityManager;
 import hunt.shiro.util.Destroyable;
 import hunt.shiro.util.LifecycleUtils;
 
-import java.util.Map;
+import hunt.collection.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**

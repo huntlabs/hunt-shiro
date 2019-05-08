@@ -46,7 +46,7 @@ class ImmutableProxiedSession : ProxiedSession {
      *
      * @param target the target <code>Session</code> to proxy.
      */
-     ImmutableProxiedSession(Session target) {
+    this(Session target) {
         super(target);
     }
 
@@ -66,7 +66,7 @@ class ImmutableProxiedSession : ProxiedSession {
      * Immediately {@link #throwImmutableException() throws} an <code>InvalidSessionException</code> in all
      * cases because this proxy is immutable.
      */
-     void setTimeout(long maxIdleTimeInMillis){
+    void setTimeout(long maxIdleTimeInMillis){
         throwImmutableException();
     }
 
@@ -74,7 +74,7 @@ class ImmutableProxiedSession : ProxiedSession {
      * Immediately {@link #throwImmutableException() throws} an <code>InvalidSessionException</code> in all
      * cases because this proxy is immutable.
      */
-     void touch(){
+    void touch(){
         throwImmutableException();
     }
 
@@ -82,7 +82,7 @@ class ImmutableProxiedSession : ProxiedSession {
      * Immediately {@link #throwImmutableException() throws} an <code>InvalidSessionException</code> in all
      * cases because this proxy is immutable.
      */
-     void stop(){
+    void stop(){
         throwImmutableException();
     }
 
@@ -90,7 +90,7 @@ class ImmutableProxiedSession : ProxiedSession {
      * Immediately {@link #throwImmutableException() throws} an <code>InvalidSessionException</code> in all
      * cases because this proxy is immutable.
      */
-     void setAttribute(Object key, Object value){
+    void setAttribute(Object key, Object value){
         throwImmutableException();
     }
 

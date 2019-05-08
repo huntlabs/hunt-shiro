@@ -21,7 +21,7 @@ module hunt.shiro.authz.Authorizer;
 import hunt.shiro.subject.PrincipalCollection;
 
 import hunt.collection;
-import java.util.List;
+
 
 /**
  * An <tt>Authorizer</tt> performs authorization (access control) operations for any given Subject

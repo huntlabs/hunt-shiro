@@ -56,24 +56,24 @@ import java.util.concurrent.Callable;
  * @see Subject#associateWith(Callable)
  * @see hunt.shiro.concurrent.SubjectAwareExecutorService SubjectAwareExecutorService
  */
-class SubjectCallable!(V) implements Callable!(V) {
+class SubjectCallable(V) : Callable!(V) {
 
     protected final ThreadState threadState;
     private final Callable!(V) callable;
 
-     SubjectCallable(Subject subject, Callable!(V) delegate) {
-        this(new SubjectThreadState(subject), delegate);
+    this(Subject subject, Callable!(V) dg) {
+        this(new SubjectThreadState(subject), dg);
     }
 
-    protected SubjectCallable(ThreadState threadState, Callable!(V) delegate) {
+    protected this(ThreadState threadState, Callable!(V) dg) {
         if (threadState  is null) {
             throw new IllegalArgumentException("ThreadState argument cannot be null.");
         }
         this.threadState = threadState;
-        if (delegate  is null) {
+        if (dg is null) {
             throw new IllegalArgumentException("Callable delegate instance cannot be null.");
         }
-        this.callable = delegate;
+        this.callable = dg;
     }
 
      V call(){

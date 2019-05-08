@@ -18,9 +18,9 @@
  */
 module hunt.shiro.authc.AbstractAuthenticator;
 
-import hunt.shiro.authc.AuthenticationException;
+import hunt.shiro.Exceptions;
 import hunt.shiro.subject.PrincipalCollection;
-import hunt.logger;
+import hunt.logging;
 
 import hunt.collection;
 

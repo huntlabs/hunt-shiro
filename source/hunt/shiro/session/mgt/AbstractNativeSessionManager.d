@@ -27,7 +27,7 @@ import hunt.shiro.session.SessionException;
 import hunt.shiro.session.SessionListener;
 import hunt.shiro.session.UnknownSessionException;
 import hunt.shiro.util.CollectionUtils;
-import hunt.logger;
+import hunt.logging;
 
 import hunt.collection;
 /**

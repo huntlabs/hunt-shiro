@@ -19,14 +19,14 @@
 module hunt.shiro.crypto.hash.SimpleHash;
 
 import hunt.shiro.codec.Base64;
-import hunt.shiro.codec.CodecException;
+// import hunt.shiro.codec.CodecException;
 import hunt.shiro.codec.Hex;
-import hunt.shiro.crypto.UnknownAlgorithmException;
+// import hunt.shiro.crypto.UnknownAlgorithmException;
 import hunt.shiro.util.ByteSource;
-import hunt.shiro.util.StringUtils;
+// import hunt.shiro.util.StringUtils;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+// import java.security.MessageDigest;
+// import java.security.NoSuchAlgorithmException;
 import hunt.util.ArrayHelper;
 
 /**

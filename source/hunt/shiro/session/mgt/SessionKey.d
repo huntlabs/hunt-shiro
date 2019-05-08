@@ -15,7 +15,7 @@
  */
 module hunt.shiro.session.mgt.SessionKey;
 
-import java.io.Serializable;
+import hunt.util.Common;
 
 /**
  * A {@code SessionKey} is a key that allows look-up of any particular {@link hunt.shiro.session.Session Session}

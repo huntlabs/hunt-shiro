@@ -23,7 +23,7 @@ import hunt.shiro.io.ResourceUtils;
 import hunt.shiro.util.Destroyable;
 
 import hunt.Exceptions;
-import hunt.logger;
+import hunt.logging;
 import hunt.util.Common;
 
 

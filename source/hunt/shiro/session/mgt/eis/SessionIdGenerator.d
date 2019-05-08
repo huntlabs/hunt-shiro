@@ -20,7 +20,7 @@ module hunt.shiro.session.mgt.eis.SessionIdGenerator;
 
 import hunt.shiro.session.Session;
 
-import java.io.Serializable;
+import hunt.util.Common;
 
 /**
  * Interface allowing pluggable session ID generation strategies to be used with various {@link SessionDAO}

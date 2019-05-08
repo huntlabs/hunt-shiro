@@ -24,11 +24,11 @@ import hunt.shiro.session.Session;
 import hunt.shiro.session.UnknownSessionException;
 import hunt.shiro.session.mgt.eis.MemorySessionDAO;
 import hunt.shiro.session.mgt.eis.SessionDAO;
-import hunt.logger;
+import hunt.logging;
 
-import java.io.Serializable;
+import hunt.util.Common;
 import hunt.collection;
-import java.util.Collections;
+import hunt.collection.Collections;
 import java.util.Date;
 
 /**
@@ -134,8 +134,9 @@ class DefaultSessionManager : AbstractValidatingSessionManager, CacheManagerAwar
      *
      */
     private void applyCacheManagerToSessionDAO() {
-        if (this.cacheManager !is null && this.sessionDAO !is null && this.sessionDAO instanceof CacheManagerAware) {
-            ((CacheManagerAware) this.sessionDAO).setCacheManager(this.cacheManager);
+        CacheManagerAware cma = cast(CacheManagerAware) this.sessionDAO;
+        if (this.cacheManager !is null && this.sessionDAO !is null && cma !is null) {
+            cma.setCacheManager(this.cacheManager);
         }
     }
 
@@ -168,8 +169,8 @@ class DefaultSessionManager : AbstractValidatingSessionManager, CacheManagerAwar
 
     override
     protected void onStop(Session session) {
-        if (session instanceof SimpleSession) {
-            SimpleSession ss = (SimpleSession) session;
+        SimpleSession ss = cast(SimpleSession) session;
+        if (ss !is null) {
             Date stopTs = ss.getStopTimestamp();
             ss.setLastAccessTime(stopTs);
         }
@@ -184,8 +185,9 @@ class DefaultSessionManager : AbstractValidatingSessionManager, CacheManagerAwar
     }
 
     protected void onExpiration(Session session) {
-        if (session instanceof SimpleSession) {
-            ((SimpleSession) session).setExpired(true);
+        SimpleSession ss = cast(SimpleSession) session;
+        if (ss !is null) {
+            ss.setExpired(true);
         }
         onChange(session);
     }
@@ -231,7 +233,7 @@ class DefaultSessionManager : AbstractValidatingSessionManager, CacheManagerAwar
 
     protected Collection!(Session) getActiveSessions() {
         Collection!(Session) active = sessionDAO.getActiveSessions();
-        return active !is null ? active : Collections.<Session>emptySet();
+        return active !is null ? active : Collections.emptySet!Session();
     }
 
 }

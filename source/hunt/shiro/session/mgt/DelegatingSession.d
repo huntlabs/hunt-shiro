@@ -21,7 +21,7 @@ module hunt.shiro.session.mgt.DelegatingSession;
 import hunt.shiro.session.InvalidSessionException;
 import hunt.shiro.session.Session;
 
-import java.io.Serializable;
+import hunt.util.Common;
 import hunt.collection;
 import java.util.Date;
 
@@ -55,7 +55,7 @@ class DelegatingSession : Session, Serializable {
     private final  NativeSessionManager sessionManager;
 
 
-     DelegatingSession(NativeSessionManager sessionManager, SessionKey key) {
+    this(NativeSessionManager sessionManager, SessionKey key) {
         if (sessionManager  is null) {
             throw new IllegalArgumentException("sessionManager argument cannot be null.");
         }

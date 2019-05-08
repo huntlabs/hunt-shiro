@@ -18,14 +18,17 @@
  */
 module hunt.shiro.session.mgt.ExecutorServiceSessionValidationScheduler;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
+import hunt.concurrency.atomic;
+import hunt.concurrency.thread;
 
-import hunt.logger;
+import hunt.concurrency.Executors;
+import hunt.concurrency.ScheduledExecutorService;
+import hunt.concurrency.ThreadFactory;
+import hunt.util.DateTime;
 
+import hunt.logging;
+
+import std.conv;
 
 /**
  * SessionValidationScheduler implementation that uses a
@@ -34,8 +37,6 @@ import hunt.logger;
  *
  */
 class ExecutorServiceSessionValidationScheduler : SessionValidationScheduler, Runnable {
-
-    //TODO - complete JavaDoc
 
     /** Private internal log instance. */
 
@@ -46,11 +47,11 @@ class ExecutorServiceSessionValidationScheduler : SessionValidationScheduler, Ru
     private bool enabled = false;
     private string threadNamePrefix = "SessionValidationThread-";
 
-     ExecutorServiceSessionValidationScheduler() {
+    this() {
         super();
     }
 
-     ExecutorServiceSessionValidationScheduler(ValidatingSessionManager sessionManager) {
+    this(ValidatingSessionManager sessionManager) {
         this.sessionManager = sessionManager;
     }
 
@@ -89,14 +90,15 @@ class ExecutorServiceSessionValidationScheduler : SessionValidationScheduler, Ru
     //TODO Implement an integration test to test for jvm exit as part of the standalone example
     // (so we don't have to change the unit test execution model for the core module)
      void enableSessionValidation() {
-        if (this.interval > 0l) {
-            this.service = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {  
-	            private final AtomicInteger count = new AtomicInteger(1);
+        if (this.interval > 0) {
+            this.service = Executors.newSingleThreadScheduledExecutor(new class ThreadFactory {  
+	            private shared int count = 0;
 
-	             Thread newThread(Runnable r) {
-	                Thread thread = new Thread(r);  
-	                thread.setDaemon(true);  
-	                thread.setName(threadNamePrefix + count.getAndIncrement());
+	             ThreadEx newThread(Runnable r) {
+                    int c = AtomicHelper.increment(count);
+	                ThreadEx thread = new ThreadEx(r);  
+	                thread.isDaemon = true;
+	                thread.name = threadNamePrefix ~ c.to!string();
 	                return thread;  
 	            }  
             });                  
@@ -109,11 +111,12 @@ class ExecutorServiceSessionValidationScheduler : SessionValidationScheduler, Ru
         version(HUNT_DEBUG) {
             tracef("Executing session validation...");
         }
-        long startTime = DateTimeHelper.currentTimeMillis()();
+        long startTime = DateTimeHelper.currentTimeMillis();
         this.sessionManager.validateSessions();
-        long stopTime = DateTimeHelper.currentTimeMillis()();
+        long stopTime = DateTimeHelper.currentTimeMillis();
         version(HUNT_DEBUG) {
-            tracef("Session validation completed successfully in " ~ (stopTime - startTime) ~ " milliseconds.");
+            tracef("Session validation completed successfully in " 
+                ~ to!string(stopTime - startTime) ~ " milliseconds.");
         }
     }
 

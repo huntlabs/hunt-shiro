@@ -28,7 +28,7 @@ import hunt.shiro.codec.Hex;
 import hunt.shiro.crypto.hash.AbstractHash;
 import hunt.shiro.crypto.hash.Hash;
 import hunt.shiro.crypto.hash.SimpleHash;
-import hunt.shiro.util.StringUtils;
+// import hunt.shiro.util.StringUtils;
 
 /**
  * A {@code HashedCredentialMatcher} provides support for hashing of supplied {@code AuthenticationToken} credentials

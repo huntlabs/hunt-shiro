@@ -20,7 +20,7 @@ module hunt.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 
 import hunt.shiro.session.Session;
 
-import java.io.Serializable;
+import hunt.util.Common;
 import java.util.UUID;
 
 /**

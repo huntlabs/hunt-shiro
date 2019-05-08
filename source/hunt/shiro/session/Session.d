@@ -18,9 +18,9 @@
  */
 module hunt.shiro.session.Session;
 
-import java.io.Serializable;
+import hunt.util.Common;
 import hunt.collection;
-import java.util.Date;
+// import java.util.Date;
 
 /**
  * A {@code Session} is a stateful data context associated with a single Subject (user, daemon process,

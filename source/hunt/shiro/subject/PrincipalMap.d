@@ -18,7 +18,7 @@
  */
 module hunt.shiro.subject.PrincipalMap;
 
-import java.util.Map;
+import hunt.collection.Map;
 
 /**
  * EXPERIMENTAL - DO NOT USE YET
@@ -47,11 +47,11 @@ import java.util.Map;
  *
  * @author Les Hazlewood
  */
-interface PrincipalMap : PrincipalCollection, Map!(string,Object) {
+interface PrincipalMap : PrincipalCollection, Map!(string, Object) {
 
     Map!(string,Object) getRealmPrincipals(string realmName);
 
-    Map!(string,Object) setRealmPrincipals(string realmName, Map!(string,Object) principals);
+    Map!(string,Object) setRealmPrincipals(string realmName, Map!(string, Object) principals);
 
     Object setRealmPrincipal(string realmName, string principalName, Object principal);
 

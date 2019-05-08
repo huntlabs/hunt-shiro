@@ -22,7 +22,7 @@ import hunt.shiro.session.Session;
 import hunt.shiro.session.UnknownSessionException;
 import hunt.shiro.session.mgt.SimpleSession;
 
-import java.io.Serializable;
+import hunt.util.Common;
 
 
 /**
@@ -54,7 +54,7 @@ abstract class AbstractSessionDAO : SessionDAO {
      * Default no-arg constructor that defaults the {@link #setSessionIdGenerator sessionIdGenerator} to be a
      * {@link hunt.shiro.session.mgt.eis.JavaUuidSessionIdGenerator}.
      */
-     AbstractSessionDAO() {
+    this() {
         this.sessionIdGenerator = new JavaUuidSessionIdGenerator();
     }
 
@@ -142,7 +142,7 @@ abstract class AbstractSessionDAO : SessionDAO {
      * @param sessionId the id to assign to the specified session instance.
      */
     protected void assignSessionId(Session session, Serializable sessionId) {
-        ((SimpleSession) session).setId(sessionId);
+        (cast(SimpleSession) session).setId(sessionId);
     }
 
     /**

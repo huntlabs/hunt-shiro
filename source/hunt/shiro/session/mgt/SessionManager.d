@@ -19,7 +19,7 @@
 module hunt.shiro.session.mgt.SessionManager;
 
 import hunt.shiro.session.Session;
-import hunt.shiro.session.SessionException;
+import hunt.shiro.Exceptions;
 
 /**
  * A SessionManager manages the creation, maintenance, and clean-up of all application

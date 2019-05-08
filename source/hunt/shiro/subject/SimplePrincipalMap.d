@@ -18,9 +18,9 @@
  */
 module hunt.shiro.subject.SimplePrincipalMap;
 
+import hunt.shiro.subject.PrincipalMap;
 import hunt.shiro.util.CollectionUtils;
 
-import java.util.*;
 
 /**
  * Default implementation of the {@link PrincipalMap} interface.
@@ -40,14 +40,14 @@ class SimplePrincipalMap : PrincipalMap {
     //the realmPrincipals for each lookup.
     private Map!(string, Object) combinedPrincipals;
 
-     SimplePrincipalMap() {
+    this() {
         this(null);
     }
 
-     SimplePrincipalMap(Map!(string, Map!(string, Object)) backingMap) {
+    this(Map!(string, Map!(string, Object)) backingMap) {
         if (!CollectionUtils.isEmpty(backingMap)) {
             this.realmPrincipals = backingMap;
-            for (Map!(string, Object) principals : this.realmPrincipals.values()) {
+            foreach (Map!(string, Object) principals; this.realmPrincipals) {
                 if (!CollectionUtils.isEmpty(principals) ) {
                     ensureCombinedPrincipals().putAll(principals);
                 }
@@ -55,7 +55,7 @@ class SimplePrincipalMap : PrincipalMap {
         }
     }
 
-     int size() {
+    int size() {
         return CollectionUtils.size(this.combinedPrincipals);
     }
 
@@ -66,49 +66,49 @@ class SimplePrincipalMap : PrincipalMap {
         return this.combinedPrincipals;
     }
 
-     bool containsKey(Object o) {
+    bool containsKey(Object o) {
         return this.combinedPrincipals !is null && this.combinedPrincipals.containsKey(o);
     }
 
-     bool containsValue(Object o) {
+    bool containsValue(Object o) {
         return this.combinedPrincipals !is null && this.combinedPrincipals.containsKey(o);
     }
 
-     Object get(Object o) {
+    Object get(Object o) {
         return this.combinedPrincipals !is null && this.combinedPrincipals.containsKey(o);
     }
 
-     Object put(string s, Object o) {
+    Object put(string s, Object o) {
         return ensureCombinedPrincipals().put(s, o);
     }
 
-     Object remove(Object o) {
+    Object remove(Object o) {
         return this.combinedPrincipals !is null ? this.combinedPrincipals.remove(o) : null;
     }
 
-     void putAll(Map<? extends string, ?> map) {
+    void putAll(Map!(string, Object) map) {
         if (!CollectionUtils.isEmpty(map)) {
             ensureCombinedPrincipals().putAll(map);
         }
     }
 
-     Set!(string) keySet() {
+    Set!(string) keySet() {
         return CollectionUtils.isEmpty(this.combinedPrincipals) ?
-                Collections.<string>emptySet() :
+                Collections.emptySet!string() :
                 Collections.unmodifiableSet(this.combinedPrincipals.keySet());
     }
 
-     Collection!(Object) values() {
-        return CollectionUtils.isEmpty(this.combinedPrincipals) ?
-                Collections.emptySet() :
-                Collections.unmodifiableCollection(this.combinedPrincipals.values());
-    }
+    // Collection!(Object) values() {
+    //     return CollectionUtils.isEmpty(this.combinedPrincipals) ?
+    //             Collections.emptySet() :
+    //             Collections.unmodifiableCollection(this.combinedPrincipals.values());
+    // }
 
-     Set!(Entry!(string, Object)) entrySet() {
-        return CollectionUtils.isEmpty(this.combinedPrincipals) ?
-                Collections.<Entry!(string,Object)>emptySet() :
-                Collections.unmodifiableSet(this.combinedPrincipals.entrySet());
-    }
+    //  Set!(Entry!(string, Object)) entrySet() {
+    //     return CollectionUtils.isEmpty(this.combinedPrincipals) ?
+    //             Collections.<Entry!(string,Object)>emptySet() :
+    //             Collections.unmodifiableSet(this.combinedPrincipals.entrySet());
+    // }
 
      void clear() {
         this.realmPrincipals = null;
@@ -122,19 +122,19 @@ class SimplePrincipalMap : PrincipalMap {
                 null;
     }
 
-     <T> T oneByType(Class!(T) type) {
+    T oneByType(T)(TypeInfo_Class type) {
         if (CollectionUtils.isEmpty(this.combinedPrincipals)) {
             return null;
         }
         foreach( Object value ; this.combinedPrincipals.values()) {
             if (type.isInstance(value) ) {
-                return type.cast(value);
+                return cast(T)(value);
             }
         }
         return null;
     }
 
-     <T> Collection!(T) byType(Class!(T) type) {
+    Collection!(T) byType(T)(TypeInfo_Class type) {
         if (CollectionUtils.isEmpty(this.combinedPrincipals)) {
             return Collections.emptySet();
         }
@@ -144,10 +144,10 @@ class SimplePrincipalMap : PrincipalMap {
                 if (instances  is null) {
                     instances = new ArrayList!(T)();
                 }
-                instances.add(type.cast(value));
+                instances.add(cast(T)(value));
             }
         }
-        return instances !is null ? instances : Collections.<T>emptyList();
+        return instances !is null ? instances : Collections.emptyList!T();
     }
 
      List asList() {

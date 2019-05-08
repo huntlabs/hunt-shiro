@@ -21,7 +21,7 @@ module hunt.shiro.authc.AuthenticationInfo;
 
 import hunt.shiro.subject.PrincipalCollection;
 
-import java.io.Serializable;
+import hunt.util.Common;
 
 /**
  * <code>AuthenticationInfo</code> represents a Subject's (aka user's) stored account information relevant to the

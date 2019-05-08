@@ -20,9 +20,9 @@ module hunt.shiro.authc.credential.DefaultPasswordService;
 
 import hunt.shiro.authc.credential.HashingPasswordService;
 
-import hunt.shiro.crypto.hash;
+// import hunt.shiro.crypto.hash;
 import hunt.shiro.util.ByteSource;
-import hunt.logger;
+import hunt.logging;
 
 /**
  * Default implementation of the {@link PasswordService} interface that relies on an internal
@@ -47,7 +47,7 @@ class DefaultPasswordService : HashingPasswordService {
 
     private bool hashFormatWarned; //used to avoid excessive log noise
 
-     this() {
+    this() {
         this.hashFormatWarned = false;
 
         DefaultHashService hashService = new DefaultHashService();

@@ -35,11 +35,11 @@ import hunt.shiro.subject.ExecutionException;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.subject.Subject;
 import hunt.shiro.util.CollectionUtils;
-import hunt.shiro.util.StringUtils;
-import hunt.logger;
+// import hunt.shiro.util.StringUtils;
+import hunt.logging;
 
 import hunt.collection;
-import java.util.List;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -83,18 +83,19 @@ class DelegatingSubject : Subject {
 
     protected  SecurityManager securityManager;
 
-     DelegatingSubject(SecurityManager securityManager) {
+    this(SecurityManager securityManager) {
         this(null, false, null, null, securityManager);
     }
 
-     DelegatingSubject(PrincipalCollection principals, bool authenticated, string host,
+    this(PrincipalCollection principals, bool authenticated, string host,
                              Session session, SecurityManager securityManager) {
         this(principals, authenticated, host, session, true, securityManager);
     }
 
     //since 1.2
-     DelegatingSubject(PrincipalCollection principals, bool authenticated, string host,
-                             Session session, bool sessionCreationEnabled, SecurityManager securityManager) {
+    this(PrincipalCollection principals, bool authenticated, string host,
+                             Session session, bool sessionCreationEnabled, 
+                             SecurityManager securityManager) {
         if (securityManager  is null) {
             throw new IllegalArgumentException("SecurityManager argument cannot be null.");
         }
@@ -242,7 +243,7 @@ class DelegatingSubject : Subject {
         securityManager.checkRole(getPrincipals(), role);
     }
 
-     void checkRoles(string... roleIdentifiers){
+     void checkRoles(string[] roleIdentifiers...){
         assertAuthzCheckPossible();
         securityManager.checkRoles(getPrincipals(), roleIdentifiers);
     }
@@ -260,8 +261,8 @@ class DelegatingSubject : Subject {
 
         string host = null;
 
-        if (subject instanceof DelegatingSubject) {
-            DelegatingSubject delegating = (DelegatingSubject) subject;
+        DelegatingSubject delegating = cast(DelegatingSubject) subject;
+        if (delegating !is null) {
             //we have to do this in case there are assumed identities - we don't want to lose the 'real' principals:
             principals = delegating.principals;
             host = delegating.host;
@@ -276,8 +277,9 @@ class DelegatingSubject : Subject {
         }
         this.principals = principals;
         this.authenticated = true;
-        if (token instanceof HostAuthenticationToken) {
-            host = ((HostAuthenticationToken) token).getHost();
+        HostAuthenticationToken hat = cast(HostAuthenticationToken) token;
+        if (hat !is null) {
+            host = hat.getHost();
         }
         if (host !is null) {
             this.host = host;
@@ -377,7 +379,7 @@ class DelegatingSubject : Subject {
         this.session = null;
     }
 
-     <V> V execute(Callable!(V) callable){
+    V execute(V)(Callable!(V) callable) {
         Callable!(V) associated = associateWith(callable);
         try {
             return associated.call();
@@ -386,17 +388,18 @@ class DelegatingSubject : Subject {
         }
     }
 
-     void execute(Runnable runnable) {
+    void execute(Runnable runnable) {
         Runnable associated = associateWith(runnable);
         associated.run();
     }
 
-     <V> Callable!(V) associateWith(Callable!(V) callable) {
+    Callable!(V) associateWith(V)(Callable!(V) callable) {
         return new SubjectCallable!(V)(this, callable);
     }
 
-     Runnable associateWith(Runnable runnable) {
-        if (runnable instanceof Thread) {
+    Runnable associateWith(Runnable runnable) {
+        ThreadEx tx = cast(ThreadEx) runnable;
+        if (tx !is null) {
             string msg = "This implementation does not support Thread arguments because of JDK ThreadLocal " ~
                     "inheritance mechanisms required by Shiro.  Instead, the method argument should be a non-Thread " ~
                     "Runnable and the return value from this method can then be given to an ExecutorService or " ~
@@ -410,7 +413,7 @@ class DelegatingSubject : Subject {
 
         private final DelegatingSubject owner;
 
-        private StoppingAwareProxiedSession(Session target, DelegatingSubject owningSubject) {
+        private this(Session target, DelegatingSubject owningSubject) {
             super(target);
             owner = owningSubject;
         }
@@ -430,7 +433,7 @@ class DelegatingSubject : Subject {
         if (!hasPrincipals()) {
             string msg = "This subject does not yet have an identity.  Assuming the identity of another " ~
                     "Subject is only allowed for Subjects with an existing identity.  Try logging this subject in " ~
-                    "first, or using the " ~ Subject.typeid(Builder).name ~ " to build ad hoc Subject instances " ~
+                    "first, or using the " ~ typeid(Builder).name ~ " to build ad hoc Subject instances " ~
                     "with identities as necessary.";
             throw new IllegalStateException(msg);
         }
@@ -442,7 +445,7 @@ class DelegatingSubject : Subject {
         return !CollectionUtils.isEmpty(stack);
     }
 
-     PrincipalCollection getPreviousPrincipals() {
+    PrincipalCollection getPreviousPrincipals() {
         PrincipalCollection previousPrincipals = null;
         List!(PrincipalCollection) stack = getRunAsPrincipalsStack();
         int stackSize = stack !is null ? stack.size() : 0;
@@ -451,14 +454,14 @@ class DelegatingSubject : Subject {
                 previousPrincipals = this.principals;
             } else {
                 //always get the one behind the current:
-                assert stack !is null;
+                assert (stack !is null);
                 previousPrincipals = stack.get(1);
             }
         }
         return previousPrincipals;
     }
 
-     PrincipalCollection releaseRunAs() {
+    PrincipalCollection releaseRunAs() {
         return popIdentity();
     }
 
@@ -466,7 +469,7 @@ class DelegatingSubject : Subject {
     private List!(PrincipalCollection) getRunAsPrincipalsStack() {
         Session session = getSession(false);
         if (session !is null) {
-            return (List!(PrincipalCollection)) session.getAttribute(RUN_AS_PRINCIPALS_SESSION_KEY);
+            return cast(List!(PrincipalCollection)) session.getAttribute(RUN_AS_PRINCIPALS_SESSION_KEY);
         }
         return null;
     }

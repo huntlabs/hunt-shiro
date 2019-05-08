@@ -26,7 +26,7 @@ import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.LifecycleUtils;
 
 import hunt.collection;
-import java.util.List;
+
 
 
 /**

@@ -201,8 +201,8 @@ class AntPathMatcher : PatternMatcher {
             strLoop:
             for (int i = 0; i <= strLength - patLength; i++) {
                 for (int j = 0; j < patLength; j++) {
-                    string subPat = (string) pattDirs[pattIdxStart + j + 1];
-                    string subStr = (string) pathDirs[pathIdxStart + i + j];
+                    string subPat = pattDirs[pattIdxStart + j + 1];
+                    string subStr = pathDirs[pathIdxStart + i + j];
                     if (!matchStrings(subPat, subStr)) {
                         continue strLoop;
                     }

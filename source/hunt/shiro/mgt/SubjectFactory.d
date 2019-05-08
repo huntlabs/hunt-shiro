@@ -21,7 +21,7 @@ module hunt.shiro.mgt.SubjectFactory;
 import hunt.shiro.subject.Subject;
 import hunt.shiro.subject.SubjectContext;
 
-import java.util.Map;
+import hunt.collection.Map;
 
 /**
  * A {@code SubjectFactory} is responsible for constructing {@link Subject Subject} instances as needed.

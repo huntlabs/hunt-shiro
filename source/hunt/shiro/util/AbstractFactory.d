@@ -22,20 +22,20 @@ module hunt.shiro.util.AbstractFactory;
  * TODO - Class JavaDoc
  *
  */
-abstract class AbstractFactory!(T) implements Factory!(T) {
+abstract class AbstractFactory(T) : Factory!(T) {
 
     private bool singleton;
     private T singletonInstance;
 
-     AbstractFactory() {
+    this() {
         this.singleton = true;
     }
 
-     bool isSingleton() {
+    bool isSingleton() {
         return singleton;
     }
 
-     void setSingleton(bool singleton) {
+    void setSingleton(bool singleton) {
         this.singleton = singleton;
     }
 

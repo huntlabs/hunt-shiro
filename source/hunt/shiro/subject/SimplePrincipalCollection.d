@@ -19,13 +19,14 @@
 module hunt.shiro.subject.SimplePrincipalCollection;
 
 import hunt.shiro.util.CollectionUtils;
-import hunt.shiro.util.StringUtils;
+// import hunt.shiro.util.StringUtils;
 import hunt.shiro.subject.MutablePrincipalCollection;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.*;
+import hunt.collection;
+
+// import java.io.IOException;
+// import java.io.ObjectInputStream;
+// import java.io.ObjectOutputStream;
 
 
 /**
@@ -42,7 +43,6 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
     // changes do not require a change to this number.  If you need to generate
     // a new number in this case, use the JDK's 'serialver' program to generate it.
 
-    //TODO - complete JavaDoc
 
     private Map!(string, Set) realmPrincipals;
 
@@ -52,8 +52,9 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
     }
 
     this(Object principal, string realmName) {
-        if (principal instanceof Collection) {
-            addAll((Collection) principal, realmName);
+        Collection c = cast(Collection) principal;
+        if (c !is null) {
+            addAll(c, realmName);
         } else {
             add(principal, realmName);
         }
@@ -130,7 +131,7 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
         }
     }
 
-     <T> T oneByType(Class!(T) type) {
+    T oneByType(T)(TypeInfo_Class type) {
         if (realmPrincipals  is null || realmPrincipals.isEmpty()) {
             return null;
         }
@@ -138,14 +139,14 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
         foreach(Set set ; values) {
             foreach(Object o ; set) {
                 if (type.isAssignableFrom(o.getClass())) {
-                    return (T) o;
+                    return cast(T) o;
                 }
             }
         }
         return null;
     }
 
-     <T> Collection!(T) byType(Class!(T) type) {
+    Collection!(T) byType(T)(TypeInfo_Class type) {
         if (realmPrincipals  is null || realmPrincipals.isEmpty()) {
             return Collections.EMPTY_SET;
         }
@@ -154,7 +155,7 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
         foreach(Set set ; values) {
             foreach(Object o ; set) {
                 if (type.isAssignableFrom(o.getClass())) {
-                    typed.add((T) o);
+                    typed.add(cast(T) o);
                 }
             }
         }
@@ -164,7 +165,7 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
         return Collections.unmodifiableSet(typed);
     }
 
-     List asList() {
+    List asList() {
         Set all = asSet();
         if (all.isEmpty()) {
             return Collections.EMPTY_LIST;
@@ -226,9 +227,12 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
         if (o == this) {
             return true;
         }
-        if (o instanceof SimplePrincipalCollection) {
-            SimplePrincipalCollection other = (SimplePrincipalCollection) o;
-            return this.realmPrincipals !is null ? this.realmPrincipals== other.realmPrincipals : other.realmPrincipals  is null;
+        
+        SimplePrincipalCollection other = cast(SimplePrincipalCollection) o;
+        if (other !is null) {
+            return this.realmPrincipals !is null ? 
+                this.realmPrincipals == other.realmPrincipals :
+                other.realmPrincipals is null;
         }
         return false;
     }
@@ -268,14 +272,14 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
      * @param out output stream provided by Java serialization
      * @throws IOException if there is a stream error
      */
-    private void writeObject(ObjectOutputStream out){
-        out.defaultWriteObject();
-        bool principalsExist = !CollectionUtils.isEmpty(realmPrincipals);
-        out.writebool(principalsExist);
-        if (principalsExist) {
-            out.writeObject(realmPrincipals);
-        }
-    }
+    // private void writeObject(ObjectOutputStream out){
+    //     out.defaultWriteObject();
+    //     bool principalsExist = !CollectionUtils.isEmpty(realmPrincipals);
+    //     out.writebool(principalsExist);
+    //     if (principalsExist) {
+    //         out.writeObject(realmPrincipals);
+    //     }
+    // }
 
     /**
      * Serialization read support - reads in the Map principals collection if it exists in the
@@ -289,11 +293,11 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
      * @throws IOException            if there is an input/output problem
      * @throws ClassNotFoundException if the underlying Map implementation class is not available to the classloader.
      */
-    private void readObject(ObjectInputStream in){
-        in.defaultReadObject();
-        bool principalsExist = in.readbool();
-        if (principalsExist) {
-            this.realmPrincipals = (Map!(string, Set)) in.readObject();
-        }
-    }
+    // private void readObject(ObjectInputStream in){
+    //     in.defaultReadObject();
+    //     bool principalsExist = in.readbool();
+    //     if (principalsExist) {
+    //         this.realmPrincipals = (Map!(string, Set)) in.readObject();
+    //     }
+    // }
 }

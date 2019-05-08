@@ -18,8 +18,8 @@
  */
 module hunt.shiro.subject.support.DefaultSubjectContext;
 
+import hunt.shiro.Exceptions;
 import hunt.shiro.SecurityUtils;
-import hunt.shiro.UnavailableSecurityManagerException;
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.authc.HostAuthenticationToken;
@@ -29,10 +29,10 @@ import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.subject.Subject;
 import hunt.shiro.subject.SubjectContext;
 import hunt.shiro.util.MapContext;
-import hunt.shiro.util.StringUtils;
-import hunt.logger;
+// // import hunt.shiro.util.StringUtils;
+import hunt.logging;
 
-import java.io.Serializable;
+import hunt.util.Common;
 
 /**
  * Default implementation of the {@link SubjectContext} interface.  Note that the getters and setters are not
@@ -42,236 +42,237 @@ import java.io.Serializable;
  * principals from those objects).
  *
  */
-class DefaultSubjectContext : MapContext implements SubjectContext {
+// class DefaultSubjectContext : MapContext, SubjectContext {
 
-    private enum string SECURITY_MANAGER = typeid(DefaultSubjectContext).name ~ ".SECURITY_MANAGER";
+//     private enum string SECURITY_MANAGER = typeid(DefaultSubjectContext).name ~ ".SECURITY_MANAGER";
 
-    private enum string SESSION_ID = typeid(DefaultSubjectContext).name ~ ".SESSION_ID";
+//     private enum string SESSION_ID = typeid(DefaultSubjectContext).name ~ ".SESSION_ID";
 
-    private enum string AUTHENTICATION_TOKEN = typeid(DefaultSubjectContext).name ~ ".AUTHENTICATION_TOKEN";
+//     private enum string AUTHENTICATION_TOKEN = typeid(DefaultSubjectContext).name ~ ".AUTHENTICATION_TOKEN";
 
-    private enum string AUTHENTICATION_INFO = typeid(DefaultSubjectContext).name ~ ".AUTHENTICATION_INFO";
+//     private enum string AUTHENTICATION_INFO = typeid(DefaultSubjectContext).name ~ ".AUTHENTICATION_INFO";
 
-    private enum string SUBJECT = typeid(DefaultSubjectContext).name ~ ".SUBJECT";
+//     private enum string SUBJECT = typeid(DefaultSubjectContext).name ~ ".SUBJECT";
 
-    private enum string PRINCIPALS = typeid(DefaultSubjectContext).name ~ ".PRINCIPALS";
+//     private enum string PRINCIPALS = typeid(DefaultSubjectContext).name ~ ".PRINCIPALS";
 
-    private enum string SESSION = typeid(DefaultSubjectContext).name ~ ".SESSION";
+//     private enum string SESSION = typeid(DefaultSubjectContext).name ~ ".SESSION";
 
-    private enum string AUTHENTICATED = typeid(DefaultSubjectContext).name ~ ".AUTHENTICATED";
+//     private enum string AUTHENTICATED = typeid(DefaultSubjectContext).name ~ ".AUTHENTICATED";
 
-    private enum string HOST = typeid(DefaultSubjectContext).name ~ ".HOST";
+//     private enum string HOST = typeid(DefaultSubjectContext).name ~ ".HOST";
 
-     enum string SESSION_CREATION_ENABLED = typeid(DefaultSubjectContext).name ~ ".SESSION_CREATION_ENABLED";
+//     enum string SESSION_CREATION_ENABLED = typeid(DefaultSubjectContext).name ~ ".SESSION_CREATION_ENABLED";
 
-    /**
-     * The session key that is used to store subject principals.
-     */
-     enum string PRINCIPALS_SESSION_KEY = typeid(DefaultSubjectContext).name ~ "_PRINCIPALS_SESSION_KEY";
+//     /**
+//      * The session key that is used to store subject principals.
+//      */
+//     enum string PRINCIPALS_SESSION_KEY = typeid(DefaultSubjectContext).name ~ "_PRINCIPALS_SESSION_KEY";
 
-    /**
-     * The session key that is used to store whether or not the user is authenticated.
-     */
-     enum string AUTHENTICATED_SESSION_KEY = typeid(DefaultSubjectContext).name ~ "_AUTHENTICATED_SESSION_KEY";
-
-
-
-     DefaultSubjectContext() {
-        super();
-    }
-
-     DefaultSubjectContext(SubjectContext ctx) {
-        super(ctx);
-    }
-
-     SecurityManager getSecurityManager() {
-        return getTypedValue(SECURITY_MANAGER, SecurityManager.class);
-    }
-
-     void setSecurityManager(SecurityManager securityManager) {
-        nullSafePut(SECURITY_MANAGER, securityManager);
-    }
-
-     SecurityManager resolveSecurityManager() {
-        SecurityManager securityManager = getSecurityManager();
-        if (securityManager  is null) {
-            version(HUNT_DEBUG) {
-                tracef("No SecurityManager available in subject context map.  " ~
-                        "Falling back to SecurityUtils.getSecurityManager() lookup.");
-            }
-            try {
-                securityManager = SecurityUtils.getSecurityManager();
-            } catch (UnavailableSecurityManagerException e) {
-                version(HUNT_DEBUG) {
-                    tracef("No SecurityManager available via SecurityUtils.  Heuristics exhausted.", e);
-                }
-            }
-        }
-        return securityManager;
-    }
-
-     Serializable getSessionId() {
-        return getTypedValue(SESSION_ID, Serializable.class);
-    }
-
-     void setSessionId(Serializable sessionId) {
-        nullSafePut(SESSION_ID, sessionId);
-    }
-
-     Subject getSubject() {
-        return getTypedValue(SUBJECT, Subject.class);
-    }
-
-     void setSubject(Subject subject) {
-        nullSafePut(SUBJECT, subject);
-    }
-
-     PrincipalCollection getPrincipals() {
-        return getTypedValue(PRINCIPALS, PrincipalCollection.class);
-    }
-
-    private static bool isEmpty(PrincipalCollection pc) {
-        return pc  is null || pc.isEmpty();
-    }
-
-     void setPrincipals(PrincipalCollection principals) {
-        if (!isEmpty(principals)) {
-            put(PRINCIPALS, principals);
-        }
-    }
-
-     PrincipalCollection resolvePrincipals() {
-        PrincipalCollection principals = getPrincipals();
-
-        if (isEmpty(principals)) {
-            //check to see if they were just authenticated:
-            AuthenticationInfo info = getAuthenticationInfo();
-            if (info !is null) {
-                principals = info.getPrincipals();
-            }
-        }
-
-        if (isEmpty(principals)) {
-            Subject subject = getSubject();
-            if (subject !is null) {
-                principals = subject.getPrincipals();
-            }
-        }
-
-        if (isEmpty(principals)) {
-            //try the session:
-            Session session = resolveSession();
-            if (session !is null) {
-                principals = (PrincipalCollection) session.getAttribute(PRINCIPALS_SESSION_KEY);
-            }
-        }
-
-        return principals;
-    }
+//     /**
+//      * The session key that is used to store whether or not the user is authenticated.
+//      */
+//     enum string AUTHENTICATED_SESSION_KEY = typeid(DefaultSubjectContext).name ~ "_AUTHENTICATED_SESSION_KEY";
 
 
-     Session getSession() {
-        return getTypedValue(SESSION, Session.class);
-    }
 
-     void setSession(Session session) {
-        nullSafePut(SESSION, session);
-    }
+//     this() {
+//         super();
+//     }
 
-     Session resolveSession() {
-        Session session = getSession();
-        if (session  is null) {
-            //try the Subject if it exists:
-            Subject existingSubject = getSubject();
-            if (existingSubject !is null) {
-                session = existingSubject.getSession(false);
-            }
-        }
-        return session;
-    }
+//     this(SubjectContext ctx) {
+//         super(ctx);
+//     }
 
-     bool isSessionCreationEnabled() {
-        bool val = getTypedValue(SESSION_CREATION_ENABLED, bool.class);
-        return val  is null || val;
-    }
+//      SecurityManager getSecurityManager() {
+//         return getTypedValue(SECURITY_MANAGER, typeid(SecurityManager));
+//     }
 
-     void setSessionCreationEnabled(bool enabled) {
-        nullSafePut(SESSION_CREATION_ENABLED, enabled);
-    }
+//      void setSecurityManager(SecurityManager securityManager) {
+//         nullSafePut(SECURITY_MANAGER, securityManager);
+//     }
 
-     bool isAuthenticated() {
-        bool authc = getTypedValue(AUTHENTICATED, bool.class);
-        return authc !is null && authc;
-    }
+//      SecurityManager resolveSecurityManager() {
+//         SecurityManager securityManager = getSecurityManager();
+//         if (securityManager  is null) {
+//             version(HUNT_DEBUG) {
+//                 tracef("No SecurityManager available in subject context map.  " ~
+//                         "Falling back to SecurityUtils.getSecurityManager() lookup.");
+//             }
+//             try {
+//                 securityManager = SecurityUtils.getSecurityManager();
+//             } catch (UnavailableSecurityManagerException e) {
+//                 version(HUNT_DEBUG) {
+//                     tracef("No SecurityManager available via SecurityUtils.  Heuristics exhausted.", e);
+//                 }
+//             }
+//         }
+//         return securityManager;
+//     }
 
-     void setAuthenticated(bool authc) {
-        put(AUTHENTICATED, authc);
-    }
+//      Serializable getSessionId() {
+//         return getTypedValue(SESSION_ID, Serializable.class);
+//     }
 
-     bool resolveAuthenticated() {
-        bool authc = getTypedValue(AUTHENTICATED, bool.class);
-        if (authc  is null) {
-            //see if there is an AuthenticationInfo object.  If so, the very presence of one indicates a successful
-            //authentication attempt:
-            AuthenticationInfo info = getAuthenticationInfo();
-            authc = info !is null;
-        }
-        if (!authc) {
-            //fall back to a session check:
-            Session session = resolveSession();
-            if (session !is null) {
-                bool sessionAuthc = (bool) session.getAttribute(AUTHENTICATED_SESSION_KEY);
-                authc = sessionAuthc !is null && sessionAuthc;
-            }
-        }
+//      void setSessionId(Serializable sessionId) {
+//         nullSafePut(SESSION_ID, sessionId);
+//     }
 
-        return authc;
-    }
+//      Subject getSubject() {
+//         return getTypedValue(SUBJECT, Subject.class);
+//     }
 
-     AuthenticationInfo getAuthenticationInfo() {
-        return getTypedValue(AUTHENTICATION_INFO, AuthenticationInfo.class);
-    }
+//      void setSubject(Subject subject) {
+//         nullSafePut(SUBJECT, subject);
+//     }
 
-     void setAuthenticationInfo(AuthenticationInfo info) {
-        nullSafePut(AUTHENTICATION_INFO, info);
-    }
+//      PrincipalCollection getPrincipals() {
+//         return getTypedValue(PRINCIPALS, PrincipalCollection.class);
+//     }
 
-     AuthenticationToken getAuthenticationToken() {
-        return getTypedValue(AUTHENTICATION_TOKEN, AuthenticationToken.class);
-    }
+//     private static bool isEmpty(PrincipalCollection pc) {
+//         return pc  is null || pc.isEmpty();
+//     }
 
-     void setAuthenticationToken(AuthenticationToken token) {
-        nullSafePut(AUTHENTICATION_TOKEN, token);
-    }
+//      void setPrincipals(PrincipalCollection principals) {
+//         if (!isEmpty(principals)) {
+//             put(PRINCIPALS, principals);
+//         }
+//     }
 
-     string getHost() {
-        return getTypedValue(HOST, string.class);
-    }
+//      PrincipalCollection resolvePrincipals() {
+//         PrincipalCollection principals = getPrincipals();
 
-     void setHost(string host) {
-        if (StringUtils.hasText(host)) {
-            put(HOST, host);
-        }
-    }
+//         if (isEmpty(principals)) {
+//             //check to see if they were just authenticated:
+//             AuthenticationInfo info = getAuthenticationInfo();
+//             if (info !is null) {
+//                 principals = info.getPrincipals();
+//             }
+//         }
 
-     string resolveHost() {
-        string host = getHost();
+//         if (isEmpty(principals)) {
+//             Subject subject = getSubject();
+//             if (subject !is null) {
+//                 principals = subject.getPrincipals();
+//             }
+//         }
 
-        if (host  is null) {
-            //check to see if there is an AuthenticationToken from which to retrieve it:
-            AuthenticationToken token = getAuthenticationToken();
-            if (token instanceof HostAuthenticationToken) {
-                host = ((HostAuthenticationToken) token).getHost();
-            }
-        }
+//         if (isEmpty(principals)) {
+//             //try the session:
+//             Session session = resolveSession();
+//             if (session !is null) {
+//                 principals = cast(PrincipalCollection) session.getAttribute(PRINCIPALS_SESSION_KEY);
+//             }
+//         }
 
-        if (host  is null) {
-            Session session = resolveSession();
-            if (session !is null) {
-                host = session.getHost();
-            }
-        }
+//         return principals;
+//     }
 
-        return host;
-    }
-}
+
+//      Session getSession() {
+//         return getTypedValue(SESSION, Session.class);
+//     }
+
+//      void setSession(Session session) {
+//         nullSafePut(SESSION, session);
+//     }
+
+//      Session resolveSession() {
+//         Session session = getSession();
+//         if (session  is null) {
+//             //try the Subject if it exists:
+//             Subject existingSubject = getSubject();
+//             if (existingSubject !is null) {
+//                 session = existingSubject.getSession(false);
+//             }
+//         }
+//         return session;
+//     }
+
+//      bool isSessionCreationEnabled() {
+//         bool val = getTypedValue(SESSION_CREATION_ENABLED, bool.class);
+//         return val  is null || val;
+//     }
+
+//      void setSessionCreationEnabled(bool enabled) {
+//         nullSafePut(SESSION_CREATION_ENABLED, enabled);
+//     }
+
+//      bool isAuthenticated() {
+//         bool authc = getTypedValue(AUTHENTICATED, bool.class);
+//         return authc !is null && authc;
+//     }
+
+//      void setAuthenticated(bool authc) {
+//         put(AUTHENTICATED, authc);
+//     }
+
+//      bool resolveAuthenticated() {
+//         bool authc = getTypedValue(AUTHENTICATED, bool.class);
+//         if (authc  is null) {
+//             //see if there is an AuthenticationInfo object.  If so, the very presence of one indicates a successful
+//             //authentication attempt:
+//             AuthenticationInfo info = getAuthenticationInfo();
+//             authc = info !is null;
+//         }
+//         if (!authc) {
+//             //fall back to a session check:
+//             Session session = resolveSession();
+//             if (session !is null) {
+//                 bool sessionAuthc = (bool) session.getAttribute(AUTHENTICATED_SESSION_KEY);
+//                 authc = sessionAuthc !is null && sessionAuthc;
+//             }
+//         }
+
+//         return authc;
+//     }
+
+//      AuthenticationInfo getAuthenticationInfo() {
+//         return getTypedValue(AUTHENTICATION_INFO, AuthenticationInfo.class);
+//     }
+
+//      void setAuthenticationInfo(AuthenticationInfo info) {
+//         nullSafePut(AUTHENTICATION_INFO, info);
+//     }
+
+//      AuthenticationToken getAuthenticationToken() {
+//         return getTypedValue(AUTHENTICATION_TOKEN, AuthenticationToken.class);
+//     }
+
+//      void setAuthenticationToken(AuthenticationToken token) {
+//         nullSafePut(AUTHENTICATION_TOKEN, token);
+//     }
+
+//      string getHost() {
+//         return getTypedValue(HOST, string.class);
+//     }
+
+//      void setHost(string host) {
+//         if (StringUtils.hasText(host)) {
+//             put(HOST, host);
+//         }
+//     }
+
+//      string resolveHost() {
+//         string host = getHost();
+
+//         if (host  is null) {
+//             //check to see if there is an AuthenticationToken from which to retrieve it:
+//             AuthenticationToken token = getAuthenticationToken();
+//             HostAuthenticationToken hat = cast(HostAuthenticationToken) token;
+//             if (hat !is null) {
+//                 host = hat.getHost();
+//             }
+//         }
+
+//         if (host is null) {
+//             Session session = resolveSession();
+//             if (session !is null) {
+//                 host = session.getHost();
+//             }
+//         }
+
+//         return host;
+//     }
+// }

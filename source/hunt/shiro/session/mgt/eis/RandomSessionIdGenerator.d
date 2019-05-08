@@ -19,9 +19,9 @@
 module hunt.shiro.session.mgt.eis.RandomSessionIdGenerator;
 
 import hunt.shiro.session.Session;
-import hunt.logger;
+import hunt.logging;
 
-import java.io.Serializable;
+import hunt.util.Common;
 import java.util.Random;
 
 /**
@@ -36,7 +36,7 @@ class RandomSessionIdGenerator : SessionIdGenerator {
     private enum string RANDOM_NUM_GENERATOR_ALGORITHM_NAME = "SHA1PRNG";
     private Random random;
 
-     RandomSessionIdGenerator() {
+    this() {
         try {
             this.random = java.security.SecureRandom.getInstance(RANDOM_NUM_GENERATOR_ALGORITHM_NAME);
         } catch (java.security.NoSuchAlgorithmException e) {
@@ -46,11 +46,11 @@ class RandomSessionIdGenerator : SessionIdGenerator {
         }
     }
 
-     Random getRandom() {
+    Random getRandom() {
         return this.random;
     }
 
-     void setRandom(Random random) {
+    void setRandom(Random random) {
         this.random = random;
     }
 
@@ -60,7 +60,7 @@ class RandomSessionIdGenerator : SessionIdGenerator {
      * @param session the {@link Session} instance to which the ID will be applied.
      * @return the string value of the configured {@link Random}'s {@link Random#nextLong()} invocation.
      */
-     Serializable generateId(Session session) {
+    Serializable generateId(Session session) {
         //ignore the argument - just call the Random:
         return Long.toString(getRandom().nextLong());
     }

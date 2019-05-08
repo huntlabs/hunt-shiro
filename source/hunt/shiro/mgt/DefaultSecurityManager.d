@@ -36,9 +36,9 @@ import hunt.shiro.subject.Subject;
 import hunt.shiro.subject.SubjectContext;
 import hunt.shiro.subject.support.DefaultSubjectContext;
 import hunt.shiro.util.CollectionUtils;
-import hunt.logger;
+import hunt.logging;
 
-import java.io.Serializable;
+import hunt.util.Common;
 import hunt.collection;
 
 /**

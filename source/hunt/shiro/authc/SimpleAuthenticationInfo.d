@@ -27,8 +27,8 @@ import hunt.shiro.util.ByteSource;
 
 
 import hunt.collection;
-import java.util.HashSet;
-import java.util.Set;
+import hunt.collection.HashSet;
+import hunt.collection.Set;
 
 
 /**

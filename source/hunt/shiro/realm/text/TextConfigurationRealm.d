@@ -24,15 +24,15 @@ import hunt.shiro.authz.SimpleRole;
 import hunt.shiro.config.ConfigurationException;
 import hunt.shiro.realm.SimpleAccountRealm;
 import hunt.shiro.util.PermissionUtils;
-import hunt.shiro.util.StringUtils;
+// import hunt.shiro.util.StringUtils;
 
 import java.text.ParseException;
 import hunt.collection;
-import java.util.HashMap;
+import hunt.collection.HashMap;
 import java.util.LinkedHashSet;
-import java.util.Map;
+import hunt.collection.Map;
 import java.util.Scanner;
-import java.util.Set;
+import hunt.collection.Set;
 
 
 /**

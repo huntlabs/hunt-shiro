@@ -33,7 +33,7 @@ import hunt.shiro.realm.AuthorizingRealm;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.ByteSource;
 import hunt.shiro.util.JdbcUtils;
-import hunt.logger;
+import hunt.logging;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -42,7 +42,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import hunt.collection;
 import java.util.LinkedHashSet;
-import java.util.Set;
+import hunt.collection.Set;
 
 
 /**

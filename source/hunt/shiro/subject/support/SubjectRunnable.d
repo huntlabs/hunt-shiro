@@ -65,8 +65,8 @@ class SubjectRunnable : Runnable {
      * @param subject  the Subject to associate with the delegate's execution.
      * @param delegate the runnable to run.
      */
-     SubjectRunnable(Subject subject, Runnable delegate) {
-        this(new SubjectThreadState(subject), delegate);
+    this(Subject subject, Runnable dg) {
+        this(new SubjectThreadState(subject), dg);
     }
 
     /**
@@ -75,18 +75,18 @@ class SubjectRunnable : Runnable {
      * {@link Runnable Runnable}'s execution, respectively.
      *
      * @param threadState the thread state to bind and unbind before and after the runnable's execution.
-     * @param delegate    the delegate {@code Runnable} to execute when this instance is {@link #run() run()}.
+     * @param dg    the delegate {@code Runnable} to execute when this instance is {@link #run() run()}.
      * @throws IllegalArgumentException if either the {@code ThreadState} or {@link Runnable} arguments are {@code null}.
      */
-    protected SubjectRunnable(ThreadState threadState, Runnable delegate){
+    protected this(ThreadState threadState, Runnable dg){
         if (threadState  is null) {
             throw new IllegalArgumentException("ThreadState argument cannot be null.");
         }
         this.threadState = threadState;
-        if (delegate  is null) {
+        if (dg  is null) {
             throw new IllegalArgumentException("Runnable argument cannot be null.");
         }
-        this.runnable = delegate;
+        this.runnable = dg;
     }
 
     /**

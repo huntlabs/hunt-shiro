@@ -18,7 +18,7 @@
  */
 module hunt.shiro.authz.permission.AllPermission;
 
-import java.io.Serializable;
+import hunt.util.Common;
 
 import hunt.shiro.authz.Permission;
 

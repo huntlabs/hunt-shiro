@@ -15,7 +15,7 @@
  */
 module hunt.shiro.session.mgt.DefaultSessionKey;
 
-import java.io.Serializable;
+import hunt.util.Common;
 
 /**
  * Default implementation of the {@link SessionKey} interface, which allows setting and retrieval of a concrete

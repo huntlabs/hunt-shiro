@@ -18,8 +18,8 @@
  */
 module hunt.shiro.session.mgt.SessionContext;
 
-import java.io.Serializable;
-import java.util.Map;
+import hunt.util.Common;
+import hunt.collection.Map;
 
 /**
  * A {@code SessionContext} is a 'bucket' of data presented to a {@link SessionFactory SessionFactory} which interprets

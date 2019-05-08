@@ -22,7 +22,7 @@ import hunt.shiro.codec.Base64;
 import hunt.shiro.crypto.hash.Hash;
 import hunt.shiro.crypto.hash.SimpleHash;
 import hunt.shiro.util.ByteSource;
-import hunt.shiro.util.StringUtils;
+// import hunt.shiro.util.StringUtils;
 
 /**
  * The {@code Shiro1CryptFormat} is a fully reversible

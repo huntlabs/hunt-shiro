@@ -18,7 +18,7 @@
  */
 module hunt.shiro.authc.AuthenticationToken;
 
-import java.io.Serializable;
+import hunt.util.Common;
 
 /**
  * <p>An <tt>AuthenticationToken</tt> is a consolidation of an account's principals and supporting

@@ -18,10 +18,8 @@
  */
 module hunt.shiro.subject.PrincipalCollection;
 
-import java.io.Serializable;
+import hunt.util.Common;
 import hunt.collection;
-import java.util.List;
-import java.util.Set;
 
 /**
  * A collection of all principals associated with a corresponding {@link Subject Subject}.  A <em>principal</em> is
@@ -83,7 +81,7 @@ interface PrincipalCollection : Iterable, Serializable {
      * @param type the type of the principal that should be returned.
      * @return a principal of the specified type or {@code null} if there isn't one of the specified type.
      */
-    <T> T oneByType(Class!(T) type);
+    T oneByType(T)(TypeInfo_Class type);
 
     /**
      * Returns all principals assignable from the specified type, or an empty Collection if no principals of that
@@ -95,7 +93,7 @@ interface PrincipalCollection : Iterable, Serializable {
      * @return a Collection of principals that are assignable from the specified type, or
      *         an empty Collection if no principals of this type are associated.
      */
-    <T> Collection!(T) byType(Class!(T) type);
+    Collection!(T) byType(T)(TypeInfo_Class type);
 
     /**
      * Returns a single Subject's principals retrieved from all configured Realms as a List, or an empty List if

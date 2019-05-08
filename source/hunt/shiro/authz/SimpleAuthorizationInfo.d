@@ -19,8 +19,6 @@
 module hunt.shiro.authz.SimpleAuthorizationInfo;
 
 import hunt.collection;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Simple POJO implementation of the {@link AuthorizationInfo} interface that stores roles and permissions as internal
@@ -48,7 +46,7 @@ class SimpleAuthorizationInfo : AuthorizationInfo {
     /**
      * Default no-argument constructor.
      */
-     this() {
+    this() {
     }
 
     /**

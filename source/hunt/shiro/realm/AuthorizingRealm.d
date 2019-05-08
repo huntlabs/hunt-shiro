@@ -26,7 +26,7 @@ import hunt.shiro.authz.permission;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.CollectionUtils;
 import hunt.shiro.util.Initializable;
-import hunt.logger;
+import hunt.logging;
 
 // import java.util.*;
 // import java.util.concurrent.atomic.AtomicInteger;

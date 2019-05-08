@@ -24,7 +24,7 @@ import hunt.shiro.authz.permission.PermissionResolver;
 import hunt.util.ArrayHelper;
 import hunt.collection;
 import java.util.LinkedHashSet;
-import java.util.Set;
+import hunt.collection.Set;
 
 
 /**

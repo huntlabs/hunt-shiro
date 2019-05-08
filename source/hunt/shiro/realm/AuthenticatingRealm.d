@@ -31,7 +31,7 @@ import hunt.shiro.cache.CacheManager;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.Initializable;
 
-import hunt.logger;
+import hunt.logging;
 
 import std.string;
 // import java.util.concurrent.atomic.AtomicInteger;

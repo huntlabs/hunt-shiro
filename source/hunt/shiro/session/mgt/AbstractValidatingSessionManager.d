@@ -25,7 +25,7 @@ import hunt.shiro.session.Session;
 import hunt.shiro.session.UnknownSessionException;
 import hunt.shiro.util.Destroyable;
 import hunt.shiro.util.LifecycleUtils;
-import hunt.logger;
+import hunt.logging;
 
 import hunt.collection;
 

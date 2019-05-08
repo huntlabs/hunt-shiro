@@ -18,9 +18,9 @@
  */
 module hunt.shiro.authz.permission.DomainPermission;
 
-import hunt.shiro.util.StringUtils;
+// import hunt.shiro.util.StringUtils;
 
-import java.util.Set;
+import hunt.collection.Set;
 
 /**
  * Provides a base Permission class from which type-safe/domain-specific subclasses may extend.  Can be used

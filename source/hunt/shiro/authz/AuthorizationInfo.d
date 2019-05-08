@@ -18,7 +18,7 @@
  */
 module hunt.shiro.authz.AuthorizationInfo;
 
-import java.io.Serializable;
+import hunt.util.Common;
 import hunt.collection;
 
 /**

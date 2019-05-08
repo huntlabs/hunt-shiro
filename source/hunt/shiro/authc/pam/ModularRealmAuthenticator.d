@@ -24,7 +24,7 @@ import hunt.shiro.authc;
 import hunt.shiro.realm.Realm;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.CollectionUtils;
-import hunt.logger;
+import hunt.logging;
 
 import hunt.collection;
 

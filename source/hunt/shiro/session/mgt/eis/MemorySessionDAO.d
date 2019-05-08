@@ -21,11 +21,11 @@ module hunt.shiro.session.mgt.eis.MemorySessionDAO;
 import hunt.shiro.session.Session;
 import hunt.shiro.session.UnknownSessionException;
 import hunt.shiro.util.CollectionUtils;
-import hunt.logger;
+import hunt.logging;
 
-import java.io.Serializable;
+import hunt.util.Common;
 import hunt.collection;
-import java.util.Collections;
+import hunt.collection.Collections;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -57,7 +57,7 @@ class MemorySessionDAO : AbstractSessionDAO {
 
     private ConcurrentMap!(Serializable, Session) sessions;
 
-     MemorySessionDAO() {
+    this() {
         this.sessions = new ConcurrentHashMap!(Serializable, Session)();
     }
 

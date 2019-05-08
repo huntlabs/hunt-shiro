@@ -21,7 +21,7 @@ module hunt.shiro.session.mgt.eis.SessionDAO;
 import hunt.shiro.session.Session;
 import hunt.shiro.session.UnknownSessionException;
 
-import java.io.Serializable;
+import hunt.util.Common;
 import hunt.collection;
 
 

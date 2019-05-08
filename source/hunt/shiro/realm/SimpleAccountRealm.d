@@ -30,10 +30,10 @@ import hunt.shiro.authz.SimpleRole;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.CollectionUtils;
 
-import java.util.HashSet;
+import hunt.collection.HashSet;
 import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import hunt.collection.Map;
+import hunt.collection.Set;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 

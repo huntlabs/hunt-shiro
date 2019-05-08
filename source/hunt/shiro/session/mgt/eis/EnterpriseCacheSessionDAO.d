@@ -24,7 +24,7 @@ import hunt.shiro.cache.CacheException;
 import hunt.shiro.cache.MapCache;
 import hunt.shiro.session.Session;
 
-import java.io.Serializable;
+import hunt.util.Common;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -50,11 +50,12 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 class EnterpriseCacheSessionDAO : CachingSessionDAO {
 
-     EnterpriseCacheSessionDAO() {
-        setCacheManager(new AbstractCacheManager() {
+     this() {
+        setCacheManager(new class AbstractCacheManager {
             override
             protected Cache!(Serializable, Session) createCache(string name){
-                return new MapCache!(Serializable, Session)(name, new ConcurrentHashMap!(Serializable, Session)());
+                return new MapCache!(Serializable, Session)(name, 
+                new ConcurrentHashMap!(Serializable, Session)());
             }
         });
     }

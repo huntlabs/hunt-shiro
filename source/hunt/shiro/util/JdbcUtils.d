@@ -18,96 +18,96 @@
  */
 module hunt.shiro.util.JdbcUtils;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+// import java.sql.Connection;
+// import java.sql.ResultSet;
+// import java.sql.SQLException;
+// import java.sql.Statement;
 
-import hunt.logger;
+// import hunt.logging;
 
-/**
- * A set of static helper methods for managing JDBC API objects.
- * <p/>
- * <em>Note:</em> Some parts of this class were copied from the Spring Framework and then modified.
- * They were copied here to prevent Spring dependencies in the Shiro core API.  The original license conditions
- * (Apache 2.0) have been maintained.
- *
- */
-class JdbcUtils {
+// /**
+//  * A set of static helper methods for managing JDBC API objects.
+//  * <p/>
+//  * <em>Note:</em> Some parts of this class were copied from the Spring Framework and then modified.
+//  * They were copied here to prevent Spring dependencies in the Shiro core API.  The original license conditions
+//  * (Apache 2.0) have been maintained.
+//  *
+//  */
+// class JdbcUtils {
 
-    /** Private internal log instance. */
+//     /** Private internal log instance. */
 
 
-    /**
-     * Private constructor to prevent instantiation.
-     */
-    private JdbcUtils() {
-    }
+//     /**
+//      * Private constructor to prevent instantiation.
+//      */
+//     private this() {
+//     }
 
-    /**
-     * Close the given JDBC Connection and ignore any thrown exception.
-     * This is useful for typical finally blocks in manual JDBC code.
-     *
-     * @param connection the JDBC Connection to close (may be <tt>null</tt>)
-     */
-     static void closeConnection(Connection connection) {
-        if (connection !is null) {
-            try {
-                connection.close();
-            } catch (SQLException ex) {
-                version(HUNT_DEBUG) {
-                    tracef("Could not close JDBC Connection", ex);
-                }
-            } catch (Throwable ex) {
-                version(HUNT_DEBUG) {
-                    tracef("Unexpected exception on closing JDBC Connection", ex);
-                }
-            }
-        }
-    }
+//     /**
+//      * Close the given JDBC Connection and ignore any thrown exception.
+//      * This is useful for typical finally blocks in manual JDBC code.
+//      *
+//      * @param connection the JDBC Connection to close (may be <tt>null</tt>)
+//      */
+//      static void closeConnection(Connection connection) {
+//         if (connection !is null) {
+//             try {
+//                 connection.close();
+//             } catch (SQLException ex) {
+//                 version(HUNT_DEBUG) {
+//                     tracef("Could not close JDBC Connection", ex);
+//                 }
+//             } catch (Throwable ex) {
+//                 version(HUNT_DEBUG) {
+//                     tracef("Unexpected exception on closing JDBC Connection", ex);
+//                 }
+//             }
+//         }
+//     }
 
-    /**
-     * Close the given JDBC Statement and ignore any thrown exception.
-     * This is useful for typical finally blocks in manual JDBC code.
-     *
-     * @param statement the JDBC Statement to close (may be <tt>null</tt>)
-     */
-     static void closeStatement(Statement statement) {
-        if (statement !is null) {
-            try {
-                statement.close();
-            } catch (SQLException ex) {
-                version(HUNT_DEBUG) {
-                    tracef("Could not close JDBC Statement", ex);
-                }
-            } catch (Throwable ex) {
-                version(HUNT_DEBUG) {
-                    tracef("Unexpected exception on closing JDBC Statement", ex);
-                }
-            }
-        }
-    }
+//     /**
+//      * Close the given JDBC Statement and ignore any thrown exception.
+//      * This is useful for typical finally blocks in manual JDBC code.
+//      *
+//      * @param statement the JDBC Statement to close (may be <tt>null</tt>)
+//      */
+//      static void closeStatement(Statement statement) {
+//         if (statement !is null) {
+//             try {
+//                 statement.close();
+//             } catch (SQLException ex) {
+//                 version(HUNT_DEBUG) {
+//                     tracef("Could not close JDBC Statement", ex);
+//                 }
+//             } catch (Throwable ex) {
+//                 version(HUNT_DEBUG) {
+//                     tracef("Unexpected exception on closing JDBC Statement", ex);
+//                 }
+//             }
+//         }
+//     }
 
-    /**
-     * Close the given JDBC ResultSet and ignore any thrown exception.
-     * This is useful for typical finally blocks in manual JDBC code.
-     *
-     * @param rs the JDBC ResultSet to close (may be <tt>null</tt>)
-     */
-     static void closeResultSet(ResultSet rs) {
-        if (rs !is null) {
-            try {
-                rs.close();
-            } catch (SQLException ex) {
-                version(HUNT_DEBUG) {
-                    tracef("Could not close JDBC ResultSet", ex);
-                }
-            } catch (Throwable ex) {
-                version(HUNT_DEBUG) {
-                    tracef("Unexpected exception on closing JDBC ResultSet", ex);
-                }
-            }
-        }
-    }
+//     /**
+//      * Close the given JDBC ResultSet and ignore any thrown exception.
+//      * This is useful for typical finally blocks in manual JDBC code.
+//      *
+//      * @param rs the JDBC ResultSet to close (may be <tt>null</tt>)
+//      */
+//      static void closeResultSet(ResultSet rs) {
+//         if (rs !is null) {
+//             try {
+//                 rs.close();
+//             } catch (SQLException ex) {
+//                 version(HUNT_DEBUG) {
+//                     tracef("Could not close JDBC ResultSet", ex);
+//                 }
+//             } catch (Throwable ex) {
+//                 version(HUNT_DEBUG) {
+//                     tracef("Unexpected exception on closing JDBC ResultSet", ex);
+//                 }
+//             }
+//         }
+//     }
 
-}
+// }

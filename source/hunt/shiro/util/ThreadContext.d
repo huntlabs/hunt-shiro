@@ -20,11 +20,11 @@ module hunt.shiro.util.ThreadContext;
 
 import hunt.shiro.mgt.SecurityManager;
 import hunt.shiro.subject.Subject;
-import hunt.logger;
+import hunt.logging;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import hunt.collection.Collections;
+import hunt.collection.HashMap;
+import hunt.collection.Map;
 
 
 /**
@@ -56,7 +56,7 @@ abstract class ThreadContext {
     /**
      * Default no-argument constructor.
      */
-    protected ThreadContext() {
+    protected this() {
     }
 
     /**
@@ -213,7 +213,7 @@ abstract class ThreadContext {
      * @return the Subject object bound to the thread, or <tt>null</tt> if there isn't one bound.
      */
      static SecurityManager getSecurityManager() {
-        return (SecurityManager) get(SECURITY_MANAGER_KEY);
+        return cast(SecurityManager) get(SECURITY_MANAGER_KEY);
     }
 
 
@@ -253,7 +253,7 @@ abstract class ThreadContext {
      *         was none bound.
      */
      static SecurityManager unbindSecurityManager() {
-        return (SecurityManager) remove(SECURITY_MANAGER_KEY);
+        return cast(SecurityManager) remove(SECURITY_MANAGER_KEY);
     }
 
     /**
@@ -269,7 +269,7 @@ abstract class ThreadContext {
      * @return the Subject object bound to the thread, or <tt>null</tt> if there isn't one bound.
      */
      static Subject getSubject() {
-        return (Subject) get(SUBJECT_KEY);
+        return cast(Subject) get(SUBJECT_KEY);
     }
 
 
@@ -307,26 +307,27 @@ abstract class ThreadContext {
      * @return the Subject object previously bound to the thread, or <tt>null</tt> if there was none bound.
      */
      static Subject unbindSubject() {
-        return (Subject) remove(SUBJECT_KEY);
+        return cast(Subject) remove(SUBJECT_KEY);
     }
     
-    private static final class InheritableThreadLocalMap!(T extends Map!(Object, Object)) extends InheritableThreadLocal!(Map!(Object, Object)) {
+}
 
-        /**
-         * This implementation was added to address a
-         * <a href="http://jsecurity.markmail.org/search/?q=#query:+page:1+mid:xqi2yxurwmrpqrvj+state:results">
-         * user-reported issue</a>.
-         * @param parentValue the parent value, a HashMap as defined in the {@link #initialValue()} method.
-         * @return the HashMap to be used by any parent-spawned child threads (a clone of the parent HashMap).
-         */
-        //@SuppressWarnings({"unchecked"})
-        protected Map!(Object, Object) childValue(Map!(Object, Object) parentValue) {
-            if (parentValue !is null) {
-                return (Map!(Object, Object)) ((HashMap!(Object, Object)) parentValue).clone();
-            } else {
-                return null;
-            }
+
+private final class InheritableThreadLocalMap(T) : InheritableThreadLocal!(Map!(Object, Object)) {
+
+    /**
+     * This implementation was added to address a
+     * <a href="http://jsecurity.markmail.org/search/?q=#query:+page:1+mid:xqi2yxurwmrpqrvj+state:results">
+     * user-reported issue</a>.
+     * @param parentValue the parent value, a HashMap as defined in the {@link #initialValue()} method.
+     * @return the HashMap to be used by any parent-spawned child threads (a clone of the parent HashMap).
+     */
+    //@SuppressWarnings({"unchecked"})
+    protected Map!(Object, Object) childValue(Map!(Object, Object) parentValue) {
+        if (parentValue !is null) {
+            return cast(Map!(Object, Object)) (cast(HashMap!(Object, Object)) parentValue).clone();
+        } else {
+            return null;
         }
     }
 }
-

@@ -26,7 +26,7 @@ import hunt.shiro.subject.support.DelegatingSubject;
 
 import hunt.Boolean;
 import hunt.Exceptions;
-import hunt.logger;
+import hunt.logging;
 
 // import java.lang.reflect.Field;
 

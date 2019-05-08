@@ -25,9 +25,9 @@ import hunt.shiro.session.Session;
 import hunt.shiro.session.UnknownSessionException;
 import hunt.shiro.session.mgt.ValidatingSession;
 
-import java.io.Serializable;
+import hunt.util.Common;
 import hunt.collection;
-import java.util.Collections;
+import hunt.collection.Collections;
 
 /**
  * An CachingSessionDAO is a SessionDAO that provides a transparent caching layer between the components that
@@ -44,7 +44,7 @@ import java.util.Collections;
  * subclasses (doCreate, doRead, etc).
  *
  */
-abstract class CachingSessionDAO : AbstractSessionDAO implements CacheManagerAware {
+abstract class CachingSessionDAO : AbstractSessionDAO, CacheManagerAware {
 
     /**
      * The default active sessions cache name, equal to {@code shiro-activeSessionCache}.
@@ -69,7 +69,7 @@ abstract class CachingSessionDAO : AbstractSessionDAO implements CacheManagerAwa
     /**
      * Default no-arg constructor.
      */
-     CachingSessionDAO() {
+    this() {
     }
 
     /**
@@ -273,8 +273,9 @@ abstract class CachingSessionDAO : AbstractSessionDAO implements CacheManagerAwa
      */
      void update(Session session){
         doUpdate(session);
-        if (session instanceof ValidatingSession) {
-            if (((ValidatingSession) session).isValid()) {
+        ValidatingSession vs = cast(ValidatingSession) session;
+        if (vs !is null) {
+            if (vs.isValid()) {
                 cache(session, session.getId());
             } else {
                 uncache(session);

@@ -19,14 +19,14 @@
 module hunt.shiro.crypto.hash.format.DefaultHashFormatFactory;
 
 import hunt.shiro.util.ClassUtils;
-import hunt.shiro.util.StringUtils;
+// import hunt.shiro.util.StringUtils;
 import hunt.shiro.util.UnknownClassException;
 import hunt.shiro.crypto.hash.format.HashFormat;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import hunt.collection.HashMap;
+import hunt.collection.HashSet;
+import hunt.collection.Map;
+import hunt.collection.Set;
 
 /**
  * This default {@code HashFormatFactory} implementation heuristically determines a {@code HashFormat} class to

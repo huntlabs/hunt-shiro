@@ -20,8 +20,8 @@ module hunt.shiro.realm.text.IniRealm;
 
 import hunt.shiro.config.Ini;
 import hunt.shiro.util.CollectionUtils;
-import hunt.shiro.util.StringUtils;
-import hunt.logger;
+// import hunt.shiro.util.StringUtils;
+import hunt.logging;
 
 /**
  * A {@link hunt.shiro.realm.Realm Realm} implementation that creates

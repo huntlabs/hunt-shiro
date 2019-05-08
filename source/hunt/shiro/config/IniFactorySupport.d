@@ -22,11 +22,11 @@ module hunt.shiro.config.IniFactorySupport;
 // import hunt.shiro.util.AbstractFactory;
 // import hunt.shiro.util.CollectionUtils;
 // import hunt.shiro.util.Factory;
-// import hunt.logger;
+// import hunt.logging;
 // import hunt.loggerFactory;
 
-// import java.util.HashMap;
-// import java.util.Map;
+// import hunt.collection.HashMap;
+// import hunt.collection.Map;
 
 // /**
 //  * Base support class for {@link Factory} implementations that generate their instance(s) based on

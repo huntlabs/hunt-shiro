@@ -22,14 +22,13 @@ import hunt.shiro.session.ExpiredSessionException;
 import hunt.shiro.session.InvalidSessionException;
 import hunt.shiro.session.StoppedSessionException;
 import hunt.shiro.util.CollectionUtils;
-import hunt.logger;
+import hunt.logging;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.text.DateFormat;
-import java.util.*;
+// import java.io.IOException;
+// import java.io.ObjectInputStream;
+// import java.io.ObjectOutputStream;
+// import hunt.util.Common;
+// import java.text.DateFormat;
 
 
 /**
@@ -48,12 +47,12 @@ class SimpleSession : ValidatingSession, Serializable {
     //TODO - complete JavaDoc
 
 
-    protected static final long MILLIS_PER_SECOND = 1000;
-    protected static final long MILLIS_PER_MINUTE = 60 * MILLIS_PER_SECOND;
-    protected static final long MILLIS_PER_HOUR = 60 * MILLIS_PER_MINUTE;
+    protected enum long MILLIS_PER_SECOND = 1000;
+    protected enum long MILLIS_PER_MINUTE = 60 * MILLIS_PER_SECOND;
+    protected enum long MILLIS_PER_HOUR = 60 * MILLIS_PER_MINUTE;
 
     //serialization bitmask fields. DO NOT CHANGE THE ORDER THEY ARE DECLARED!
-    static int bitIndexCounter = 0;
+    static shared int bitIndexCounter = 0;
     private enum int ID_BIT_MASK = 1 << bitIndexCounter++;
     private enum int START_TIMESTAMP_BIT_MASK = 1 << bitIndexCounter++;
     private enum int STOP_TIMESTAMP_BIT_MASK = 1 << bitIndexCounter++;
@@ -89,13 +88,13 @@ class SimpleSession : ValidatingSession, Serializable {
     private  string host;
     private  Map!(Object, Object) attributes;
 
-     SimpleSession() {
+    this() {
         this.timeout = DefaultSessionManager.DEFAULT_GLOBAL_SESSION_TIMEOUT; //TODO - remove concrete reference to DefaultSessionManager
         this.startTimestamp = new Date();
         this.lastAccessTime = this.startTimestamp;
     }
 
-     SimpleSession(string host) {
+    this(string host) {
         this();
         this.host = host;
     }
@@ -225,7 +224,7 @@ class SimpleSession : ValidatingSession, Serializable {
 
         long timeout = getTimeout();
 
-        if (timeout >= 0l) {
+        if (timeout >= 0) {
 
             Date lastAccessTime = getLastAccessTime();
 
@@ -348,8 +347,9 @@ class SimpleSession : ValidatingSession, Serializable {
         if (this == obj) {
             return true;
         }
-        if (obj instanceof SimpleSession) {
-            SimpleSession other = (SimpleSession) obj;
+
+        SimpleSession other = cast(SimpleSession) obj;
+        if (other !is null) {
             Serializable thisId = getId();
             Serializable otherId = other.getId();
             if (thisId !is null && otherId !is null) {
@@ -389,12 +389,12 @@ class SimpleSession : ValidatingSession, Serializable {
      * @return this object's hashCode
      */
     override
-     size_t toHash() @trusted nothrow {
+    size_t toHash() @trusted nothrow {
         Serializable id = getId();
         if (id !is null) {
             return id.hashCode();
         }
-        size_t toHash() @trusted nothrow = getStartTimestamp() !is null ? getStartTimestamp().hashCode() : 0;
+        int hashCode = getStartTimestamp() != null ? getStartTimestamp().hashCode() : 0;
         hashCode = 31 * hashCode + (getStopTimestamp() !is null ? getStopTimestamp().hashCode() : 0);
         hashCode = 31 * hashCode + (getLastAccessTime() !is null ? getLastAccessTime().hashCode() : 0);
         hashCode = 31 * hashCode + Long.valueOf(Math.max(getTimeout(), 0)).hashCode();
@@ -412,9 +412,9 @@ class SimpleSession : ValidatingSession, Serializable {
      *         <typeid(code).name + &quot;,id=&quot; + getId()</code>.
      */
     override
-     string toString() {
+    string toString() {
         StringBuilder sb = new StringBuilder();
-        sb.typeid(append).name).append(",id=").append(getId());
+        sb.append(typeid(this).name).append(",id=").append(getId());
         return sb.toString();
     }
 
@@ -424,35 +424,35 @@ class SimpleSession : ValidatingSession, Serializable {
      * @param out output stream used for Object serialization.
      * @throws IOException if any of this object's fields cannot be written to the stream.
      */
-    private void writeObject(ObjectOutputStream out){
-        out.defaultWriteObject();
-        short alteredFieldsBitMask = getAlteredFieldsBitMask();
-        out.writeShort(alteredFieldsBitMask);
-        if (id !is null) {
-            out.writeObject(id);
-        }
-        if (startTimestamp !is null) {
-            out.writeObject(startTimestamp);
-        }
-        if (stopTimestamp !is null) {
-            out.writeObject(stopTimestamp);
-        }
-        if (lastAccessTime !is null) {
-            out.writeObject(lastAccessTime);
-        }
-        if (timeout != 0l) {
-            out.writeLong(timeout);
-        }
-        if (expired) {
-            out.writebool(expired);
-        }
-        if (host !is null) {
-            out.writeUTF(host);
-        }
-        if (!CollectionUtils.isEmpty(attributes)) {
-            out.writeObject(attributes);
-        }
-    }
+    // private void writeObject(ObjectOutputStream out){
+    //     out.defaultWriteObject();
+    //     short alteredFieldsBitMask = getAlteredFieldsBitMask();
+    //     out.writeShort(alteredFieldsBitMask);
+    //     if (id !is null) {
+    //         out.writeObject(id);
+    //     }
+    //     if (startTimestamp !is null) {
+    //         out.writeObject(startTimestamp);
+    //     }
+    //     if (stopTimestamp !is null) {
+    //         out.writeObject(stopTimestamp);
+    //     }
+    //     if (lastAccessTime !is null) {
+    //         out.writeObject(lastAccessTime);
+    //     }
+    //     if (timeout != 0l) {
+    //         out.writeLong(timeout);
+    //     }
+    //     if (expired) {
+    //         out.writebool(expired);
+    //     }
+    //     if (host !is null) {
+    //         out.writeUTF(host);
+    //     }
+    //     if (!CollectionUtils.isEmpty(attributes)) {
+    //         out.writeObject(attributes);
+    //     }
+    // }
 
     /**
      * Reconstitutes this object based on the specified InputStream for JDK Serialization.
@@ -462,35 +462,35 @@ class SimpleSession : ValidatingSession, Serializable {
      * @throws ClassNotFoundException if a required class needed for instantiation is not available in the present JVM
      */
     //@SuppressWarnings({"unchecked"})
-    private void readObject(ObjectInputStream in){
-        in.defaultReadObject();
-        short bitMask = in.readShort();
+    // private void readObject(ObjectInputStream in){
+    //     in.defaultReadObject();
+    //     short bitMask = in.readShort();
 
-        if (isFieldPresent(bitMask, ID_BIT_MASK)) {
-            this.id = (Serializable) in.readObject();
-        }
-        if (isFieldPresent(bitMask, START_TIMESTAMP_BIT_MASK)) {
-            this.startTimestamp = (Date) in.readObject();
-        }
-        if (isFieldPresent(bitMask, STOP_TIMESTAMP_BIT_MASK)) {
-            this.stopTimestamp = (Date) in.readObject();
-        }
-        if (isFieldPresent(bitMask, LAST_ACCESS_TIME_BIT_MASK)) {
-            this.lastAccessTime = (Date) in.readObject();
-        }
-        if (isFieldPresent(bitMask, TIMEOUT_BIT_MASK)) {
-            this.timeout = in.readLong();
-        }
-        if (isFieldPresent(bitMask, EXPIRED_BIT_MASK)) {
-            this.expired = in.readbool();
-        }
-        if (isFieldPresent(bitMask, HOST_BIT_MASK)) {
-            this.host = in.readUTF();
-        }
-        if (isFieldPresent(bitMask, ATTRIBUTES_BIT_MASK)) {
-            this.attributes = (Map!(Object, Object)) in.readObject();
-        }
-    }
+    //     if (isFieldPresent(bitMask, ID_BIT_MASK)) {
+    //         this.id = (Serializable) in.readObject();
+    //     }
+    //     if (isFieldPresent(bitMask, START_TIMESTAMP_BIT_MASK)) {
+    //         this.startTimestamp = (Date) in.readObject();
+    //     }
+    //     if (isFieldPresent(bitMask, STOP_TIMESTAMP_BIT_MASK)) {
+    //         this.stopTimestamp = (Date) in.readObject();
+    //     }
+    //     if (isFieldPresent(bitMask, LAST_ACCESS_TIME_BIT_MASK)) {
+    //         this.lastAccessTime = (Date) in.readObject();
+    //     }
+    //     if (isFieldPresent(bitMask, TIMEOUT_BIT_MASK)) {
+    //         this.timeout = in.readLong();
+    //     }
+    //     if (isFieldPresent(bitMask, EXPIRED_BIT_MASK)) {
+    //         this.expired = in.readbool();
+    //     }
+    //     if (isFieldPresent(bitMask, HOST_BIT_MASK)) {
+    //         this.host = in.readUTF();
+    //     }
+    //     if (isFieldPresent(bitMask, ATTRIBUTES_BIT_MASK)) {
+    //         this.attributes = (Map!(Object, Object)) in.readObject();
+    //     }
+    // }
 
     /**
      * Returns a bit mask used during serialization indicating which fields have been serialized. Fields that have been
@@ -499,18 +499,18 @@ class SimpleSession : ValidatingSession, Serializable {
      *
      * @return a bit mask used during serialization indicating which fields have been serialized.
      */
-    private short getAlteredFieldsBitMask() {
-        int bitMask = 0;
-        bitMask = id !is null ? bitMask | ID_BIT_MASK : bitMask;
-        bitMask = startTimestamp !is null ? bitMask | START_TIMESTAMP_BIT_MASK : bitMask;
-        bitMask = stopTimestamp !is null ? bitMask | STOP_TIMESTAMP_BIT_MASK : bitMask;
-        bitMask = lastAccessTime !is null ? bitMask | LAST_ACCESS_TIME_BIT_MASK : bitMask;
-        bitMask = timeout != 0l ? bitMask | TIMEOUT_BIT_MASK : bitMask;
-        bitMask = expired ? bitMask | EXPIRED_BIT_MASK : bitMask;
-        bitMask = host !is null ? bitMask | HOST_BIT_MASK : bitMask;
-        bitMask = !CollectionUtils.isEmpty(attributes) ? bitMask | ATTRIBUTES_BIT_MASK : bitMask;
-        return (short) bitMask;
-    }
+    // private short getAlteredFieldsBitMask() {
+    //     int bitMask = 0;
+    //     bitMask = id !is null ? bitMask | ID_BIT_MASK : bitMask;
+    //     bitMask = startTimestamp !is null ? bitMask | START_TIMESTAMP_BIT_MASK : bitMask;
+    //     bitMask = stopTimestamp !is null ? bitMask | STOP_TIMESTAMP_BIT_MASK : bitMask;
+    //     bitMask = lastAccessTime !is null ? bitMask | LAST_ACCESS_TIME_BIT_MASK : bitMask;
+    //     bitMask = timeout != 0l ? bitMask | TIMEOUT_BIT_MASK : bitMask;
+    //     bitMask = expired ? bitMask | EXPIRED_BIT_MASK : bitMask;
+    //     bitMask = host !is null ? bitMask | HOST_BIT_MASK : bitMask;
+    //     bitMask = !CollectionUtils.isEmpty(attributes) ? bitMask | ATTRIBUTES_BIT_MASK : bitMask;
+    //     return (short) bitMask;
+    // }
 
     /**
      * Returns {@code true} if the given {@code bitMask} argument indicates that the specified field has been

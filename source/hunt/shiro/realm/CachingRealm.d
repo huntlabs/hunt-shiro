@@ -24,7 +24,7 @@ import hunt.shiro.cache.CacheManagerAware;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.CollectionUtils;
 import hunt.shiro.util.Nameable;
-import hunt.logger;
+import hunt.logging;
 
 import hunt.collection;
 import java.util.concurrent.atomic.AtomicInteger;

@@ -24,7 +24,7 @@ import hunt.shiro.util.CollectionUtils;
 import hunt.shiro.util.ThreadContext;
 import hunt.shiro.util.ThreadState;
 
-import java.util.Map;
+import hunt.collection.Map;
 
 /**
  * Manages thread-state for {@link Subject Subject} access (supporting
@@ -51,15 +51,16 @@ class SubjectThreadState : ThreadState {
      *
      * @param subject the {@code Subject} instance to bind and unbind from the {@link ThreadContext}.
      */
-     SubjectThreadState(Subject subject) {
+    this(Subject subject) {
         if (subject  is null) {
             throw new IllegalArgumentException("Subject argument cannot be null.");
         }
         this.subject = subject;
 
         SecurityManager securityManager = null;
-        if ( subject instanceof DelegatingSubject) {
-            securityManager = ((DelegatingSubject)subject).getSecurityManager();
+        DelegatingSubject ds = cast(DelegatingSubject)subject;
+        if (ds !is null) {
+            securityManager = ds.getSecurityManager();
         }
         if ( securityManager  is null) {
             securityManager = ThreadContext.getSecurityManager();

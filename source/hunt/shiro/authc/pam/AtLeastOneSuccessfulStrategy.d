@@ -52,7 +52,7 @@ class AtLeastOneSuccessfulStrategy : AbstractAuthenticationStrategy {
      * is not <code>null</code>, and if either is <code>null</code>,
      * that none of the realms authenticated successfully.
      */
-     AuthenticationInfo afterAllAttempts(AuthenticationToken token, AuthenticationInfo aggregate){
+    override AuthenticationInfo afterAllAttempts(AuthenticationToken token, AuthenticationInfo aggregate){
         //we know if one or more were able to successfully authenticate if the aggregated account object does not
         //contain null or empty data:
         if (aggregate  is null || isEmpty(aggregate.getPrincipals())) {

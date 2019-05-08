@@ -20,11 +20,9 @@ module hunt.shiro.crypto.hash.AbstractHash;
 
 import std.stdio;
 import hunt.shiro.codec.Base64;
-// import hunt.shiro.codec.CodecException;
-// import hunt.shiro.codec.CodecSupport;
+import hunt.shiro.codec.CodecSupport;
 import hunt.shiro.codec.Hex;
-// import hunt.shiro.crypto.UnknownAlgorithmException;
-// import hunt.shiro.crypto.hash.Hash;
+import hunt.shiro.crypto.hash.Hash;
 
 //import hunt.util.Common;
 //import java.security.MessageDigest;
@@ -45,7 +43,7 @@ import hunt.util.ArrayHelper;
  * deprecated("") in Shiro 1.1 in favor of using the concrete {@link SimpleHash} implementation directly.
  */
 // deprecated("")
-// abstract class AbstractHash : CodecSupport, Hash {
+abstract class AbstractHash : CodecSupport, Hash {
 
 //     /**
 //      * The hashed data
@@ -360,4 +358,4 @@ import hunt.util.ArrayHelper;
 //         writeln(hashed);
 //         return 0;
 //     }
-// }
+}

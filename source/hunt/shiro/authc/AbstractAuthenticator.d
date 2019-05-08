@@ -18,10 +18,16 @@
  */
 module hunt.shiro.authc.AbstractAuthenticator;
 
+import hunt.shiro.authc.Authenticator;
+import hunt.shiro.authc.AuthenticationInfo;
+import hunt.shiro.authc.AuthenticationListener;
+import hunt.shiro.authc.AuthenticationToken;
+import hunt.shiro.authc.LogoutAware;
+
 import hunt.shiro.Exceptions;
 import hunt.shiro.subject.PrincipalCollection;
-import hunt.logging;
 
+import hunt.logging;
 import hunt.collection;
 
 

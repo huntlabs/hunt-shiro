@@ -18,6 +18,11 @@
  */
 module hunt.shiro.mgt.DefaultSecurityManager;
 
+import hunt.shiro.mgt.RememberMeManager;
+import hunt.shiro.mgt.SessionsSecurityManager;
+import hunt.shiro.mgt.SubjectFactory;
+import hunt.shiro.mgt.SubjectDAO;
+
 import hunt.shiro.Exceptions;
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
@@ -70,8 +75,6 @@ import hunt.collection;
  *
  */
 class DefaultSecurityManager : SessionsSecurityManager {
-
-
 
     protected RememberMeManager rememberMeManager;
     protected SubjectDAO subjectDAO;

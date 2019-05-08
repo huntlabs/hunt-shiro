@@ -18,6 +18,9 @@
  */
 module hunt.shiro.mgt.DefaultSubjectDAO;
 
+import hunt.shiro.mgt.SessionStorageEvaluator;
+import hunt.shiro.mgt.SubjectDAO;
+
 import hunt.shiro.session.Session;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.subject.Subject;
@@ -88,7 +91,7 @@ class DefaultSubjectDAO : SubjectDAO {
      */
     private SessionStorageEvaluator sessionStorageEvaluator;
 
-     this() {
+    this() {
         //default implementation allows enabling/disabling session usages at a global level for all subjects:
         this.sessionStorageEvaluator = new DefaultSessionStorageEvaluator();
     }

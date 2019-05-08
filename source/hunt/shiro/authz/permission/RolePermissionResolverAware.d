@@ -18,6 +18,8 @@
  */
 module hunt.shiro.authz.permission.RolePermissionResolverAware;
 
+import hunt.shiro.authz.permission.RolePermissionResolver;
+
 /**
  * Interface implemented by a component that wishes to use any application-configured <tt>RolePermissionResolver</tt> that
  * might already exist instead of potentially creating one itself.

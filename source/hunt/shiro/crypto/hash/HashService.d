@@ -18,6 +18,9 @@
  */
 module hunt.shiro.crypto.hash.HashService;
 
+import hunt.shiro.crypto.hash.Hash;
+import hunt.shiro.crypto.hash.HashRequest;
+
 /**
  * A {@code HashService} hashes input sources utilizing a particular hashing strategy.
  * <p/>

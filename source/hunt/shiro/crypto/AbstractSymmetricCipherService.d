@@ -18,6 +18,8 @@
  */
 module hunt.shiro.crypto.AbstractSymmetricCipherService;
 
+import hunt.shiro.crypto.JcaCipherService;
+
 // import javax.crypto.KeyGenerator;
 // import java.security.Key;
 // import java.security.NoSuchAlgorithmException;
@@ -27,7 +29,7 @@ module hunt.shiro.crypto.AbstractSymmetricCipherService;
  *
  * @since 1.0
  */
-// abstract class AbstractSymmetricCipherService : JcaCipherService {
+abstract class AbstractSymmetricCipherService : JcaCipherService {
 
 //     protected this(String algorithmName) {
 //         super(algorithmName);
@@ -62,4 +64,4 @@ module hunt.shiro.crypto.AbstractSymmetricCipherService;
 //         return kg.generateKey();
 //     }
 
-// }
+}

@@ -18,6 +18,8 @@
  */
 module hunt.shiro.authc.RememberMeAuthenticationToken;
 
+import hunt.shiro.authc.AuthenticationToken;
+
 /**
  * An {@code AuthenticationToken} that indicates if the user wishes their identity to be remembered across sessions.
  * <p/>

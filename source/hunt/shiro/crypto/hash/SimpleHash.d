@@ -18,6 +18,8 @@
  */
 module hunt.shiro.crypto.hash.SimpleHash;
 
+import hunt.shiro.crypto.hash.AbstractHash;
+
 import hunt.shiro.codec.Base64;
 // import hunt.shiro.codec.CodecException;
 import hunt.shiro.codec.Hex;
@@ -25,8 +27,10 @@ import hunt.shiro.codec.Hex;
 import hunt.shiro.util.ByteSource;
 // import hunt.shiro.util.StringUtils;
 
-// import java.security.MessageDigest;
+// import hunt.security.MessageDigest;
 // import java.security.NoSuchAlgorithmException;
+
+import hunt.Exceptions;
 import hunt.util.ArrayHelper;
 
 /**
@@ -46,7 +50,7 @@ class SimpleHash : AbstractHash {
     /**
      * The {@link java.security.MessageDigest MessageDigest} algorithm name to use when performing the hash.
      */
-    private final string algorithmName;
+    private string algorithmName;
 
     /**
      * The hashed data
@@ -292,14 +296,14 @@ class SimpleHash : AbstractHash {
      * @return the MessageDigest object for the specified {@code algorithm}.
      * @throws UnknownAlgorithmException if the specified algorithm name is not available.
      */
-    protected MessageDigest getDigest(string algorithmName) {
-        try {
-            return MessageDigest.getInstance(algorithmName);
-        } catch (NoSuchAlgorithmException e) {
-            string msg = "No native '" ~ algorithmName ~ "' MessageDigest instance available on the current JVM.";
-            throw new UnknownAlgorithmException(msg, e);
-        }
-    }
+    // protected MessageDigest getDigest(string algorithmName) {
+    //     try {
+    //         return MessageDigest.getInstance(algorithmName);
+    //     } catch (NoSuchAlgorithmException e) {
+    //         string msg = "No native '" ~ algorithmName ~ "' MessageDigest instance available on the current JVM.";
+    //         throw new UnknownAlgorithmException(msg, e);
+    //     }
+    // }
 
     /**
      * Hashes the specified byte array without a salt for a single iteration.
@@ -334,19 +338,21 @@ class SimpleHash : AbstractHash {
      * @throws UnknownAlgorithmException if the {@link #getAlgorithmName() algorithmName} is not available.
      */
    protected byte[] hash(byte[] bytes, byte[] salt, int hashIterations) {
-        MessageDigest digest = getDigest(getAlgorithmName());
-        if (salt !is null) {
-            digest.reset();
-            digest.update(salt);
-        }
-        byte[] hashed = digest.digest(bytes);
-        int iterations = hashIterations - 1; //already hashed once above
-        //iterate remaining number:
-        for (int i = 0; i < iterations; i++) {
-            digest.reset();
-            hashed = digest.digest(hashed);
-        }
-        return hashed;
+        // MessageDigest digest = getDigest(getAlgorithmName());
+        // if (salt !is null) {
+        //     digest.reset();
+        //     digest.update(salt);
+        // }
+        // byte[] hashed = digest.digest(bytes);
+        // int iterations = hashIterations - 1; //already hashed once above
+        // //iterate remaining number:
+        // for (int i = 0; i < iterations; i++) {
+        //     digest.reset();
+        //     hashed = digest.digest(hashed);
+        // }
+        // return hashed;
+        implementationMissing(false);
+        return null;
     }
 
     bool isEmpty() {
@@ -391,7 +397,7 @@ class SimpleHash : AbstractHash {
      *
      * @return the {@link #toHex() toHex()} value.
      */
-    string toString() {
+    override string toString() {
         return toHex();
     }
 
@@ -403,7 +409,7 @@ class SimpleHash : AbstractHash {
      * @return {@code true} if the specified object is a Hash and its {@link #getBytes byte array} is identical to
      *         this Hash's byte array, {@code false} otherwise.
      */
-    boolean equals(Object o) {
+    override bool opEquals(Object o) {
         auto oCast = cast(Hash) o;
         if (oCast !is null) {
             Hash other = oCast;
@@ -417,7 +423,7 @@ class SimpleHash : AbstractHash {
      *
      * @return toHex().hashCode()
      */
-    size_t toHash() @trusted nothrow {
+    override size_t toHash() @trusted nothrow {
         if (this.bytes  is null || this.bytes.length == 0) {
             return 0;
         }

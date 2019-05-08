@@ -18,6 +18,11 @@
  */
 module hunt.shiro.crypto.hash.DefaultHashService;
 
+import hunt.shiro.crypto.hash.ConfigurableHashService;
+import hunt.shiro.crypto.hash.Hash;
+import hunt.shiro.crypto.hash.HashRequest;
+
+
 import hunt.shiro.crypto.RandomNumberGenerator;
 import hunt.shiro.crypto.SecureRandomNumberGenerator;
 import hunt.shiro.util.ByteSource;
@@ -90,7 +95,7 @@ class DefaultHashService : ConfigurableHashService {
     /**
      * Whether or not to generate public salts if a request does not provide one.
      */
-    private boolean generatePublicSalt;
+    private bool generatePublicSalt;
 
     /**
      * Constructs a new {@code DefaultHashService} instance with the following defaults:
@@ -99,7 +104,7 @@ class DefaultHashService : ConfigurableHashService {
      * <li>{@link #setHashIterations(int) hashIterations} = {@code 1}</li>
      * <li>{@link #setRandomNumberGenerator(hunt.shiro.crypto.RandomNumberGenerator) randomNumberGenerator} =
      * new {@link SecureRandomNumberGenerator}()</li>
-     * <li>{@link #setGeneratePublicSalt(boolean) generatePublicSalt} = {@code false}</li>
+     * <li>{@link #setGeneratePublicSalt(bool) generatePublicSalt} = {@code false}</li>
      * </ul>
      * <p/>
      * If this hashService will be used for password hashing it is recommended to set the
@@ -221,7 +226,7 @@ class DefaultHashService : ConfigurableHashService {
 
         //check to see if we need to generate one:
         ByteSource privateSalt = getPrivateSalt();
-        boolean privateSaltExists = privateSalt !is null && !privateSalt.isEmpty();
+        bool privateSaltExists = privateSalt !is null && !privateSalt.isEmpty();
 
         //If a private salt exists, we must generate a public salt to protect the integrity of the private salt.
         //Or generate it if the instance is explicitly configured to do so:
@@ -318,7 +323,7 @@ class DefaultHashService : ConfigurableHashService {
      * @return {@code true} if a public salt should be randomly generated and used to compute a hash if a
      *         {@link HashRequest} does not specify a salt, {@code false} otherwise.
      */
-    boolean isGeneratePublicSalt() {
+    bool isGeneratePublicSalt() {
         return generatePublicSalt;
     }
 
@@ -337,7 +342,7 @@ class DefaultHashService : ConfigurableHashService {
      * @param generatePublicSalt whether or not a public salt should be randomly generated and used to compute a hash
      *                           if a {@link HashRequest} does not specify a salt.
      */
-    void setGeneratePublicSalt(boolean generatePublicSalt) {
+    void setGeneratePublicSalt(bool generatePublicSalt) {
         this.generatePublicSalt = generatePublicSalt;
     }
 }

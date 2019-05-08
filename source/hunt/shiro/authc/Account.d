@@ -18,6 +18,7 @@
  */
 module hunt.shiro.authc.Account;
 
+import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authz.AuthorizationInfo;
 
 /**

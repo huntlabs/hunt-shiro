@@ -18,6 +18,8 @@
  */
 module hunt.shiro.crypto.hash.SimpleHashRequest;
 
+import hunt.shiro.crypto.hash.HashRequest;
+
 import hunt.shiro.util.ByteSource;
 
 /**
@@ -26,10 +28,10 @@ import hunt.shiro.util.ByteSource;
  */
 class SimpleHashRequest : HashRequest {
 
-    private final ByteSource source; //cannot be null - this is the source to hash.
-    private final ByteSource salt; //null = no salt specified
-    private final int iterations; //0 = not specified by the requestor; let the HashService decide.
-    private final string algorithmName; //null = let the HashService decide.
+    private ByteSource source; //cannot be null - this is the source to hash.
+    private ByteSource salt; //null = no salt specified
+    private int iterations; //0 = not specified by the requestor; let the HashService decide.
+    private string algorithmName; //null = let the HashService decide.
 
     /**
      * Creates a new SimpleHashRequest instance.

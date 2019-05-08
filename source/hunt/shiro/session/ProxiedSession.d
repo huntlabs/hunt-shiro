@@ -18,6 +18,8 @@
  */
 module hunt.shiro.session.ProxiedSession;
 
+import hunt.shiro.session.Session;
+
 import hunt.util.Common;
 import hunt.collection;
 // // import java.util.Date;
@@ -35,7 +37,7 @@ class ProxiedSession : Session {
     /**
      * The proxied instance
      */
-    protected final Session session;
+    protected Session session;
 
     /**
      * Constructs an instance that proxies the specified <code>target</code>.  Subclasses may access this
@@ -60,28 +62,28 @@ class ProxiedSession : Session {
     /**
      * Immediately delegates to the underlying proxied session.
      */
-     Date getStartTimestamp() {
-        return session.getStartTimestamp();
-    }
+    //  Date getStartTimestamp() {
+    //     return session.getStartTimestamp();
+    // }
+
+    // /**
+    //  * Immediately delegates to the underlying proxied session.
+    //  */
+    //  Date getLastAccessTime() {
+    //     return session.getLastAccessTime();
+    // }
 
     /**
      * Immediately delegates to the underlying proxied session.
      */
-     Date getLastAccessTime() {
-        return session.getLastAccessTime();
-    }
-
-    /**
-     * Immediately delegates to the underlying proxied session.
-     */
-     long getTimeout(){
+    long getTimeout(){
         return session.getTimeout();
     }
 
     /**
      * Immediately delegates to the underlying proxied session.
      */
-     void setTimeout(long maxIdleTimeInMillis){
+    void setTimeout(long maxIdleTimeInMillis){
         session.setTimeout(maxIdleTimeInMillis);
     }
 

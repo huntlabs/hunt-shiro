@@ -18,6 +18,12 @@
  */
 module hunt.shiro.authc.SimpleAccount;
 
+import hunt.shiro.authc.Account;
+import hunt.shiro.authc.AuthenticationInfo;
+import hunt.shiro.authc.MergableAuthenticationInfo;
+import hunt.shiro.authc.SaltedAuthenticationInfo;
+import hunt.shiro.authc.SimpleAuthenticationInfo;
+
 import hunt.shiro.authz.Permission;
 import hunt.shiro.authz.SimpleAuthorizationInfo;
 import hunt.shiro.subject.PrincipalCollection;
@@ -107,7 +113,7 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
      * @param credentials the credentials that verify identity for the account
      * @param realmName   the name of the realm that accesses this account data
      */
-     this(Collection principals, Object credentials, string realmName) {
+    this(Collection!Object principals, Object credentials, string realmName) {
         this(new SimplePrincipalCollection(principals, realmName), credentials);
     }
 
@@ -177,7 +183,7 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
      * @param roleNames   the names of the roles assigned to this account.
      * @param permissions the permissions assigned to this account directly (not those assigned to any of the realms).
      */
-     this(Collection principals, Object credentials, string realmName, Set!(string) roleNames, Set!(Permission) permissions) {
+     this(Collection!Object principals, Object credentials, string realmName, Set!(string) roleNames, Set!(Permission) permissions) {
         this.authcInfo = new SimpleAuthenticationInfo(new SimplePrincipalCollection(principals, realmName), credentials);
         this.authzInfo = new SimpleAuthorizationInfo(roleNames);
         this.authzInfo.setObjectPermissions(permissions);
@@ -454,7 +460,7 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
      *
      * @return <code>principals.hashCode()</code> if they are not null, 0 (zero) otherwise.
      */
-     size_t toHash() @trusted nothrow {
+    override size_t toHash() @trusted nothrow {
         return (getPrincipals() !is null ? getPrincipals().hashCode() : 0);
     }
 
@@ -466,7 +472,7 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
      * @return <code>true</code> if the specified object is also a {@link SimpleAccount SimpleAccount} and its
      *         {@link #getPrincipals() principals} are equal to this object's <code>principals</code>, <code>false</code> otherwise.
      */
-     bool opEquals(Object o) {
+    override bool opEquals(Object o) {
         if (o == this) {
             return true;
         }
@@ -474,7 +480,7 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
         if (oCast !is null) {
             SimpleAccount sa = oCast;
             //principal should be unique across the application, so only check this for equality:
-            return (getPrincipals() !is null ? getPrincipals()== sa.getPrincipals() : sa.getPrincipals()  is null);
+            return (getPrincipals() !is null ? getPrincipals() == sa.getPrincipals() : sa.getPrincipals()  is null);
         }
         return false;
     }
@@ -485,7 +491,7 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
      *
      * @return the string representation of this Account object.
      */
-     string toString() {
+    override string toString() {
         return getPrincipals() !is null ? getPrincipals().toString() : "empty";
     }
 

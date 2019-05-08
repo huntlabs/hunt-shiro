@@ -111,7 +111,7 @@ class WildcardPermission : Permission {
     protected enum string WILDCARD_TOKEN = "*";
     protected enum string PART_DIVIDER_TOKEN = ":";
     protected enum string SUBPART_DIVIDER_TOKEN = ",";
-    protected static final bool DEFAULT_CASE_SENSITIVE = false;
+    protected enum bool DEFAULT_CASE_SENSITIVE = false;
 
     /*--------------------------------------------
     |    I N S T A N C E   V A R I A B L E S    |
@@ -229,7 +229,7 @@ class WildcardPermission : Permission {
         return true;
     }
 
-     string toString() {
+    override string toString() {
         StringBuilder buffer = new StringBuilder();
         foreach (Set!(string) part; parts) {
             if (buffer.length() > 0) {
@@ -246,7 +246,7 @@ class WildcardPermission : Permission {
         return buffer.toString();
     }
 
-     bool opEquals(Object o) {
+    override bool opEquals(Object o) {
         auto oCast = cast(WildcardPermission)o;
         if (oCast !is null) {
             WildcardPermission wp = oCast;
@@ -255,7 +255,7 @@ class WildcardPermission : Permission {
         return false;
     }
 
-     size_t toHash() @trusted nothrow {
+    override size_t toHash() @trusted nothrow {
         return parts.hashCode();
     }
 

@@ -18,6 +18,8 @@
  */
 module hunt.shiro.mgt.AuthorizingSecurityManager;
 
+import hunt.shiro.mgt.AuthenticatingSecurityManager;
+
 import hunt.shiro.Exceptions;
 import hunt.shiro.authz.Authorizer;
 import hunt.shiro.authz.ModularRealmAuthorizer;
@@ -95,7 +97,7 @@ abstract class AuthorizingSecurityManager : AuthenticatingSecurityManager {
      *     ((ModularRealmAuthorizer)this.authorizer).setRealms(realms);
      * }</pre>
      */
-    protected void afterRealmsSet() {
+    override protected void afterRealmsSet() {
         super.afterRealmsSet();
         auto authorizerCast = cast(ModularRealmAuthorizer) this.authorizer;
         if (authorizerCast !is null) {
@@ -103,7 +105,7 @@ abstract class AuthorizingSecurityManager : AuthenticatingSecurityManager {
         }
     }
 
-     void destroy() {
+    override void destroy() {
         LifecycleUtils.destroy(getAuthorizer());
         this.authorizer = null;
         super.destroy();

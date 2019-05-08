@@ -18,6 +18,8 @@
  */
 module hunt.shiro.mgt.AuthenticatingSecurityManager;
 
+import hunt.shiro.mgt.RealmSecurityManager;
+
 import hunt.shiro.Exceptions;
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
@@ -91,7 +93,7 @@ abstract class AuthenticatingSecurityManager : RealmSecurityManager {
      * Passes on the {@link #getRealms() realms} to the internal delegate <code>Authenticator</code> instance so
      * that it may use them during authentication attempts.
      */
-    protected void afterRealmsSet() {
+    override protected void afterRealmsSet() {
         super.afterRealmsSet();
         auto authenticatorCast = cast(ModularRealmAuthenticator) this.authenticator;
         if (authenticatorCast !is null) {
@@ -106,7 +108,7 @@ abstract class AuthenticatingSecurityManager : RealmSecurityManager {
         return this.authenticator.authenticate(token);
     }
 
-     void destroy() {
+    override void destroy() {
         LifecycleUtils.destroy(getAuthenticator());
         this.authenticator = null;
         super.destroy();

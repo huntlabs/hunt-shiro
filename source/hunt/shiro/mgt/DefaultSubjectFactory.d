@@ -18,6 +18,9 @@
  */
 module hunt.shiro.mgt.DefaultSubjectFactory;
 
+import hunt.shiro.mgt.SubjectFactory;
+import hunt.shiro.mgt.SecurityManager;
+
 import hunt.shiro.session.Session;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.subject.Subject;

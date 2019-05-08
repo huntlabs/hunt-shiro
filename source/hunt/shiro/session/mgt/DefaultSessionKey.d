@@ -15,6 +15,7 @@
  */
 module hunt.shiro.session.mgt.DefaultSessionKey;
 
+import hunt.shiro.session.mgt.SessionKey;
 import hunt.util.Common;
 
 /**

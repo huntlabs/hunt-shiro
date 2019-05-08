@@ -18,6 +18,7 @@
  */
 module hunt.shiro.authc.credential.AllowAllCredentialsMatcher;
 
+import hunt.shiro.authc.credential.CredentialsMatcher;
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
 

@@ -18,6 +18,8 @@
  */
 module hunt.shiro.crypto.hash.format.ModularCryptFormat;
 
+import hunt.shiro.crypto.hash.format.HashFormat;
+
 /**
  * A {@code HashFormat} that supports
  * <a href="http://packages.python.org/passlib/modular_crypt_format.html">Modular Crypt Format</a> token rules.

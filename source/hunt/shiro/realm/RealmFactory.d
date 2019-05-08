@@ -18,6 +18,8 @@
  */
 module hunt.shiro.realm.RealmFactory;
 
+import hunt.shiro.realm.Realm;
+
 import hunt.collection;
 
 /**

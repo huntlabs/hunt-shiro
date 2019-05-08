@@ -25,7 +25,7 @@ import hunt.logging;
 import hunt.shiro.Exceptions;
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
-import hunt.shiro.authc.UnknownAccountException;
+import hunt.shiro.Exceptions;
 import hunt.shiro.realm.Realm;
 
 
@@ -50,7 +50,7 @@ class AllSuccessfulStrategy : AbstractAuthenticationStrategy {
      * {@link UnsupportedTokenException UnsupportedTokenException} to end the authentication
      * process immediately. If the realm does support the token, the <code>info</code> argument is returned immediately.
      */
-     AuthenticationInfo beforeAttempt(Realm realm, AuthenticationToken token, AuthenticationInfo info){
+    override AuthenticationInfo beforeAttempt(Realm realm, AuthenticationToken token, AuthenticationInfo info){
         if (!realm.supports(token)) {
             string msg = "Realm [" ~ realm ~ "] of type [" ~ typeid(realm).name ~ "] does not support " ~
                     " the submitted AuthenticationToken [" ~ token ~ "].  The [" ~ typeid(this).name +
@@ -72,7 +72,7 @@ class AllSuccessfulStrategy : AbstractAuthenticationStrategy {
      * realm did in fact authenticate successfully</li>
      * </ol>
      */
-     AuthenticationInfo afterAttempt(Realm realm, AuthenticationToken token, AuthenticationInfo info, AuthenticationInfo aggregate, Throwable t){
+    override AuthenticationInfo afterAttempt(Realm realm, AuthenticationToken token, AuthenticationInfo info, AuthenticationInfo aggregate, Throwable t){
         if (t !is null) {
             auto tCast = cast(AuthenticationException) t;
             if (tCast !is null) {

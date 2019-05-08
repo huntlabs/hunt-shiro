@@ -18,6 +18,8 @@
  */
 module hunt.shiro.authz.permission.PermissionResolverAware;
 
+import hunt.shiro.authz.permission.PermissionResolver;
+
 /**
  * Interface implemented by a component that wishes to use any application-configured <tt>PermissionResolver</tt> that
  * might already exist instead of potentially creating one itself.

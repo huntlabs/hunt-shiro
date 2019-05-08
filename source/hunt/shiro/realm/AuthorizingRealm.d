@@ -18,15 +18,22 @@
  */
 module hunt.shiro.realm.AuthorizingRealm;
 
+import hunt.shiro.realm.AuthenticatingRealm;
+
+import hunt.shiro.authc.AuthenticationInfo;
+import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.authc.credential.CredentialsMatcher;
 import hunt.shiro.authz;
 import hunt.shiro.authz.permission;
-// import hunt.shiro.cache.Cache;
-// import hunt.shiro.cache.CacheManager;
+import hunt.shiro.cache.Cache;
+import hunt.shiro.cache.CacheManager;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.CollectionUtils;
-import hunt.shiro.util.Initializable;
+import hunt.shiro.util.Common;
 import hunt.logging;
+
+import hunt.collection.Collection;
+import hunt.collection.List;
 
 // import java.util.*;
 // import java.util.concurrent.atomic.AtomicInteger;
@@ -63,7 +70,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
      */
     private enum string DEFAULT_AUTHORIZATION_CACHE_SUFFIX = ".authorizationCache";
 
-    private static final AtomicInteger INSTANCE_COUNT = new AtomicInteger();
+    private static shared int INSTANCE_COUNT = 0; 
 
     /*-------------------------------------------
     |    I N S T A N C E   V A R I A B L E S    |

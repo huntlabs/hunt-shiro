@@ -33,12 +33,12 @@ import hunt.shiro.util.ByteSource;
  * <li>Default per-instance behavior can be customized on implementations, typically via JavaBeans mutators.</li>
  * <li>Perhaps most important for Shiro end-users, tt can more easily be used as a source of cryptographic seed data,
  * and the data returned is already in a more convenient {@link ByteSource ByteSource} format in case that data needs
- * to be {@link org.apache.shiro.util.ByteSource#toHex() hex} or
- * {@link org.apache.shiro.util.ByteSource#toBase64() base64}-encoded.</li>
+ * to be {@link hunt.shiro.util.ByteSource#toHex() hex} or
+ * {@link hunt.shiro.util.ByteSource#toBase64() base64}-encoded.</li>
  * </ul>
  * For example, consider the following example generating password salts for new user accounts:
  * <pre>
- * RandomNumberGenerator saltGenerator = new {@link org.apache.shiro.crypto.SecureRandomNumberGenerator SecureRandomNumberGenerator}();
+ * RandomNumberGenerator saltGenerator = new {@link hunt.shiro.crypto.SecureRandomNumberGenerator SecureRandomNumberGenerator}();
  * User user = new User();
  * user.setPasswordSalt(saltGenerator.nextBytes().toBase64());
  * userDAO.save(user);

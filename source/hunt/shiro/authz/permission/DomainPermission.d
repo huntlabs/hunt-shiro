@@ -18,6 +18,7 @@
  */
 module hunt.shiro.authz.permission.DomainPermission;
 
+import hunt.shiro.authz.permission.WildcardPermission;
 // import hunt.shiro.util.StringUtils;
 
 import hunt.collection.Set;
@@ -90,7 +91,7 @@ class DomainPermission : WildcardPermission {
         this.targets = targets;
     }
 
-    protected string getDomain(Class!DomainPermission clazz) {
+    protected string getDomain(TypeInfo_Class clazz) {
         string domain = clazz.getSimpleName().toLowerCase();
         //strip any trailing 'permission' text from the name (as all subclasses should have been named):
         int index = domain.lastIndexOf("permission");

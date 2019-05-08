@@ -18,6 +18,7 @@
  */
 module hunt.shiro.authc.SimpleAuthenticationInfo;
 
+import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.MergableAuthenticationInfo;
 import hunt.shiro.authc.SaltedAuthenticationInfo;
 import hunt.shiro.subject.MutablePrincipalCollection;
@@ -249,7 +250,7 @@ class SimpleAuthenticationInfo : MergableAuthenticationInfo, SaltedAuthenticatio
      * @return <code>true</code> if the Object argument is an <code>instanceof SimpleAuthenticationInfo</code> and
      *         its {@link #getPrincipals() principals} are equal to this instance's principals, <code>false</code> otherwise.
      */
-     bool opEquals(Object o) {
+    override bool opEquals(Object o) {
         if (this == o) return true;
         auto oCast = cast(SimpleAuthenticationInfo)o;
         if (oCast is null) return false;
@@ -267,8 +268,8 @@ class SimpleAuthenticationInfo : MergableAuthenticationInfo, SaltedAuthenticatio
      *
      * @return the hashcode of the internal {@link #getPrincipals() principals} instance.
      */
-     size_t toHash() @trusted nothrow {
-        return (principals !is null ? principals.hashCode() : 0);
+    override size_t toHash() @trusted nothrow {
+        return (principals !is null ? principals.toHash() : 0);
     }
 
     /**
@@ -276,7 +277,7 @@ class SimpleAuthenticationInfo : MergableAuthenticationInfo, SaltedAuthenticatio
      *
      * @return <code>{@link #getPrincipals() principals}.toString()</code>
      */
-     string toString() {
+    override string toString() {
         return principals.toString();
     }
 

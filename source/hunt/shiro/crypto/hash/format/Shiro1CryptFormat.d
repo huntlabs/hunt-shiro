@@ -18,6 +18,9 @@
  */
 module hunt.shiro.crypto.hash.format.Shiro1CryptFormat;
 
+import hunt.shiro.crypto.hash.format.ModularCryptFormat;
+import hunt.shiro.crypto.hash.format.ParsableHashFormat;
+
 import hunt.shiro.codec.Base64;
 import hunt.shiro.crypto.hash.Hash;
 import hunt.shiro.crypto.hash.SimpleHash;

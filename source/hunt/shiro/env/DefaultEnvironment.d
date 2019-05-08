@@ -18,6 +18,8 @@
  */
 module hunt.shiro.env.DefaultEnvironment;
 
+import hunt.shiro.env.NamedObjectEnvironment;
+
 import hunt.shiro.mgt.SecurityManager;
 import hunt.shiro.util.Destroyable;
 import hunt.shiro.util.LifecycleUtils;
@@ -37,13 +39,13 @@ class DefaultEnvironment : NamedObjectEnvironment, Destroyable {
      */
      enum string DEFAULT_SECURITY_MANAGER_KEY = "securityManager";
 
-    protected final Map!(string, Object) objects;
+    protected Map!(string, Object) objects;
     private string securityManagerName;
 
     /**
      * Creates a new instance with a thread-safe {@link ConcurrentHashMap} backing map.
      */
-     this() {
+    this() {
         this(new ConcurrentHashMap!(string, Object)());
     }
 
@@ -53,12 +55,12 @@ class DefaultEnvironment : NamedObjectEnvironment, Destroyable {
      * @param seed backing map to use to maintain Shiro objects.
      */
     //@SuppressWarnings({"unchecked"})
-     this(Map!(string, T) seed) {
+    this(Map!(string, Object) seed) {
         this.securityManagerName = DEFAULT_SECURITY_MANAGER_KEY;
-        if (seed  is null) {
+        if (seed is null) {
             throw new IllegalArgumentException("Backing map cannot be null.");
         }
-        this.objects = cast(Map!(string, Object)) seed;
+        this.objects = seed;
     }
 
     /**
@@ -132,7 +134,7 @@ class DefaultEnvironment : NamedObjectEnvironment, Destroyable {
     }
 
     //@SuppressWarnings({"unchecked"})
-     T getObject(string name, Class!(T) requiredType){
+    Object getObject(string name, TypeInfo_Class requiredType){
         if (name  is null) {
             throw new NullPointerException("name parameter cannot be null.");
         }
@@ -147,7 +149,7 @@ class DefaultEnvironment : NamedObjectEnvironment, Destroyable {
             string msg = "Object named '" ~ name ~ "' is not of required type [" ~ requiredType.getName() ~ "].";
             throw new RequiredTypeException(msg);
         }
-        return cast(T)o;
+        return o;
     }
 
      void setObject(string name, Object instance) {
@@ -161,8 +163,7 @@ class DefaultEnvironment : NamedObjectEnvironment, Destroyable {
         }
     }
 
-
-     void destroy(){
+    void destroy(){
         LifecycleUtils.destroy(this.objects.values());
     }
 }

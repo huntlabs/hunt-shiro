@@ -20,8 +20,8 @@ module hunt.shiro.crypto.JcaCipherService;
 
 import hunt.shiro.crypto.CipherService;
 
-// import org.apache.shiro.util.ByteSource;
-// import org.apache.shiro.util.StringUtils;
+// import hunt.shiro.util.ByteSource;
+// import hunt.shiro.util.StringUtils;
 
 // import javax.crypto.CipherInputStream;
 // import javax.crypto.spec.IvParameterSpec;
@@ -66,7 +66,7 @@ import hunt.shiro.crypto.CipherService;
  *
  * @since 1.0
  */
-public abstract class JcaCipherService : CipherService {
+abstract class JcaCipherService : CipherService {
 
     // /**
     //  * Default key size (in bits) for generated keys.
@@ -134,7 +134,7 @@ public abstract class JcaCipherService : CipherService {
     //  *
     //  * @return the cipher algorithm name that will be used for all encryption, decryption, and key operations
     //  */
-    // public String getAlgorithmName() {
+    // String getAlgorithmName() {
     //     return algorithmName;
     // }
 
@@ -143,7 +143,7 @@ public abstract class JcaCipherService : CipherService {
     //  *
     //  * @return the size in bits (not bytes) of generated cipher keys.
     //  */
-    // public int getKeySize() {
+    // int getKeySize() {
     //     return keySize;
     // }
 
@@ -152,15 +152,15 @@ public abstract class JcaCipherService : CipherService {
     //  *
     //  * @param keySize the size in bits (not bytes) of generated cipher keys.
     //  */
-    // public void setKeySize(int keySize) {
+    // void setKeySize(int keySize) {
     //     this.keySize = keySize;
     // }
 
-    // public boolean isGenerateInitializationVectors() {
+    // boolean isGenerateInitializationVectors() {
     //     return generateInitializationVectors;
     // }
 
-    // public void setGenerateInitializationVectors(boolean generateInitializationVectors) {
+    // void setGenerateInitializationVectors(boolean generateInitializationVectors) {
     //     this.generateInitializationVectors = generateInitializationVectors;
     // }
 
@@ -169,7 +169,7 @@ public abstract class JcaCipherService : CipherService {
     //  *
     //  * @return the algorithm-specific size in bits of generated initialization vectors.
     //  */
-    // public int getInitializationVectorSize() {
+    // int getInitializationVectorSize() {
     //     return initializationVectorSize;
     // }
 
@@ -181,7 +181,7 @@ public abstract class JcaCipherService : CipherService {
     //  * @param initializationVectorSize the size in bits (not bytes) of generated initialization vectors.
     //  * @throws IllegalArgumentException if the size is not a multiple of {@code 8}.
     //  */
-    // public void setInitializationVectorSize(int initializationVectorSize) throws IllegalArgumentException {
+    // void setInitializationVectorSize(int initializationVectorSize) throws IllegalArgumentException {
     //     if (initializationVectorSize % BITS_PER_BYTE != 0) {
     //         String msg = "Initialization vector sizes are specified in bits, but must be a multiple of 8 so they " +
     //                 "can be easily represented as a byte array.";
@@ -204,7 +204,7 @@ public abstract class JcaCipherService : CipherService {
     //  * @return the size of the internal buffer used to transfer data from one stream to another during stream
     //  *         operations
     //  */
-    // public int getStreamingBufferSize() {
+    // int getStreamingBufferSize() {
     //     return streamingBufferSize;
     // }
 
@@ -218,7 +218,7 @@ public abstract class JcaCipherService : CipherService {
     //  * @param streamingBufferSize the size of the internal buffer used to transfer data from one stream to another
     //  *                            during stream operations
     //  */
-    // public void setStreamingBufferSize(int streamingBufferSize) {
+    // void setStreamingBufferSize(int streamingBufferSize) {
     //     this.streamingBufferSize = streamingBufferSize;
     // }
 
@@ -229,7 +229,7 @@ public abstract class JcaCipherService : CipherService {
     //  * @return a source of randomness for encryption operations.  If one is not configured, and the underlying
     //  *         algorithm needs one, the JDK {@code SHA1PRNG} instance will be used by default.
     //  */
-    // public SecureRandom getSecureRandom() {
+    // SecureRandom getSecureRandom() {
     //     return secureRandom;
     // }
 
@@ -240,7 +240,7 @@ public abstract class JcaCipherService : CipherService {
     //  * @param secureRandom a source of randomness for encryption operations.  If one is not configured, and the
     //  *                     underlying algorithm needs one, the JDK {@code SHA1PRNG} instance will be used by default.
     //  */
-    // public void setSecureRandom(SecureRandom secureRandom) {
+    // void setSecureRandom(SecureRandom secureRandom) {
     //     this.secureRandom = secureRandom;
     // }
 
@@ -295,7 +295,7 @@ public abstract class JcaCipherService : CipherService {
     //     return ivBytes;
     // }
 
-    // public ByteSource encrypt(byte[] plaintext, byte[] key) {
+    // ByteSource encrypt(byte[] plaintext, byte[] key) {
     //     byte[] ivBytes = null;
     //     boolean generate = isGenerateInitializationVectors(false);
     //     if (generate) {
@@ -339,7 +339,7 @@ public abstract class JcaCipherService : CipherService {
     //     return ByteSource.Util.bytes(output);
     // }
 
-    // public ByteSource decrypt(byte[] ciphertext, byte[] key) throws CryptoException {
+    // ByteSource decrypt(byte[] ciphertext, byte[] key) throws CryptoException {
 
     //     byte[] encrypted = ciphertext;
 
@@ -492,7 +492,7 @@ public abstract class JcaCipherService : CipherService {
     // }
 
 
-    // public void encrypt(InputStream in, OutputStream out, byte[] key) throws CryptoException {
+    // void encrypt(InputStream in, OutputStream out, byte[] key) throws CryptoException {
     //     byte[] iv = null;
     //     boolean generate = isGenerateInitializationVectors(true);
     //     if (generate) {
@@ -518,7 +518,7 @@ public abstract class JcaCipherService : CipherService {
     //     crypt(in, out, key, iv, javax.crypto.Cipher.ENCRYPT_MODE);
     // }
 
-    // public void decrypt(InputStream in, OutputStream out, byte[] key) throws CryptoException {
+    // void decrypt(InputStream in, OutputStream out, byte[] key) throws CryptoException {
     //     decrypt(in, out, key, isGenerateInitializationVectors(true));
     // }
 

@@ -18,6 +18,7 @@
  */
 module hunt.shiro.crypto.hash.format.ParsableHashFormat;
 
+import hunt.shiro.crypto.hash.format.HashFormat;
 import hunt.shiro.crypto.hash.Hash;
 
 /**

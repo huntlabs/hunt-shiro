@@ -18,7 +18,11 @@
  */
 module hunt.shiro.authc.pam.ModularRealmAuthenticator;
 
+import hunt.shiro.authc.pam.AuthenticationStrategy;
+
 import hunt.shiro.authc.AbstractAuthenticator;
+import hunt.shiro.authc.AuthenticationInfo;
+import hunt.shiro.authc.AuthenticationToken;
 
 // import hunt.shiro.authc;
 import hunt.shiro.realm.Realm;
@@ -258,7 +262,7 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
      * @throws AuthenticationException if the user could not be authenticated or the user is denied authentication
      *                                 for the given principal and credentials.
      */
-    protected AuthenticationInfo doAuthenticate(AuthenticationToken authenticationToken){
+    override protected AuthenticationInfo doAuthenticate(AuthenticationToken authenticationToken){
         assertRealmsConfigured();
         Collection!(Realm) realms = getRealms();
         if (realms.size() == 1) {
@@ -279,7 +283,7 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
      *
      * @param principals the application-specific Subject/user identifier.
      */
-     void onLogout(PrincipalCollection principals) {
+    override void onLogout(PrincipalCollection principals) {
         super.onLogout(principals);
         Collection!(Realm) realms = getRealms();
         if (!CollectionUtils.isEmpty(realms)) {

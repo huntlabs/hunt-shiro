@@ -19,6 +19,15 @@ class AuthorizationException : ShiroException {
 }
 
 /**
+ * Root class of all Shiro exceptions related to caching operations.
+ *
+ * @since 0.2
+ */
+class CacheException : ShiroException {
+    mixin BasicExceptionCtors;
+}
+
+/**
  * Root exception related to issues during encoding or decoding.
  *
  * @since 0.9
@@ -290,5 +299,19 @@ class HostUnauthorizedException : UnauthorizedException {
  * @since 1.2
  */
 public class UnknownAlgorithmException : CryptoException {
+    mixin BasicExceptionCtors;
+}
+
+
+/**
+ * Thrown when attempting to authenticate with a principal that doesn't exist in the system (e.g.
+ * by specifying a username that doesn't relate to a user account).
+ *
+ * <p>Whether or not an application wishes to alert a user logging in to the system of this fact is
+ * at the discretion of those responsible for designing the view and what happens when this
+ * exception occurs.
+ *
+ */
+class UnknownAccountException : AccountException {
     mixin BasicExceptionCtors;
 }

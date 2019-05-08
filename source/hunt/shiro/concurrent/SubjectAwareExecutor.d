@@ -20,7 +20,8 @@ module hunt.shiro.concurrent.SubjectAwareExecutor;
 
 import hunt.shiro.SecurityUtils;
 import hunt.shiro.subject.Subject;
-import hunt.concurrency.Executor;
+
+import hunt.util.Common;
 
 /**
  * {@code Executor} implementation that will automatically first associate any argument
@@ -58,10 +59,10 @@ class SubjectAwareExecutor : Executor {
      */
     private Executor targetExecutor;
 
-     this() {
+    this() {
     }
 
-     this(Executor targetExecutor) {
+    this(Executor targetExecutor) {
         if (targetExecutor  is null) {
             throw new NullPointerException("target Executor instance cannot be null.");
         }
@@ -73,7 +74,7 @@ class SubjectAwareExecutor : Executor {
      *
      * @return target Executor instance that will actually execute the subject-associated Runnable instances.
      */
-     Executor getTargetExecutor() {
+    Executor getTargetExecutor() {
         return targetExecutor;
     }
 

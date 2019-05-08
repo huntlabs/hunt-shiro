@@ -18,6 +18,8 @@
  */
 module hunt.shiro.crypto.AesCipherService;
 
+import hunt.shiro.crypto.DefaultBlockCipherService;
+
 /**
  * {@code CipherService} using the {@code AES} cipher algorithm for all encryption, decryption, and key operations.
  * <p/>

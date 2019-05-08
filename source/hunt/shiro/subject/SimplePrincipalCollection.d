@@ -18,6 +18,8 @@
  */
 module hunt.shiro.subject.SimplePrincipalCollection;
 
+import hunt.shiro.subject.PrincipalCollection;
+
 import hunt.shiro.util.CollectionUtils;
 // import hunt.shiro.util.StringUtils;
 import hunt.shiro.subject.MutablePrincipalCollection;
@@ -44,260 +46,260 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
     // a new number in this case, use the JDK's 'serialver' program to generate it.
 
 
-    private Map!(string, Set) realmPrincipals;
+    // private Map!(string, Set) realmPrincipals;
 
-    private  string cachedToString; //cached toString() result, as this can be printed many times in logging
+    // private  string cachedToString; //cached toString() result, as this can be printed many times in logging
 
-    this() {
-    }
+    // this() {
+    // }
 
-    this(Object principal, string realmName) {
-        Collection c = cast(Collection) principal;
-        if (c !is null) {
-            addAll(c, realmName);
-        } else {
-            add(principal, realmName);
-        }
-    }
+    // this(Object principal, string realmName) {
+    //     Collection!Object c = cast(Collection!Object) principal;
+    //     if (c !is null) {
+    //         addAll(c, realmName);
+    //     } else {
+    //         add(principal, realmName);
+    //     }
+    // }
 
-    this(Collection principals, string realmName) {
-        addAll(principals, realmName);
-    }
+    // this(Collection!Object principals, string realmName) {
+    //     addAll(principals, realmName);
+    // }
 
-    this(PrincipalCollection principals) {
-        addAll(principals);
-    }
+    // this(PrincipalCollection principals) {
+    //     addAll(principals);
+    // }
 
-    protected Collection getPrincipalsLazy(string realmName) {
-        if (realmPrincipals  is null) {
-            realmPrincipals = new LinkedHashMap!(string, Set)();
-        }
-        Set principals = realmPrincipals.get(realmName);
-        if (principals  is null) {
-            principals = new LinkedHashSet();
-            realmPrincipals.put(realmName, principals);
-        }
-        return principals;
-    }
+    // protected Collection!Object getPrincipalsLazy(string realmName) {
+    //     if (realmPrincipals  is null) {
+    //         realmPrincipals = new LinkedHashMap!(string, Set)();
+    //     }
+    //     Set principals = realmPrincipals.get(realmName);
+    //     if (principals  is null) {
+    //         principals = new LinkedHashSet();
+    //         realmPrincipals.put(realmName, principals);
+    //     }
+    //     return principals;
+    // }
 
-    /**
-     * Returns the first available principal from any of the {@code Realm} principals, or {@code null} if there are
-     * no principals yet.
-     * <p/>
-     * The 'first available principal' is interpreted as the principal that would be returned by
-     * <code>{@link #iterator() iterator()}.{@link java.util.Iterator#next() next()}.</code>
-     *
-     * @inheritDoc
-     */
-     Object getPrimaryPrincipal() {
-        if (isEmpty()) {
-            return null;
-        }
-        return iterator().next();
-    }
+    // /**
+    //  * Returns the first available principal from any of the {@code Realm} principals, or {@code null} if there are
+    //  * no principals yet.
+    //  * <p/>
+    //  * The 'first available principal' is interpreted as the principal that would be returned by
+    //  * <code>{@link #iterator() iterator()}.{@link java.util.Iterator#next() next()}.</code>
+    //  *
+    //  * @inheritDoc
+    //  */
+    //  Object getPrimaryPrincipal() {
+    //     if (isEmpty()) {
+    //         return null;
+    //     }
+    //     return iterator().next();
+    // }
 
-     void add(Object principal, string realmName) {
-        if (realmName  is null) {
-            throw new IllegalArgumentException("realmName argument cannot be null.");
-        }
-        if (principal  is null) {
-            throw new IllegalArgumentException("principal argument cannot be null.");
-        }
-        this.cachedToString = null;
-        getPrincipalsLazy(realmName).add(principal);
-    }
+    //  void add(Object principal, string realmName) {
+    //     if (realmName  is null) {
+    //         throw new IllegalArgumentException("realmName argument cannot be null.");
+    //     }
+    //     if (principal  is null) {
+    //         throw new IllegalArgumentException("principal argument cannot be null.");
+    //     }
+    //     this.cachedToString = null;
+    //     getPrincipalsLazy(realmName).add(principal);
+    // }
 
-     void addAll(Collection principals, string realmName) {
-        if (realmName  is null) {
-            throw new IllegalArgumentException("realmName argument cannot be null.");
-        }
-        if (principals  is null) {
-            throw new IllegalArgumentException("principals argument cannot be null.");
-        }
-        if (principals.isEmpty()) {
-            throw new IllegalArgumentException("principals argument cannot be an empty collection.");
-        }
-        this.cachedToString = null;
-        getPrincipalsLazy(realmName).addAll(principals);
-    }
+    //  void addAll(Collection!Object principals, string realmName) {
+    //     if (realmName  is null) {
+    //         throw new IllegalArgumentException("realmName argument cannot be null.");
+    //     }
+    //     if (principals  is null) {
+    //         throw new IllegalArgumentException("principals argument cannot be null.");
+    //     }
+    //     if (principals.isEmpty()) {
+    //         throw new IllegalArgumentException("principals argument cannot be an empty collection.");
+    //     }
+    //     this.cachedToString = null;
+    //     getPrincipalsLazy(realmName).addAll(principals);
+    // }
 
-     void addAll(PrincipalCollection principals) {
-        if (principals.getRealmNames() !is null) {
-            foreach(string realmName ; principals.getRealmNames()) {
-                foreach(Object principal ; principals.fromRealm(realmName)) {
-                    add(principal, realmName);
-                }
-            }
-        }
-    }
+    //  void addAll(PrincipalCollection principals) {
+    //     if (principals.getRealmNames() !is null) {
+    //         foreach(string realmName ; principals.getRealmNames()) {
+    //             foreach(Object principal ; principals.fromRealm(realmName)) {
+    //                 add(principal, realmName);
+    //             }
+    //         }
+    //     }
+    // }
 
-    T oneByType(T)(TypeInfo_Class type) {
-        if (realmPrincipals  is null || realmPrincipals.isEmpty()) {
-            return null;
-        }
-        Collection!(Set) values = realmPrincipals.values();
-        foreach(Set set ; values) {
-            foreach(Object o ; set) {
-                if (type.isAssignableFrom(o.getClass())) {
-                    return cast(T) o;
-                }
-            }
-        }
-        return null;
-    }
+    // T oneByType(T)(TypeInfo_Class type) {
+    //     if (realmPrincipals  is null || realmPrincipals.isEmpty()) {
+    //         return null;
+    //     }
+    //     Collection!(Set) values = realmPrincipals.values();
+    //     foreach(Set set ; values) {
+    //         foreach(Object o ; set) {
+    //             if (type.isAssignableFrom(o.getClass())) {
+    //                 return cast(T) o;
+    //             }
+    //         }
+    //     }
+    //     return null;
+    // }
 
-    Collection!(T) byType(T)(TypeInfo_Class type) {
-        if (realmPrincipals  is null || realmPrincipals.isEmpty()) {
-            return Collections.EMPTY_SET;
-        }
-        Set!(T) typed = new LinkedHashSet!(T)();
-        Collection!(Set) values = realmPrincipals.values();
-        foreach(Set set ; values) {
-            foreach(Object o ; set) {
-                if (type.isAssignableFrom(o.getClass())) {
-                    typed.add(cast(T) o);
-                }
-            }
-        }
-        if (typed.isEmpty()) {
-            return Collections.EMPTY_SET;
-        }
-        return Collections.unmodifiableSet(typed);
-    }
+    // Collection!(T) byType(T)(TypeInfo_Class type) {
+    //     if (realmPrincipals  is null || realmPrincipals.isEmpty()) {
+    //         return Collections.EMPTY_SET;
+    //     }
+    //     Set!(T) typed = new LinkedHashSet!(T)();
+    //     Collection!(Set) values = realmPrincipals.values();
+    //     foreach(Set set ; values) {
+    //         foreach(Object o ; set) {
+    //             if (type.isAssignableFrom(o.getClass())) {
+    //                 typed.add(cast(T) o);
+    //             }
+    //         }
+    //     }
+    //     if (typed.isEmpty()) {
+    //         return Collections.EMPTY_SET;
+    //     }
+    //     return Collections.unmodifiableSet(typed);
+    // }
 
-    List asList() {
-        Set all = asSet();
-        if (all.isEmpty()) {
-            return Collections.EMPTY_LIST;
-        }
-        return Collections.unmodifiableList(new ArrayList(all));
-    }
+    // List!Object asList() {
+    //     Set all = asSet();
+    //     if (all.isEmpty()) {
+    //         return Collections.EMPTY_LIST;
+    //     }
+    //     return Collections.unmodifiableList(new ArrayList(all));
+    // }
 
-     Set asSet() {
-        if (realmPrincipals  is null || realmPrincipals.isEmpty()) {
-            return Collections.EMPTY_SET;
-        }
-        Set aggregated = new LinkedHashSet();
-        Collection!(Set) values = realmPrincipals.values();
-        foreach(Set set ; values) {
-            aggregated.addAll(set);
-        }
-        if (aggregated.isEmpty()) {
-            return Collections.EMPTY_SET;
-        }
-        return Collections.unmodifiableSet(aggregated);
-    }
+    // Set!Object asSet() {
+    //     if (realmPrincipals  is null || realmPrincipals.isEmpty()) {
+    //         return Collections.EMPTY_SET;
+    //     }
+    //     Set aggregated = new LinkedHashSet();
+    //     Collection!(Set) values = realmPrincipals.values();
+    //     foreach(Set set ; values) {
+    //         aggregated.addAll(set);
+    //     }
+    //     if (aggregated.isEmpty()) {
+    //         return Collections.EMPTY_SET;
+    //     }
+    //     return aggregated; // Collections.unmodifiableSet(aggregated);
+    // }
 
-     Collection fromRealm(string realmName) {
-        if (realmPrincipals  is null || realmPrincipals.isEmpty()) {
-            return Collections.EMPTY_SET;
-        }
-        Set principals = realmPrincipals.get(realmName);
-        if (principals  is null || principals.isEmpty()) {
-            principals = Collections.EMPTY_SET;
-        }
-        return Collections.unmodifiableSet(principals);
-    }
+    //  Collection fromRealm(string realmName) {
+    //     if (realmPrincipals  is null || realmPrincipals.isEmpty()) {
+    //         return Collections.EMPTY_SET;
+    //     }
+    //     Set principals = realmPrincipals.get(realmName);
+    //     if (principals  is null || principals.isEmpty()) {
+    //         principals = Collections.EMPTY_SET;
+    //     }
+    //     return Collections.unmodifiableSet(principals);
+    // }
 
-     Set!(string) getRealmNames() {
-        if (realmPrincipals  is null) {
-            return null;
-        } else {
-            return realmPrincipals.keySet();
-        }
-    }
+    //  Set!(string) getRealmNames() {
+    //     if (realmPrincipals  is null) {
+    //         return null;
+    //     } else {
+    //         return realmPrincipals.keySet();
+    //     }
+    // }
 
-     bool isEmpty() {
-        return realmPrincipals  is null || realmPrincipals.isEmpty();
-    }
+    //  bool isEmpty() {
+    //     return realmPrincipals  is null || realmPrincipals.isEmpty();
+    // }
 
-     void clear() {
-        this.cachedToString = null;
-        if (realmPrincipals !is null) {
-            realmPrincipals.clear();
-            realmPrincipals = null;
-        }
-    }
+    //  void clear() {
+    //     this.cachedToString = null;
+    //     if (realmPrincipals !is null) {
+    //         realmPrincipals.clear();
+    //         realmPrincipals = null;
+    //     }
+    // }
 
-     Iterator iterator() {
-        return asSet().iterator();
-    }
+    //  Iterator iterator() {
+    //     return asSet().iterator();
+    // }
 
-     bool opEquals(Object o) {
-        if (o == this) {
-            return true;
-        }
+    //  bool opEquals(Object o) {
+    //     if (o == this) {
+    //         return true;
+    //     }
         
-        SimplePrincipalCollection other = cast(SimplePrincipalCollection) o;
-        if (other !is null) {
-            return this.realmPrincipals !is null ? 
-                this.realmPrincipals == other.realmPrincipals :
-                other.realmPrincipals is null;
-        }
-        return false;
-    }
-
-     size_t toHash() @trusted nothrow {
-        if (this.realmPrincipals !is null && !realmPrincipals.isEmpty()) {
-            return realmPrincipals.hashCode();
-        }
-        return super.hashCode();
-    }
-
-    /**
-     * Returns a simple string representation suitable for printing.
-     *
-     * @return a simple string representation suitable for printing.
-     */
-     string toString() {
-        if (this.cachedToString  is null) {
-            Set!(Object) principals = asSet();
-            if (!CollectionUtils.isEmpty(principals)) {
-                this.cachedToString = StringUtils.toString(principals.toArray());
-            } else {
-                this.cachedToString = "empty";
-            }
-        }
-        return this.cachedToString;
-    }
-
-
-    /**
-     * Serialization write support.
-     * <p/>
-     * NOTE: Don't forget to change the serialVersionUID constant at the top of this class
-     * if you make any backwards-incompatible serialization changes!!!
-     * (use the JDK 'serialver' program for this)
-     *
-     * @param out output stream provided by Java serialization
-     * @throws IOException if there is a stream error
-     */
-    // private void writeObject(ObjectOutputStream out){
-    //     out.defaultWriteObject();
-    //     bool principalsExist = !CollectionUtils.isEmpty(realmPrincipals);
-    //     out.writebool(principalsExist);
-    //     if (principalsExist) {
-    //         out.writeObject(realmPrincipals);
+    //     SimplePrincipalCollection other = cast(SimplePrincipalCollection) o;
+    //     if (other !is null) {
+    //         return this.realmPrincipals !is null ? 
+    //             this.realmPrincipals == other.realmPrincipals :
+    //             other.realmPrincipals is null;
     //     }
+    //     return false;
     // }
 
-    /**
-     * Serialization read support - reads in the Map principals collection if it exists in the
-     * input stream.
-     * <p/>
-     * NOTE: Don't forget to change the serialVersionUID constant at the top of this class
-     * if you make any backwards-incompatible serialization changes!!!
-     * (use the JDK 'serialver' program for this)
-     *
-     * @param in input stream provided by
-     * @throws IOException            if there is an input/output problem
-     * @throws ClassNotFoundException if the underlying Map implementation class is not available to the classloader.
-     */
-    // private void readObject(ObjectInputStream in){
-    //     in.defaultReadObject();
-    //     bool principalsExist = in.readbool();
-    //     if (principalsExist) {
-    //         this.realmPrincipals = (Map!(string, Set)) in.readObject();
+    //  size_t toHash() @trusted nothrow {
+    //     if (this.realmPrincipals !is null && !realmPrincipals.isEmpty()) {
+    //         return realmPrincipals.hashCode();
     //     }
+    //     return super.hashCode();
     // }
+
+    // /**
+    //  * Returns a simple string representation suitable for printing.
+    //  *
+    //  * @return a simple string representation suitable for printing.
+    //  */
+    //  string toString() {
+    //     if (this.cachedToString  is null) {
+    //         Set!(Object) principals = asSet();
+    //         if (!CollectionUtils.isEmpty(principals)) {
+    //             this.cachedToString = StringUtils.toString(principals.toArray());
+    //         } else {
+    //             this.cachedToString = "empty";
+    //         }
+    //     }
+    //     return this.cachedToString;
+    // }
+
+
+    // /**
+    //  * Serialization write support.
+    //  * <p/>
+    //  * NOTE: Don't forget to change the serialVersionUID constant at the top of this class
+    //  * if you make any backwards-incompatible serialization changes!!!
+    //  * (use the JDK 'serialver' program for this)
+    //  *
+    //  * @param out output stream provided by Java serialization
+    //  * @throws IOException if there is a stream error
+    //  */
+    // // private void writeObject(ObjectOutputStream out){
+    // //     out.defaultWriteObject();
+    // //     bool principalsExist = !CollectionUtils.isEmpty(realmPrincipals);
+    // //     out.writebool(principalsExist);
+    // //     if (principalsExist) {
+    // //         out.writeObject(realmPrincipals);
+    // //     }
+    // // }
+
+    // /**
+    //  * Serialization read support - reads in the Map principals collection if it exists in the
+    //  * input stream.
+    //  * <p/>
+    //  * NOTE: Don't forget to change the serialVersionUID constant at the top of this class
+    //  * if you make any backwards-incompatible serialization changes!!!
+    //  * (use the JDK 'serialver' program for this)
+    //  *
+    //  * @param in input stream provided by
+    //  * @throws IOException            if there is an input/output problem
+    //  * @throws ClassNotFoundException if the underlying Map implementation class is not available to the classloader.
+    //  */
+    // // private void readObject(ObjectInputStream in){
+    // //     in.defaultReadObject();
+    // //     bool principalsExist = in.readbool();
+    // //     if (principalsExist) {
+    // //         this.realmPrincipals = (Map!(string, Set)) in.readObject();
+    // //     }
+    // // }
 }

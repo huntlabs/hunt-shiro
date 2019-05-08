@@ -42,7 +42,7 @@ class FirstSuccessfulStrategy : AbstractAuthenticationStrategy {
      * Returns {@code null} immediately, relying on this class's {@link #merge merge} implementation to return
      * only the first {@code info} object it encounters, ignoring all subsequent ones.
      */
-     AuthenticationInfo beforeAllAttempts(Collection!Realm realms, AuthenticationToken token){
+    override AuthenticationInfo beforeAllAttempts(Collection!Realm realms, AuthenticationToken token){
         return null;
     }
 
@@ -57,7 +57,7 @@ class FirstSuccessfulStrategy : AbstractAuthenticationStrategy {
      * This logic ensures that the first valid info encountered is the one retained and all subsequent ones are ignored,
      * since this strategy mandates that only the info from the first successfully authenticated realm be used.
      */
-    protected AuthenticationInfo merge(AuthenticationInfo info, AuthenticationInfo aggregate) {
+    override protected AuthenticationInfo merge(AuthenticationInfo info, AuthenticationInfo aggregate) {
         if (aggregate !is null && isEmpty(aggregate.getPrincipals())) {
             return aggregate;
         }

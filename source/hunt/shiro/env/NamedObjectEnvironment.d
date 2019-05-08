@@ -18,6 +18,8 @@
  */
 module hunt.shiro.env.NamedObjectEnvironment;
 
+import hunt.shiro.env.Environment;
+
 /**
  * An environment that supports object lookup by name.
  *
@@ -35,5 +37,5 @@ interface NamedObjectEnvironment : Environment {
      * @return the object in Shiro's environment with the specified name (of the specified type) or {@code null} if
      * no object with that name was found.
      */
-    T getObject(string name, Class!(T) requiredType);
+    Object getObject(string name, TypeInfo_Class requiredType);
 }

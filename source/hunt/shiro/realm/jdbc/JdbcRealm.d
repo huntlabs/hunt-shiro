@@ -23,7 +23,7 @@ module hunt.shiro.realm.jdbc.JdbcRealm;
 // import hunt.shiro.authc.AuthenticationInfo;
 // import hunt.shiro.authc.AuthenticationToken;
 // import hunt.shiro.authc.SimpleAuthenticationInfo;
-// import hunt.shiro.authc.UnknownAccountException;
+// import hunt.shiro.Exceptions;
 // import hunt.shiro.authc.UsernamePasswordToken;
 // import hunt.shiro.Exceptions;
 // import hunt.shiro.authz.AuthorizationInfo;

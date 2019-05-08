@@ -18,6 +18,8 @@
  */
 module hunt.shiro.crypto.hash.format.HashFormatFactory;
 
+import hunt.shiro.crypto.hash.format.HashFormat;
+
 /**
  */
 interface HashFormatFactory {

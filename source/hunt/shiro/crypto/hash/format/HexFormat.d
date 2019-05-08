@@ -18,6 +18,8 @@
  */
 module hunt.shiro.crypto.hash.format.HexFormat;
 
+import hunt.shiro.crypto.hash.format.HashFormat;
+
 import hunt.shiro.crypto.hash.Hash;
 
 /**

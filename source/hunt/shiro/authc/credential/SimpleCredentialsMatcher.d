@@ -22,7 +22,7 @@ import hunt.shiro.authc.credential.CredentialsMatcher;
 
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
-// import hunt.shiro.codec.CodecSupport;
+import hunt.shiro.codec.CodecSupport;
 import hunt.logging;
 
 //import java.security.MessageDigest;

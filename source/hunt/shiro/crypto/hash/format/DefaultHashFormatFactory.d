@@ -23,6 +23,8 @@ module hunt.shiro.crypto.hash.format.DefaultHashFormatFactory;
 // import hunt.shiro.util.UnknownClassException;
 import hunt.shiro.crypto.hash.format.HashFormat;
 
+import hunt.shiro.crypto.hash.format.HashFormatFactory;
+
 import hunt.collection.HashMap;
 import hunt.collection.HashSet;
 import hunt.collection.Map;
@@ -278,76 +280,76 @@ class DefaultHashFormatFactory : HashFormatFactory {
      * @param token       the string token from which a class name will be heuristically determined.
      * @return the discovered HashFormat class implementation or {@code null} if no class could be heuristically determined.
      */
-    protected Class getHashFormatClass(string packageName, string token) {
-        string test = token;
-        Class clazz = null;
-        string pkg = packageName  is null ? "" : packageName;
+    // protected Class getHashFormatClass(string packageName, string token) {
+    //     string test = token;
+    //     Class clazz = null;
+    //     string pkg = packageName  is null ? "" : packageName;
 
-        //1. Assume the arg is a fully qualified class name in the classpath:
-        clazz = lookupHashFormatClass(test);
+    //     //1. Assume the arg is a fully qualified class name in the classpath:
+    //     clazz = lookupHashFormatClass(test);
 
-        if (clazz  is null) {
-            test = pkg ~ "." ~ token;
-            clazz = lookupHashFormatClass(test);
-        }
+    //     if (clazz  is null) {
+    //         test = pkg ~ "." ~ token;
+    //         clazz = lookupHashFormatClass(test);
+    //     }
 
-        if (clazz  is null) {
-            test = pkg ~ "." ~ StringUtils.uppercaseFirstChar(token) ~ "Format";
-            clazz = lookupHashFormatClass(test);
-        }
+    //     if (clazz  is null) {
+    //         test = pkg ~ "." ~ StringUtils.uppercaseFirstChar(token) ~ "Format";
+    //         clazz = lookupHashFormatClass(test);
+    //     }
 
-        if (clazz  is null) {
-            test = pkg ~ "." ~ token ~ "Format";
-            clazz = lookupHashFormatClass(test);
-        }
+    //     if (clazz  is null) {
+    //         test = pkg ~ "." ~ token ~ "Format";
+    //         clazz = lookupHashFormatClass(test);
+    //     }
 
-        if (clazz  is null) {
-            test = pkg ~ "." ~ StringUtils.uppercaseFirstChar(token) ~ "HashFormat";
-            clazz = lookupHashFormatClass(test);
-        }
+    //     if (clazz  is null) {
+    //         test = pkg ~ "." ~ StringUtils.uppercaseFirstChar(token) ~ "HashFormat";
+    //         clazz = lookupHashFormatClass(test);
+    //     }
 
-        if (clazz  is null) {
-            test = pkg ~ "." ~ token ~ "HashFormat";
-            clazz = lookupHashFormatClass(test);
-        }
+    //     if (clazz  is null) {
+    //         test = pkg ~ "." ~ token ~ "HashFormat";
+    //         clazz = lookupHashFormatClass(test);
+    //     }
 
-        if (clazz  is null) {
-            test = pkg ~ "." ~ StringUtils.uppercaseFirstChar(token) ~ "CryptFormat";
-            clazz = lookupHashFormatClass(test);
-        }
+    //     if (clazz  is null) {
+    //         test = pkg ~ "." ~ StringUtils.uppercaseFirstChar(token) ~ "CryptFormat";
+    //         clazz = lookupHashFormatClass(test);
+    //     }
 
-        if (clazz  is null) {
-            test = pkg ~ "." ~ token ~ "CryptFormat";
-            clazz = lookupHashFormatClass(test);
-        }
+    //     if (clazz  is null) {
+    //         test = pkg ~ "." ~ token ~ "CryptFormat";
+    //         clazz = lookupHashFormatClass(test);
+    //     }
 
-        if (clazz  is null) {
-            return null; //ran out of options
-        }
+    //     if (clazz  is null) {
+    //         return null; //ran out of options
+    //     }
 
-        assertHashFormatImpl(clazz);
+    //     assertHashFormatImpl(clazz);
 
-        return clazz;
-    }
+    //     return clazz;
+    // }
 
-    protected Class lookupHashFormatClass(string name) {
-        try {
-            return ClassUtils.forName(name);
-        } catch (UnknownClassException ignored) {
-        }
+    // protected Class lookupHashFormatClass(string name) {
+    //     try {
+    //         return ClassUtils.forName(name);
+    //     } catch (UnknownClassException ignored) {
+    //     }
 
-        return null;
-    }
+    //     return null;
+    // }
 
-    protected final void assertHashFormatImpl(Typeinfo clazz) {
+    protected final void assertHashFormatImpl(TypeInfo_Class clazz) {
         // if (!HashFormat.class.isAssignableFrom(clazz) || clazz.isInterface()) {
         //     throw new IllegalArgumentException("Discovered class [" ~ clazz.getName() ~ "] is not a " ~
         //             "HashFormat implementation.");
         // }
     }
 
-    protected final HashFormat newHashFormatInstance(Class clazz) {
+    protected final HashFormat newHashFormatInstance(TypeInfo_Class clazz) {
         assertHashFormatImpl(clazz);
-        return cast(HashFormat) ClassUtils.newInstance(clazz);
+        return cast(HashFormat) clazz.create();
     }
 }

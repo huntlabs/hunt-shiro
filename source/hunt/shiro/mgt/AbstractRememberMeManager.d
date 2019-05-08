@@ -18,6 +18,8 @@
  */
 module hunt.shiro.mgt.AbstractRememberMeManager;
 
+import hunt.shiro.mgt.RememberMeManager;
+
 import hunt.shiro.Exceptions;
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
@@ -31,6 +33,8 @@ import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.subject.Subject;
 import hunt.shiro.subject.SubjectContext;
 import hunt.shiro.util.ByteSource;
+
+import hunt.Exceptions;
 import hunt.logging;
 
 /**
@@ -69,7 +73,7 @@ abstract class AbstractRememberMeManager : RememberMeManager {
     /**
      * Serializer to use for converting PrincipalCollection instances to/from byte arrays
      */
-    private Serializer!(PrincipalCollection) serializer;
+    // private Serializer!(PrincipalCollection) serializer;
 
     /**
      * Cipher to use for encrypting/decrypting serialized byte arrays for added security
@@ -91,38 +95,38 @@ abstract class AbstractRememberMeManager : RememberMeManager {
      * an {@link AesCipherService} as the {@link #getCipherService() cipherService}.
      */
      this() {
-        this.serializer = new DefaultSerializer!(PrincipalCollection)();
+        // this.serializer = new DefaultSerializer!(PrincipalCollection)();
         AesCipherService cipherService = new AesCipherService();
         this.cipherService = cipherService;
         setCipherKey(cipherService.generateNewKey().getEncoded());
     }
 
-    /**
-     * Returns the {@code Serializer} used to serialize and deserialize {@link PrincipalCollection} instances for
-     * persistent remember me storage.
-     * <p/>
-     * Unless overridden by the {@link #setSerializer} method, the default instance is a
-     * {@link hunt.shiro.io.DefaultSerializer}.
-     *
-     * @return the {@code Serializer} used to serialize and deserialize {@link PrincipalCollection} instances for
-     *         persistent remember me storage.
-     */
-     Serializer!(PrincipalCollection) getSerializer() {
-        return serializer;
-    }
+    // /**
+    //  * Returns the {@code Serializer} used to serialize and deserialize {@link PrincipalCollection} instances for
+    //  * persistent remember me storage.
+    //  * <p/>
+    //  * Unless overridden by the {@link #setSerializer} method, the default instance is a
+    //  * {@link hunt.shiro.io.DefaultSerializer}.
+    //  *
+    //  * @return the {@code Serializer} used to serialize and deserialize {@link PrincipalCollection} instances for
+    //  *         persistent remember me storage.
+    //  */
+    //  Serializer!(PrincipalCollection) getSerializer() {
+    //     return serializer;
+    // }
 
-    /**
-     * Sets the {@code Serializer} used to serialize and deserialize {@link PrincipalCollection} instances for
-     * persistent remember me storage.
-     * <p/>
-     * Unless overridden by this method, the default instance is a {@link DefaultSerializer}.
-     *
-     * @param serializer the {@code Serializer} used to serialize and deserialize {@link PrincipalCollection} instances
-     *                   for persistent remember me storage.
-     */
-     void setSerializer(Serializer!(PrincipalCollection) serializer) {
-        this.serializer = serializer;
-    }
+    // /**
+    //  * Sets the {@code Serializer} used to serialize and deserialize {@link PrincipalCollection} instances for
+    //  * persistent remember me storage.
+    //  * <p/>
+    //  * Unless overridden by this method, the default instance is a {@link DefaultSerializer}.
+    //  *
+    //  * @param serializer the {@code Serializer} used to serialize and deserialize {@link PrincipalCollection} instances
+    //  *                   for persistent remember me storage.
+    //  */
+    //  void setSerializer(Serializer!(PrincipalCollection) serializer) {
+    //     this.serializer = serializer;
+    // }
 
     /**
      * Returns the {@code CipherService} to use for encrypting and decrypting serialized identity data to prevent easy

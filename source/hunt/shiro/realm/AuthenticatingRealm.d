@@ -18,6 +18,8 @@
  */
 module hunt.shiro.realm.AuthenticatingRealm;
 
+import hunt.shiro.realm.CachingRealm;
+
 import hunt.shiro.Exceptions;
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
@@ -26,10 +28,10 @@ import hunt.shiro.authc.UsernamePasswordToken;
 import hunt.shiro.authc.credential.AllowAllCredentialsMatcher;
 import hunt.shiro.authc.credential.CredentialsMatcher;
 import hunt.shiro.authc.credential.SimpleCredentialsMatcher;
-// import hunt.shiro.cache.Cache;
-// import hunt.shiro.cache.CacheManager;
+import hunt.shiro.cache.Cache;
+import hunt.shiro.cache.CacheManager;
 import hunt.shiro.subject.PrincipalCollection;
-import hunt.shiro.util.Initializable;
+import hunt.shiro.util.Common;
 
 import hunt.logging;
 
@@ -116,7 +118,7 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
 
 
 
-    private static final AtomicInteger INSTANCE_COUNT = new AtomicInteger();
+    private shared static int INSTANCE_COUNT = 0;
 
     /**
      * The default suffix appended to the realm name used for caching authentication data.
@@ -224,7 +226,7 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
      * @return the authenticationToken class supported by this realm.
      * @see #setAuthenticationTokenClass
      */
-     Class getAuthenticationTokenClass() {
+    TypeInfo_Class getAuthenticationTokenClass() {
         return authenticationTokenClass;
     }
 
@@ -335,7 +337,7 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
         }
     }
 
-     void setName(string name) {
+    override void setName(string name) {
         super.setName(name);
         string authcCacheName = this.authenticationCacheName;
         if (authcCacheName !is null && authcCacheName.startsWith(typeid(this).name)) {
@@ -404,7 +406,7 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
      * This implementation attempts to acquire an authentication cache if one is not already configured.
      *
      */
-    protected void afterCacheManagerSet() {
+    override protected void afterCacheManagerSet() {
         //trigger obtaining the authorization cache if possible
         getAvailableAuthenticationCache();
     }

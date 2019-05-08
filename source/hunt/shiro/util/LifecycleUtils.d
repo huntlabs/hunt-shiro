@@ -3,8 +3,8 @@ module hunt.shiro.util.LifecycleUtils;
 
 
 /**
- * Utility class to help call {@link org.apache.shiro.util.Initializable#init() Initializable.init()} and
- * {@link org.apache.shiro.util.Destroyable#destroy() Destroyable.destroy()} methods cleanly on any object.
+ * Utility class to help call {@link hunt.shiro.util.Initializable#init() Initializable.init()} and
+ * {@link hunt.shiro.util.Destroyable#destroy() Destroyable.destroy()} methods cleanly on any object.
  *
  * @since 0.2
  */

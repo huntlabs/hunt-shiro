@@ -18,6 +18,8 @@
  */
 module hunt.shiro.crypto.hash.ConfigurableHashService;
 
+import hunt.shiro.crypto.hash.HashService;
+
 import hunt.shiro.crypto.RandomNumberGenerator;
 import hunt.shiro.util.ByteSource;
 

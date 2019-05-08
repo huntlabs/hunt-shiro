@@ -18,6 +18,7 @@
  */
 module hunt.shiro.subject.MutablePrincipalCollection;
 
+import hunt.shiro.subject.PrincipalCollection;
 import hunt.collection;
 
 
@@ -41,7 +42,7 @@ interface MutablePrincipalCollection : PrincipalCollection {
      * @param principals the principals to be added.
      * @param realmName  the realm these principals came from.
      */
-    void addAll(Collection principals, string realmName);
+    void addAll(Collection!Object principals, string realmName);
 
     /**
      * Adds all of the principals from the given principal collection to this collection.

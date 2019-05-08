@@ -18,168 +18,168 @@
  */
 module hunt.shiro.realm.SimpleAccountRealm;
 
-// import hunt.shiro.Exceptions;
-// import hunt.shiro.authc.AuthenticationInfo;
-// import hunt.shiro.authc.AuthenticationToken;
-// import hunt.shiro.authc.ExpiredCredentialsException;
-// import hunt.shiro.authc.LockedAccountException;
-// import hunt.shiro.authc.SimpleAccount;
-// import hunt.shiro.authc.UsernamePasswordToken;
-// import hunt.shiro.authz.AuthorizationInfo;
-// import hunt.shiro.authz.SimpleRole;
-// import hunt.shiro.subject.PrincipalCollection;
-// import hunt.shiro.util.CollectionUtils;
+import hunt.shiro.realm.AuthorizingRealm;
 
-// import hunt.collection.HashSet;
-// import java.util.LinkedHashMap;
-// import hunt.collection.Map;
-// import hunt.collection.Set;
-// import java.util.concurrent.locks.ReadWriteLock;
-// import java.util.concurrent.locks.ReentrantReadWriteLock;
+import hunt.shiro.Exceptions;
+import hunt.shiro.authc.AuthenticationInfo;
+import hunt.shiro.authc.AuthenticationToken;
+import hunt.shiro.authc.SimpleAccount;
+import hunt.shiro.authc.UsernamePasswordToken;
+import hunt.shiro.authz.AuthorizationInfo;
+import hunt.shiro.authz.SimpleRole;
+import hunt.shiro.subject.PrincipalCollection;
+import hunt.shiro.util.CollectionUtils;
 
-// /**
-//  * A simple implementation of the {@link Realm Realm} interface that
-//  * uses a set of configured user accounts and roles to support authentication and authorization.  Each account entry
-//  * specifies the username, password, and roles for a user.  Roles can also be mapped
-//  * to permissions and associated with users.
-//  * <p/>
-//  * User accounts and roles are stored in two {@code Map}s in memory, so it is expected that the total number of either
-//  * is not sufficiently large.
-//  *
-//  */
-// class SimpleAccountRealm : AuthorizingRealm {
+import hunt.collection.HashSet;
+import hunt.collection.LinkedHashMap;
+import hunt.collection.Map;
+import hunt.collection.Set;
 
-//     //TODO - complete JavaDoc
-//     protected final Map!(string, SimpleAccount) users; //username-to-SimpleAccount
-//     protected final Map!(string, SimpleRole) roles; //roleName-to-SimpleRole
-//     protected final ReadWriteLock USERS_LOCK;
-//     protected final ReadWriteLock ROLES_LOCK;
+import core.sync.rwmutex;
 
-//      this() {
-//         this.users = new LinkedHashMap!(string, SimpleAccount)();
-//         this.roles = new LinkedHashMap!(string, SimpleRole)();
-//         USERS_LOCK = new ReentrantReadWriteLock();
-//         ROLES_LOCK = new ReentrantReadWriteLock();
-//         //SimpleAccountRealms are memory-only realms - no need for an additional cache mechanism since we're
-//         //already as memory-efficient as we can be:
-//         setCachingEnabled(false);
-//     }
+/**
+ * A simple implementation of the {@link Realm Realm} interface that
+ * uses a set of configured user accounts and roles to support authentication and authorization.  Each account entry
+ * specifies the username, password, and roles for a user.  Roles can also be mapped
+ * to permissions and associated with users.
+ * <p/>
+ * User accounts and roles are stored in two {@code Map}s in memory, so it is expected that the total number of either
+ * is not sufficiently large.
+ *
+ */
+class SimpleAccountRealm : AuthorizingRealm {
 
-//      this(string name) {
-//         this();
-//         setName(name);
-//     }
+    //TODO - complete JavaDoc
+    protected Map!(string, SimpleAccount) users; //username-to-SimpleAccount
+    protected Map!(string, SimpleRole) roles; //roleName-to-SimpleRole
+    protected ReadWriteMutex USERS_LOCK;
+    protected ReadWriteMutex ROLES_LOCK;
 
-//     protected SimpleAccount getUser(string username) {
-//         USERS_LOCK.readLock().lock();
-//         try {
-//             return this.users.get(username);
-//         } finally {
-//             USERS_LOCK.readLock().unlock();
-//         }
-//     }
+     this() {
+        this.users = new LinkedHashMap!(string, SimpleAccount)();
+        this.roles = new LinkedHashMap!(string, SimpleRole)();
+        USERS_LOCK = new ReadWriteMutex();
+        ROLES_LOCK = new ReadWriteMutex();
+        //SimpleAccountRealms are memory-only realms - no need for an additional cache mechanism since we're
+        //already as memory-efficient as we can be:
+        setCachingEnabled(false);
+    }
 
-//      bool accountExists(string username) {
-//         return getUser(username) !is null;
-//     }
+     this(string name) {
+        this();
+        setName(name);
+    }
 
-//      void addAccount(string username, string password) {
-//         addAccount(username, password, cast(string[]) null);
-//     }
+    protected SimpleAccount getUser(string username) {
+        USERS_LOCK.reader().lock();
+        try {
+            return this.users.get(username);
+        } finally {
+            USERS_LOCK.reader().unlock();
+        }
+    }
 
-//      void addAccount(string username, string password, string[] roles...) {
-//         Set!(string) roleNames = CollectionUtils.asSet(roles);
-//         SimpleAccount account = new SimpleAccount(username, password, getName(), roleNames, null);
-//         add(account);
-//     }
+     bool accountExists(string username) {
+        return getUser(username) !is null;
+    }
 
-//     protected string getUsername(SimpleAccount account) {
-//         return getUsername(account.getPrincipals());
-//     }
+     void addAccount(string username, string password) {
+        addAccount(username, password, cast(string[]) null);
+    }
 
-//     protected string getUsername(PrincipalCollection principals) {
-//         return getAvailablePrincipal(principals).toString();
-//     }
+     void addAccount(string username, string password, string[] roles...) {
+        Set!(string) roleNames = CollectionUtils.asSet(roles);
+        SimpleAccount account = new SimpleAccount(username, password, getName(), roleNames, null);
+        add(account);
+    }
 
-//     protected void add(SimpleAccount account) {
-//         string username = getUsername(account);
-//         USERS_LOCK.writeLock().lock();
-//         try {
-//             this.users.put(username, account);
-//         } finally {
-//             USERS_LOCK.writeLock().unlock();
-//         }
-//     }
+    protected string getUsername(SimpleAccount account) {
+        return getUsername(account.getPrincipals());
+    }
 
-//     protected SimpleRole getRole(string rolename) {
-//         ROLES_LOCK.readLock().lock();
-//         try {
-//             return roles.get(rolename);
-//         } finally {
-//             ROLES_LOCK.readLock().unlock();
-//         }
-//     }
+    protected string getUsername(PrincipalCollection principals) {
+        return getAvailablePrincipal(principals).toString();
+    }
 
-//      bool roleExists(string name) {
-//         return getRole(name) !is null;
-//     }
+    protected void add(SimpleAccount account) {
+        string username = getUsername(account);
+        USERS_LOCK.writer().lock();
+        try {
+            this.users.put(username, account);
+        } finally {
+            USERS_LOCK.writer().unlock();
+        }
+    }
 
-//      void addRole(string name) {
-//         add(new SimpleRole(name));
-//     }
+    protected SimpleRole getRole(string rolename) {
+        ROLES_LOCK.reader().lock();
+        try {
+            return roles.get(rolename);
+        } finally {
+            ROLES_LOCK.reader().unlock();
+        }
+    }
 
-//     protected void add(SimpleRole role) {
-//         ROLES_LOCK.writeLock().lock();
-//         try {
-//             roles.put(role.getName(), role);
-//         } finally {
-//             ROLES_LOCK.writeLock().unlock();
-//         }
-//     }
+     bool roleExists(string name) {
+        return getRole(name) !is null;
+    }
 
-//     protected static Set!(string) toSet(string delimited, string delimiter) {
-//         if (delimited  is null || delimited.trim().equals("")) {
-//             return null;
-//         }
+     void addRole(string name) {
+        add(new SimpleRole(name));
+    }
 
-//         Set!(string) values = new HashSet!(string)();
-//         string[] rolenamesArray = delimited.split(delimiter);
-//         foreach(string s ; rolenamesArray) {
-//             string trimmed = s.trim();
-//             if (trimmed.length() > 0) {
-//                 values.add(trimmed);
-//             }
-//         }
+    protected void add(SimpleRole role) {
+        ROLES_LOCK.writer().lock();
+        try {
+            roles.put(role.getName(), role);
+        } finally {
+            ROLES_LOCK.writer().unlock();
+        }
+    }
 
-//         return values;
-//     }
+    protected static Set!(string) toSet(string delimited, string delimiter) {
+        if (delimited  is null || delimited.trim().equals("")) {
+            return null;
+        }
 
-//     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token){
-//         UsernamePasswordToken upToken = cast(UsernamePasswordToken) token;
-//         SimpleAccount account = getUser(upToken.getUsername());
+        Set!(string) values = new HashSet!(string)();
+        string[] rolenamesArray = delimited.split(delimiter);
+        foreach(string s ; rolenamesArray) {
+            string trimmed = s.trim();
+            if (trimmed.length() > 0) {
+                values.add(trimmed);
+            }
+        }
 
-//         if (account !is null) {
+        return values;
+    }
 
-//             if (account.isLocked()) {
-//                 throw new LockedAccountException("Account [" ~ account.toString() ~ "] is locked.");
-//             }
-//             if (account.isCredentialsExpired()) {
-//                 string msg = "The credentials for account [" ~ account.toString() ~ "] are expired";
-//                 throw new ExpiredCredentialsException(msg);
-//             }
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token){
+        UsernamePasswordToken upToken = cast(UsernamePasswordToken) token;
+        SimpleAccount account = getUser(upToken.getUsername());
 
-//         }
+        if (account !is null) {
 
-//         return account;
-//     }
+            if (account.isLocked()) {
+                throw new LockedAccountException("Account [" ~ account.toString() ~ "] is locked.");
+            }
+            if (account.isCredentialsExpired()) {
+                string msg = "The credentials for account [" ~ account.toString() ~ "] are expired";
+                throw new ExpiredCredentialsException(msg);
+            }
 
-//     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-//         string username = getUsername(principals);
-//         USERS_LOCK.readLock().lock();
-//         try {
-//             return this.users.get(username);
-//         } finally {
-//             USERS_LOCK.readLock().unlock();
-//         }
-//     }
-// }
+        }
+
+        return account;
+    }
+
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        string username = getUsername(principals);
+        USERS_LOCK.readLock().lock();
+        try {
+            return this.users.get(username);
+        } finally {
+            USERS_LOCK.readLock().unlock();
+        }
+    }
+}

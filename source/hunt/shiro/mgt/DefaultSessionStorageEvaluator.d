@@ -18,6 +18,8 @@
  */
 module hunt.shiro.mgt.DefaultSessionStorageEvaluator;
 
+import hunt.shiro.mgt.SessionStorageEvaluator;
+
 import hunt.shiro.subject.Subject;
 
 /**

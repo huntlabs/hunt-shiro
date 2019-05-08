@@ -18,6 +18,10 @@
  */
 module hunt.shiro.authc.UsernamePasswordToken;
 
+
+import hunt.shiro.authc.RememberMeAuthenticationToken;
+import hunt.shiro.authc.HostAuthenticationToken;
+
 /**
  * <p>A simple username/password authentication token to support the most widely-used authentication mechanism.  This
  * class also : the {@link RememberMeAuthenticationToken RememberMeAuthenticationToken} interface to support
@@ -340,7 +344,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @return the string representation of the <tt>UsernamePasswordToken</tt>, omitting
      *         the password.
      */
-     string toString() {
+    override string toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(typeid(this).name);
         sb.append(" - ");

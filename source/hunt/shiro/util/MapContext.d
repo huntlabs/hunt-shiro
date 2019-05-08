@@ -18,6 +18,8 @@
  */
 module hunt.shiro.util.MapContext;
 
+import hunt.collection.Map;
+import hunt.util.Common;
 
 /**
  * A {@code MapContext} provides a common base for context-based data storage in a {@link Map}.  Type-safe attribute
@@ -26,7 +28,7 @@ module hunt.shiro.util.MapContext;
  * @see hunt.shiro.subject.SubjectContext SubjectContext
  * @see hunt.shiro.session.mgt.SessionContext SessionContext
  */
-// class MapContext : Map!(string, Object), Serializable {
+class MapContext : Map!(string, Object), Serializable {
 
 //     private Map!(string, Object) backingMap;
 
@@ -125,4 +127,4 @@ module hunt.shiro.util.MapContext;
 //      Set!(Entry!(string, Object)) entrySet() {
 //         return Collections.unmodifiableSet(backingMap.entrySet());
 //     }
-// }
+}

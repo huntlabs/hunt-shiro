@@ -18,6 +18,10 @@
  */
 module hunt.shiro.authc.AuthenticationListener;
 
+import hunt.shiro.authc.AuthenticationToken;
+import hunt.shiro.authc.AuthenticationInfo;
+import hunt.shiro.Exceptions;
+
 import hunt.shiro.subject.PrincipalCollection;
 
 /**

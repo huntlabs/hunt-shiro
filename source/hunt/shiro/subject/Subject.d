@@ -19,6 +19,7 @@
 module hunt.shiro.subject.Subject;
 
 import hunt.shiro.subject.PrincipalCollection;
+import hunt.shiro.subject.SubjectContext;
 
 import hunt.shiro.SecurityUtils;
 import hunt.shiro.Exceptions;
@@ -586,18 +587,18 @@ interface Subject {
  * developer to bind the built {@code Subject} for continued use if desired.
  *
  */
-static class Builder {
+class Builder {
 
     /**
      * Hold all contextual data via the Builder instance's method invocations to be sent to the
      * {@code SecurityManager} during the {@link #buildSubject} call.
      */
-    private final SubjectContext subjectContext;
+    private SubjectContext subjectContext;
 
     /**
      * The SecurityManager to invoke during the {@link #buildSubject} call.
      */
-    private final SecurityManager securityManager;
+    private SecurityManager securityManager;
 
     /**
      * Constructs a new {@link Subject.Builder} instance, using the {@code SecurityManager} instance available

@@ -18,6 +18,8 @@
  */
 module hunt.shiro.authz.SimpleRole;
 
+import hunt.shiro.authz.Permission;
+
 import hunt.util.Common;
 import hunt.collection;
 
@@ -91,11 +93,11 @@ class SimpleRole : Serializable {
         return false;
     }
 
-     size_t toHash() @trusted nothrow {
+    override size_t toHash() @trusted nothrow {
         return (getName() !is null ? getName().hashCode() : 0);
     }
 
-     bool opEquals(Object o) {
+    override bool opEquals(Object o) {
         if (o == this) {
             return true;
         }
@@ -108,7 +110,7 @@ class SimpleRole : Serializable {
         return false;
     }
 
-     string toString() {
+    override string toString() {
         return getName();
     }
 }

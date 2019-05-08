@@ -409,14 +409,14 @@ class DelegatingSubject : Subject {
 
     private class StoppingAwareProxiedSession : ProxiedSession {
 
-        private final DelegatingSubject owner;
+        private DelegatingSubject owner;
 
         private this(Session target, DelegatingSubject owningSubject) {
             super(target);
             owner = owningSubject;
         }
 
-         void stop(){
+        override void stop(){
             super.stop();
             owner.sessionStopped();
         }

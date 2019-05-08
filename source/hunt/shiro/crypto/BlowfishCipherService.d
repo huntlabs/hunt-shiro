@@ -18,6 +18,8 @@
  */
 module hunt.shiro.crypto.BlowfishCipherService;
 
+import hunt.shiro.crypto.DefaultBlockCipherService;
+
 /**
  * {@code CipherService} using the {@code Blowfish} cipher algorithm for all encryption, decryption, and key operations.
  * <p/>
@@ -40,8 +42,8 @@ module hunt.shiro.crypto.BlowfishCipherService;
  */
 class BlowfishCipherService : DefaultBlockCipherService {
 
-    private static final String ALGORITHM_NAME = "Blowfish";
-    private static final int BLOCK_SIZE = 64;
+    private enum string ALGORITHM_NAME = "Blowfish";
+    private enum int BLOCK_SIZE = 64;
 
     /**
      * Creates a new {@link CipherService} instance using the {@code Blowfish} cipher algorithm with the following

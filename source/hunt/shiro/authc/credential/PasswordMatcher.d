@@ -18,6 +18,7 @@
  */
 module hunt.shiro.authc.credential.PasswordMatcher;
 
+import hunt.shiro.authc.credential.PasswordService;
 import hunt.shiro.authc.credential.CredentialsMatcher;
 import hunt.shiro.authc.credential.HashingPasswordService;
 

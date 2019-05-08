@@ -18,6 +18,8 @@
  */
 module hunt.shiro.crypto.hash.Sha384Hash;
 
+import hunt.shiro.crypto.hash.SimpleHash;
+
 import hunt.shiro.codec.Base64;
 import hunt.shiro.codec.Hex;
 

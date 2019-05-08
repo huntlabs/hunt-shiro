@@ -19,6 +19,8 @@
 module hunt.shiro.crypto.DefaultBlockCipherService;
 
 import hunt.shiro.crypto.AbstractSymmetricCipherService;
+import hunt.shiro.crypto.OperationMode;
+import hunt.shiro.crypto.PaddingScheme;
 // import hunt.shiro.util.StringUtils;
 
 /**
@@ -35,7 +37,7 @@ import hunt.shiro.crypto.AbstractSymmetricCipherService;
  *
  * <h2>Configuration</h2>
  * Block ciphers can accept configuration parameters that direct how they operate.  These parameters concatenated
- * together in a single String comprise what the JDK JCA documentation calls a
+ * together in a single string comprise what the JDK JCA documentation calls a
  * <a href="http://java.sun.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html#trans">transformation
  * string</a>.  We think that it is better for Shiro to construct this transformation string automatically based on its
  * constituent parts instead of having the end-user construct the string manually, which may be error prone or
@@ -71,7 +73,7 @@ import hunt.shiro.crypto.AbstractSymmetricCipherService;
  * {@link OperationMode#CBC CBC} mode, specifically to support auto-generation of initialization vectors during
  * encryption.  This is different than the JDK's default {@link OperationMode#ECB ECB} mode because {@code ECB} does
  * not support initialization vectors, which are necessary for strong encryption.  See  the
- * {@link org.apache.shiro.crypto.JcaCipherService JcaCipherService parent class} class JavaDoc for an extensive
+ * {@link hunt.shiro.crypto.JcaCipherService JcaCipherService parent class} class JavaDoc for an extensive
  * explanation on why we do this and why we do not use the Sun {@code ECB} default.  You also might also want read
  * the <a href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Electronic_codebook_.28ECB.29">Wikipedia
  * section on ECB<a/> and look at the encrypted image to see an example of why {@code ECB} should not be used in
@@ -84,7 +86,7 @@ import hunt.shiro.crypto.AbstractSymmetricCipherService;
  * <p/>
  * <b>NOTE:</b> If you change the mode to one that does not support initialization vectors (such as
  * {@link OperationMode#ECB ECB} or {@link OperationMode#NONE NONE}), you <em>must</em> turn off auto-generated
- * initialization vectors by setting {@link #setGenerateInitializationVectors(boolean) generateInitializationVectors}
+ * initialization vectors by setting {@link #setGenerateInitializationVectors(bool) generateInitializationVectors}
  * to {@code false}.  Abandoning initialization vectors significantly weakens encryption, so think twice before
  * disabling this feature.
  *
@@ -101,7 +103,7 @@ import hunt.shiro.crypto.AbstractSymmetricCipherService;
  * <p/>
  * <b>*</b>If no padding scheme is specified, this class defaults to the {@link PaddingScheme#PKCS5} scheme, specifically
  * to be compliant with the default behavior of auto-generating initialization vectors during encryption (see the
- * {@link org.apache.shiro.crypto.JcaCipherService JcaCipherService parent class} class JavaDoc for why).
+ * {@link hunt.shiro.crypto.JcaCipherService JcaCipherService parent class} class JavaDoc for why).
  * <p/>
  * In the rare case that you need to override the default with a scheme not represented by the {@link PaddingScheme}
  * enum, you may specify the raw padding scheme name string that will be recognized by your JCA provider via the
@@ -133,21 +135,21 @@ import hunt.shiro.crypto.AbstractSymmetricCipherService;
  */
 class DefaultBlockCipherService : AbstractSymmetricCipherService {
 
-    private static final int DEFAULT_BLOCK_SIZE = 0;
+    private enum int DEFAULT_BLOCK_SIZE = 0;
 
-    private static final String TRANSFORMATION_STRING_DELIMITER = "/";
-    private static final int DEFAULT_STREAMING_BLOCK_SIZE = 8; //8 bits (1 byte)
+    private enum string TRANSFORMATION_STRING_DELIMITER = "/";
+    private enum int DEFAULT_STREAMING_BLOCK_SIZE = 8; //8 bits (1 byte)
 
-    private String modeName;
+    private string modeName;
     private int blockSize; //size in bits (not bytes) - i.e. a blockSize of 8 equals 1 byte. negative or zero value = use system default
-    private String paddingSchemeName;
+    private string paddingSchemeName;
 
-    private String streamingModeName;
+    private string streamingModeName;
     private int streamingBlockSize;
-    private String streamingPaddingSchemeName;
+    private string streamingPaddingSchemeName;
 
-    private String transformationString; //cached value - rebuilt whenever any of its constituent parts change
-    private String streamingTransformationString; //cached value - rebuilt whenever any of its constituent parts change
+    private string transformationString; //cached value - rebuilt whenever any of its constituent parts change
+    private string streamingTransformationString; //cached value - rebuilt whenever any of its constituent parts change
 
 
     /**
@@ -162,7 +164,7 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
      *
      * @param algorithmName the block cipher algorithm to use when encrypting and decrypting
      */
-    this(String algorithmName) {
+    this(string algorithmName) {
         super(algorithmName);
 
         this.modeName = OperationMode.CBC.name();
@@ -175,7 +177,7 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
     }
 
     /**
-     * Returns the cipher operation mode name (as a String) to be used when constructing
+     * Returns the cipher operation mode name (as a string) to be used when constructing
      * {@link javax.crypto.Cipher Cipher} transformation string or {@code null} if the JCA Provider default mode for
      * the specified {@link #getAlgorithmName() algorithm} should be used.
      * <p/>
@@ -186,11 +188,11 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
      * <p/>
      * The default value is {@code null} to retain the JCA Provider default.
      *
-     * @return the cipher operation mode name (as a String) to be used when constructing the
+     * @return the cipher operation mode name (as a string) to be used when constructing the
      *         {@link javax.crypto.Cipher Cipher} transformation string, or {@code null} if the JCA Provider default
      *         mode for the specified {@link #getAlgorithmName() algorithm} should be used.
      */
-    String getModeName() {
+    string getModeName() {
         return modeName;
     }
 
@@ -216,7 +218,7 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
      *                 default mode for the specified {@link #getAlgorithmName() algorithm} should be used.
      * @see #setMode
      */
-    void setModeName(String modeName) {
+    void setModeName(string modeName) {
         this.modeName = modeName;
         //clear out the transformation string so the next invocation will rebuild it with the new mode:
         this.transformationString = null;
@@ -245,7 +247,7 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
     }
 
     /**
-     * Returns the cipher algorithm padding scheme name (as a String) to be used when constructing
+     * Returns the cipher algorithm padding scheme name (as a string) to be used when constructing
      * {@link javax.crypto.Cipher Cipher} transformation string or {@code null} if the JCA Provider default mode for
      * the specified {@link #getAlgorithmName() algorithm} should be used.
      * <p/>
@@ -256,11 +258,11 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
      * <p/>
      * The default value is {@code null} to retain the JCA Provider default.
      *
-     * @return the padding scheme name (as a String) to be used when constructing the
+     * @return the padding scheme name (as a string) to be used when constructing the
      *         {@link javax.crypto.Cipher Cipher} transformation string, or {@code null} if the JCA Provider default
      *         padding scheme for the specified {@link #getAlgorithmName() algorithm} should be used.
      */
-    String getPaddingSchemeName() {
+    string getPaddingSchemeName() {
         return paddingSchemeName;
     }
 
@@ -287,7 +289,7 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
      *                          should be used.
      * @see #setPaddingScheme
      */
-    void setPaddingSchemeName(String paddingSchemeName) {
+    void setPaddingSchemeName(string paddingSchemeName) {
         this.paddingSchemeName = paddingSchemeName;
         //clear out the transformation string so the next invocation will rebuild it with the new padding scheme:
         this.transformationString = null;
@@ -372,11 +374,11 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
      *
      * @return the transformation string mode name to be used for streaming operations only.
      */
-    String getStreamingModeName() {
+    string getStreamingModeName() {
         return streamingModeName;
     }
 
-    private boolean isModeStreamingCompatible(String modeName) {
+    private bool isModeStreamingCompatible(string modeName) {
         return modeName != null &&
                 !modeName.equalsIgnoreCase(OperationMode.ECB.name()) &&
                 !modeName.equalsIgnoreCase(OperationMode.NONE.name());
@@ -388,9 +390,9 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
      *
      * @param streamingModeName transformation string mode name to be used for streaming operations only
      */
-    void setStreamingModeName(String streamingModeName) {
+    void setStreamingModeName(string streamingModeName) {
         if (!isModeStreamingCompatible(streamingModeName)) {
-            String msg = "mode [" + streamingModeName + "] is not a valid operation mode for block cipher streaming.";
+            string msg = "mode [" + streamingModeName + "] is not a valid operation mode for block cipher streaming.";
             throw new IllegalArgumentException(msg);
         }
         this.streamingModeName = streamingModeName;
@@ -408,11 +410,11 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
         setStreamingModeName(mode.name());
     }
 
-    String getStreamingPaddingSchemeName() {
+    string getStreamingPaddingSchemeName() {
         return streamingPaddingSchemeName;
     }
 
-    void setStreamingPaddingSchemeName(String streamingPaddingSchemeName) {
+    void setStreamingPaddingSchemeName(string streamingPaddingSchemeName) {
         this.streamingPaddingSchemeName = streamingPaddingSchemeName;
         //clear out the streaming transformation string so the next invocation will rebuild it with the new scheme:
         this.streamingTransformationString = null;
@@ -442,7 +444,7 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
      * @param streaming if the transformation string is going to be used for a Cipher performing stream-based encryption or not.
      * @return the transformation string
      */
-    protected String getTransformationString(boolean streaming) {
+    protected string getTransformationString(bool streaming) {
         if (streaming) {
             if (this.streamingTransformationString == null) {
                 this.streamingTransformationString = buildStreamingTransformationString();
@@ -456,15 +458,15 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
         }
     }
 
-    private String buildTransformationString() {
+    private string buildTransformationString() {
         return buildTransformationString(getModeName(), getPaddingSchemeName(), getBlockSize());
     }
 
-    private String buildStreamingTransformationString() {
+    private string buildStreamingTransformationString() {
         return buildTransformationString(getStreamingModeName(), getStreamingPaddingSchemeName(), 0);
     }
 
-    private String buildTransformationString(String modeName, String paddingSchemeName, int blockSize) {
+    private string buildTransformationString(string modeName, string paddingSchemeName, int blockSize) {
         StringBuilder sb = new StringBuilder(getAlgorithmName());
         if (StringUtils.hasText(modeName)) {
             sb.append(TRANSFORMATION_STRING_DELIMITER).append(modeName);
@@ -486,7 +488,7 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
      * @return {@code true} if the specified cipher operation mode name supports initialization vectors,
      *         {@code false} otherwise.
      */
-    private boolean isModeInitializationVectorCompatible(String modeName) {
+    private bool isModeInitializationVectorCompatible(string modeName) {
         return modeName != null &&
                 !modeName.equalsIgnoreCase(OperationMode.ECB.name()) &&
                 !modeName.equalsIgnoreCase(OperationMode.NONE.name());
@@ -497,31 +499,31 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
      * enabled (block ciphers <em>must</em> use initialization vectors if they are to be used as a stream cipher).  If
      * not being used as a stream cipher, then the value is computed based on whether or not the currently configured
      * {@link #getModeName modeName} is compatible with initialization vectors as well as the result of the configured
-     * {@link #setGenerateInitializationVectors(boolean) generateInitializationVectors} value.
+     * {@link #setGenerateInitializationVectors(bool) generateInitializationVectors} value.
      *
      * @param streaming whether or not streaming is being performed
      * @return {@code true} if streaming or a value computed based on if the currently configured mode is compatible
      *         with initialization vectors.
      */
     @Override
-    protected boolean isGenerateInitializationVectors(boolean streaming) {
+    protected bool isGenerateInitializationVectors(bool streaming) {
         return streaming || super.isGenerateInitializationVectors() && isModeInitializationVectorCompatible(getModeName());
     }
 
     @Override
-    protected byte[] generateInitializationVector(boolean streaming) {
+    protected byte[] generateInitializationVector(bool streaming) {
         if (streaming) {
-            String streamingModeName = getStreamingModeName();
+            string streamingModeName = getStreamingModeName();
             if (!isModeInitializationVectorCompatible(streamingModeName)) {
-                String msg = "streamingMode attribute value [" + streamingModeName + "] does not support " +
+                string msg = "streamingMode attribute value [" + streamingModeName + "] does not support " +
                         "Initialization Vectors.  Ensure the streamingMode value represents an operation mode " +
                         "that is compatible with initialization vectors.";
                 throw new IllegalStateException(msg);
             }
         } else {
-            String modeName = getModeName();
+            string modeName = getModeName();
             if (!isModeInitializationVectorCompatible(modeName)) {
-                String msg = "mode attribute value [" + modeName + "] does not support " +
+                string msg = "mode attribute value [" + modeName + "] does not support " +
                         "Initialization Vectors.  Ensure the mode value represents an operation mode " +
                         "that is compatible with initialization vectors.";
                 throw new IllegalStateException(msg);

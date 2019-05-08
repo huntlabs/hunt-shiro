@@ -18,6 +18,8 @@
  */
 module hunt.shiro.subject.SubjectContext;
 
+import hunt.shiro.subject.PrincipalCollection;
+import hunt.shiro.subject.Subject;
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.mgt.SecurityManager;

@@ -18,7 +18,7 @@
  */
 module hunt.shiro.concurrent.SubjectAwareScheduledExecutorService;
 
-import hunt.concurrency;
+// import hunt.concurrency;
 
 /**
  * Same concept as the {@link SubjectAwareExecutorService} but additionally supports the

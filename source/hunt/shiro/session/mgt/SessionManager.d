@@ -18,6 +18,8 @@
  */
 module hunt.shiro.session.mgt.SessionManager;
 
+import hunt.shiro.session.mgt.SessionContext;
+import hunt.shiro.session.mgt.SessionKey;
 import hunt.shiro.session.Session;
 import hunt.shiro.Exceptions;
 

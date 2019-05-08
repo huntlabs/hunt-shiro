@@ -18,9 +18,9 @@
  */
 module hunt.shiro.crypto.hash.format.DefaultHashFormatFactory;
 
-import hunt.shiro.util.ClassUtils;
+// import hunt.shiro.util.ClassUtils;
 // import hunt.shiro.util.StringUtils;
-import hunt.shiro.util.UnknownClassException;
+// import hunt.shiro.util.UnknownClassException;
 import hunt.shiro.crypto.hash.format.HashFormat;
 
 import hunt.collection.HashMap;

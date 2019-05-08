@@ -20,8 +20,7 @@ module hunt.shiro.concurrent.SubjectAwareExecutor;
 
 import hunt.shiro.SecurityUtils;
 import hunt.shiro.subject.Subject;
-
-import java.util.concurrent.Executor;
+import hunt.concurrency.Executor;
 
 /**
  * {@code Executor} implementation that will automatically first associate any argument

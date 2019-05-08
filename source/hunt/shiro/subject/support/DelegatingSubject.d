@@ -18,20 +18,20 @@
  */
 module hunt.shiro.subject.support.DelegatingSubject;
 
-import hunt.shiro.authc.AuthenticationException;
+import hunt.shiro.Exceptions;
 import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.authc.HostAuthenticationToken;
-import hunt.shiro.authz.AuthorizationException;
+import hunt.shiro.Exceptions;
 import hunt.shiro.authz.Permission;
-import hunt.shiro.authz.UnauthenticatedException;
+
 import hunt.shiro.mgt.SecurityManager;
-import hunt.shiro.session.InvalidSessionException;
+import hunt.shiro.Exceptions;
 import hunt.shiro.session.ProxiedSession;
 import hunt.shiro.session.Session;
-import hunt.shiro.session.SessionException;
+
 import hunt.shiro.session.mgt.DefaultSessionContext;
 import hunt.shiro.session.mgt.SessionContext;
-import hunt.shiro.subject.ExecutionException;
+
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.subject.Subject;
 import hunt.shiro.util.CollectionUtils;
@@ -39,9 +39,7 @@ import hunt.shiro.util.CollectionUtils;
 import hunt.logging;
 
 import hunt.collection;
-
-import java.util.concurrent.Callable;
-import java.util.concurrent.CopyOnWriteArrayList;
+import hunt.util.Common;
 
 /**
  * Implementation of the {@code Subject} interface that delegates

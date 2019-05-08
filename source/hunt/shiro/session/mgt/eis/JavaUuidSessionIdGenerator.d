@@ -18,25 +18,25 @@
  */
 module hunt.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 
-import hunt.shiro.session.Session;
+// import hunt.shiro.session.Session;
 
-import hunt.util.Common;
-import java.util.UUID;
+// import hunt.util.Common;
+// import java.util.UUID;
 
-/**
- * {@link SessionIdGenerator} that generates string values of JDK {@link java.util.UUID}'s as the session IDs.
- *
- */
-class JavaUuidSessionIdGenerator : SessionIdGenerator {
+// /**
+//  * {@link SessionIdGenerator} that generates string values of JDK {@link java.util.UUID}'s as the session IDs.
+//  *
+//  */
+// class JavaUuidSessionIdGenerator : SessionIdGenerator {
 
-    /**
-     * Ignores the method argument and simply returns
-     * {@code UUID}.{@link java.util.UUID#randomUUID() randomUUID()}.{@code toString()}.
-     *
-     * @param session the {@link Session} instance to which the ID will be applied.
-     * @return the string value of the JDK's next {@link UUID#randomUUID() randomUUID()}.
-     */
-     Serializable generateId(Session session) {
-        return UUID.randomUUID().toString();
-    }
-}
+//     /**
+//      * Ignores the method argument and simply returns
+//      * {@code UUID}.{@link java.util.UUID#randomUUID() randomUUID()}.{@code toString()}.
+//      *
+//      * @param session the {@link Session} instance to which the ID will be applied.
+//      * @return the string value of the JDK's next {@link UUID#randomUUID() randomUUID()}.
+//      */
+//      Serializable generateId(Session session) {
+//         return UUID.randomUUID().toString();
+//     }
+// }

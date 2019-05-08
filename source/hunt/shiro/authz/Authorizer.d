@@ -18,6 +18,7 @@
  */
 module hunt.shiro.authz.Authorizer;
 
+import hunt.shiro.authz.Permission;
 import hunt.shiro.subject.PrincipalCollection;
 
 import hunt.collection;

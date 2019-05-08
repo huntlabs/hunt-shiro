@@ -20,7 +20,7 @@ module hunt.shiro.session.Session;
 
 import hunt.util.Common;
 import hunt.collection;
-// import java.util.Date;
+// // import java.util.Date;
 
 /**
  * A {@code Session} is a stateful data context associated with a single Subject (user, daemon process,
@@ -52,7 +52,7 @@ interface Session {
      *
      * @return The time the system created the session.
      */
-    Date getStartTimestamp();
+    // Date getStartTimestamp();
 
     /**
      * Returns the last time the application received a request or method invocation from the user associated
@@ -61,7 +61,7 @@ interface Session {
      * @return The time the user last interacted with the system.
      * @see #touch()
      */
-    Date getLastAccessTime();
+    // Date getLastAccessTime();
 
     /**
      * Returns the time in milliseconds that the session session may remain idle before expiring.

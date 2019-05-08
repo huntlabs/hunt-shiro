@@ -20,7 +20,7 @@ module hunt.shiro.authc.pam.AbstractAuthenticationStrategy;
 
 import hunt.shiro.authc.pam.AuthenticationStrategy;
 
-import hunt.shiro.authc;
+// import hunt.shiro.authc;
 import hunt.shiro.realm.Realm;
 
 import hunt.collection;

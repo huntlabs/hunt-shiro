@@ -18,15 +18,15 @@
  */
 module hunt.shiro.mgt.AbstractRememberMeManager;
 
-import hunt.shiro.authc.AuthenticationException;
+import hunt.shiro.Exceptions;
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.authc.RememberMeAuthenticationToken;
 import hunt.shiro.codec.Base64;
 import hunt.shiro.crypto.AesCipherService;
 import hunt.shiro.crypto.CipherService;
-import hunt.shiro.io.DefaultSerializer;
-import hunt.shiro.io.Serializer;
+// import hunt.shiro.io.DefaultSerializer;
+// import hunt.shiro.io.Serializer;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.subject.Subject;
 import hunt.shiro.subject.SubjectContext;

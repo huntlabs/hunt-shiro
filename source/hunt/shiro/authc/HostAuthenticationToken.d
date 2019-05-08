@@ -18,6 +18,8 @@
  */
 module hunt.shiro.authc.HostAuthenticationToken;
 
+import hunt.shiro.authc.AuthenticationToken;
+
 /**
  * A {@code HostAuthenticationToken} retains the host information from where
  * an authentication attempt originates.

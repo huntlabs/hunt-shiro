@@ -19,6 +19,33 @@ class AuthorizationException : ShiroException {
 }
 
 /**
+ * Root exception related to issues during encoding or decoding.
+ *
+ * @since 0.9
+ */
+class CodecException : ShiroException {
+    mixin BasicExceptionCtors;
+}
+
+/**
+ * Root exception indicating there was a problem parsing or processing the Shiro configuration.
+ *
+ * @since 0.9
+ */
+class ConfigurationException : ShiroException{
+    mixin BasicExceptionCtors;
+}
+
+/**
+ * Base Shiro exception for problems encountered during cryptographic operations.
+ *
+ * @since 1.0
+ */
+class CryptoException : ShiroException {
+    mixin BasicExceptionCtors;
+}
+
+/**
  * Generic exception representing a problem when attempting to access data.
  * <p/>
  * The idea was borrowed from the Spring Framework, which has a nice model for a generic DAO exception hierarchy.
@@ -252,5 +279,16 @@ class UnauthorizedException : AuthorizationException {
  *
  */
 class HostUnauthorizedException : UnauthorizedException {
+    mixin BasicExceptionCtors;
+}
+
+
+/**
+ * Exception thrown when attempting to lookup or use a cryptographic algorithm that does not exist in the current
+ * JVM environment.
+ *
+ * @since 1.2
+ */
+public class UnknownAlgorithmException : CryptoException {
     mixin BasicExceptionCtors;
 }

@@ -19,7 +19,7 @@
 module hunt.shiro.session.mgt.eis.AbstractSessionDAO;
 
 import hunt.shiro.session.Session;
-import hunt.shiro.session.UnknownSessionException;
+import hunt.shiro.Exceptions;
 import hunt.shiro.session.mgt.SimpleSession;
 
 import hunt.util.Common;

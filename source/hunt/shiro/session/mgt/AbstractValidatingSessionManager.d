@@ -18,11 +18,8 @@
  */
 module hunt.shiro.session.mgt.AbstractValidatingSessionManager;
 
-import hunt.shiro.authz.AuthorizationException;
-import hunt.shiro.session.ExpiredSessionException;
-import hunt.shiro.session.InvalidSessionException;
+import hunt.shiro.Exceptions;
 import hunt.shiro.session.Session;
-import hunt.shiro.session.UnknownSessionException;
 import hunt.shiro.util.Destroyable;
 import hunt.shiro.util.LifecycleUtils;
 import hunt.logging;

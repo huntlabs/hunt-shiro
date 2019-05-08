@@ -18,14 +18,13 @@
  */
 module hunt.shiro.mgt.DefaultSecurityManager;
 
-import hunt.shiro.authc.AuthenticationException;
+import hunt.shiro.Exceptions;
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.authc.Authenticator;
 import hunt.shiro.authc.LogoutAware;
 import hunt.shiro.authz.Authorizer;
 import hunt.shiro.realm.Realm;
-import hunt.shiro.session.InvalidSessionException;
 import hunt.shiro.session.Session;
 import hunt.shiro.session.mgt.DefaultSessionContext;
 import hunt.shiro.session.mgt.DefaultSessionKey;

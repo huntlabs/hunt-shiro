@@ -18,6 +18,9 @@
  */
 module hunt.shiro.authc.Authenticator;
 
+import hunt.shiro.authc.AuthenticationInfo;
+import hunt.shiro.authc.AuthenticationToken;
+
 /**
  * An Authenticator is responsible for authenticating accounts in an application.  It
  * is one of the primary entry points into the Shiro API.

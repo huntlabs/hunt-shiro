@@ -18,7 +18,7 @@
  */
 module hunt.shiro.mgt.AuthorizingSecurityManager;
 
-import hunt.shiro.authz.AuthorizationException;
+import hunt.shiro.Exceptions;
 import hunt.shiro.authz.Authorizer;
 import hunt.shiro.authz.ModularRealmAuthorizer;
 import hunt.shiro.authz.Permission;

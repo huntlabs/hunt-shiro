@@ -22,8 +22,7 @@ import hunt.shiro.mgt.SecurityManager;
 import hunt.shiro.util.Destroyable;
 import hunt.shiro.util.LifecycleUtils;
 
-import hunt.collection.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import hunt.collection;
 
 /**
  * Simple/default {@code Environment} implementation that stores Shiro objects as key-value pairs in a

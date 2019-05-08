@@ -18,7 +18,7 @@
  */
 module hunt.shiro.session.mgt.ImmutableProxiedSession;
 
-import hunt.shiro.session.InvalidSessionException;
+import hunt.shiro.Exceptions;
 import hunt.shiro.session.ProxiedSession;
 import hunt.shiro.session.Session;
 

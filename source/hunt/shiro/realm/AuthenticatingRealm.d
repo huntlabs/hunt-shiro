@@ -18,16 +18,16 @@
  */
 module hunt.shiro.realm.AuthenticatingRealm;
 
-import hunt.shiro.authc.AuthenticationException;
+import hunt.shiro.Exceptions;
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
-import hunt.shiro.authc.IncorrectCredentialsException;
+
 import hunt.shiro.authc.UsernamePasswordToken;
 import hunt.shiro.authc.credential.AllowAllCredentialsMatcher;
 import hunt.shiro.authc.credential.CredentialsMatcher;
 import hunt.shiro.authc.credential.SimpleCredentialsMatcher;
-import hunt.shiro.cache.Cache;
-import hunt.shiro.cache.CacheManager;
+// import hunt.shiro.cache.Cache;
+// import hunt.shiro.cache.CacheManager;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.Initializable;
 

@@ -18,34 +18,34 @@
  */
 module hunt.shiro.util.RegExPatternMatcher;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
+// import java.util.regex.Pattern;
+// import java.util.regex.Matcher;
 
 /**
  * {@code PatternMatcher} implementation that uses standard {@link java.util.regex} objects.
  *
  * @see Pattern
  */
-class RegExPatternMatcher : PatternMatcher {
+// class RegExPatternMatcher : PatternMatcher {
 
-    /**
-     * Simple implementation that merely uses the default pattern comparison logic provided by the
-     * JDK.
-     * <p/>This implementation essentially executes the following:
-     * <pre>
-     * Pattern p = Pattern.compile(pattern);
-     * Matcher m = p.matcher(source);
-     * return m.matches();</pre>
-     * @param pattern the pattern to match against
-     * @param source  the source to match
-     * @return {@code true} if the source matches the required pattern, {@code false} otherwise.
-     */
-     bool matches(string pattern, string source) {
-        if (pattern  is null) {
-            throw new IllegalArgumentException("pattern argument cannot be null.");
-        }
-        Pattern p = Pattern.compile(pattern);
-        Matcher m = p.matcher(source);
-        return m.matches();
-    }
-}
+//     /**
+//      * Simple implementation that merely uses the default pattern comparison logic provided by the
+//      * JDK.
+//      * <p/>This implementation essentially executes the following:
+//      * <pre>
+//      * Pattern p = Pattern.compile(pattern);
+//      * Matcher m = p.matcher(source);
+//      * return m.matches();</pre>
+//      * @param pattern the pattern to match against
+//      * @param source  the source to match
+//      * @return {@code true} if the source matches the required pattern, {@code false} otherwise.
+//      */
+//      bool matches(string pattern, string source) {
+//         if (pattern  is null) {
+//             throw new IllegalArgumentException("pattern argument cannot be null.");
+//         }
+//         Pattern p = Pattern.compile(pattern);
+//         Matcher m = p.matcher(source);
+//         return m.matches();
+//     }
+// }

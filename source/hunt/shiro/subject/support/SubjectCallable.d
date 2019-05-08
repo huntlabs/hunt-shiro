@@ -21,7 +21,7 @@ module hunt.shiro.subject.support.SubjectCallable;
 import hunt.shiro.subject.Subject;
 import hunt.shiro.util.ThreadState;
 
-import java.util.concurrent.Callable;
+import hunt.util.Common;
 
 /**
  * A {@code SubjectCallable} associates a {@link Subject Subject} with a target/delegate

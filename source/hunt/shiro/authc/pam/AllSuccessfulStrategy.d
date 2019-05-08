@@ -22,7 +22,7 @@ import hunt.shiro.authc.pam.AbstractAuthenticationStrategy;
 
 import hunt.logging;
 
-import hunt.shiro.authc.AuthenticationException;
+import hunt.shiro.Exceptions;
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.authc.UnknownAccountException;

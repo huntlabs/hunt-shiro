@@ -20,8 +20,6 @@ module hunt.shiro.authz.SimpleRole;
 
 import hunt.util.Common;
 import hunt.collection;
-import java.util.LinkedHashSet;
-import hunt.collection.Set;
 
 /**
  * A simple representation of a security role that has a name and a collection of permissions.  This object can be

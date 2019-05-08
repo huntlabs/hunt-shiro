@@ -18,9 +18,7 @@
  */
 module hunt.shiro.session.mgt.SimpleSession;
 
-import hunt.shiro.session.ExpiredSessionException;
-import hunt.shiro.session.InvalidSessionException;
-import hunt.shiro.session.StoppedSessionException;
+import hunt.shiro.Exceptions;
 import hunt.shiro.util.CollectionUtils;
 import hunt.logging;
 

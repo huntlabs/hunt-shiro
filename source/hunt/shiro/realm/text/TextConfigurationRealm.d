@@ -21,18 +21,14 @@ module hunt.shiro.realm.text.TextConfigurationRealm;
 import hunt.shiro.authc.SimpleAccount;
 import hunt.shiro.authz.Permission;
 import hunt.shiro.authz.SimpleRole;
-import hunt.shiro.config.ConfigurationException;
+import hunt.shiro.Exceptions;
 import hunt.shiro.realm.SimpleAccountRealm;
 import hunt.shiro.util.PermissionUtils;
 // import hunt.shiro.util.StringUtils;
 
-import java.text.ParseException;
+// import java.text.ParseException;
 import hunt.collection;
-import hunt.collection.HashMap;
-import java.util.LinkedHashSet;
-import hunt.collection.Map;
-import java.util.Scanner;
-import hunt.collection.Set;
+// import java.util.Scanner;
 
 
 /**

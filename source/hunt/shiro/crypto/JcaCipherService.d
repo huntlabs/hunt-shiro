@@ -50,7 +50,7 @@ import hunt.shiro.crypto.CipherService;
  * that are the same or similar.
  * <p/>
  * You can turn off this behavior by setting the
- * {@link #setGenerateInitializationVectors(boolean) generateInitializationVectors} property to {@code false}, but it
+ * {@link #setGenerateInitializationVectors(bool) generateInitializationVectors} property to {@code false}, but it
  * is highly recommended that you do not do this unless you have a very good reason to do so, since you would be losing
  * a critical security feature.
  * <h3>Initialization Vector Size</h3>
@@ -68,40 +68,40 @@ import hunt.shiro.crypto.CipherService;
  */
 abstract class JcaCipherService : CipherService {
 
-    // /**
-    //  * Default key size (in bits) for generated keys.
-    //  */
-    // private static final int DEFAULT_KEY_SIZE = 128;
+    /**
+     * Default key size (in bits) for generated keys.
+     */
+    private enum int DEFAULT_KEY_SIZE = 128;
 
-    // /**
-    //  * Default size of the internal buffer (in bytes) used to transfer data between streams during stream operations
-    //  */
-    // private static final int DEFAULT_STREAMING_BUFFER_SIZE = 512;
+    /**
+     * Default size of the internal buffer (in bytes) used to transfer data between streams during stream operations
+     */
+    private enum int DEFAULT_STREAMING_BUFFER_SIZE = 512;
 
-    // private static final int BITS_PER_BYTE = 8;
+    private enum int BITS_PER_BYTE = 8;
 
-    // /**
-    //  * Default SecureRandom algorithm name to use when acquiring the SecureRandom instance.
-    //  */
-    // private static final String RANDOM_NUM_GENERATOR_ALGORITHM_NAME = "SHA1PRNG";
+    /**
+     * Default SecureRandom algorithm name to use when acquiring the SecureRandom instance.
+     */
+    private enum string RANDOM_NUM_GENERATOR_ALGORITHM_NAME = "SHA1PRNG";
 
-    // /**
-    //  * The name of the cipher algorithm to use for all encryption, decryption, and key operations
-    //  */
-    // private String algorithmName;
+    /**
+     * The name of the cipher algorithm to use for all encryption, decryption, and key operations
+     */
+    private string algorithmName;
 
-    // /**
-    //  * The size in bits (not bytes) of generated cipher keys
-    //  */
-    // private int keySize;
+    /**
+     * The size in bits (not bytes) of generated cipher keys
+     */
+    private int keySize;
 
-    // /**
-    //  * The size of the internal buffer (in bytes) used to transfer data from one stream to another during stream operations
-    //  */
-    // private int streamingBufferSize;
+    /**
+     * The size of the internal buffer (in bytes) used to transfer data from one stream to another during stream operations
+     */
+    private int streamingBufferSize;
 
-    // private boolean generateInitializationVectors;
-    // private int initializationVectorSize;
+    private bool generateInitializationVectors;
+    private int initializationVectorSize;
 
 
     // private SecureRandom secureRandom;
@@ -117,7 +117,7 @@ abstract class JcaCipherService : CipherService {
     //  *
     //  * @param algorithmName the name of the cipher algorithm to use for all encryption, decryption, and key operations
     //  */
-    // protected JcaCipherService(String algorithmName) {
+    // protected JcaCipherService(string algorithmName) {
     //     if (!StringUtils.hasText(algorithmName)) {
     //         throw new IllegalArgumentException("algorithmName argument cannot be null or empty.");
     //     }
@@ -134,93 +134,93 @@ abstract class JcaCipherService : CipherService {
     //  *
     //  * @return the cipher algorithm name that will be used for all encryption, decryption, and key operations
     //  */
-    // String getAlgorithmName() {
+    // string getAlgorithmName() {
     //     return algorithmName;
     // }
 
-    // /**
-    //  * Returns the size in bits (not bytes) of generated cipher keys.
-    //  *
-    //  * @return the size in bits (not bytes) of generated cipher keys.
-    //  */
-    // int getKeySize() {
-    //     return keySize;
-    // }
+    /**
+     * Returns the size in bits (not bytes) of generated cipher keys.
+     *
+     * @return the size in bits (not bytes) of generated cipher keys.
+     */
+    int getKeySize() {
+        return keySize;
+    }
 
-    // /**
-    //  * Sets the size in bits (not bytes) of generated cipher keys.
-    //  *
-    //  * @param keySize the size in bits (not bytes) of generated cipher keys.
-    //  */
-    // void setKeySize(int keySize) {
-    //     this.keySize = keySize;
-    // }
+    /**
+     * Sets the size in bits (not bytes) of generated cipher keys.
+     *
+     * @param keySize the size in bits (not bytes) of generated cipher keys.
+     */
+    void setKeySize(int keySize) {
+        this.keySize = keySize;
+    }
 
-    // boolean isGenerateInitializationVectors() {
-    //     return generateInitializationVectors;
-    // }
+    bool isGenerateInitializationVectors() {
+        return generateInitializationVectors;
+    }
 
-    // void setGenerateInitializationVectors(boolean generateInitializationVectors) {
-    //     this.generateInitializationVectors = generateInitializationVectors;
-    // }
+    void setGenerateInitializationVectors(bool generateInitializationVectors) {
+        this.generateInitializationVectors = generateInitializationVectors;
+    }
 
-    // /**
-    //  * Returns the algorithm-specific size in bits of generated initialization vectors.
-    //  *
-    //  * @return the algorithm-specific size in bits of generated initialization vectors.
-    //  */
-    // int getInitializationVectorSize() {
-    //     return initializationVectorSize;
-    // }
+    /**
+     * Returns the algorithm-specific size in bits of generated initialization vectors.
+     *
+     * @return the algorithm-specific size in bits of generated initialization vectors.
+     */
+    int getInitializationVectorSize() {
+        return initializationVectorSize;
+    }
 
-    // /**
-    //  * Sets the algorithm-specific initialization vector size in bits (not bytes!) to be used when generating
-    //  * initialization vectors.  The  value must be a multiple of {@code 8} to ensure that the IV can be represented
-    //  * as a byte array.
-    //  *
-    //  * @param initializationVectorSize the size in bits (not bytes) of generated initialization vectors.
-    //  * @throws IllegalArgumentException if the size is not a multiple of {@code 8}.
-    //  */
-    // void setInitializationVectorSize(int initializationVectorSize) throws IllegalArgumentException {
-    //     if (initializationVectorSize % BITS_PER_BYTE != 0) {
-    //         String msg = "Initialization vector sizes are specified in bits, but must be a multiple of 8 so they " +
-    //                 "can be easily represented as a byte array.";
-    //         throw new IllegalArgumentException(msg);
-    //     }
-    //     this.initializationVectorSize = initializationVectorSize;
-    // }
+    /**
+     * Sets the algorithm-specific initialization vector size in bits (not bytes!) to be used when generating
+     * initialization vectors.  The  value must be a multiple of {@code 8} to ensure that the IV can be represented
+     * as a byte array.
+     *
+     * @param initializationVectorSize the size in bits (not bytes) of generated initialization vectors.
+     * @throws IllegalArgumentException if the size is not a multiple of {@code 8}.
+     */
+    void setInitializationVectorSize(int initializationVectorSize) {
+        if (initializationVectorSize % BITS_PER_BYTE != 0) {
+            string msg = "Initialization vector sizes are specified in bits, but must be a multiple of 8 so they " +
+                    "can be easily represented as a byte array.";
+            throw new IllegalArgumentException(msg);
+        }
+        this.initializationVectorSize = initializationVectorSize;
+    }
 
-    // protected boolean isGenerateInitializationVectors(boolean streaming) {
-    //     return isGenerateInitializationVectors();
-    // }
+    protected bool isGenerateInitializationVectors(bool streaming) {
+        return isGenerateInitializationVectors();
+    }
 
-    // /**
-    //  * Returns the size in bytes of the internal buffer used to transfer data from one stream to another during stream
-    //  * operations ({@link #encrypt(java.io.InputStream, java.io.OutputStream, byte[])} and
-    //  * {@link #decrypt(java.io.InputStream, java.io.OutputStream, byte[])}).
-    //  * <p/>
-    //  * Default size is {@code 512} bytes.
-    //  *
-    //  * @return the size of the internal buffer used to transfer data from one stream to another during stream
-    //  *         operations
-    //  */
-    // int getStreamingBufferSize() {
-    //     return streamingBufferSize;
-    // }
+    /**
+     * Returns the size in bytes of the internal buffer used to transfer data from one stream to another during stream
+     * operations ({@link #encrypt(java.io.InputStream, java.io.OutputStream, byte[])} and
+     * {@link #decrypt(java.io.InputStream, java.io.OutputStream, byte[])}).
+     * <p/>
+     * Default size is {@code 512} bytes.
+     *
+     * @return the size of the internal buffer used to transfer data from one stream to another during stream
+     *         operations
+     */
+    int getStreamingBufferSize() {
+        return streamingBufferSize;
+    }
 
-    // /**
-    //  * Sets the size in bytes of the internal buffer used to transfer data from one stream to another during stream
-    //  * operations ({@link #encrypt(java.io.InputStream, java.io.OutputStream, byte[])} and
-    //  * {@link #decrypt(java.io.InputStream, java.io.OutputStream, byte[])}).
-    //  * <p/>
-    //  * Default size is {@code 512} bytes.
-    //  *
-    //  * @param streamingBufferSize the size of the internal buffer used to transfer data from one stream to another
-    //  *                            during stream operations
-    //  */
-    // void setStreamingBufferSize(int streamingBufferSize) {
-    //     this.streamingBufferSize = streamingBufferSize;
-    // }
+    /**
+     * Sets the size in bytes of the internal buffer used to transfer data from one stream to another during stream
+     * operations ({@link #encrypt(java.io.InputStream, java.io.OutputStream, byte[])} and
+     * {@link #decrypt(java.io.InputStream, java.io.OutputStream, byte[])}).
+     * <p/>
+     * Default size is {@code 512} bytes.
+     *
+     * @param streamingBufferSize the size of the internal buffer used to transfer data from one stream to another
+     *                            during stream operations
+     */
+    void setStreamingBufferSize(int streamingBufferSize) {
+        this.streamingBufferSize = streamingBufferSize;
+    }
 
     // /**
     //  * Returns a source of randomness for encryption operations.  If one is not configured, and the underlying
@@ -272,20 +272,20 @@ abstract class JcaCipherService : CipherService {
     //  * @return the transformation string to use with the {@link javax.crypto.Cipher#getInstance} invocation when
     //  *         creating a new {@code Cipher} instance.
     //  */
-    // protected String getTransformationString(boolean streaming) {
+    // protected string getTransformationString(bool streaming) {
     //     return getAlgorithmName();
     // }
 
-    // protected byte[] generateInitializationVector(boolean streaming) {
+    // protected byte[] generateInitializationVector(bool streaming) {
     //     int size = getInitializationVectorSize();
     //     if (size <= 0) {
-    //         String msg = "initializationVectorSize property must be greater than zero.  This number is " +
+    //         string msg = "initializationVectorSize property must be greater than zero.  This number is " +
     //                 "typically set in the " + CipherService.class.getSimpleName() + " subclass constructor.  " +
     //                 "Also check your configuration to ensure that if you are setting a value, it is positive.";
     //         throw new IllegalStateException(msg);
     //     }
     //     if (size % BITS_PER_BYTE != 0) {
-    //         String msg = "initializationVectorSize property must be a multiple of 8 to represent as a byte array.";
+    //         string msg = "initializationVectorSize property must be a multiple of 8 to represent as a byte array.";
     //         throw new IllegalStateException(msg);
     //     }
     //     int sizeInBytes = size / BITS_PER_BYTE;
@@ -297,7 +297,7 @@ abstract class JcaCipherService : CipherService {
 
     // ByteSource encrypt(byte[] plaintext, byte[] key) {
     //     byte[] ivBytes = null;
-    //     boolean generate = isGenerateInitializationVectors(false);
+    //     bool generate = isGenerateInitializationVectors(false);
     //     if (generate) {
     //         ivBytes = generateInitializationVector(false);
     //         if (ivBytes == null || ivBytes.length == 0) {
@@ -308,7 +308,7 @@ abstract class JcaCipherService : CipherService {
     //     return encrypt(plaintext, key, ivBytes, generate);
     // }
 
-    // private ByteSource encrypt(byte[] plaintext, byte[] key, byte[] iv, boolean prependIv) throws CryptoException {
+    // private ByteSource encrypt(byte[] plaintext, byte[] key, byte[] iv, bool prependIv) throws CryptoException {
 
     //     final int MODE = javax.crypto.Cipher.ENCRYPT_MODE;
 
@@ -369,7 +369,7 @@ abstract class JcaCipherService : CipherService {
     //             encrypted = new byte[encryptedSize];
     //             System.arraycopy(ciphertext, ivByteSize, encrypted, 0, encryptedSize);
     //         } catch (Exception e) {
-    //             String msg = "Unable to correctly extract the Initialization Vector or ciphertext.";
+    //             string msg = "Unable to correctly extract the Initialization Vector or ciphertext.";
     //             throw new CryptoException(msg, e);
     //         }
     //     }
@@ -389,20 +389,20 @@ abstract class JcaCipherService : CipherService {
     // /**
     //  * Returns a new {@link javax.crypto.Cipher Cipher} instance to use for encryption/decryption operations.  The
     //  * Cipher's {@code transformationString} for the {@code Cipher}.{@link javax.crypto.Cipher#getInstance getInstance}
-    //  * call is obtaind via the {@link #getTransformationString(boolean) getTransformationString} method.
+    //  * call is obtaind via the {@link #getTransformationString(bool) getTransformationString} method.
     //  *
     //  * @param streaming {@code true} if the cipher instance will be used as a stream cipher, {@code false} if it will be
     //  *                  used as a block cipher.
     //  * @return a new JDK {@code Cipher} instance.
     //  * @throws CryptoException if a new Cipher instance cannot be constructed based on the
-    //  *                         {@link #getTransformationString(boolean) getTransformationString} value.
+    //  *                         {@link #getTransformationString(bool) getTransformationString} value.
     //  */
-    // private javax.crypto.Cipher newCipherInstance(boolean streaming) throws CryptoException {
-    //     String transformationString = getTransformationString(streaming);
+    // private javax.crypto.Cipher newCipherInstance(bool streaming) throws CryptoException {
+    //     string transformationString = getTransformationString(streaming);
     //     try {
     //         return javax.crypto.Cipher.getInstance(transformationString);
     //     } catch (Exception e) {
-    //         String msg = "Unable to acquire a Java JCA Cipher instance using " +
+    //         string msg = "Unable to acquire a Java JCA Cipher instance using " +
     //                 javax.crypto.Cipher.class.getName() + ".getInstance( \"" + transformationString + "\" ). " +
     //                 getAlgorithmName() + " under this configuration is required for the " +
     //                 getClass().getName() + " instance to function.";
@@ -413,7 +413,7 @@ abstract class JcaCipherService : CipherService {
     // /**
     //  * Functions as follows:
     //  * <ol>
-    //  * <li>Creates a {@link #newCipherInstance(boolean) new JDK cipher instance}</li>
+    //  * <li>Creates a {@link #newCipherInstance(bool) new JDK cipher instance}</li>
     //  * <li>Converts the specified key bytes into an {@link #getAlgorithmName() algorithm}-compatible JDK
     //  * {@link Key key} instance</li>
     //  * <li>{@link #init(javax.crypto.Cipher, int, java.security.Key, AlgorithmParameterSpec, SecureRandom) Initializes}
@@ -453,7 +453,7 @@ abstract class JcaCipherService : CipherService {
     //     try {
     //         return cipher.doFinal(bytes);
     //     } catch (Exception e) {
-    //         String msg = "Unable to execute 'doFinal' with cipher instance [" + cipher + "].";
+    //         string msg = "Unable to execute 'doFinal' with cipher instance [" + cipher + "].";
     //         throw new CryptoException(msg, e);
     //     }
     // }
@@ -486,7 +486,7 @@ abstract class JcaCipherService : CipherService {
     //             }
     //         }
     //     } catch (Exception e) {
-    //         String msg = "Unable to init cipher instance.";
+    //         string msg = "Unable to init cipher instance.";
     //         throw new CryptoException(msg, e);
     //     }
     // }
@@ -494,7 +494,7 @@ abstract class JcaCipherService : CipherService {
 
     // void encrypt(InputStream in, OutputStream out, byte[] key) throws CryptoException {
     //     byte[] iv = null;
-    //     boolean generate = isGenerateInitializationVectors(true);
+    //     bool generate = isGenerateInitializationVectors(true);
     //     if (generate) {
     //         iv = generateInitializationVector(true);
     //         if (iv == null || iv.length == 0) {
@@ -505,7 +505,7 @@ abstract class JcaCipherService : CipherService {
     //     encrypt(in, out, key, iv, generate);
     // }
 
-    // private void encrypt(InputStream in, OutputStream out, byte[] key, byte[] iv, boolean prependIv) throws CryptoException {
+    // private void encrypt(InputStream in, OutputStream out, byte[] key, byte[] iv, bool prependIv) throws CryptoException {
     //     if (prependIv && iv != null && iv.length > 0) {
     //         try {
     //             //first write the IV:
@@ -522,7 +522,7 @@ abstract class JcaCipherService : CipherService {
     //     decrypt(in, out, key, isGenerateInitializationVectors(true));
     // }
 
-    // private void decrypt(InputStream in, OutputStream out, byte[] key, boolean ivPrepended) throws CryptoException {
+    // private void decrypt(InputStream in, OutputStream out, byte[] key, bool ivPrepended) throws CryptoException {
 
     //     byte[] iv = null;
     //     //No Initialization Vector provided as a method argument - check if we need to read the IV from the stream:
@@ -537,7 +537,7 @@ abstract class JcaCipherService : CipherService {
     //         try {
     //             read = in.read(iv);
     //         } catch (IOException e) {
-    //             String msg = "Unable to correctly read the Initialization Vector from the input stream.";
+    //             string msg = "Unable to correctly read the Initialization Vector from the input stream.";
     //             throw new CryptoException(msg, e);
     //         }
 
@@ -580,7 +580,7 @@ abstract class JcaCipherService : CipherService {
     //     }
     // }
 
-    // private javax.crypto.Cipher initNewCipher(int jcaCipherMode, byte[] key, byte[] iv, boolean streaming)
+    // private javax.crypto.Cipher initNewCipher(int jcaCipherMode, byte[] key, byte[] iv, bool streaming)
     //         throws CryptoException {
 
     //     javax.crypto.Cipher cipher = newCipherInstance(streaming);

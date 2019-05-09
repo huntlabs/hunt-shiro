@@ -21,9 +21,14 @@ module hunt.shiro.cache.AbstractCacheManager;
 import hunt.shiro.cache.Cache;
 import hunt.shiro.cache.CacheManager;
 
-import hunt.shiro.util.Destroyable;
+import hunt.shiro.util.Common;
 import hunt.shiro.util.LifecycleUtils;
 // import hunt.shiro.util.StringUtils;
+
+import hunt.Exceptions;
+import hunt.text.StringBuilder;
+
+import std.array;
 
 // import java.util.Collection;
 // import java.util.concurrent.ConcurrentHashMap;
@@ -89,7 +94,7 @@ abstract class AbstractCacheManager(K, V) : CacheManager, Destroyable {
      * @throws Exception if any of the managed caches can't destroy properly.
      */
     void destroy() {
-        while (!caches.isEmpty()) {
+        while (caches !is null) {
             foreach (Cache!(K, V) cache; caches.byValue) {
                 LifecycleUtils.destroy(cache);
             }

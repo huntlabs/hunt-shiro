@@ -18,9 +18,15 @@
  */
 module hunt.shiro.session.mgt.AbstractValidatingSessionManager;
 
+import hunt.shiro.session.mgt.AbstractNativeSessionManager;
+import hunt.shiro.session.mgt.SessionContext;
+import hunt.shiro.session.mgt.SessionKey;
+import hunt.shiro.session.mgt.SessionValidationScheduler;
+import hunt.shiro.session.mgt.ValidatingSessionManager;
+
 import hunt.shiro.Exceptions;
 import hunt.shiro.session.Session;
-import hunt.shiro.util.Destroyable;
+import hunt.shiro.util.Common;
 import hunt.shiro.util.LifecycleUtils;
 import hunt.logging;
 
@@ -123,7 +129,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager,
      */
     protected abstract Session retrieveSession(SessionKey key);
 
-    protected Session createSession(SessionContext context){
+    override protected Session createSession(SessionContext context){
         enableSessionValidationIfNecessary();
         return doCreateSession(context);
     }

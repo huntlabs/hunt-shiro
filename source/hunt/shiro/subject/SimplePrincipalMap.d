@@ -21,6 +21,9 @@ module hunt.shiro.subject.SimplePrincipalMap;
 import hunt.shiro.subject.PrincipalMap;
 import hunt.shiro.util.CollectionUtils;
 
+import hunt.collection.List;
+import hunt.collection.Map;
+import hunt.collection.Set;
 
 /**
  * Default implementation of the {@link PrincipalMap} interface.
@@ -150,7 +153,7 @@ class SimplePrincipalMap : PrincipalMap {
         return instances !is null ? instances : Collections.emptyList!T();
     }
 
-     List asList() {
+    List!(Object) asList() {
         if (CollectionUtils.isEmpty(this.combinedPrincipals)) {
             return Collections.emptyList();
         }
@@ -159,7 +162,7 @@ class SimplePrincipalMap : PrincipalMap {
         return list;
     }
 
-     Set asSet() {
+    Set!(Object) asSet() {
         if (CollectionUtils.isEmpty(this.combinedPrincipals)) {
             return Collections.emptySet();
         }
@@ -168,7 +171,7 @@ class SimplePrincipalMap : PrincipalMap {
         return set;
     }
 
-     Collection fromRealm(string realmName) {
+    Object[] fromRealm(string realmName) {
         if (CollectionUtils.isEmpty(this.realmPrincipals)) {
             return Collections.emptySet();
         }
@@ -176,23 +179,23 @@ class SimplePrincipalMap : PrincipalMap {
         if (CollectionUtils.isEmpty(principals)) {
             return Collections.emptySet();
         }
-        return Collections.unmodifiableCollection(principals.values());
+        return principals.values();
     }
 
-     Set!(string) getRealmNames() {
+    string[] getRealmNames() {
         if (CollectionUtils.isEmpty(this.realmPrincipals)) {
             return Collections.emptySet();
         }
-        return Collections.unmodifiableSet(this.realmPrincipals.keySet());
+        return this.realmPrincipals.keys;
     }
 
      bool isEmpty() {
         return CollectionUtils.isEmpty(this.combinedPrincipals);
     }
 
-     Iterator iterator() {
-        return asList().iterator();
-    }
+    //  Iterator iterator() {
+    //     return asList().iterator();
+    // }
 
      Map!(string, Object) getRealmPrincipals(string name) {
         if (this.realmPrincipals  is null) {

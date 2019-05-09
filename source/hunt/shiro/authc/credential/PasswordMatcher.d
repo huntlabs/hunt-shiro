@@ -18,14 +18,19 @@
  */
 module hunt.shiro.authc.credential.PasswordMatcher;
 
-import hunt.shiro.authc.credential.PasswordService;
 import hunt.shiro.authc.credential.CredentialsMatcher;
+import hunt.shiro.authc.credential.DefaultPasswordService;
+import hunt.shiro.authc.credential.PasswordService;
 import hunt.shiro.authc.credential.HashingPasswordService;
 
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.crypto.hash.Hash;
+
+import hunt.Exceptions;
 import hunt.String;
+
+
 /**
  * A {@link CredentialsMatcher} that employs best-practices comparisons for hashed text passwords.
  * <p/>
@@ -56,7 +61,7 @@ class PasswordMatcher : CredentialsMatcher {
             return hashingService.passwordsMatch(submittedPassword, hashedPassword);
         }
         //otherwise they are a string (asserted in the 'assertStoredCredentialsType' method call above):
-        string formatted = cast(String)storedCredentials;
+        string formatted = (cast(String)storedCredentials).value;
         return passwordService.passwordsMatch(submittedPassword, formatted);
     }
 

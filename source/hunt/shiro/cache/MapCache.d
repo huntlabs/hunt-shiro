@@ -45,7 +45,7 @@ class MapCache(K, V) : Cache!(K, V) {
     /**
      * The name of this cache.
      */
-    private final string name;
+    private string name;
 
     this(string name, V[K] backingMap) {
         if (name.empty) {

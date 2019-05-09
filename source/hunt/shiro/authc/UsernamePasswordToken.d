@@ -22,6 +22,8 @@ module hunt.shiro.authc.UsernamePasswordToken;
 import hunt.shiro.authc.RememberMeAuthenticationToken;
 import hunt.shiro.authc.HostAuthenticationToken;
 
+import hunt.text.StringBuilder;
+
 /**
  * <p>A simple username/password authentication token to support the most widely-used authentication mechanism.  This
  * class also : the {@link RememberMeAuthenticationToken RememberMeAuthenticationToken} interface to support
@@ -111,7 +113,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param password the password string submitted for authentication
      */
      this(string username, string password) {
-        this(username, password !is null ? password.toCharArray() : null, false, null);
+        this(username, password !is null ? password.dup : null, false, cast(string)null);
     }
 
     /**
@@ -139,7 +141,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param host     the host name or IP string from where the attempt is occurring
      */
      this(string username, string password, string host) {
-        this(username, password !is null ? password.toCharArray() : null, false, host);
+        this(username, password !is null ? password.dup : null, false, host);
     }
 
     /**
@@ -167,7 +169,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param rememberMe if the user wishes their identity to be remembered across sessions
      */
      this(string username, string password, bool rememberMe) {
-        this(username, password !is null ? password.toCharArray() : null, rememberMe, null);
+        this(username, password !is null ? password.dup : null, rememberMe, cast(string)null);
     }
 
     /**
@@ -201,7 +203,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param host       the host name or IP string from where the attempt is occurring
      */
      this(string username, string password, bool rememberMe, string host) {
-        this(username, password !is null ? password.toCharArray() : null, rememberMe, host);
+        this(username, password !is null ? password.dup : null, rememberMe, host);
     }
 
     /*--------------------------------------------
@@ -213,7 +215,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      *
      * @return the username submitted during an authentication attempt.
      */
-     string getUsername() {
+    string getUsername() {
         return username;
     }
 
@@ -222,7 +224,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      *
      * @param username the username to be used for submission during an authentication attempt.
      */
-     void setUsername(string username) {
+    void setUsername(string username) {
         this.username = username;
     }
 
@@ -232,7 +234,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      *
      * @return the password submitted during an authentication attempt as a character array.
      */
-     char[] getPassword() {
+    char[] getPassword() {
         return password;
     }
 
@@ -241,7 +243,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      *
      * @param password the password to be used for submission during an authentication attempt.
      */
-     void setPassword(char[] password) {
+    void setPassword(char[] password) {
         this.password = password;
     }
 
@@ -251,7 +253,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @return the {@link #getUsername() username}.
      * @see hunt.shiro.authc.AuthenticationToken#getPrincipal()
      */
-     Object getPrincipal() {
+    string getPrincipal() {
         return getUsername();
     }
 
@@ -261,7 +263,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @return the {@link #getPassword() password} char array.
      * @see hunt.shiro.authc.AuthenticationToken#getCredentials()
      */
-     Object getCredentials() {
+    char[] getCredentials() {
         return getPassword();
     }
 
@@ -275,7 +277,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @return the host from where the authentication attempt occurs, or <tt>null</tt> if it is unknown or
      *         explicitly omitted.
      */
-     string getHost() {
+    string getHost() {
         return host;
     }
 
@@ -299,7 +301,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @return <tt>true</tt> if the submitting user wishes their identity (principal(s)) to be remembered
      *         across sessions, <tt>false</tt> otherwise (<tt>false</tt> by default).
      */
-     bool isRememberMe() {
+    bool isRememberMe() {
         return rememberMe;
     }
 
@@ -310,7 +312,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param rememberMe value indicating if the user wishes their identity (principal(s)) to be remembered across
      *                   sessions.
      */
-     void setRememberMe(bool rememberMe) {
+    void setRememberMe(bool rememberMe) {
         this.rememberMe = rememberMe;
     }
 

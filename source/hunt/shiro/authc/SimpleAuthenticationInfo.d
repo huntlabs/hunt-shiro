@@ -124,7 +124,7 @@ class SimpleAuthenticationInfo : MergableAuthenticationInfo, SaltedAuthenticatio
     }
 
 
-     PrincipalCollection getPrincipals() {
+    PrincipalCollection getPrincipals() @trusted nothrow {
         return principals;
     }
 
@@ -225,16 +225,16 @@ class SimpleAuthenticationInfo : MergableAuthenticationInfo, SaltedAuthenticatio
             this.credentials = otherCredentials;
             return;
         }
-        auto thisCredentialsCast = cast(Collection) thisCredentials;
+        auto thisCredentialsCast = cast(Collection!Object) thisCredentials;
         if (thisCredentialsCast is null) {
-            Set newSet = new HashSet();
+            Set!Object newSet = new HashSet!Object();
             newSet.add(thisCredentials);
-            setCredentials(newSet);
+            setCredentials(cast(Object)newSet);
         }
 
         // At this point, the credentials should be a collection
-        Collection credentialCollection = cast(Collection)getCredentials();
-        auto otherCredentialsCast = cast(Collection)otherCredentials;
+        Collection!Object credentialCollection = cast(Collection!Object)getCredentials();
+        auto otherCredentialsCast = cast(Collection!Object)otherCredentials;
         if (otherCredentialsCast !is null) {
             credentialCollection.addAll(otherCredentialsCast);
         } else {
@@ -258,7 +258,7 @@ class SimpleAuthenticationInfo : MergableAuthenticationInfo, SaltedAuthenticatio
         SimpleAuthenticationInfo that = oCast;
 
         //noinspection RedundantIfStatement
-        if (principals !is null ? !principals== that.principals : that.principals !is null) return false;
+        if (principals !is null ? principals != that.principals : that.principals !is null) return false;
 
         return true;
     }
@@ -269,7 +269,7 @@ class SimpleAuthenticationInfo : MergableAuthenticationInfo, SaltedAuthenticatio
      * @return the hashcode of the internal {@link #getPrincipals() principals} instance.
      */
     override size_t toHash() @trusted nothrow {
-        return (principals !is null ? principals.toHash() : 0);
+        return (principals !is null ? (cast(Object)principals).toHash() : 0);
     }
 
     /**
@@ -278,7 +278,7 @@ class SimpleAuthenticationInfo : MergableAuthenticationInfo, SaltedAuthenticatio
      * @return <code>{@link #getPrincipals() principals}.toString()</code>
      */
     override string toString() {
-        return principals.toString();
+        return (cast(Object) principals).toString();
     }
 
 }

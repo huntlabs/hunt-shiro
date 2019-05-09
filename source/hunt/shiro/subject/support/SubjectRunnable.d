@@ -21,6 +21,8 @@ module hunt.shiro.subject.support.SubjectRunnable;
 import hunt.shiro.subject.Subject;
 import hunt.shiro.util.ThreadState;
 
+import hunt.util.Common;
+
 /**
  * A {@code SubjectRunnable} ensures that a target/delegate {@link Runnable Runnable} will execute such that any
  * call to {@code SecurityUtils.}{@link hunt.shiro.SecurityUtils#getSubject() getSubject()} during the
@@ -55,8 +57,8 @@ import hunt.shiro.util.ThreadState;
  */
 class SubjectRunnable : Runnable {
 
-    protected final ThreadState threadState;
-    private final Runnable runnable;
+    protected ThreadState threadState;
+    private Runnable runnable;
 
     /**
      * Creates a new {@code SubjectRunnable} that, when executed, will execute the target {@code delegate}, but

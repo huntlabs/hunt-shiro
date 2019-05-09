@@ -53,7 +53,7 @@ class Base64 {
      *
      * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045 section 2.1</a>
      */
-    enum byte[] CHUNK_SEPARATOR = "\r\n".idup;
+    enum byte[] CHUNK_SEPARATOR = cast(byte[])"\r\n".dup;
 
     /**
      * The base length.

@@ -18,6 +18,7 @@
  */
 module hunt.shiro.subject.PrincipalMap;
 
+import hunt.shiro.subject.PrincipalCollection;
 import hunt.collection.Map;
 
 /**

@@ -21,7 +21,9 @@ module hunt.shiro.concurrent.SubjectAwareExecutor;
 import hunt.shiro.SecurityUtils;
 import hunt.shiro.subject.Subject;
 
+import hunt.Exceptions;
 import hunt.util.Common;
+
 
 /**
  * {@code Executor} implementation that will automatically first associate any argument

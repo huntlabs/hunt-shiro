@@ -18,6 +18,7 @@
  */
 module hunt.shiro.session.mgt.SessionFactory;
 
+import hunt.shiro.session.mgt.SessionContext;
 import hunt.shiro.session.Session;
 
 /**

@@ -23,6 +23,8 @@ import hunt.shiro.authc.credential.CredentialsMatcher;
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.codec.CodecSupport;
+
+import hunt.Exceptions;
 import hunt.logging;
 
 //import java.security.MessageDigest;
@@ -97,18 +99,21 @@ class SimpleCredentialsMatcher : CodecSupport, CredentialsMatcher {
                     typeid(tokenCredentials).name ~ " and accountCredentials of type [" ~
                     typeid(accountCredentials).name ~ "]");
         }
-        if (isByteSource(tokenCredentials) && isByteSource(accountCredentials)) {
-            version(HUNT_DEBUG) {
-                tracef("Both credentials arguments can be easily converted to byte ArrayHelper.  Performing " ~
-                        "array equals comparison");
-            }
-            byte[] tokenBytes = toBytes(tokenCredentials);
-            byte[] accountBytes = toBytes(accountCredentials);
-            //return MessageDigest.isEqual(tokenBytes, accountBytes);
-            return tokenBytes == accountBytes;
-        } else {
-            return accountCredentials== tokenCredentials;
-        }
+        
+        implementationMissing(false);
+        return false;
+        // if (isByteSource(tokenCredentials) && isByteSource(accountCredentials)) {
+        //     version(HUNT_DEBUG) {
+        //         tracef("Both credentials arguments can be easily converted to byte ArrayHelper.  Performing " ~
+        //                 "array equals comparison");
+        //     }
+        //     byte[] tokenBytes = toBytes(tokenCredentials);
+        //     byte[] accountBytes = toBytes(accountCredentials);
+        //     //return MessageDigest.isEqual(tokenBytes, accountBytes);
+        //     return tokenBytes == accountBytes;
+        // } else {
+        //     return accountCredentials == tokenCredentials;
+        // }
     }
 
     /**

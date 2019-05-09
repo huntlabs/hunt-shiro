@@ -18,6 +18,9 @@
  */
 module hunt.shiro.session.mgt.DelegatingSession;
 
+import hunt.shiro.session.mgt.NativeSessionManager;
+import hunt.shiro.session.mgt.SessionKey;
+
 import hunt.shiro.Exceptions;
 import hunt.shiro.session.Session;
 
@@ -43,16 +46,16 @@ class DelegatingSession : Session, Serializable {
 
     //TODO - complete JavaDoc
 
-    private final SessionKey key;
+    private SessionKey key;
 
     //cached fields to avoid a server-side method call if out-of-process:
-    private Date startTimestamp = null;
+    // private Date startTimestamp = null;
     private string host = null;
 
     /**
      * Handle to the target NativeSessionManager that will support the delegate calls.
      */
-    private final  NativeSessionManager sessionManager;
+    private  NativeSessionManager sessionManager;
 
 
     this(NativeSessionManager sessionManager, SessionKey key) {
@@ -82,20 +85,20 @@ class DelegatingSession : Session, Serializable {
     /**
      * @see hunt.shiro.session.Session#getStartTimestamp()
      */
-     Date getStartTimestamp() {
-        if (startTimestamp  is null) {
-            startTimestamp = sessionManager.getStartTimestamp(key);
-        }
-        return startTimestamp;
-    }
+    //  Date getStartTimestamp() {
+    //     if (startTimestamp  is null) {
+    //         startTimestamp = sessionManager.getStartTimestamp(key);
+    //     }
+    //     return startTimestamp;
+    // }
 
     /**
      * @see hunt.shiro.session.Session#getLastAccessTime()
      */
-     Date getLastAccessTime() {
-        //can't cache - only business pojo knows the accurate time:
-        return sessionManager.getLastAccessTime(key);
-    }
+    //  Date getLastAccessTime() {
+    //     //can't cache - only business pojo knows the accurate time:
+    //     return sessionManager.getLastAccessTime(key);
+    // }
 
      long getTimeout(){
         return sessionManager.getTimeout(key);

@@ -27,6 +27,7 @@ import hunt.shiro.authc.LogoutAware;
 import hunt.shiro.Exceptions;
 import hunt.shiro.subject.PrincipalCollection;
 
+import hunt.Exceptions;
 import hunt.logging;
 import hunt.collection;
 
@@ -201,7 +202,8 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
         try {
             info = doAuthenticate(token);
             if (info  is null) {
-                string msg = "No account information found for authentication token [" ~ token ~ "] by this " ~
+                string msg = "No account information found for authentication token [" ~ 
+                        (cast(Object)token).toString() ~ "] by this " ~
                         "Authenticator instance.  Please check that it is configured correctly.";
                 throw new AuthenticationException(msg);
             }
@@ -214,11 +216,11 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
             if (ae  is null) {
                 //Exception thrown was not an expected AuthenticationException.  Therefore it is probably a little more
                 //severe or unexpected.  So, wrap in an AuthenticationException, log to warn, and propagate:
-                string msg = "Authentication failed for token submission [" ~ token ~ "].  Possible unexpected " ~
+                string msg = "Authentication failed for token submission [" ~ 
+                        (cast(Object)token).toString() ~ "].  Possible unexpected " ~
                         "error? (Typical or expected login exceptions should extend from AuthenticationException).";
                 ae = new AuthenticationException(msg, t);
-                version(HUNT_DEBUG)
-                    warning(msg, t);
+                version(HUNT_DEBUG) warning(msg, t);
             }
             try {
                 notifyFailure(token, ae);

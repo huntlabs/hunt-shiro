@@ -587,7 +587,7 @@ interface Subject {
  * developer to bind the built {@code Subject} for continued use if desired.
  *
  */
-class Builder {
+class SubjectBuilder {
 
     /**
      * Hold all contextual data via the Builder instance's method invocations to be sent to the
@@ -675,7 +675,7 @@ class Builder {
      * @param sessionId the id of the session that backs the desired Subject being acquired.
      * @return this {@code Builder} instance for method chaining.
      */
-     Builder sessionId(Serializable sessionId) {
+    SubjectBuilder sessionId(Serializable sessionId) {
         if (sessionId !is null) {
             this.subjectContext.setSessionId(sessionId);
         }
@@ -689,7 +689,7 @@ class Builder {
      * @param host the host name or IP address to use as the {@code Subject}'s originating location.
      * @return this {@code Builder} instance for method chaining.
      */
-     Builder host(string host) {
+    SubjectBuilder host(string host) {
         if (StringUtils.hasText(host)) {
             this.subjectContext.setHost(host);
         }
@@ -704,7 +704,7 @@ class Builder {
      * @param session the session to use as the {@code Subject}'s {@link Session}
      * @return this {@code Builder} instance for method chaining.
      */
-     Builder session(Session session) {
+    SubjectBuilder session(Session session) {
         if (session !is null) {
             this.subjectContext.setSession(session);
         }
@@ -735,7 +735,7 @@ class Builder {
      * @param principals the principals to use as the {@code Subject}'s identity.
      * @return this {@code Builder} instance for method chaining.
      */
-     Builder principals(PrincipalCollection principals) {
+    SubjectBuilder principals(PrincipalCollection principals) {
         if (principals !is null && !principals.isEmpty()) {
             this.subjectContext.setPrincipals(principals);
         }
@@ -753,7 +753,7 @@ class Builder {
      *                already exist.
      * @return this {@code Builder} instance for method chaining.
      */
-     Builder sessionCreationEnabled(bool enabled) {
+    SubjectBuilder sessionCreationEnabled(bool enabled) {
         this.subjectContext.setSessionCreationEnabled(enabled);
         return this;
     }
@@ -769,7 +769,7 @@ class Builder {
      * @return this {@code Builder} instance for method chaining.
      * @see hunt.shiro.subject.Subject#isAuthenticated()
      */
-     Builder authenticated(bool authenticated) {
+    SubjectBuilder authenticated(bool authenticated) {
         this.subjectContext.setAuthenticated(authenticated);
         return this;
     }
@@ -792,7 +792,7 @@ class Builder {
      * @throws IllegalArgumentException if the {@code attributeKey} is {@code null}.
      * @see SubjectFactory#createSubject(SubjectContext)
      */
-     Builder contextAttribute(string attributeKey, Object attributeValue) {
+    SubjectBuilder contextAttribute(string attributeKey, Object attributeValue) {
         if (attributeKey  is null) {
             string msg = "Subject context map key cannot be null.";
             throw new IllegalArgumentException(msg);
@@ -823,7 +823,7 @@ class Builder {
      * @return a new {@code Subject} instance reflecting the cumulative state acquired by the
      *         other methods in this class.
      */
-     Subject buildSubject() {
+    Subject buildSubject() {
         return this.securityManager.createSubject(this.subjectContext);
     }
 }

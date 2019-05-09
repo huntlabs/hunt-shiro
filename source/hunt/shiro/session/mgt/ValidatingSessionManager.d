@@ -18,6 +18,8 @@
  */
 module hunt.shiro.session.mgt.ValidatingSessionManager;
 
+import hunt.shiro.session.mgt.SessionManager;
+
 /**
  * A ValidatingSessionManager is a SessionManager that can proactively validate any or all sessions
  * that may be expired.

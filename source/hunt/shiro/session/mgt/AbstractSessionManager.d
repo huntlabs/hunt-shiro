@@ -18,6 +18,7 @@
  */
 module hunt.shiro.session.mgt.AbstractSessionManager;
 
+import hunt.shiro.session.mgt.SessionManager;
 import hunt.shiro.session.Session;
 
 /**

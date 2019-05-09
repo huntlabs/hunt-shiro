@@ -18,284 +18,289 @@
  */
 module hunt.shiro.session.mgt.AbstractNativeSessionManager;
 
-// import hunt.shiro.Exceptions;
-// import hunt.shiro.event.EventBus;
-// import hunt.shiro.event.EventBusAware;
-// import hunt.shiro.Exceptions;
-// import hunt.shiro.session.Session;
+import hunt.shiro.session.mgt.AbstractSessionManager;
+import hunt.shiro.session.mgt.NativeSessionManager;
+import hunt.shiro.session.mgt.SessionContext;
+import hunt.shiro.session.mgt.SessionKey;
 
-// import hunt.shiro.session.SessionListener;
-// import hunt.shiro.Exceptions;
-// import hunt.shiro.util.CollectionUtils;
-// import hunt.logging;
+import hunt.shiro.Exceptions;
+import hunt.shiro.event.EventBus;
+import hunt.shiro.event.EventBusAware;
+import hunt.shiro.session.Session;
 
-// import hunt.collection;
-// /**
-//  * Abstract implementation supporting the {@link NativeSessionManager NativeSessionManager} interface, supporting
-//  * {@link SessionListener SessionListener}s and application of the
-//  * {@link #getGlobalSessionTimeout() globalSessionTimeout}.
-//  *
-//  */
-// abstract class AbstractNativeSessionManager : AbstractSessionManager, NativeSessionManager, EventBusAware {
+import hunt.shiro.session.SessionListener;
+import hunt.shiro.util.CollectionUtils;
+import hunt.logging;
 
-//     private EventBus eventBus;
+import hunt.collection;
 
-//     private Collection!(SessionListener) listeners;
+/**
+ * Abstract implementation supporting the {@link NativeSessionManager NativeSessionManager} interface, supporting
+ * {@link SessionListener SessionListener}s and application of the
+ * {@link #getGlobalSessionTimeout() globalSessionTimeout}.
+ *
+ */
+abstract class AbstractNativeSessionManager : 
+    AbstractSessionManager, NativeSessionManager, EventBusAware {
 
-//     this() {
-//         this.listeners = new ArrayList!(SessionListener)();
-//     }
+    private EventBus eventBus;
 
-//      void setSessionListeners(Collection!(SessionListener) listeners) {
-//         this.listeners = listeners !is null ? listeners : new ArrayList!(SessionListener)();
-//     }
+    private Collection!(SessionListener) listeners;
 
-//     //@SuppressWarnings({"UnusedDeclaration"})
-//      Collection!(SessionListener) getSessionListeners() {
-//         return this.listeners;
-//     }
+    this() {
+        this.listeners = new ArrayList!(SessionListener)();
+    }
 
-//     /**
-//      * Returns the EventBus used to publish SessionEvents.
-//      *
-//      * @return the EventBus used to publish SessionEvents.
-//      */
-//     protected EventBus getEventBus() {
-//         return eventBus;
-//     }
+     void setSessionListeners(Collection!(SessionListener) listeners) {
+        this.listeners = listeners !is null ? listeners : new ArrayList!(SessionListener)();
+    }
 
-//     /**
-//      * Sets the EventBus to use to publish SessionEvents.
-//      *
-//      * @param eventBus the EventBus to use to publish SessionEvents.
-//      */
-//     void setEventBus(EventBus eventBus) {
-//         this.eventBus = eventBus;
-//     }
+    //@SuppressWarnings({"UnusedDeclaration"})
+     Collection!(SessionListener) getSessionListeners() {
+        return this.listeners;
+    }
 
-//     /**
-//      * Publishes events on the event bus if the event bus is non-null, otherwise does nothing.
-//      *
-//      * @param event the event to publish on the event bus if the event bus exists.
-//      */
-//     protected void publishEvent(Object event) {
-//         if (this.eventBus !is null) {
-//             this.eventBus.publish(event);
-//         }
-//     }
+    /**
+     * Returns the EventBus used to publish SessionEvents.
+     *
+     * @return the EventBus used to publish SessionEvents.
+     */
+    protected EventBus getEventBus() {
+        return eventBus;
+    }
 
-//     Session start(SessionContext context) {
-//         Session session = createSession(context);
-//         applyGlobalSessionTimeout(session);
-//         onStart(session, context);
-//         notifyStart(session);
-//         //Don't expose the EIS-tier Session object to the client-tier:
-//         return createExposedSession(session, context);
-//     }
+    /**
+     * Sets the EventBus to use to publish SessionEvents.
+     *
+     * @param eventBus the EventBus to use to publish SessionEvents.
+     */
+    void setEventBus(EventBus eventBus) {
+        this.eventBus = eventBus;
+    }
 
-//     /**
-//      * Creates a new {@code Session Session} instance based on the specified (possibly {@code null})
-//      * initialization data.  Implementing classes must manage the persistent state of the returned session such that it
-//      * could later be acquired via the {@link #getSession(SessionKey)} method.
-//      *
-//      * @param context the initialization data that can be used by the implementation or underlying
-//      *                {@link SessionFactory} when instantiating the internal {@code Session} instance.
-//      * @return the new {@code Session} instance.
-//      * @throws hunt.shiro.authz.HostUnauthorizedException
-//      *                                if the system access control policy restricts access based
-//      *                                on client location/IP and the specified hostAddress hasn't been enabled.
-//      * @throws AuthorizationException if the system access control policy does not allow the currently executing
-//      *                                caller to start sessions.
-//      */
-//     protected abstract Session createSession(SessionContext context);
+    /**
+     * Publishes events on the event bus if the event bus is non-null, otherwise does nothing.
+     *
+     * @param event the event to publish on the event bus if the event bus exists.
+     */
+    protected void publishEvent(Object event) {
+        if (this.eventBus !is null) {
+            this.eventBus.publish(event);
+        }
+    }
 
-//     protected void applyGlobalSessionTimeout(Session session) {
-//         session.setTimeout(getGlobalSessionTimeout());
-//         onChange(session);
-//     }
+    Session start(SessionContext context) {
+        Session session = createSession(context);
+        applyGlobalSessionTimeout(session);
+        onStart(session, context);
+        notifyStart(session);
+        //Don't expose the EIS-tier Session object to the client-tier:
+        return createExposedSession(session, context);
+    }
 
-//     /**
-//      * Template method that allows subclasses to react to a new session being created.
-//      * <p/>
-//      * This method is invoked <em>before</em> any session listeners are notified.
-//      *
-//      * @param session the session that was just {@link #createSession created}.
-//      * @param context the {@link SessionContext SessionContext} that was used to start the session.
-//      */
-//     protected void onStart(Session session, SessionContext context) {
-//     }
+    /**
+     * Creates a new {@code Session Session} instance based on the specified (possibly {@code null})
+     * initialization data.  Implementing classes must manage the persistent state of the returned session such that it
+     * could later be acquired via the {@link #getSession(SessionKey)} method.
+     *
+     * @param context the initialization data that can be used by the implementation or underlying
+     *                {@link SessionFactory} when instantiating the internal {@code Session} instance.
+     * @return the new {@code Session} instance.
+     * @throws hunt.shiro.authz.HostUnauthorizedException
+     *                                if the system access control policy restricts access based
+     *                                on client location/IP and the specified hostAddress hasn't been enabled.
+     * @throws AuthorizationException if the system access control policy does not allow the currently executing
+     *                                caller to start sessions.
+     */
+    protected abstract Session createSession(SessionContext context);
 
-//      Session getSession(SessionKey key){
-//         Session session = lookupSession(key);
-//         return session !is null ? createExposedSession(session, key) : null;
-//     }
+    protected void applyGlobalSessionTimeout(Session session) {
+        session.setTimeout(getGlobalSessionTimeout());
+        onChange(session);
+    }
 
-//     private Session lookupSession(SessionKey key){
-//         if (key  is null) {
-//             throw new NullPointerException("SessionKey argument cannot be null.");
-//         }
-//         return doGetSession(key);
-//     }
+    /**
+     * Template method that allows subclasses to react to a new session being created.
+     * <p/>
+     * This method is invoked <em>before</em> any session listeners are notified.
+     *
+     * @param session the session that was just {@link #createSession created}.
+     * @param context the {@link SessionContext SessionContext} that was used to start the session.
+     */
+    protected void onStart(Session session, SessionContext context) {
+    }
 
-//     private Session lookupRequiredSession(SessionKey key){
-//         Session session = lookupSession(key);
-//         if (session  is null) {
-//             string msg = "Unable to locate required Session instance based on SessionKey [" ~ key ~ "].";
-//             throw new UnknownSessionException(msg);
-//         }
-//         return session;
-//     }
+     Session getSession(SessionKey key){
+        Session session = lookupSession(key);
+        return session !is null ? createExposedSession(session, key) : null;
+    }
 
-//     protected abstract Session doGetSession(SessionKey key);
+    private Session lookupSession(SessionKey key){
+        if (key  is null) {
+            throw new NullPointerException("SessionKey argument cannot be null.");
+        }
+        return doGetSession(key);
+    }
 
-//     protected Session createExposedSession(Session session, SessionContext context) {
-//         return new DelegatingSession(this, new DefaultSessionKey(session.getId()));
-//     }
+    private Session lookupRequiredSession(SessionKey key){
+        Session session = lookupSession(key);
+        if (session  is null) {
+            string msg = "Unable to locate required Session instance based on SessionKey [" ~ key ~ "].";
+            throw new UnknownSessionException(msg);
+        }
+        return session;
+    }
 
-//     protected Session createExposedSession(Session session, SessionKey key) {
-//         return new DelegatingSession(this, new DefaultSessionKey(session.getId()));
-//     }
+    protected abstract Session doGetSession(SessionKey key);
 
-//     /**
-//      * Returns the session instance to use to pass to registered {@code SessionListener}s for notification
-//      * that the session has been invalidated (stopped or expired).
-//      * <p/>
-//      * The default implementation returns an {@link ImmutableProxiedSession ImmutableProxiedSession} instance to ensure
-//      * that the specified {@code session} argument is not modified by any listeners.
-//      *
-//      * @param session the {@code Session} object being invalidated.
-//      * @return the {@code Session} instance to use to pass to registered {@code SessionListener}s for notification.
-//      */
-//     protected Session beforeInvalidNotification(Session session) {
-//         return new ImmutableProxiedSession(session);
-//     }
+    protected Session createExposedSession(Session session, SessionContext context) {
+        return new DelegatingSession(this, new DefaultSessionKey(session.getId()));
+    }
 
-//     /**
-//      * Notifies any interested {@link SessionListener}s that a Session has started.  This method is invoked
-//      * <em>after</em> the {@link #onStart onStart} method is called.
-//      *
-//      * @param session the session that has just started that will be delivered to any
-//      *                {@link #setSessionListeners(java.util.Collection) registered} session listeners.
-//      * @see SessionListener#onStart(hunt.shiro.session.Session)
-//      */
-//     protected void notifyStart(Session session) {
-//         foreach(SessionListener listener ; this.listeners) {
-//             listener.onStart(session);
-//         }
-//     }
+    protected Session createExposedSession(Session session, SessionKey key) {
+        return new DelegatingSession(this, new DefaultSessionKey(session.getId()));
+    }
 
-//     protected void notifyStop(Session session) {
-//         Session forNotification = beforeInvalidNotification(session);
-//         foreach(SessionListener listener ; this.listeners) {
-//             listener.onStop(forNotification);
-//         }
-//     }
+    /**
+     * Returns the session instance to use to pass to registered {@code SessionListener}s for notification
+     * that the session has been invalidated (stopped or expired).
+     * <p/>
+     * The default implementation returns an {@link ImmutableProxiedSession ImmutableProxiedSession} instance to ensure
+     * that the specified {@code session} argument is not modified by any listeners.
+     *
+     * @param session the {@code Session} object being invalidated.
+     * @return the {@code Session} instance to use to pass to registered {@code SessionListener}s for notification.
+     */
+    protected Session beforeInvalidNotification(Session session) {
+        return new ImmutableProxiedSession(session);
+    }
 
-//     protected void notifyExpiration(Session session) {
-//         Session forNotification = beforeInvalidNotification(session);
-//         foreach(SessionListener listener ; this.listeners) {
-//             listener.onExpiration(forNotification);
-//         }
-//     }
+    /**
+     * Notifies any interested {@link SessionListener}s that a Session has started.  This method is invoked
+     * <em>after</em> the {@link #onStart onStart} method is called.
+     *
+     * @param session the session that has just started that will be delivered to any
+     *                {@link #setSessionListeners(java.util.Collection) registered} session listeners.
+     * @see SessionListener#onStart(hunt.shiro.session.Session)
+     */
+    protected void notifyStart(Session session) {
+        foreach(SessionListener listener ; this.listeners) {
+            listener.onStart(session);
+        }
+    }
 
-//      Date getStartTimestamp(SessionKey key) {
-//         return lookupRequiredSession(key).getStartTimestamp();
-//     }
+    protected void notifyStop(Session session) {
+        Session forNotification = beforeInvalidNotification(session);
+        foreach(SessionListener listener ; this.listeners) {
+            listener.onStop(forNotification);
+        }
+    }
 
-//      Date getLastAccessTime(SessionKey key) {
-//         return lookupRequiredSession(key).getLastAccessTime();
-//     }
+    protected void notifyExpiration(Session session) {
+        Session forNotification = beforeInvalidNotification(session);
+        foreach(SessionListener listener ; this.listeners) {
+            listener.onExpiration(forNotification);
+        }
+    }
 
-//      long getTimeout(SessionKey key){
-//         return lookupRequiredSession(key).getTimeout();
-//     }
+    //  Date getStartTimestamp(SessionKey key) {
+    //     return lookupRequiredSession(key).getStartTimestamp();
+    // }
 
-//      void setTimeout(SessionKey key, long maxIdleTimeInMillis){
-//         Session s = lookupRequiredSession(key);
-//         s.setTimeout(maxIdleTimeInMillis);
-//         onChange(s);
-//     }
+    //  Date getLastAccessTime(SessionKey key) {
+    //     return lookupRequiredSession(key).getLastAccessTime();
+    // }
 
-//      void touch(SessionKey key){
-//         Session s = lookupRequiredSession(key);
-//         s.touch();
-//         onChange(s);
-//     }
+     long getTimeout(SessionKey key){
+        return lookupRequiredSession(key).getTimeout();
+    }
 
-//      string getHost(SessionKey key) {
-//         return lookupRequiredSession(key).getHost();
-//     }
+     void setTimeout(SessionKey key, long maxIdleTimeInMillis){
+        Session s = lookupRequiredSession(key);
+        s.setTimeout(maxIdleTimeInMillis);
+        onChange(s);
+    }
 
-//      Collection!(Object) getAttributeKeys(SessionKey key) {
-//         Collection!(Object) c = lookupRequiredSession(key).getAttributeKeys();
-//         if (!CollectionUtils.isEmpty(c)) {
-//             return Collections.unmodifiableCollection(c);
-//         }
-//         return Collections.emptySet();
-//     }
+     void touch(SessionKey key){
+        Session s = lookupRequiredSession(key);
+        s.touch();
+        onChange(s);
+    }
 
-//      Object getAttribute(SessionKey sessionKey, Object attributeKey){
-//         return lookupRequiredSession(sessionKey).getAttribute(attributeKey);
-//     }
+     string getHost(SessionKey key) {
+        return lookupRequiredSession(key).getHost();
+    }
 
-//      void setAttribute(SessionKey sessionKey, Object attributeKey, Object value){
-//         if (value  is null) {
-//             removeAttribute(sessionKey, attributeKey);
-//         } else {
-//             Session s = lookupRequiredSession(sessionKey);
-//             s.setAttribute(attributeKey, value);
-//             onChange(s);
-//         }
-//     }
+     Collection!(Object) getAttributeKeys(SessionKey key) {
+        Collection!(Object) c = lookupRequiredSession(key).getAttributeKeys();
+        if (!CollectionUtils.isEmpty(c)) {
+            return Collections.unmodifiableCollection(c);
+        }
+        return Collections.emptySet();
+    }
 
-//      Object removeAttribute(SessionKey sessionKey, Object attributeKey){
-//         Session s = lookupRequiredSession(sessionKey);
-//         Object removed = s.removeAttribute(attributeKey);
-//         if (removed !is null) {
-//             onChange(s);
-//         }
-//         return removed;
-//     }
+     Object getAttribute(SessionKey sessionKey, Object attributeKey){
+        return lookupRequiredSession(sessionKey).getAttribute(attributeKey);
+    }
 
-//      bool isValid(SessionKey key) {
-//         try {
-//             checkValid(key);
-//             return true;
-//         } catch (InvalidSessionException e) {
-//             return false;
-//         }
-//     }
+     void setAttribute(SessionKey sessionKey, Object attributeKey, Object value){
+        if (value  is null) {
+            removeAttribute(sessionKey, attributeKey);
+        } else {
+            Session s = lookupRequiredSession(sessionKey);
+            s.setAttribute(attributeKey, value);
+            onChange(s);
+        }
+    }
 
-//      void stop(SessionKey key){
-//         Session session = lookupRequiredSession(key);
-//         try {
-//             version(HUNT_DEBUG) {
-//                 tracef("Stopping session with id [" ~ session.getId() ~ "]");
-//             }
-//             session.stop();
-//             onStop(session, key);
-//             notifyStop(session);
-//         } finally {
-//             afterStopped(session);
-//         }
-//     }
+     Object removeAttribute(SessionKey sessionKey, Object attributeKey){
+        Session s = lookupRequiredSession(sessionKey);
+        Object removed = s.removeAttribute(attributeKey);
+        if (removed !is null) {
+            onChange(s);
+        }
+        return removed;
+    }
 
-//     protected void onStop(Session session, SessionKey key) {
-//         onStop(session);
-//     }
+     bool isValid(SessionKey key) {
+        try {
+            checkValid(key);
+            return true;
+        } catch (InvalidSessionException e) {
+            return false;
+        }
+    }
 
-//     protected void onStop(Session session) {
-//         onChange(session);
-//     }
+     void stop(SessionKey key){
+        Session session = lookupRequiredSession(key);
+        try {
+            version(HUNT_DEBUG) {
+                tracef("Stopping session with id [" ~ session.getId() ~ "]");
+            }
+            session.stop();
+            onStop(session, key);
+            notifyStop(session);
+        } finally {
+            afterStopped(session);
+        }
+    }
 
-//     protected void afterStopped(Session session) {
-//     }
+    protected void onStop(Session session, SessionKey key) {
+        onStop(session);
+    }
 
-//      void checkValid(SessionKey key){
-//         //just try to acquire it.  If there is a problem, an exception will be thrown:
-//         lookupRequiredSession(key);
-//     }
+    protected void onStop(Session session) {
+        onChange(session);
+    }
 
-//     protected void onChange(Session s) {
-//     }
-// }
+    protected void afterStopped(Session session) {
+    }
+
+     void checkValid(SessionKey key){
+        //just try to acquire it.  If there is a problem, an exception will be thrown:
+        lookupRequiredSession(key);
+    }
+
+    protected void onChange(Session s) {
+    }
+}

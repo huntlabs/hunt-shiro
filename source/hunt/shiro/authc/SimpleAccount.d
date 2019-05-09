@@ -215,7 +215,7 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
      *
      * @return all the principals, aka the identifying attributes, of this Account.
      */
-     PrincipalCollection getPrincipals() @trusted nothrow {
+    PrincipalCollection getPrincipals() @trusted nothrow {
         return authcInfo.getPrincipals();
     }
 
@@ -441,7 +441,7 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
         authcInfo.merge(info);
 
         // Merge SimpleAccount specific info\
-        aut infoCast = cast(SimpleAccount)info;
+        SimpleAccount infoCast = cast(SimpleAccount)info;
         if (infoCast !is null) {
             SimpleAccount otherAccount = infoCast;
             if (otherAccount.isLocked()) {
@@ -461,7 +461,8 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
      * @return <code>principals.hashCode()</code> if they are not null, 0 (zero) otherwise.
      */
     override size_t toHash() @trusted nothrow {
-        return (getPrincipals() !is null ? getPrincipals().hashCode() : 0);
+        PrincipalCollection pc = getPrincipals();
+        return (pc !is null ? (cast(Object)pc).toHash() : 0);
     }
 
     /**
@@ -492,7 +493,8 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
      * @return the string representation of this Account object.
      */
     override string toString() {
-        return getPrincipals() !is null ? getPrincipals().toString() : "empty";
+        PrincipalCollection pc = getPrincipals();
+        return pc !is null ? (cast(Object)pc).toString() : "empty";
     }
 
 }

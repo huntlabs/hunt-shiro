@@ -27,7 +27,7 @@ import hunt.collection;
  * Static helper class for use dealing with Collections.
  *
  */
-// class CollectionUtils {
+class CollectionUtils {
 
 //     //TODO - complete JavaDoc
 
@@ -45,49 +45,49 @@ import hunt.collection;
 //         return set;
 //     }
 
-//     /**
-//      * Returns {@code true} if the specified {@code Collection} is {@code null} or {@link Collection#isEmpty empty},
-//      * {@code false} otherwise.
-//      *
-//      * @param c the collection to check
-//      * @return {@code true} if the specified {@code Collection} is {@code null} or {@link Collection#isEmpty empty},
-//      *         {@code false} otherwise.
-//      */
-//      static bool isEmpty(Collection c) {
-//         return c  is null || c.isEmpty();
-//     }
+    /**
+     * Returns {@code true} if the specified {@code Collection} is {@code null} or {@link Collection#isEmpty empty},
+     * {@code false} otherwise.
+     *
+     * @param c the collection to check
+     * @return {@code true} if the specified {@code Collection} is {@code null} or {@link Collection#isEmpty empty},
+     *         {@code false} otherwise.
+     */
+    static bool isEmpty(T)(Collection!(T) c) {
+        return c is null || c.isEmpty();
+    }
 
-//     /**
-//      * Returns {@code true} if the specified {@code Map} is {@code null} or {@link Map#isEmpty empty},
-//      * {@code false} otherwise.
-//      *
-//      * @param m the {@code Map} to check
-//      * @return {@code true} if the specified {@code Map} is {@code null} or {@link Map#isEmpty empty},
-//      *         {@code false} otherwise.
-//      */
-//      static bool isEmpty(Map m) {
-//         return m  is null || m.isEmpty();
-//     }
+    /**
+     * Returns {@code true} if the specified {@code Map} is {@code null} or {@link Map#isEmpty empty},
+     * {@code false} otherwise.
+     *
+     * @param m the {@code Map} to check
+     * @return {@code true} if the specified {@code Map} is {@code null} or {@link Map#isEmpty empty},
+     *         {@code false} otherwise.
+     */
+    static bool isEmpty(K, V)(Map!(K, V) m) {
+        return m  is null || m.isEmpty();
+    }
 
-//     /**
-//      * Returns the size of the specified collection or {@code 0} if the collection is {@code null}.
-//      *
-//      * @param c the collection to check
-//      * @return the size of the specified collection or {@code 0} if the collection is {@code null}.
-//      */
-//      static int size(Collection c) {
-//         return c !is null ? c.size() : 0;
-//     }
+    /**
+     * Returns the size of the specified collection or {@code 0} if the collection is {@code null}.
+     *
+     * @param c the collection to check
+     * @return the size of the specified collection or {@code 0} if the collection is {@code null}.
+     */
+    static int size(T)(Collection!T c) {
+        return c !is null ? c.size() : 0;
+    }
 
-//     /**
-//      * Returns the size of the specified map or {@code 0} if the map is {@code null}.
-//      *
-//      * @param m the map to check
-//      * @return the size of the specified map or {@code 0} if the map is {@code null}.
-//      */
-//      static int size(Map m) {
-//         return m !is null ? m.size() : 0;
-//     }
+    /**
+     * Returns the size of the specified map or {@code 0} if the map is {@code null}.
+     *
+     * @param m the map to check
+     * @return the size of the specified map or {@code 0} if the map is {@code null}.
+     */
+    static int size(T)(Map!T m) {
+        return m !is null ? m.size() : 0;
+    }
 
 
 //     /**
@@ -127,4 +127,4 @@ import hunt.collection;
 //     static int computeListCapacity(int arraySize) {
 //         return (int) Math.min(5L + arraySize + (arraySize / 10), Integer.MAX_VALUE);
 //     }
-// }
+}

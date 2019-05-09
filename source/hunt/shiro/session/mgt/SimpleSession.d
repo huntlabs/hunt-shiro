@@ -18,16 +18,23 @@
  */
 module hunt.shiro.session.mgt.SimpleSession;
 
+import hunt.shiro.session.mgt.ValidatingSession;
+
 import hunt.shiro.Exceptions;
 import hunt.shiro.util.CollectionUtils;
+
+import hunt.collection.Collection;
+import hunt.collection.Map;
 import hunt.logging;
+import hunt.util.Common;
+import hunt.util.DateTime;
 
 // import java.io.IOException;
 // import java.io.ObjectInputStream;
 // import java.io.ObjectOutputStream;
-// import hunt.util.Common;
 // import java.text.DateFormat;
 
+alias Date = long;
 
 /**
  * Simple {@link hunt.shiro.session.Session} JavaBeans-compatible POJO implementation, intended to be used on the
@@ -50,15 +57,15 @@ class SimpleSession : ValidatingSession, Serializable {
     protected enum long MILLIS_PER_HOUR = 60 * MILLIS_PER_MINUTE;
 
     //serialization bitmask fields. DO NOT CHANGE THE ORDER THEY ARE DECLARED!
-    static shared int bitIndexCounter = 0;
-    private enum int ID_BIT_MASK = 1 << bitIndexCounter++;
-    private enum int START_TIMESTAMP_BIT_MASK = 1 << bitIndexCounter++;
-    private enum int STOP_TIMESTAMP_BIT_MASK = 1 << bitIndexCounter++;
-    private enum int LAST_ACCESS_TIME_BIT_MASK = 1 << bitIndexCounter++;
-    private enum int TIMEOUT_BIT_MASK = 1 << bitIndexCounter++;
-    private enum int EXPIRED_BIT_MASK = 1 << bitIndexCounter++;
-    private enum int HOST_BIT_MASK = 1 << bitIndexCounter++;
-    private enum int ATTRIBUTES_BIT_MASK = 1 << bitIndexCounter++;
+    enum int bitIndexCounter = 0;
+    private enum int ID_BIT_MASK = 1 << 0;
+    private enum int START_TIMESTAMP_BIT_MASK = 1 << 1;
+    private enum int STOP_TIMESTAMP_BIT_MASK = 1 << 2;
+    private enum int LAST_ACCESS_TIME_BIT_MASK = 1 << 3;
+    private enum int TIMEOUT_BIT_MASK = 1 << 4;
+    private enum int EXPIRED_BIT_MASK = 1 << 5;
+    private enum int HOST_BIT_MASK = 1 << 6;
+    private enum int ATTRIBUTES_BIT_MASK = 1 << 7;
 
     // ==============================================================
     // NOTICE:
@@ -88,7 +95,7 @@ class SimpleSession : ValidatingSession, Serializable {
 
     this() {
         this.timeout = DefaultSessionManager.DEFAULT_GLOBAL_SESSION_TIMEOUT; //TODO - remove concrete reference to DefaultSessionManager
-        this.startTimestamp = new Date();
+        this.startTimestamp = DateTimeHelper.currentTimeMillis(); // new Date();
         this.lastAccessTime = this.startTimestamp;
     }
 
@@ -185,12 +192,12 @@ class SimpleSession : ValidatingSession, Serializable {
     }
 
      void touch() {
-        this.lastAccessTime = new Date();
+        this.lastAccessTime = DateTimeHelper.currentTimeMillis();
     }
 
      void stop() {
         if (this.stopTimestamp  is null) {
-            this.stopTimestamp = new Date();
+            this.stopTimestamp = DateTimeHelper.currentTimeMillis();
         }
     }
 
@@ -273,12 +280,13 @@ class SimpleSession : ValidatingSession, Serializable {
 
             Serializable sessionId = getId();
 
-            DateFormat df = DateFormat.getInstance();
-            string msg = "Session with id [" ~ sessionId ~ "] has expired. " ~
-                    "Last access time: " ~ df.format(lastAccessTime) +
-                    ".  Current time: " ~ df.format(new Date()) +
-                    ".  Session timeout is set to " ~ timeout / MILLIS_PER_SECOND ~ " seconds (" ~
-                    timeout / MILLIS_PER_MINUTE ~ " minutes)";
+            // DateFormat df = DateFormat.getInstance();
+            import std.conv;
+            string msg = "Session with id [" ~ sessionId.toString() ~ "] has expired. " ~
+                    "Last access time: " ~ lastAccessTime.to!string() ~
+                    ".  Current time: " ~ DateTimeHelper.getTimeAsGMT() ~
+                    ".  Session timeout is set to " ~ to!string(timeout / MILLIS_PER_SECOND) ~ " seconds (" ~
+                    to!string(timeout / MILLIS_PER_MINUTE) ~ " minutes)";
             version(HUNT_DEBUG) {
                 tracef(msg);
             }

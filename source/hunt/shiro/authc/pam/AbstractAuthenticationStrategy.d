@@ -18,13 +18,17 @@
  */
 module hunt.shiro.authc.pam.AbstractAuthenticationStrategy;
 
+import hunt.shiro.authc.pam.AuthenticationStrategy;
+
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
-import hunt.shiro.authc.pam.AuthenticationStrategy;
+import hunt.shiro.authc.MergableAuthenticationInfo;
+import hunt.shiro.authc.SimpleAuthenticationInfo;
 
 // import hunt.shiro.authc;
 import hunt.shiro.realm.Realm;
 
+import hunt.Exceptions;
 import hunt.collection;
 
 
@@ -86,8 +90,9 @@ abstract class AbstractAuthenticationStrategy : AuthenticationStrategy {
             aggregateCast.merge(info);
             return aggregate;
         } else {
-            throw new IllegalArgumentException( "Attempt to merge authentication info from multiple realms, but aggregate " ~
-                      "AuthenticationInfo is not of type MergableAuthenticationInfo." );
+            throw new IllegalArgumentException( "Attempt to merge authentication info " ~ 
+                        "from multiple realms, but aggregate " ~
+                        "AuthenticationInfo is not of type MergableAuthenticationInfo." );
         }
     }
 

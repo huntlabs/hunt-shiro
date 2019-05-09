@@ -121,7 +121,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
     |  A C C E S S O R S / M O D I F I E R S    |
     ============================================*/
 
-     void setName(string name) {
+    override void setName(string name) {
         super.setName(name);
         string authzCacheName = this.authorizationCacheName;
         if (authzCacheName !is null && authzCacheName.startsWith(typeid(this).name)) {
@@ -217,13 +217,13 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
      * subclass implementations for each authorization check.</li>
      * </ol>
      */
-    protected void onInit() {
+    override protected void onInit() {
         super.onInit();
         //trigger obtaining the authorization cache if possible
         getAvailableAuthorizationCache();
     }
 
-    protected void afterCacheManagerSet() {
+    override protected void afterCacheManagerSet() {
         super.afterCacheManagerSet();
         //trigger obtaining the authorization cache if possible
         getAvailableAuthorizationCache();

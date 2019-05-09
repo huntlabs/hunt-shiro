@@ -21,7 +21,7 @@ module hunt.shiro.env.DefaultEnvironment;
 import hunt.shiro.env.NamedObjectEnvironment;
 
 import hunt.shiro.mgt.SecurityManager;
-import hunt.shiro.util.Destroyable;
+import hunt.shiro.util.Common;
 import hunt.shiro.util.LifecycleUtils;
 
 import hunt.collection;

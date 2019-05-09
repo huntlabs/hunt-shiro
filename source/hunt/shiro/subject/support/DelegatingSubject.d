@@ -41,6 +41,9 @@ import hunt.logging;
 import hunt.collection;
 import hunt.util.Common;
 
+import std.traits;
+
+
 /**
  * Implementation of the {@code Subject} interface that delegates
  * method calls to an underlying {@link hunt.shiro.mgt.SecurityManager SecurityManager} instance for security checks.
@@ -69,7 +72,7 @@ class DelegatingSubject : Subject {
 
 
     private enum string RUN_AS_PRINCIPALS_SESSION_KEY =
-            typeid(DelegatingSubject).name ~ ".RUN_AS_PRINCIPALS_SESSION_KEY";
+            fullyQualifiedName!(DelegatingSubject) ~ ".RUN_AS_PRINCIPALS_SESSION_KEY";
 
     protected PrincipalCollection principals;
     protected bool authenticated;

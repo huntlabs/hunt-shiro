@@ -1,5 +1,9 @@
 module hunt.shiro.util.LifecycleUtils;
 
+import hunt.shiro.util.Common;
+
+import hunt.collection.Collection;
+import hunt.logging;
 
 
 /**
@@ -37,41 +41,47 @@ abstract class LifecycleUtils {
     //     }
     // }
 
-    // static void destroy(Object o) {
-    //     if (o instanceof Destroyable) {
-    //         destroy((Destroyable) o);
-    //     } else if (o instanceof Collection) {
-    //         destroy((Collection)o);
-    //     }
-    // }
+    static void destroy(Object o) {
+        Destroyable d = cast(Destroyable)o;
+        if (d !is null) {
+            destroy(d);
+        } else {
+            Collection!Object c = cast(Collection!Object)o;
+            if (c !is null) {
+                destroy(c);
+            }
+        }
+    }
 
-    // static void destroy(Destroyable d) {
-    //     if (d != null) {
-    //         try {
-    //             d.destroy();
-    //         } catch (Throwable t) {
-    //             if (log.isDebugEnabled()) {
-    //                 String msg = "Unable to cleanly destroy instance [" + d + "] of type [" + d.getClass().getName() + "].";
-    //                 log.debug(msg, t);
-    //             }
-    //         }
-    //     }
-    // }
+    static void destroy(Destroyable d) {
+        if (d != null) {
+            try {
+                d.destroy();
+            } catch (Throwable t) {
+                version(HUNT_DEBUG) {
+                    string msg = "Unable to cleanly destroy instance [" ~ 
+                        (cast(Object)d).toString() ~ "] of type [" ~ 
+                        (cast(Object)d).name ~ "].";
+                    trace(msg, t);
+                }
+            }
+        }
+    }
 
-    // /**
-    //  * Calls {@link #destroy(Object) destroy} for each object in the collection.
-    //  * If the collection is {@code null} or empty, this method returns quietly.
-    //  *
-    //  * @param c the collection of objects to destroy.
-    //  * @since 0.9
-    //  */
-    // static void destroy(Collection c) {
-    //     if (c == null || c.isEmpty()) {
-    //         return;
-    //     }
+    /**
+     * Calls {@link #destroy(Object) destroy} for each object in the collection.
+     * If the collection is {@code null} or empty, this method returns quietly.
+     *
+     * @param c the collection of objects to destroy.
+     * @since 0.9
+     */
+    static void destroy(Collection!Object c) {
+        if (c is null || c.isEmpty()) {
+            return;
+        }
 
-    //     foreach (Object o ; c) {
-    //         destroy(o);
-    //     }
-    // }
+        foreach (Object o ; c) {
+            destroy(o);
+        }
+    }
 }

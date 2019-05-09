@@ -30,6 +30,9 @@ import hunt.shiro.crypto.hash.Hash;
 import hunt.shiro.crypto.hash.SimpleHash;
 // import hunt.shiro.util.StringUtils;
 
+import hunt.Exceptions;
+import std.array;
+
 /**
  * A {@code HashedCredentialMatcher} provides support for hashing of supplied {@code AuthenticationToken} credentials
  * before being compared to those in the {@code AuthenticationInfo} from the data store.
@@ -148,7 +151,7 @@ class HashedCredentialsMatcher : SimpleCredentialsMatcher {
      */
      this(string hashAlgorithmName) {
         this();
-        if (!StringUtils.hasText(hashAlgorithmName) ) {
+        if (hashAlgorithmName.empty()) {
             throw new IllegalArgumentException("hashAlgorithmName cannot be null or empty.");
         }
         this.hashAlgorithm = hashAlgorithmName;
@@ -232,7 +235,7 @@ class HashedCredentialsMatcher : SimpleCredentialsMatcher {
      *             are almost impossible to break.  This method will be removed in Shiro 2.0.
      */
     deprecated("")
-     bool isHashSalted() {
+    bool isHashSalted() {
         return hashSalted;
     }
 
@@ -399,16 +402,16 @@ class HashedCredentialsMatcher : SimpleCredentialsMatcher {
      */
     protected Object hashProvidedCredentials(AuthenticationToken token, AuthenticationInfo info) {
         Object salt = null;
-        auto infoCast = cast(SaltedAuthenticationInfo)info;
+        SaltedAuthenticationInfo infoCast = cast(SaltedAuthenticationInfo)info;
         if (infoCast !is null) {
-            salt = infoCast.getCredentialsSalt();
+            salt = cast(Object)infoCast.getCredentialsSalt();
         } else {
             //retain 1.0 backwards compatibility:
             if (isHashSalted()) {
                 salt = getSalt(token);
             }
         }
-        return hashProvidedCredentials(token.getCredentials(), salt, getHashIterations());
+        return cast(Object)hashProvidedCredentials(token.getCredentials(), salt, getHashIterations());
     }
 
     /**

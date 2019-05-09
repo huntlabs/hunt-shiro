@@ -45,15 +45,15 @@ class SimpleRole : Serializable {
         setPermissions(permissions);
     }
 
-     string getName() {
+    string getName() @trusted nothrow {
         return name;
     }
 
-     void setName(string name) {
+    void setName(string name) @trusted nothrow {
         this.name = name;
     }
 
-     Set!(Permission) getPermissions() {
+    Set!(Permission) getPermissions() {
         return permissions;
     }
 
@@ -94,7 +94,7 @@ class SimpleRole : Serializable {
     }
 
     override size_t toHash() @trusted nothrow {
-        return (getName() !is null ? getName().hashCode() : 0);
+        return (getName() !is null ? getName().hashOf() : 0);
     }
 
     override bool opEquals(Object o) {

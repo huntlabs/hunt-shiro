@@ -42,8 +42,8 @@ class SubjectThreadState : ThreadState {
 
     private Map!(Object, Object) originalResources;
 
-    private final Subject subject;
-    private  SecurityManager securityManager;
+    private Subject subject;
+    private SecurityManager securityManager;
 
     /**
      * Creates a new {@code SubjectThreadState} that will bind and unbind the specified {@code Subject} to the

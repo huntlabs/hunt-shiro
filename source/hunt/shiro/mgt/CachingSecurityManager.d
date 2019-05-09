@@ -25,7 +25,7 @@ import hunt.shiro.cache.CacheManagerAware;
 import hunt.shiro.event.EventBus;
 import hunt.shiro.event.EventBusAware;
 // import hunt.shiro.event.support.DefaultEventBus;
-import hunt.shiro.util.Destroyable;
+import hunt.shiro.util.Common;
 import hunt.shiro.util.LifecycleUtils;
 
 import hunt.Exceptions;

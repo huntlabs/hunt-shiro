@@ -18,6 +18,10 @@
  */
 module hunt.shiro.session.mgt.ExecutorServiceSessionValidationScheduler;
 
+import hunt.shiro.session.mgt.DefaultSessionManager;
+import hunt.shiro.session.mgt.SessionValidationScheduler;
+import hunt.shiro.session.mgt.ValidatingSessionManager;
+
 import hunt.concurrency.atomic;
 import hunt.concurrency.thread;
 
@@ -25,6 +29,7 @@ import hunt.concurrency.Executors;
 import hunt.concurrency.ScheduledExecutorService;
 import hunt.concurrency.ThreadFactory;
 import hunt.util.DateTime;
+import hunt.util.Common;
 
 import hunt.logging;
 

@@ -20,6 +20,7 @@ module hunt.shiro.codec.CodecSupport;
 
 import hunt.shiro.util.ByteSource;
 
+import hunt.Exceptions;
 
 /**
  * Base abstract class that provides useful encoding and decoding operations, especially for character data.
@@ -153,30 +154,37 @@ abstract class CodecSupport {
     //     return toString(bytes, encoding).toCharArray();
     // }
 
-    // /**
-    //  * Returns {@code true} if the specified object can be easily converted to bytes by instances of this class,
-    //  * {@code false} otherwise.
-    //  * <p/>
-    //  * The default implementation returns {@code true} IFF the specified object is an instance of one of the following
-    //  * types:
-    //  * <ul>
-    //  * <li>{@code byte[]}</li>
-    //  * <li>{@code char[]}</li>
-    //  * <li>{@link ByteSource}</li>
-    //  * <li>{@link String}</li>
-    //  * <li>{@link File}</li>
-    //  * </li>{@link InputStream}</li>
-    //  * </ul>
-    //  *
-    //  * @param o the object to test to see if it can be easily converted to a byte array
-    //  * @return {@code true} if the specified object can be easily converted to bytes by instances of this class,
-    //  *         {@code false} otherwise.
-    //  * @since 1.0
-    //  */
-    // protected boolean isByteSource(Object o) {
-    //     return o instanceof byte[] || o instanceof char[] || o instanceof String ||
-    //             o instanceof ByteSource || o instanceof File || o instanceof InputStream;
-    // }
+    /**
+     * Returns {@code true} if the specified object can be easily converted to bytes by instances of this class,
+     * {@code false} otherwise.
+     * <p/>
+     * The default implementation returns {@code true} IFF the specified object is an instance of one of the following
+     * types:
+     * <ul>
+     * <li>{@code byte[]}</li>
+     * <li>{@code char[]}</li>
+     * <li>{@link ByteSource}</li>
+     * <li>{@link String}</li>
+     * <li>{@link File}</li>
+     * </li>{@link InputStream}</li>
+     * </ul>
+     *
+     * @param o the object to test to see if it can be easily converted to a byte array
+     * @return {@code true} if the specified object can be easily converted to bytes by instances of this class,
+     *         {@code false} otherwise.
+     * @since 1.0
+     */
+    protected bool isByteSource(Object o) {
+        ByteSource bs = cast(ByteSource)o;
+        if(bs !is null)
+            return true;
+        
+        implementationMissing(false);
+        
+        return false;
+        // return o instanceof byte[] || o instanceof char[] || o instanceof String ||
+        //         o instanceof ByteSource || o instanceof File || o instanceof InputStream;
+    }
 
     // /**
     //  * Converts the specified Object into a byte array.

@@ -18,6 +18,8 @@
  */
 module hunt.shiro.authz.Permission;
 
+import hunt.util.Common;
+
 /**
  * A Permission represents the ability to perform an action or access a resource.  A Permission is the most
  * granular, or atomic, unit in a system's security policy and is the cornerstone upon which fine-grained security
@@ -62,7 +64,7 @@ module hunt.shiro.authz.Permission;
  *
  * @see hunt.shiro.authz.permission.WildcardPermission WildcardPermission
  */
-interface Permission {
+interface Permission : Comparable!Permission {
 
     /**
      * Returns {@code true} if this current instance <em>implies</em> all the functionality and/or resource access

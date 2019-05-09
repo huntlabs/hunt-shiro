@@ -51,7 +51,7 @@ import std.array;
  */
 class SimpleByteSource : ByteSource {
 
-    private final byte[] bytes;
+    private byte[] bytes;
     private string cachedHex;
     private string cachedBase64;
 
@@ -161,7 +161,7 @@ class SimpleByteSource : ByteSource {
         return this.cachedBase64;
     }
 
-    string toString() {
+    override string toString() {
         return toBase64();
     }
 
@@ -203,7 +203,7 @@ class SimpleByteSource : ByteSource {
  *
  * @since 1.2
  */
-final class Util {
+final class ByteSourceUtil {
 
     /**
      * Returns a new {@code ByteSource} instance representing the specified byte array.
@@ -253,9 +253,9 @@ final class Util {
      * @param file the file to represent as a {@code ByteSource} instance.
      * @return a new {@code ByteSource} instance representing the specified File's bytes.
      */
-    static ByteSource bytes(File file) {
-        return new SimpleByteSource(file);
-    }
+    // static ByteSource bytes(File file) {
+    //     return new SimpleByteSource(file);
+    // }
 
     /**
      * Returns a new {@code ByteSource} instance representing the specified InputStream's bytes.
@@ -263,9 +263,9 @@ final class Util {
      * @param stream the InputStream to represent as a {@code ByteSource} instance.
      * @return a new {@code ByteSource} instance representing the specified InputStream's bytes.
      */
-    static ByteSource bytes(InputStream stream) {
-        return new SimpleByteSource(stream);
-    }
+    // static ByteSource bytes(InputStream stream) {
+    //     return new SimpleByteSource(stream);
+    // }
 
     /**
      * Returns {@code true} if the specified object can be easily represented as a {@code ByteSource} using

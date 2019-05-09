@@ -27,6 +27,8 @@ import hunt.String;
 import hunt.util.Common;
 import hunt.collection.Map;
 
+import std.traits;
+
 /**
  * Default implementation of the {@link SessionContext} interface which provides getters and setters that
  * wrap interaction with the underlying backing context map.
@@ -35,8 +37,8 @@ import hunt.collection.Map;
 class DefaultSessionContext : MapContext, SessionContext {
 
 
-    private enum string HOST = typeid(DefaultSessionContext).name ~ ".HOST";
-    private enum string SESSION_ID = typeid(DefaultSessionContext).name ~ ".SESSION_ID";
+    private enum string HOST = fullyQualifiedName!(DefaultSessionContext) ~ ".HOST";
+    private enum string SESSION_ID = fullyQualifiedName!(DefaultSessionContext) ~ ".SESSION_ID";
 
     this() {
         super();

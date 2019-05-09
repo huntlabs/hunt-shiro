@@ -20,14 +20,15 @@ module hunt.shiro.authz.ModularRealmAuthorizer;
 
 import hunt.shiro.authz.Authorizer;
 import hunt.shiro.authz.Permission;
-
 import hunt.shiro.authz.permission.PermissionResolver;
 import hunt.shiro.authz.permission.PermissionResolverAware;
 import hunt.shiro.authz.permission.RolePermissionResolver;
 import hunt.shiro.authz.permission.RolePermissionResolverAware;
+import hunt.shiro.Exceptions;
 import hunt.shiro.realm.Realm;
 import hunt.shiro.subject.PrincipalCollection;
 
+import hunt.Exceptions;
 import hunt.collection;
 
 
@@ -253,11 +254,11 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      bool[] isPermitted(PrincipalCollection principals, string[] permissions...) {
         assertRealmsConfigured();
         if (permissions !is null && permissions.length > 0) {
-            bool[] isPermitted = new bool[permissions.length];
+            bool[] r = new bool[permissions.length];
             for(int i = 0; i < permissions.length; i++) {
-                isPermitted[i] = isPermitted(principals, permissions[i]);
+                r[i] = isPermitted(principals, permissions[i]);
             }
-            return isPermitted;
+            return r;
         }
         return new bool[0];
     }
@@ -270,12 +271,12 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      bool[] isPermitted(PrincipalCollection principals, List!(Permission) permissions) {
         assertRealmsConfigured();
         if (permissions !is null && !permissions.isEmpty()) {
-            bool[] isPermitted = new bool[permissions.size()];
+            bool[] r = new bool[permissions.size()];
             int i = 0;
             foreach(Permission p ; permissions) {
-                isPermitted[i++] = isPermitted(principals, p);
+                r[i++] = isPermitted(principals, p);
             }
-            return isPermitted;
+            return r;
         }
 
         return new bool[0];
@@ -333,7 +334,8 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      void checkPermission(PrincipalCollection principals, Permission permission){
         assertRealmsConfigured();
         if (!isPermitted(principals, permission)) {
-            throw new UnauthorizedException("Subject does not have permission [" ~ permission ~ "]");
+            throw new UnauthorizedException("Subject does not have permission [" ~ 
+                (cast(Object)permission).toString() ~ "]");
         }
     }
 
@@ -430,7 +432,9 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      */
      void checkRoles(PrincipalCollection principals, Collection!(string) roles){
         //SHIRO-234 - roles.toArray() -> roles.toArray(new string[roles.size()])
-        if (roles !is null && !roles.isEmpty()) checkRoles(principals, roles.toArray(new string[roles.size()]));
+        if (roles !is null && !roles.isEmpty()) {
+            checkRoles(principals, roles.toArray());
+        }
     }
 
     /**

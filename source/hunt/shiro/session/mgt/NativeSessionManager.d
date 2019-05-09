@@ -15,6 +15,9 @@
  */
 module hunt.shiro.session.mgt.NativeSessionManager;
 
+import hunt.shiro.session.mgt.SessionKey;
+import hunt.shiro.session.mgt.SessionManager;
+
 import hunt.shiro.Exceptions;
 
 import hunt.collection;
@@ -35,7 +38,7 @@ interface NativeSessionManager : SessionManager {
      * @return the time the specified {@code Session} started (was created).
      * @see hunt.shiro.session.Session#getStartTimestamp()
      */
-    Date getStartTimestamp(SessionKey key);
+    // Date getStartTimestamp(SessionKey key);
 
     /**
      * Returns the time the associated {@code Session} last interacted with the system.
@@ -45,7 +48,7 @@ interface NativeSessionManager : SessionManager {
      * @see hunt.shiro.session.Session#getLastAccessTime()
      * @see hunt.shiro.session.Session#touch()
      */
-    Date getLastAccessTime(SessionKey key);
+    // Date getLastAccessTime(SessionKey key);
 
     /**
      * Returns {@code true} if the associated session is valid (it exists and is not stopped nor expired),

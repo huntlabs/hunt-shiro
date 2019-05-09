@@ -56,8 +56,10 @@ class AtLeastOneSuccessfulStrategy : AbstractAuthenticationStrategy {
         //we know if one or more were able to successfully authenticate if the aggregated account object does not
         //contain null or empty data:
         if (aggregate  is null || isEmpty(aggregate.getPrincipals())) {
-            throw new AuthenticationException("Authentication token of type [" ~ token.getClass() ~ "] " ~
-                    "could not be authenticated by any configured realms.  Please ensure that at least one realm can " ~
+            throw new AuthenticationException("Authentication token of type [" ~ 
+                    typeid(cast(Object)token).name ~ "] " ~
+                    "could not be authenticated by any configured realms.  " ~ 
+                    "Please ensure that at least one realm can " ~
                     "authenticate these tokens.");
         }
 

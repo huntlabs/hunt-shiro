@@ -18,19 +18,23 @@
  */
 module hunt.shiro.authc.pam.ModularRealmAuthenticator;
 
+import hunt.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
 import hunt.shiro.authc.pam.AuthenticationStrategy;
+
 
 import hunt.shiro.authc.AbstractAuthenticator;
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
+import hunt.shiro.authc.LogoutAware;
 
-// import hunt.shiro.authc;
+import hunt.shiro.Exceptions;
 import hunt.shiro.realm.Realm;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.CollectionUtils;
-import hunt.logging;
 
+import hunt.Exceptions;
 import hunt.collection;
+import hunt.logging;
 
 /**
  * A {@code ModularRealmAuthenticator} delegates account lookups to a pluggable (modular) collection of
@@ -174,15 +178,15 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
      */
     protected AuthenticationInfo doSingleRealmAuthentication(Realm realm, AuthenticationToken token) {
         if (!realm.supports(token)) {
-            string msg = "Realm [" ~ realm ~ "] does not support authentication token [" ~
-                    token ~ "].  Please ensure that the appropriate Realm implementation is " ~
+            string msg = "Realm [" ~ (cast(Object)realm).toString() ~ "] does not support authentication token [" ~
+                    (cast(Object)token).toString() ~ "].  Please ensure that the appropriate Realm implementation is " ~
                     "configured correctly or that the realm accepts AuthenticationTokens of this type.";
             throw new UnsupportedTokenException(msg);
         }
         AuthenticationInfo info = realm.getAuthenticationInfo(token);
         if (info  is null) {
-            string msg = "Realm [" ~ realm ~ "] was unable to find account data for the " ~
-                    "submitted AuthenticationToken [" ~ token ~ "].";
+            string msg = "Realm [" ~ (cast(Object)realm).toString() ~ "] was unable to find account data for the " ~
+                    "submitted AuthenticationToken [" ~ (cast(Object)token).toString() ~ "].";
             throw new UnknownAccountException(msg);
         }
         return info;
@@ -266,7 +270,7 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
         assertRealmsConfigured();
         Collection!(Realm) realms = getRealms();
         if (realms.size() == 1) {
-            return doSingleRealmAuthentication(realms.iterator().next(), authenticationToken);
+            return doSingleRealmAuthentication(realms.iterator().front, authenticationToken);
         } else {
             return doMultiRealmAuthentication(realms, authenticationToken);
         }
@@ -288,9 +292,9 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
         Collection!(Realm) realms = getRealms();
         if (!CollectionUtils.isEmpty(realms)) {
             foreach(Realm realm ; realms) {
-                auto realmCast = cast(LogoutAware) realm;
+                LogoutAware realmCast = cast(LogoutAware) realm;
                 if (realmCast !is null) {
-                    (realmCast).onLogout(principals);
+                    realmCast.onLogout(principals);
                 }
             }
         }

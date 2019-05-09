@@ -22,6 +22,10 @@ import hunt.shiro.mgt.SecurityManager;
 import hunt.shiro.subject.Subject;
 import hunt.shiro.util.ThreadContext;
 
+import hunt.shiro.Exceptions;
+
+import core.thread;
+
 
 /**
  * Accesses the currently accessible {@code Subject} for the calling code depending on runtime environment.
@@ -52,7 +56,7 @@ abstract class SecurityUtils {
      static Subject getSubject() {
         Subject subject = ThreadContext.getSubject();
         if (subject  is null) {
-            subject = (new Subject.Builder()).buildSubject();
+            subject = (new SubjectBuilder()).buildSubject();
             ThreadContext.bind(subject);
         }
         return subject;
@@ -117,7 +121,7 @@ abstract class SecurityUtils {
         }
         if (securityManager  is null) {
             string msg = "No SecurityManager accessible to the calling code, either bound to the " ~
-            Thread.getThis().getName() ~ " or as a vm static singleton.  This is an invalid application " ~
+            Thread.getThis().name() ~ " or as a vm static singleton.  This is an invalid application " ~
                     "configuration.";
             throw new UnavailableSecurityManagerException(msg);
         }

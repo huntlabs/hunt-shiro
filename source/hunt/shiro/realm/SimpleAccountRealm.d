@@ -154,7 +154,7 @@ class SimpleAccountRealm : AuthorizingRealm {
         return values;
     }
 
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token){
+    override protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token){
         UsernamePasswordToken upToken = cast(UsernamePasswordToken) token;
         SimpleAccount account = getUser(upToken.getUsername());
 
@@ -173,7 +173,7 @@ class SimpleAccountRealm : AuthorizingRealm {
         return account;
     }
 
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+    override protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         string username = getUsername(principals);
         USERS_LOCK.readLock().lock();
         try {

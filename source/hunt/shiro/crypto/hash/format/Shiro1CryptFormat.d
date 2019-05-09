@@ -90,7 +90,7 @@ import hunt.shiro.util.ByteSource;
 class Shiro1CryptFormat : ModularCryptFormat, ParsableHashFormat {
 
     enum string ID = "shiro1";
-    enum string MCF_PREFIX = TOKEN_DELIMITER + ID + TOKEN_DELIMITER;
+    enum string MCF_PREFIX = TOKEN_DELIMITER ~ ID ~ TOKEN_DELIMITER;
 
     this() {
     }

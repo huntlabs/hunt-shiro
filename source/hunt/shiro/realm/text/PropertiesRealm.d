@@ -20,7 +20,7 @@ module hunt.shiro.realm.text.PropertiesRealm;
 
 // import hunt.shiro.Exceptions;
 // import hunt.shiro.io.ResourceUtils;
-// import hunt.shiro.util.Destroyable;
+// import hunt.shiro.util.Common;
 
 // import hunt.Exceptions;
 // import hunt.logging;

@@ -52,10 +52,12 @@ class AllSuccessfulStrategy : AbstractAuthenticationStrategy {
      */
     override AuthenticationInfo beforeAttempt(Realm realm, AuthenticationToken token, AuthenticationInfo info){
         if (!realm.supports(token)) {
-            string msg = "Realm [" ~ realm ~ "] of type [" ~ typeid(realm).name ~ "] does not support " ~
-                    " the submitted AuthenticationToken [" ~ token ~ "].  The [" ~ typeid(this).name +
-                    "] implementation requires all configured realm(s) to support and be able to process the submitted " ~
-                    "AuthenticationToken.";
+            string msg = "Realm [" ~ (cast(Object)realm).toString() ~ "] of type [" ~ 
+                    typeid(realm).name ~ "] does not support " ~
+                    " the submitted AuthenticationToken [" ~ (cast(Object)token).toString() ~ 
+                    "].  The [" ~ typeid(this).name ~
+                    "] implementation requires all configured realm(s) to support " ~
+                    "and be able to process the submitted AuthenticationToken.";
             throw new UnsupportedTokenException(msg);
         }
 
@@ -72,22 +74,26 @@ class AllSuccessfulStrategy : AbstractAuthenticationStrategy {
      * realm did in fact authenticate successfully</li>
      * </ol>
      */
-    override AuthenticationInfo afterAttempt(Realm realm, AuthenticationToken token, AuthenticationInfo info, AuthenticationInfo aggregate, Throwable t){
+    override AuthenticationInfo afterAttempt(Realm realm, AuthenticationToken token, 
+        AuthenticationInfo info, AuthenticationInfo aggregate, Throwable t){
         if (t !is null) {
             auto tCast = cast(AuthenticationException) t;
             if (tCast !is null) {
                 //propagate:
                 throw (tCast);
             } else {
-                string msg = "Unable to acquire account data from realm [" ~ realm ~ "].  The [" ~
-                        typeid(this).name ~ " implementation requires all configured realm(s) to operate successfully " ~
+                string msg = "Unable to acquire account data from realm [" ~ (cast(Object)realm).toString() ~ 
+                        "].  The [" ~ typeid(this).name ~ 
+                        " implementation requires all configured realm(s) to operate successfully " ~
                         "for a successful authentication.";
                 throw new AuthenticationException(msg, t);
             }
         }
         if (info  is null) {
-            string msg = "Realm [" ~ realm ~ "] could not find any associated account data for the submitted " ~
-                    "AuthenticationToken [" ~ token ~ "].  The [AllSuccessfulStrategy] implementation requires " ~
+            string msg = "Realm [" ~ (cast(Object)realm).toString() ~ 
+                    "] could not find any associated account data for the submitted " ~
+                    "AuthenticationToken [" ~ (cast(Object)token).toString() ~ 
+                    "].  The [AllSuccessfulStrategy] implementation requires " ~
                     "all configured realm(s) to acquire valid account data for a submitted token during the " ~
                     "log-in process.";
             throw new UnknownAccountException(msg);

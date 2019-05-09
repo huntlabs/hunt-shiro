@@ -18,6 +18,9 @@
  */
 module hunt.shiro.session.mgt.eis.AbstractSessionDAO;
 
+import hunt.shiro.session.mgt.eis.SessionDAO;
+import hunt.shiro.session.mgt.eis.SessionIdGenerator;
+
 import hunt.shiro.session.Session;
 import hunt.shiro.Exceptions;
 import hunt.shiro.session.mgt.SimpleSession;

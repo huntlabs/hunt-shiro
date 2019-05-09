@@ -23,6 +23,11 @@ import hunt.shiro.crypto.OperationMode;
 import hunt.shiro.crypto.PaddingScheme;
 // import hunt.shiro.util.StringUtils;
 
+import std.algorithm;
+import std.conv;
+import std.string;
+
+
 /**
  * Base abstract class for block cipher algorithms.
  *
@@ -167,11 +172,11 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
     this(string algorithmName) {
         super(algorithmName);
 
-        this.modeName = OperationMode.CBC.name();
+        this.modeName = OperationMode.CBC.to!string();
         this.paddingSchemeName = PaddingScheme.PKCS5.getTransformationName();
         this.blockSize = DEFAULT_BLOCK_SIZE; //0 = use the JCA provider's default
 
-        this.streamingModeName = OperationMode.CBC.name();
+        this.streamingModeName = OperationMode.CBC.to!string();
         this.streamingPaddingSchemeName = PaddingScheme.PKCS5.getTransformationName();
         this.streamingBlockSize = DEFAULT_STREAMING_BLOCK_SIZE;
     }
@@ -243,7 +248,7 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
      *             default mode for the specified {@link #getAlgorithmName() algorithm} should be used.
      */
     void setMode(OperationMode mode) {
-        setModeName(mode.name());
+        setModeName(mode.to!string());
     }
 
     /**
@@ -358,7 +363,7 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
      *                  default block size for the specified {@link #getAlgorithmName() algorithm} should be used.
      */
     void setBlockSize(int blockSize) {
-        this.blockSize = Math.max(DEFAULT_BLOCK_SIZE, blockSize);
+        this.blockSize = max(DEFAULT_BLOCK_SIZE, blockSize);
         //clear out the transformation string so the next invocation will rebuild it with the new block size:
         this.transformationString = null;
     }
@@ -379,9 +384,9 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
     }
 
     private bool isModeStreamingCompatible(string modeName) {
-        return modeName != null &&
-                !modeName.equalsIgnoreCase(OperationMode.ECB.name()) &&
-                !modeName.equalsIgnoreCase(OperationMode.NONE.name());
+        return !modeName.empty() && 
+            icmp(modeName, OperationMode.ECB.name()) != 0 &&
+            icmp(modeName, OperationMode.NONE.name()) != 0;
     }
 
     /**
@@ -392,7 +397,7 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
      */
     void setStreamingModeName(string streamingModeName) {
         if (!isModeStreamingCompatible(streamingModeName)) {
-            string msg = "mode [" + streamingModeName + "] is not a valid operation mode for block cipher streaming.";
+            string msg = "mode [" ~ streamingModeName ~ "] is not a valid operation mode for block cipher streaming.";
             throw new IllegalArgumentException(msg);
         }
         this.streamingModeName = streamingModeName;
@@ -505,12 +510,13 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
      * @return {@code true} if streaming or a value computed based on if the currently configured mode is compatible
      *         with initialization vectors.
      */
-    @Override
+    override
     protected bool isGenerateInitializationVectors(bool streaming) {
-        return streaming || super.isGenerateInitializationVectors() && isModeInitializationVectorCompatible(getModeName());
+        return streaming || super.isGenerateInitializationVectors() && 
+            isModeInitializationVectorCompatible(getModeName());
     }
 
-    @Override
+    // override
     protected byte[] generateInitializationVector(bool streaming) {
         if (streaming) {
             string streamingModeName = getStreamingModeName();

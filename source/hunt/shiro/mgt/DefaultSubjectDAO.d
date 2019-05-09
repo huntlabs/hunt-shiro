@@ -18,8 +18,11 @@
  */
 module hunt.shiro.mgt.DefaultSubjectDAO;
 
+
+import hunt.shiro.mgt.DefaultSessionStorageEvaluator;
 import hunt.shiro.mgt.SessionStorageEvaluator;
 import hunt.shiro.mgt.SubjectDAO;
+
 
 import hunt.shiro.session.Session;
 import hunt.shiro.subject.PrincipalCollection;
@@ -240,31 +243,32 @@ implementationMissing(false);
      */
     protected void mergeAuthenticationState(Subject subject) {
 
-        Session session = subject.getSession(false);
+        implementationMissing(false);
 
-        if (session  is null) {
-            if (subject.isAuthenticated()) {
-                session = subject.getSession();
-                session.setAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY, bool.TRUE);
-            }
-            //otherwise no session and not authenticated - nothing to save
-        } else {
-            Boolean r = cast(Boolean) session.getAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
-            bool existingAuthc = r.value;
+        // Session session = subject.getSession(false);
 
-            if (subject.isAuthenticated()) {
-                if (existingAuthc  is null || !existingAuthc) {
-                    session.setAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY, bool.TRUE);
-                }
-                //otherwise authc state matches - no need to update the session
-            } else {
-                if (existingAuthc !is null) {
-                    //existing doesn't match the current state - remove it:
-                    session.removeAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
-                }
-                //otherwise not in the session and not authenticated - no need to update the session
-            }
-        }
+        // if (session  is null) {
+        //     if (subject.isAuthenticated()) {
+        //         session = subject.getSession();
+        //         session.setAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY, Boolean.TRUE);
+        //     }
+        //     //otherwise no session and not authenticated - nothing to save
+        // } else {
+        //     Boolean existingAuthc = cast(Boolean) session.getAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
+
+        //     if (subject.isAuthenticated()) {
+        //         if (existingAuthc is null || !existingAuthc.value) {
+        //             session.setAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY, Boolean.TRUE);
+        //         }
+        //         //otherwise authc state matches - no need to update the session
+        //     } else {
+        //         if (existingAuthc !is null) {
+        //             //existing doesn't match the current state - remove it:
+        //             session.removeAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
+        //         }
+        //         //otherwise not in the session and not authenticated - no need to update the session
+        //     }
+        // }
     }
 
     /**
@@ -275,10 +279,11 @@ implementationMissing(false);
      */
     protected void removeFromSession(Subject subject) {
         Session session = subject.getSession(false);
-        if (session !is null) {
-            session.removeAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
-            session.removeAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-        }
+        implementationMissing(false);
+        // if (session !is null) {
+        //     session.removeAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
+        //     session.removeAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+        // }
     }
 
     /**

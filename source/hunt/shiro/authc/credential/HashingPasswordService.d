@@ -43,18 +43,18 @@ interface HashingPasswordService : PasswordService {
      * The input argument type can be any 'byte backed' {@code Object} - almost always either a
      * string or character array representing passwords (character arrays are often a safer way to represent passwords
      * as they can be cleared/nulled-out after use.  Any argument type supported by
-     * {@link ByteSource.Util#isCompatible(Object)} is valid.
+     * {@link ByteSourceUtil#isCompatible(Object)} is valid.
      * <p/>
      * Regardless of your choice of using Strings or character arrays to represent submitted passwords, you can wrap
-     * either as a {@code ByteSource} by using {@link ByteSource.Util}, for example, when the passwords are captured as
+     * either as a {@code ByteSource} by using {@link ByteSourceUtil}, for example, when the passwords are captured as
      * Strings:
      * <pre>
-     * ByteSource passwordBytes = ByteSource.Util.bytes(submittedPasswordString);
+     * ByteSource passwordBytes = ByteSourceUtil.bytes(submittedPasswordString);
      * Hash hashedPassword = hashingPasswordService.hashPassword(passwordBytes);
      * </pre>
      * or, identically, when captured as a character array:
      * <pre>
-     * ByteSource passwordBytes = ByteSource.Util.bytes(submittedPasswordCharacterArray);
+     * ByteSource passwordBytes = ByteSourceUtil.bytes(submittedPasswordCharacterArray);
      * Hash hashedPassword = hashingPasswordService.hashPassword(passwordBytes);
      * </pre>
      *
@@ -62,8 +62,8 @@ interface HashingPasswordService : PasswordService {
      *                  etc) usually acquired from your application's 'new user' or 'password reset' workflow.
      * @return the hashed password.
      * @throws IllegalArgumentException if the argument cannot be easily converted to bytes as defined by
-     *                                  {@link ByteSource.Util#isCompatible(Object)}.
-     * @see ByteSource.Util#isCompatible(Object)
+     *                                  {@link ByteSourceUtil#isCompatible(Object)}.
+     * @see ByteSourceUtil#isCompatible(Object)
      * @see #encryptPassword(Object)
      */
     Hash hashPassword(Object plaintext);
@@ -78,7 +78,7 @@ interface HashingPasswordService : PasswordService {
      * The {@code submittedPlaintext} argument type can be any 'byte backed' {@code Object} - almost always either a
      * string or character array representing passwords (character arrays are often a safer way to represent passwords
      * as they can be cleared/nulled-out after use.  Any argument type supported by
-     * {@link ByteSource.Util#isCompatible(Object)} is valid.
+     * {@link ByteSourceUtil#isCompatible(Object)} is valid.
      *
      * @param plaintext a raw/plaintext password submitted by an end user/Subject.
      * @param savedPasswordHash  the previously hashed password known to be associated with an account.

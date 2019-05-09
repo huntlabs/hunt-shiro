@@ -250,6 +250,9 @@ abstract class AbstractRememberMeManager : RememberMeManager {
      *                mechanism.
      */
     protected abstract void forgetIdentity(Subject subject);
+    
+    protected abstract void forgetIdentity(SubjectContext subject);
+
 
     /**
      * Determines whether or not remember me services should be performed for the specified token.  This method returns
@@ -496,7 +499,9 @@ abstract class AbstractRememberMeManager : RememberMeManager {
      * @return the serialized principal collection in the form of a byte array
      */
     protected byte[] serialize(PrincipalCollection principals) {
-        return getSerializer().serialize(principals);
+        // return getSerializer().serialize(principals);
+        implementationMissing(false);
+        return null;
     }
 
     /**
@@ -507,7 +512,10 @@ abstract class AbstractRememberMeManager : RememberMeManager {
      * @return the de-serialized (reconstituted) {@code PrincipalCollection}
      */
     protected PrincipalCollection deserialize(byte[] serializedIdentity) {
-        return getSerializer().deserialize(serializedIdentity);
+        // return getSerializer().deserialize(serializedIdentity);
+        
+        implementationMissing(false);
+        return null;
     }
 
     /**

@@ -18,6 +18,9 @@
  */
 module hunt.shiro.codec.Base64;
 
+import hunt.Exceptions;
+
+
 /**
  * Provides <a href="http://en.wikipedia.org/wiki/Base64">Base 64</a> encoding and decoding as defined by
  * <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>.
@@ -222,53 +225,56 @@ class Base64 {
     //     return packedData;
     // }
 
-    // /**
-    //  * Base64 encodes the specified byte array and then encodes it as a String using Shiro's preferred character
-    //  * encoding (UTF-8).
-    //  *
-    //  * @param bytes the byte array to Base64 encode.
-    //  * @return a UTF-8 encoded String of the resulting Base64 encoded byte array.
-    //  */
-    // static String encodeToString(byte[] bytes) {
-    //     byte[] encoded = encode(bytes);
-    //     return CodecSupport.toString(encoded);
-    // }
+    /**
+     * Base64 encodes the specified byte array and then encodes it as a string using Shiro's preferred character
+     * encoding (UTF-8).
+     *
+     * @param bytes the byte array to Base64 encode.
+     * @return a UTF-8 encoded string of the resulting Base64 encoded byte array.
+     */
+    static string encodeToString(byte[] bytes) {
+        byte[] encoded = encode(bytes);
+        return cast(string)encoded;
+    }
 
-    // /**
-    //  * Encodes binary data using the base64 algorithm and chunks the encoded output into 76 character blocks
-    //  *
-    //  * @param binaryData binary data to encodeToChars
-    //  * @return Base64 characters chunked in 76 character blocks
-    //  */
-    // static byte[] encodeChunked(byte[] binaryData) {
-    //     return encode(binaryData, true);
-    // }
+    /**
+     * Encodes binary data using the base64 algorithm and chunks the encoded output into 76 character blocks
+     *
+     * @param binaryData binary data to encodeToChars
+     * @return Base64 characters chunked in 76 character blocks
+     */
+    static byte[] encodeChunked(byte[] binaryData) {
+        return encode(binaryData, true);
+    }
 
-    // /**
-    //  * Encodes a byte[] containing binary data, into a byte[] containing characters in the Base64 alphabet.
-    //  *
-    //  * @param pArray a byte array containing binary data
-    //  * @return A byte array containing only Base64 character data
-    //  */
-    // static byte[] encode(byte[] pArray) {
-    //     return encode(pArray, false);
-    // }
+    /**
+     * Encodes a byte[] containing binary data, into a byte[] containing characters in the Base64 alphabet.
+     *
+     * @param pArray a byte array containing binary data
+     * @return A byte array containing only Base64 character data
+     */
+    static byte[] encode(byte[] pArray) {
+        return encode(pArray, false);
+    }
 
-    // /**
-    //  * Encodes binary data using the base64 algorithm, optionally chunking the output into 76 character blocks.
-    //  *
-    //  * @param binaryData Array containing binary data to encodeToChars.
-    //  * @param isChunked  if <code>true</code> this encoder will chunk the base64 output into 76 character blocks
-    //  * @return Base64-encoded data.
-    //  * @throws IllegalArgumentException Thrown when the input array needs an output array bigger than {@link Integer#MAX_VALUE}
-    //  */
-    // static byte[] encode(byte[] binaryData, bool isChunked) {
-    //     long binaryDataLength = binaryData.length;
-    //     long lengthDataBits = binaryDataLength * EIGHTBIT;
-    //     long fewerThan24bits = lengthDataBits % TWENTYFOURBITGROUP;
-    //     long tripletCount = lengthDataBits / TWENTYFOURBITGROUP;
-    //     long encodedDataLengthLong;
-    //     int chunckCount = 0;
+    /**
+     * Encodes binary data using the base64 algorithm, optionally chunking the output into 76 character blocks.
+     *
+     * @param binaryData Array containing binary data to encodeToChars.
+     * @param isChunked  if <code>true</code> this encoder will chunk the base64 output into 76 character blocks
+     * @return Base64-encoded data.
+     * @throws IllegalArgumentException Thrown when the input array needs an output array bigger than {@link Integer#MAX_VALUE}
+     */
+    static byte[] encode(byte[] binaryData, bool isChunked) {
+        long binaryDataLength = binaryData.length;
+        long lengthDataBits = binaryDataLength * EIGHTBIT;
+        long fewerThan24bits = lengthDataBits % TWENTYFOURBITGROUP;
+        long tripletCount = lengthDataBits / TWENTYFOURBITGROUP;
+        long encodedDataLengthLong;
+        int chunckCount = 0;
+
+        implementationMissing(false);
+        return null;
 
     //     if (fewerThan24bits != 0) {
     //         // data not divisible by 24 bit
@@ -379,15 +385,15 @@ class Base64 {
     //     }
 
     //     return encodedData;
-    // }
+    }
 
     // /**
-    //  * Converts the specified UTF-8 Base64 encoded String and decodes it to a resultant UTF-8 encoded string.
+    //  * Converts the specified UTF-8 Base64 encoded string and decodes it to a resultant UTF-8 encoded string.
     //  *
-    //  * @param base64Encoded a UTF-8 Base64 encoded String
-    //  * @return the decoded String, UTF-8 encoded.
+    //  * @param base64Encoded a UTF-8 Base64 encoded string
+    //  * @return the decoded string, UTF-8 encoded.
     //  */
-    // static String decodeToString(String base64Encoded) {
+    // static string decodeToString(string base64Encoded) {
     //     byte[] encodedBytes = CodecSupport.toBytes(base64Encoded);
     //     return decodeToString(encodedBytes);
     // }
@@ -396,88 +402,89 @@ class Base64 {
     //  * Decodes the specified Base64 encoded byte array and returns the decoded result as a UTF-8 encoded.
     //  *
     //  * @param base64Encoded a Base64 encoded byte array
-    //  * @return the decoded String, UTF-8 encoded.
+    //  * @return the decoded string, UTF-8 encoded.
     //  */
-    // static String decodeToString(byte[] base64Encoded) {
+    // static string decodeToString(byte[] base64Encoded) {
     //     byte[] decoded = decode(base64Encoded);
     //     return CodecSupport.toString(decoded);
     // }
 
-    // /**
-    //  * Converts the specified UTF-8 Base64 encoded String and decodes it to a raw Base64 decoded byte array.
-    //  *
-    //  * @param base64Encoded a UTF-8 Base64 encoded String
-    //  * @return the raw Base64 decoded byte array.
-    //  */
-    // static byte[] decode(String base64Encoded) {
-    //     byte[] bytes = CodecSupport.toBytes(base64Encoded);
-    //     return decode(bytes);
-    // }
+    /**
+     * Converts the specified UTF-8 Base64 encoded string and decodes it to a raw Base64 decoded byte array.
+     *
+     * @param base64Encoded a UTF-8 Base64 encoded string
+     * @return the raw Base64 decoded byte array.
+     */
+    static byte[] decode(string base64Encoded) {
+        return decode(cast(byte[])base64Encoded);
+    }
 
-    // /**
-    //  * Decodes Base64 data into octets
-    //  *
-    //  * @param base64Data Byte array containing Base64 data
-    //  * @return Array containing decoded data.
-    //  */
-    // static byte[] decode(byte[] base64Data) {
-    //     // RFC 2045 requires that we discard ALL non-Base64 characters
-    //     base64Data = discardNonBase64(base64Data);
+    /**
+     * Decodes Base64 data into octets
+     *
+     * @param base64Data Byte array containing Base64 data
+     * @return Array containing decoded data.
+     */
+    static byte[] decode(byte[] base64Data) {
+        implementationMissing(false);
+        return null;
+        // // RFC 2045 requires that we discard ALL non-Base64 characters
+        // base64Data = discardNonBase64(base64Data);
 
-    //     // handle the edge case, so we don't have to worry about it later
-    //     if (base64Data.length == 0) {
-    //         return new byte[0];
-    //     }
+        // // handle the edge case, so we don't have to worry about it later
+        // if (base64Data.length == 0) {
+        //     return new byte[0];
+        // }
 
-    //     int numberQuadruple = base64Data.length / FOURBYTE;
-    //     byte decodedData[];
-    //     byte b1, b2, b3, b4, marker0, marker1;
+        // int numberQuadruple = base64Data.length / FOURBYTE;
+        // byte decodedData[];
+        // byte b1, b2, b3, b4, marker0, marker1;
 
-    //     // Throw away anything not in base64Data
+        // // Throw away anything not in base64Data
 
-    //     int encodedIndex = 0;
-    //     int dataIndex;
-    //     {
-    //         // this sizes the output array properly - rlw
-    //         int lastData = base64Data.length;
-    //         // ignore the '=' padding
-    //         while (base64Data[lastData - 1] == PAD) {
-    //             if (--lastData == 0) {
-    //                 return new byte[0];
-    //             }
-    //         }
-    //         decodedData = new byte[lastData - numberQuadruple];
-    //     }
+        // int encodedIndex = 0;
+        // int dataIndex;
+        // {
+        //     // this sizes the output array properly - rlw
+        //     int lastData = base64Data.length;
+        //     // ignore the '=' padding
+        //     while (base64Data[lastData - 1] == PAD) {
+        //         if (--lastData == 0) {
+        //             return new byte[0];
+        //         }
+        //     }
+        //     decodedData = new byte[lastData - numberQuadruple];
+        // }
 
-    //     for (int i = 0; i < numberQuadruple; i++) {
-    //         dataIndex = i * 4;
-    //         marker0 = base64Data[dataIndex + 2];
-    //         marker1 = base64Data[dataIndex + 3];
+        // for (int i = 0; i < numberQuadruple; i++) {
+        //     dataIndex = i * 4;
+        //     marker0 = base64Data[dataIndex + 2];
+        //     marker1 = base64Data[dataIndex + 3];
 
-    //         b1 = base64Alphabet[base64Data[dataIndex]];
-    //         b2 = base64Alphabet[base64Data[dataIndex + 1]];
+        //     b1 = base64Alphabet[base64Data[dataIndex]];
+        //     b2 = base64Alphabet[base64Data[dataIndex + 1]];
 
-    //         if (marker0 != PAD && marker1 != PAD) {
-    //             // No PAD e.g 3cQl
-    //             b3 = base64Alphabet[marker0];
-    //             b4 = base64Alphabet[marker1];
+        //     if (marker0 != PAD && marker1 != PAD) {
+        //         // No PAD e.g 3cQl
+        //         b3 = base64Alphabet[marker0];
+        //         b4 = base64Alphabet[marker1];
 
-    //             decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
-    //             decodedData[encodedIndex + 1] = (byte) (((b2 & 0xf) << 4) | ((b3 >> 2) & 0xf));
-    //             decodedData[encodedIndex + 2] = (byte) (b3 << 6 | b4);
-    //         } else if (marker0 == PAD) {
-    //             // Two PAD e.g. 3c[Pad][Pad]
-    //             decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
-    //         } else {
-    //             // One PAD e.g. 3cQ[Pad]
-    //             b3 = base64Alphabet[marker0];
-    //             decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
-    //             decodedData[encodedIndex + 1] = (byte) (((b2 & 0xf) << 4) | ((b3 >> 2) & 0xf));
-    //         }
-    //         encodedIndex += 3;
-    //     }
-    //     return decodedData;
-    // }
+        //         decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
+        //         decodedData[encodedIndex + 1] = (byte) (((b2 & 0xf) << 4) | ((b3 >> 2) & 0xf));
+        //         decodedData[encodedIndex + 2] = (byte) (b3 << 6 | b4);
+        //     } else if (marker0 == PAD) {
+        //         // Two PAD e.g. 3c[Pad][Pad]
+        //         decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
+        //     } else {
+        //         // One PAD e.g. 3cQ[Pad]
+        //         b3 = base64Alphabet[marker0];
+        //         decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
+        //         decodedData[encodedIndex + 1] = (byte) (((b2 & 0xf) << 4) | ((b3 >> 2) & 0xf));
+        //     }
+        //     encodedIndex += 3;
+        // }
+        // return decodedData;
+    }
 
     // /**
     //  * Discards any characters outside of the base64 alphabet, per the requirements on page 25 of RFC 2045 - "Any

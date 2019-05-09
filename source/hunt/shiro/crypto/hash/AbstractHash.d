@@ -45,31 +45,31 @@ import hunt.util.ArrayHelper;
 // deprecated("")
 abstract class AbstractHash : CodecSupport, Hash {
 
-//     /**
-//      * The hashed data
-//      */
-//    private byte[] bytes = null;
+    /**
+     * The hashed data
+     */
+   private byte[] bytes = null;
 
-//     /**
-//      * Cached value of the {@link #toHex() toHex()} call so multiple calls won't incur repeated overhead.
-//      */
-//     private string hexEncoded = null;
-//     /**
-//      * Cached value of the {@link #toBase64() toBase64()} call so multiple calls won't incur repeated overhead.
-//      */
-//     private string base64Encoded = null;
+    /**
+     * Cached value of the {@link #toHex() toHex()} call so multiple calls won't incur repeated overhead.
+     */
+    private string hexEncoded = null;
+    /**
+     * Cached value of the {@link #toBase64() toBase64()} call so multiple calls won't incur repeated overhead.
+     */
+    private string base64Encoded = null;
 
-//     /**
-//      * Creates an new instance without any of its properties set (no hashing is performed).
-//      * <p/>
-//      * Because all constructors in this class (except this one) hash the {@code source} constructor argument, this
-//      * default, no-arg constructor is useful in scenarios when you have a byte array that you know is already hashed and
-//      * just want to set the bytes in their raw form directly on an instance.  After instantiating the instance with
-//      * this default, no-arg constructor, you can then immediately call {@link #setBytes setBytes} to have a
-//      * fully-initialized instance.
-//      */
-//     this() {
-//     }
+    /**
+     * Creates an new instance without any of its properties set (no hashing is performed).
+     * <p/>
+     * Because all constructors in this class (except this one) hash the {@code source} constructor argument, this
+     * default, no-arg constructor is useful in scenarios when you have a byte array that you know is already hashed and
+     * just want to set the bytes in their raw form directly on an instance.  After instantiating the instance with
+     * this default, no-arg constructor, you can then immediately call {@link #setBytes setBytes} to have a
+     * fully-initialized instance.
+     */
+    this() {
+    }
 
 //     /**
 //      * Creates a hash of the specified {@code source} with no {@code salt} using a single hash iteration.

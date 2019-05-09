@@ -27,16 +27,18 @@ import hunt.shiro.authz;
 import hunt.shiro.authz.permission;
 import hunt.shiro.cache.Cache;
 import hunt.shiro.cache.CacheManager;
+import hunt.shiro.Exceptions;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.CollectionUtils;
 import hunt.shiro.util.Common;
+
+import hunt.collection;
+import hunt.Exceptions;
 import hunt.logging;
 
-import hunt.collection.Collection;
-import hunt.collection.List;
-
-// import java.util.*;
-// import java.util.concurrent.atomic.AtomicInteger;
+import core.atomic;
+import std.conv;
+import std.string;
 
 
 /**
@@ -110,10 +112,12 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
         this.authorizationCachingEnabled = true;
         this.permissionResolver = new WildcardPermissionResolver();
 
-        int instanceNumber = INSTANCE_COUNT.getAndIncrement();
-        this.authorizationCacheName = typeid(this).name + DEFAULT_AUTHORIZATION_CACHE_SUFFIX;
+        
+        int instanceNumber = atomicOp!("+=")(INSTANCE_COUNT, 1);
+        instanceNumber--;
+        this.authorizationCacheName = typeid(this).name ~ DEFAULT_AUTHORIZATION_CACHE_SUFFIX;
         if (instanceNumber > 0) {
-            this.authorizationCacheName = this.authorizationCacheName ~ "." ~ instanceNumber;
+            this.authorizationCacheName = this.authorizationCacheName ~ "." ~ instanceNumber.to!string();
         }
     }
 
@@ -245,7 +249,8 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
                     tracef("CacheManager [" ~ cacheManager ~ "] has been configured.  Building " ~
                             "authorization cache named [" ~ cacheName ~ "]");
                 }
-                this.authorizationCache = cacheManager.getCache(cacheName);
+                // this.authorizationCache = cacheManager.getCache(cacheName);
+                implementationMissing(false);
             } else {
                 version(HUNT_DEBUG) {
                     tracef("No cache or cacheManager properties have been set.  Authorization cache cannot " ~
@@ -356,7 +361,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
     }
 
     protected Object getAuthorizationCacheKey(PrincipalCollection principals) {
-        return principals;
+        return cast(Object)principals;
     }
 
     /**
@@ -422,14 +427,14 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
         }
 
         if (permissions.isEmpty()) {
-            return Collections.emptySet();
+            return Collections.emptySet!(Permission)();
         } else {
-            return Collections.unmodifiableSet(permissions);
+            return permissions;
         }
     }
 
     private Collection!(Permission) resolvePermissions(Collection!(string) stringPerms) {
-        Collection!(Permission) perms = Collections.emptySet();
+        Collection!(Permission) perms = Collections.emptySet!Permission();
         PermissionResolver resolver = getPermissionResolver();
         if (resolver !is null && !CollectionUtils.isEmpty(stringPerms)) {
             perms = new LinkedHashSet!(Permission)(stringPerms.size());
@@ -442,7 +447,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
     }
 
     private Collection!(Permission) resolveRolePermissions(Collection!(string) roleNames) {
-        Collection!(Permission) perms = Collections.emptySet();
+        Collection!(Permission) perms = Collections.emptySet!Permission();
         RolePermissionResolver resolver = getRolePermissionResolver();
         if (resolver !is null && !CollectionUtils.isEmpty(roleNames)) {
             perms = new LinkedHashSet!(Permission)(roleNames.size());
@@ -480,7 +485,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
     }
 
      bool[] isPermitted(PrincipalCollection subjectIdentifier, string[] permissions...) {
-        List!(Permission) perms = new ArrayList!(Permission)(permissions.length);
+        List!(Permission) perms = new ArrayList!(Permission)(cast(int)permissions.length);
         foreach(string permString ; permissions) {
             perms.add(getPermissionResolver().resolvePermission(permString));
         }
@@ -509,7 +514,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
 
      bool isPermittedAll(PrincipalCollection subjectIdentifier, string[] permissions...) {
         if (permissions !is null && permissions.length > 0) {
-            Collection!(Permission) perms = new ArrayList!(Permission)(permissions.length);
+            Collection!(Permission) perms = new ArrayList!(Permission)(cast(int)permissions.length);
             foreach(string permString ; permissions) {
                 perms.add(getPermissionResolver().resolvePermission(permString));
             }
@@ -546,7 +551,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
 
     protected void checkPermission(Permission permission, AuthorizationInfo info) {
         if (!isPermitted(permission, info)) {
-            string msg = "User is not permitted [" ~ permission.toString() ~ "]";
+            string msg = "User is not permitted [" ~ (cast(Object)permission).toString() ~ "]";
             throw new UnauthorizedException(msg);
         }
     }
@@ -633,13 +638,19 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
         }
     }
 
-     void checkRoles(PrincipalCollection principal, Collection!(string) roles){
+    void checkRoles(PrincipalCollection principal, Collection!(string) roles){
         AuthorizationInfo info = getAuthorizationInfo(principal);
         checkRoles(roles, info);
     }
 
      void checkRoles(PrincipalCollection principal, string[] roles... ){
-        checkRoles(principal, ArrayHelper.asList(roles));
+        
+        AuthorizationInfo info = getAuthorizationInfo(principal);
+        if (!roles.empty()) {
+            foreach(string roleName ; roles) {
+                checkRole(roleName, info);
+            }
+        }
     }
 
     protected void checkRoles(Collection!(string) roles, AuthorizationInfo info) {

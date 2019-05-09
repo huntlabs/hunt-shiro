@@ -20,6 +20,7 @@ module hunt.shiro.crypto.SecureRandomNumberGenerator;
 
 import hunt.shiro.crypto.RandomNumberGenerator;
 import hunt.shiro.util.ByteSource;
+import hunt.shiro.util.SimpleByteSource;
 
 import hunt.security.SecureRandom;
 
@@ -78,7 +79,7 @@ class SecureRandomNumberGenerator : RandomNumberGenerator {
      * @throws NullPointerException if the method argument is null
      */
     void setSecureRandom(SecureRandom random) {
-        if (random == null) {
+        if (random is null) {
             throw new NullPointerException("SecureRandom argument cannot be null.");
         }
         this.secureRandom = random;
@@ -118,6 +119,6 @@ class SecureRandomNumberGenerator : RandomNumberGenerator {
         }
         byte[] bytes = new byte[numBytes];
         this.secureRandom.nextBytes(bytes);
-        return ByteSource.Util.bytes(bytes);
+        return ByteSourceUtil.bytes(bytes);
     }
 }

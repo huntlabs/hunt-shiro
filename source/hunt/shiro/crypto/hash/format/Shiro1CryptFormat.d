@@ -25,7 +25,14 @@ import hunt.shiro.codec.Base64;
 import hunt.shiro.crypto.hash.Hash;
 import hunt.shiro.crypto.hash.SimpleHash;
 import hunt.shiro.util.ByteSource;
+import hunt.shiro.util.SimpleByteSource;
 // import hunt.shiro.util.StringUtils;
+
+import hunt.Exceptions;
+import hunt.text.StringBuilder;
+
+import std.conv;
+import std.string;
 
 /**
  * The {@code Shiro1CryptFormat} is a fully reversible
@@ -129,11 +136,11 @@ class Shiro1CryptFormat : ModularCryptFormat, ParsableHashFormat {
             throw new IllegalArgumentException(msg);
         }
 
-        string suffix = formatted.substring(MCF_PREFIX.length());
+        string suffix = formatted[MCF_PREFIX.length .. $];
         string[] parts = suffix.split("\\$");
 
         //last part is always the digest/checksum, Base64-encoded:
-        int i = parts.length-1;
+        int i = cast(int)parts.length-1;
         string digestBase64 = parts[i--];
         //second-to-last part is always the salt, Base64-encoded:
         string saltBase64 = parts[i--];
@@ -143,14 +150,14 @@ class Shiro1CryptFormat : ModularCryptFormat, ParsableHashFormat {
         byte[] digest = Base64.decode(digestBase64);
         ByteSource salt = null;
 
-        if (StringUtils.hasLength(saltBase64)) {
+        if (!saltBase64.empty()) {
             byte[] saltBytes = Base64.decode(saltBase64);
-            salt = ByteSource.Util.bytes(saltBytes);
+            salt = ByteSourceUtil.bytes(saltBytes);
         }
 
         int iterations;
         try {
-            iterations = Integer.parseInt(iterationsString);
+            iterations = to!int(iterationsString);
         } catch (NumberFormatException e) {
             string msg = "Unable to parse formatted hash string: " ~ formatted;
             throw new IllegalArgumentException(msg, e);

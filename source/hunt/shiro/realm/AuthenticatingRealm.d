@@ -33,10 +33,12 @@ import hunt.shiro.cache.CacheManager;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.Common;
 
+import hunt.Exceptions;
 import hunt.logging;
 
+import core.atomic;
+import std.conv;
 import std.string;
-// import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
@@ -116,8 +118,6 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
 
     //TODO - complete JavaDoc
 
-
-
     private shared static int INSTANCE_COUNT = 0;
 
     /**
@@ -166,10 +166,13 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
         //unexpected results for existing applications:
         this.authenticationCachingEnabled = false;
 
-        int instanceNumber = INSTANCE_COUNT.getAndIncrement();
-        this.authenticationCacheName = typeid(this).name + DEFAULT_AUTHORIZATION_CACHE_SUFFIX;
+        
+        int instanceNumber = atomicOp!("+=")(INSTANCE_COUNT, 1);
+        instanceNumber--;
+
+        this.authenticationCacheName = typeid(this).name ~ DEFAULT_AUTHORIZATION_CACHE_SUFFIX;
         if (instanceNumber > 0) {
-            this.authenticationCacheName = this.authenticationCacheName ~ "." ~ instanceNumber;
+            this.authenticationCacheName = this.authenticationCacheName ~ "." ~ instanceNumber.to!string();
         }
 
         if (cacheManager !is null) {
@@ -343,7 +346,7 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
         if (authcCacheName !is null && authcCacheName.startsWith(typeid(this).name)) {
             //get rid of the default heuristically-created cache name.  Create a more meaningful one
             //based on the application-unique Realm name:
-            this.authenticationCacheName = name + DEFAULT_AUTHORIZATION_CACHE_SUFFIX;
+            this.authenticationCacheName = name ~ DEFAULT_AUTHORIZATION_CACHE_SUFFIX;
         }
     }
 
@@ -362,8 +365,8 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
      * @param token the token being submitted for authentication.
      * @return true if this authentication realm can process the submitted token instance of the class, false otherwise.
      */
-     bool supports(AuthenticationToken token) {
-        return token !is null && getAuthenticationTokenClass().isAssignableFrom(token.getClass());
+    bool supports(AuthenticationToken token) {
+        return token !is null && _d_isbaseof(getAuthenticationTokenClass(), typeid(token));
     }
 
     /**
@@ -455,7 +458,9 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
             if (cacheManager !is null) {
                 string cacheName = getAuthenticationCacheName();
                 tracef("CacheManager [%s] configured.  Building authentication cache '%s'", cacheManager, cacheName);
-                this.authenticationCache = cacheManager.getCache(cacheName);
+                // this.authenticationCache = cacheManager.getCache(cacheName);
+                
+                implementationMissing(false);
             }
         }
 
@@ -589,7 +594,8 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
         if (cm !is null) {
             if (!cm.doCredentialsMatch(token, info)) {
                 //not successful - throw an exception to indicate this:
-                string msg = "Submitted credentials for token [" ~ token ~ "] did not match the expected credentials.";
+                string msg = "Submitted credentials for token [" ~ (cast(Object)token).toString() ~ 
+                    "] did not match the expected credentials.";
                 throw new IncorrectCredentialsException(msg);
             }
         } else {

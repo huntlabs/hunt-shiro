@@ -20,6 +20,8 @@ module hunt.shiro.crypto.hash.format.ProvidedHashFormat;
 
 //import java.util.Locale;
 
+import hunt.Exceptions;
+
 /**
  * An enum representing Shiro's default provided {@link HashFormat} implementations.
  *
@@ -44,24 +46,26 @@ public enum ProvidedHashFormat {
 }
 
 class ProvidedHashFormatHelper {
-    //    /**
-    //  * Value representing the {@link HexFormat} implementation.
-    //  */
+    /**
+     * Value representing the {@link HexFormat} implementation.
+     */
     // HEX(HexFormat.class),
 
     TypeInfo getProvided(ProvidedHashFormat format)
     {
-        switch(format)
-        {
-            case ProvidedHashFormat.HEX:
-            return typeid(HexFormat);
-            case ProvidedHashFormat.BASE64:
-            return typeid(Base64Format);
-            case ProvidedHashFormat.SHIRO1:
-            return typeid(Shiro1CryptFormat);
-            default:
-            throw new Exception("format error");
-        }
+        // switch(format)
+        // {
+        //     case ProvidedHashFormat.HEX:
+        //     return typeid(HexFormat);
+        //     case ProvidedHashFormat.BASE64:
+        //     return typeid(Base64Format);
+        //     case ProvidedHashFormat.SHIRO1:
+        //     return typeid(Shiro1CryptFormat);
+        //     default:
+        //     throw new Exception("format error");
+        // }
+        implementationMissing(false);
+        return null;
     }
     // /**
     //  * Value representing the {@link Base64Format} implementation.

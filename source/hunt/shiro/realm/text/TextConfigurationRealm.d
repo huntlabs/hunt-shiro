@@ -28,7 +28,10 @@ import hunt.shiro.util.PermissionUtils;
 // import hunt.shiro.util.StringUtils;
 
 // import java.text.ParseException;
+
+import hunt.Exceptions;
 import hunt.collection;
+import hunt.String;
 // import java.util.Scanner;
 
 
@@ -143,7 +146,7 @@ class TextConfigurationRealm : SimpleAccountRealm {
         if (roleDefs  is null || roleDefs.isEmpty()) {
             return;
         }
-        foreach(string rolename ; roleDefs.keySet()) {
+        foreach(string rolename ; roleDefs.byKey()) {
             string value = roleDefs.get(rolename);
 
             SimpleRole role = getRole(rolename);
@@ -172,20 +175,21 @@ class TextConfigurationRealm : SimpleAccountRealm {
         if (userDefs  is null || userDefs.isEmpty()) {
             return;
         }
-        foreach(string username ; userDefs.keySet()) {
+        implementationMissing(false);
+        foreach(string username ; userDefs.byKey()) {
 
             string value = userDefs.get(username);
 
-            string[] passwordAndRolesArray = StringUtils.split(value);
+            string[] passwordAndRolesArray; // = StringUtils.split(value);
 
             string password = passwordAndRolesArray[0];
 
             SimpleAccount account = getUser(username);
-            if (account  is null) {
-                account = new SimpleAccount(username, password, getName());
+            if (account is null) {
+                account = new SimpleAccount(new String(username), new String(password), getName());
                 add(account);
             }
-            account.setCredentials(password);
+            account.setCredentials(new String(password));
 
             if (passwordAndRolesArray.length > 1) {
                 for (int i = 1; i < passwordAndRolesArray.length; i++) {
@@ -205,10 +209,11 @@ class TextConfigurationRealm : SimpleAccountRealm {
 
     protected static Set!(string) toLines(string s) {
         LinkedHashSet!(string) set = new LinkedHashSet!(string)();
-        Scanner scanner = new Scanner(s);
-        while (scanner.hasNextLine()) {
-            set.add(scanner.nextLine());
-        }
+        // Scanner scanner = new Scanner(s);
+        // while (scanner.hasNextLine()) {
+        //     set.add(scanner.nextLine());
+        // }
+        implementationMissing(false);
         return set;
     }
 
@@ -219,12 +224,13 @@ class TextConfigurationRealm : SimpleAccountRealm {
 
         Map!(string, string) pairs = new HashMap!(string, string)();
         foreach(string pairString ; keyValuePairs) {
-            string[] pair = StringUtils.splitKeyValue(pairString);
-            if (pair !is null) {
-                pairs.put(pair[0].trim(), pair[1].trim());
-            }
+            // string[] pair = StringUtils.splitKeyValue(pairString);
+            // if (pair !is null) {
+            //     pairs.put(pair[0].strip(), pair[1].strip());
+            // }
         }
 
+            implementationMissing(false);
         return pairs;
     }
 }

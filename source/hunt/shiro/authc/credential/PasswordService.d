@@ -82,7 +82,7 @@ interface PasswordService {
      * The input argument type can be any 'byte backed' {@code Object} - almost always either a
      * string or character array representing passwords (character arrays are often a safer way to represent passwords
      * as they can be cleared/nulled-out after use.  Any argument type supported by
-     * {@link ByteSource.Util#isCompatible(Object)} is valid.
+     * {@link ByteSourceUtil#isCompatible(Object)} is valid.
      * <p/>
      * For example:
      * <pre>
@@ -108,8 +108,8 @@ interface PasswordService {
      *                          etc) usually acquired from your application's 'new user' or 'password reset' workflow.
      * @return the encrypted password, formatted for storage.
      * @throws IllegalArgumentException if the argument cannot be easily converted to bytes as defined by
-     *                                  {@link ByteSource.Util#isCompatible(Object)}.
-     * @see ByteSource.Util#isCompatible(Object)
+     *                                  {@link ByteSourceUtil#isCompatible(Object)}.
+     * @see ByteSourceUtil#isCompatible(Object)
      */
     string encryptPassword(Object plaintextPassword);
 
@@ -120,7 +120,7 @@ interface PasswordService {
      * The {@code submittedPlaintext} argument type can be any 'byte backed' {@code Object} - almost always either a
      * string or character array representing passwords (character arrays are often a safer way to represent passwords
      * as they can be cleared/nulled-out after use.  Any argument type supported by
-     * {@link ByteSource.Util#isCompatible(Object)} is valid.
+     * {@link ByteSourceUtil#isCompatible(Object)} is valid.
      * <p/>
      * For example:
      * <pre>
@@ -140,7 +140,7 @@ interface PasswordService {
      *                           when the account is created or the account's password is reset).
      * @return {@code true} if the {@code submittedPlaintext} password matches the existing {@code saved} password,
      *         {@code false} otherwise.
-     * @see ByteSource.Util#isCompatible(Object)
+     * @see ByteSourceUtil#isCompatible(Object)
      */
     bool passwordsMatch(Object submittedPlaintext, string encrypted);
 }

@@ -34,20 +34,21 @@ abstract class CodecSupport {
      */
     enum string PREFERRED_ENCODING = "UTF-8";
 
-    // /**
-    //  * Converts the specified character array to a byte array using the Shiro's preferred encoding (UTF-8).
-    //  * <p/>
-    //  * This is a convenience method equivalent to calling the {@link #toBytes(String,String)} method with a
-    //  * a wrapping String and {@link CodecSupport#PREFERRED_ENCODING PREFERRED_ENCODING}, i.e.
-    //  * <p/>
-    //  * <code>toBytes( new String(chars), {@link CodecSupport#PREFERRED_ENCODING PREFERRED_ENCODING} );</code>
-    //  *
-    //  * @param chars the character array to be converted to a byte array.
-    //  * @return the byte array of the UTF-8 encoded character array.
-    //  */
-    // static byte[] toBytes(char[] chars) {
-    //     return toBytes(new String(chars), PREFERRED_ENCODING);
-    // }
+    /**
+     * Converts the specified character array to a byte array using the Shiro's preferred encoding (UTF-8).
+     * <p/>
+     * This is a convenience method equivalent to calling the {@link #toBytes(String,String)} method with a
+     * a wrapping String and {@link CodecSupport#PREFERRED_ENCODING PREFERRED_ENCODING}, i.e.
+     * <p/>
+     * <code>toBytes( new String(chars), {@link CodecSupport#PREFERRED_ENCODING PREFERRED_ENCODING} );</code>
+     *
+     * @param chars the character array to be converted to a byte array.
+     * @return the byte array of the UTF-8 encoded character array.
+     */
+    static byte[] toBytes(char[] chars) {
+        // return toBytes(new String(chars), PREFERRED_ENCODING);
+        return cast(byte[])chars;
+    }
 
     // /**
     //  * Converts the specified character array into a byte array using the specified character encoding.
@@ -186,39 +187,42 @@ abstract class CodecSupport {
         //         o instanceof ByteSource || o instanceof File || o instanceof InputStream;
     }
 
-    // /**
-    //  * Converts the specified Object into a byte array.
-    //  * <p/>
-    //  * If the argument is a {@code byte[]}, {@code char[]}, {@link ByteSource}, {@link String}, {@link File}, or
-    //  * {@link InputStream}, it will be converted automatically and returned.}
-    //  * <p/>
-    //  * If the argument is anything other than these types, it is passed to the
-    //  * {@link #objectToBytes(Object) objectToBytes} method which must be overridden by subclasses.
-    //  *
-    //  * @param o the Object to convert into a byte array
-    //  * @return a byte array representation of the Object argument.
-    //  */
-    // protected byte[] toBytes(Object o) {
-    //     if (o == null) {
-    //         String msg = "Argument for byte conversion cannot be null.";
-    //         throw new IllegalArgumentException(msg);
-    //     }
-    //     if (o instanceof byte[]) {
-    //         return (byte[]) o;
-    //     } else if (o instanceof ByteSource) {
-    //         return ((ByteSource) o).getBytes();
-    //     } else if (o instanceof char[]) {
-    //         return toBytes((char[]) o);
-    //     } else if (o instanceof String) {
-    //         return toBytes((String) o);
-    //     } else if (o instanceof File) {
-    //         return toBytes((File) o);
-    //     } else if (o instanceof InputStream) {
-    //         return toBytes((InputStream) o);
-    //     } else {
-    //         return objectToBytes(o);
-    //     }
-    // }
+    /**
+     * Converts the specified Object into a byte array.
+     * <p/>
+     * If the argument is a {@code byte[]}, {@code char[]}, {@link ByteSource}, {@link String}, {@link File}, or
+     * {@link InputStream}, it will be converted automatically and returned.}
+     * <p/>
+     * If the argument is anything other than these types, it is passed to the
+     * {@link #objectToBytes(Object) objectToBytes} method which must be overridden by subclasses.
+     *
+     * @param o the Object to convert into a byte array
+     * @return a byte array representation of the Object argument.
+     */
+    protected byte[] toBytes(Object o) {
+        if (o is null) {
+            string msg = "Argument for byte conversion cannot be null.";
+            throw new IllegalArgumentException(msg);
+        }
+
+        implementationMissing(false);
+        return null;
+        // if (o instanceof byte[]) {
+        //     return (byte[]) o;
+        // } else if (o instanceof ByteSource) {
+        //     return ((ByteSource) o).getBytes();
+        // } else if (o instanceof char[]) {
+        //     return toBytes((char[]) o);
+        // } else if (o instanceof String) {
+        //     return toBytes((String) o);
+        // } else if (o instanceof File) {
+        //     return toBytes((File) o);
+        // } else if (o instanceof InputStream) {
+        //     return toBytes((InputStream) o);
+        // } else {
+        //     return objectToBytes(o);
+        // }
+    }
 
     // /**
     //  * Converts the specified Object into a String.

@@ -19,12 +19,13 @@
 module hunt.shiro.crypto.hash.SimpleHash;
 
 import hunt.shiro.crypto.hash.AbstractHash;
+import hunt.shiro.crypto.hash.Hash;
 
+import hunt.shiro.Exceptions;
 import hunt.shiro.codec.Base64;
-// import hunt.shiro.codec.CodecException;
 import hunt.shiro.codec.Hex;
-// import hunt.shiro.crypto.UnknownAlgorithmException;
 import hunt.shiro.util.ByteSource;
+import hunt.shiro.util.SimpleByteSource;
 // import hunt.shiro.util.StringUtils;
 
 // import hunt.security.MessageDigest;
@@ -32,6 +33,9 @@ import hunt.shiro.util.ByteSource;
 
 import hunt.Exceptions;
 import hunt.util.ArrayHelper;
+
+import std.algorithm;
+import std.array;
 
 /**
  * A {@code Hash} implementation that allows any {@link java.security.MessageDigest MessageDigest} algorithm name to
@@ -166,11 +170,11 @@ class SimpleHash : AbstractHash {
      * @throws UnknownAlgorithmException if the {@code algorithmName} is not available.
      */
     this(string algorithmName, Object source, Object salt, int hashIterations) {
-        if (!StringUtils.hasText(algorithmName)) {
+        if (!algorithmName.empty()) {
             throw new NullPointerException("algorithmName argument cannot be null or empty.");
         }
         this.algorithmName = algorithmName;
-        this.iterations = Math.max(DEFAULT_ITERATIONS, hashIterations);
+        this.iterations = max(DEFAULT_ITERATIONS, hashIterations);
         ByteSource saltBytes = null;
         if (salt !is null) {
             saltBytes = convertSaltToBytes(salt);
@@ -221,7 +225,7 @@ class SimpleHash : AbstractHash {
             return oCast;
         }
         byte[] bytes = toBytes(o);
-        return ByteSource.Util.bytes(bytes);
+        return ByteSourceUtil.bytes(bytes);
     }
 
     private void hash(ByteSource source, ByteSource salt, int hashIterations) {
@@ -274,7 +278,7 @@ class SimpleHash : AbstractHash {
      * @param iterations the number of hash iterations used to previously create the hash/digest.
      */
     void setIterations(int iterations) {
-        this.iterations = Math.max(DEFAULT_ITERATIONS, iterations);
+        this.iterations = max(DEFAULT_ITERATIONS, iterations);
     }
 
     /**
@@ -413,7 +417,9 @@ class SimpleHash : AbstractHash {
         auto oCast = cast(Hash) o;
         if (oCast !is null) {
             Hash other = oCast;
-            return MessageDigest.isEqual(getBytes(), other.getBytes());
+            // return MessageDigest.isEqual(getBytes(), other.getBytes());
+            implementationMissing(false);
+            return false;
         }
         return false;
     }
@@ -427,6 +433,6 @@ class SimpleHash : AbstractHash {
         if (this.bytes  is null || this.bytes.length == 0) {
             return 0;
         }
-        return ArrayHelper.hashCode(this.bytes);
+        return hashOf(this.bytes);
     }
 }

@@ -34,7 +34,7 @@ module hunt.shiro.crypto.PaddingScheme;
  * @see <a href="http://en.wikipedia.org/wiki/Padding_(cryptography)">Wikipedia: Cryptographic Padding</a>
  * @since 1.0
  */
-enum PaddingScheme {
+enum PaddingScheme : string {
 
     /**
      * No padding.  Useful when the block size is 8 bits for block cipher streaming operations. (Because

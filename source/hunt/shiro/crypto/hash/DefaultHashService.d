@@ -21,11 +21,16 @@ module hunt.shiro.crypto.hash.DefaultHashService;
 import hunt.shiro.crypto.hash.ConfigurableHashService;
 import hunt.shiro.crypto.hash.Hash;
 import hunt.shiro.crypto.hash.HashRequest;
+import hunt.shiro.crypto.hash.SimpleHash;
+
 
 
 import hunt.shiro.crypto.RandomNumberGenerator;
 import hunt.shiro.crypto.SecureRandomNumberGenerator;
 import hunt.shiro.util.ByteSource;
+import hunt.shiro.util.SimpleByteSource;
+
+import std.algorithm;
 
 /**
  * Default implementation of the {@link HashService} interface, supporting a customizable hash algorithm name,
@@ -164,7 +169,7 @@ class DefaultHashService : ConfigurableHashService {
         ByteSource privateSalt = getPrivateSalt();
         ByteSource salt = combine(privateSalt, publicSalt);
 
-        Hash computed = new SimpleHash(algorithmName, source, salt, iterations);
+        Hash computed = new SimpleHash(algorithmName, cast(Object)source, cast(Object)salt, iterations);
 
         SimpleHash result = new SimpleHash(algorithmName);
         result.setBytes(computed.getBytes());
@@ -184,9 +189,9 @@ class DefaultHashService : ConfigurableHashService {
     }
 
     protected int getIterations(HashRequest request) {
-        int iterations = Math.max(0, request.getIterations());
+        int iterations = max(0, request.getIterations());
         if (iterations < 1) {
-            iterations = Math.max(1, getHashIterations());
+            iterations = max(1, getHashIterations());
         }
         return iterations;
     }
@@ -222,7 +227,7 @@ class DefaultHashService : ConfigurableHashService {
             return publicSalt;
         }
 
-       Salt = null;
+        publicSalt = null;
 
         //check to see if we need to generate one:
         ByteSource privateSalt = getPrivateSalt();
@@ -231,7 +236,7 @@ class DefaultHashService : ConfigurableHashService {
         //If a private salt exists, we must generate a public salt to protect the integrity of the private salt.
         //Or generate it if the instance is explicitly configured to do so:
         if (privateSaltExists || isGeneratePublicSalt()) {
-           Salt = getRandomNumberGenerator().nextBytes();
+            publicSalt = getRandomNumberGenerator().nextBytes();
         }
 
         return publicSalt;
@@ -250,10 +255,10 @@ class DefaultHashService : ConfigurableHashService {
     protected ByteSource combine(ByteSource privateSalt, ByteSource publicSalt) {
 
         byte[] privateSaltBytes = privateSalt !is null ? privateSalt.getBytes() : null;
-        int privateSaltLength = privateSaltBytes !is null ? privateSaltBytes.length : 0;
+        int privateSaltLength = privateSaltBytes !is null ? cast(int)privateSaltBytes.length : 0;
 
         byte[] publicSaltBytes = publicSalt !is null ? publicSalt.getBytes() : null;
-        int extraBytesLength = publicSaltBytes !is null ? publicSaltBytes.length : 0;
+        int extraBytesLength = publicSaltBytes !is null ? cast(int)publicSaltBytes.length : 0;
 
         int length = privateSaltLength + extraBytesLength;
 
@@ -273,7 +278,7 @@ class DefaultHashService : ConfigurableHashService {
             combined[i++] = publicSaltBytes[j];
         }
 
-        return ByteSource.Util.bytes(combined);
+        return ByteSourceUtil.bytes(combined);
     }
 
     void setHashAlgorithmName(string name) {

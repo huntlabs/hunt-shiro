@@ -28,7 +28,7 @@ import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.LifecycleUtils;
 
 import hunt.collection;
-
+import hunt.Exceptions;
 
 
 /**
@@ -106,7 +106,7 @@ abstract class AuthorizingSecurityManager : AuthenticatingSecurityManager {
     }
 
     override void destroy() {
-        LifecycleUtils.destroy(getAuthorizer());
+        LifecycleUtils.destroy(cast(Object)getAuthorizer());
         this.authorizer = null;
         super.destroy();
     }

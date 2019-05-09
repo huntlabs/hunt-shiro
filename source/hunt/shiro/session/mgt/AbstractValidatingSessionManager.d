@@ -19,18 +19,24 @@
 module hunt.shiro.session.mgt.AbstractValidatingSessionManager;
 
 import hunt.shiro.session.mgt.AbstractNativeSessionManager;
+import hunt.shiro.session.mgt.DefaultSessionKey;
+import hunt.shiro.session.mgt.ExecutorServiceSessionValidationScheduler;
 import hunt.shiro.session.mgt.SessionContext;
 import hunt.shiro.session.mgt.SessionKey;
 import hunt.shiro.session.mgt.SessionValidationScheduler;
 import hunt.shiro.session.mgt.ValidatingSessionManager;
+import hunt.shiro.session.mgt.ValidatingSession;
+
+
 
 import hunt.shiro.Exceptions;
 import hunt.shiro.session.Session;
 import hunt.shiro.util.Common;
 import hunt.shiro.util.LifecycleUtils;
-import hunt.logging;
 
+import hunt.Exceptions;
 import hunt.collection;
+import hunt.logging;
 
 
 /**
@@ -108,7 +114,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager,
     }
 
     override
-    protected final Session doGetSession(final SessionKey key){
+    protected final Session doGetSession(SessionKey key){
         enableSessionValidationIfNecessary();
 
         tracef("Attempting to retrieve session with key %s", key);
@@ -186,7 +192,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager,
             vs.validate();
         } else {
             string msg = "The " ~ typeid(this).name ~ " implementation only supports validating " ~
-                    "Session implementations of the " ~ typeid(ValidatingSession).name ~ " interface.  " ~
+                    "Session implementations of the " ~ typeid(ValidatingSession).toString() ~ " interface.  " ~
                     "Please either implement this interface in your session implementation or override the " ~
                     typeid(AbstractValidatingSessionManager).name ~ 
                     ".doValidate(Session) method to perform validation.";
@@ -221,7 +227,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager,
         return scheduler;
     }
 
-    protected synchronized void enableSessionValidation() {
+    protected void enableSessionValidation() {
         SessionValidationScheduler scheduler = getSessionValidationScheduler();
         if (scheduler  is null) {
             scheduler = createSessionValidationScheduler();
@@ -241,7 +247,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager,
     protected void afterSessionValidationEnabled() {
     }
 
-    protected synchronized void disableSessionValidation() {
+    protected void disableSessionValidation() {
         beforeSessionValidationDisabled();
         SessionValidationScheduler scheduler = getSessionValidationScheduler();
         if (scheduler !is null) {
@@ -256,7 +262,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager,
                     tracef(msg, e);
                 }
             }
-            LifecycleUtils.destroy(scheduler);
+            LifecycleUtils.destroy(cast(Object)scheduler);
             setSessionValidationScheduler(null);
         }
     }

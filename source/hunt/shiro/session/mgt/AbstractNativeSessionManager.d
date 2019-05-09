@@ -19,6 +19,9 @@
 module hunt.shiro.session.mgt.AbstractNativeSessionManager;
 
 import hunt.shiro.session.mgt.AbstractSessionManager;
+import hunt.shiro.session.mgt.DefaultSessionKey;
+import hunt.shiro.session.mgt.DelegatingSession;
+import hunt.shiro.session.mgt.ImmutableProxiedSession;
 import hunt.shiro.session.mgt.NativeSessionManager;
 import hunt.shiro.session.mgt.SessionContext;
 import hunt.shiro.session.mgt.SessionKey;
@@ -30,9 +33,10 @@ import hunt.shiro.session.Session;
 
 import hunt.shiro.session.SessionListener;
 import hunt.shiro.util.CollectionUtils;
-import hunt.logging;
 
+import hunt.Exceptions;
 import hunt.collection;
+import hunt.logging;
 
 /**
  * Abstract implementation supporting the {@link NativeSessionManager NativeSessionManager} interface, supporting
@@ -145,7 +149,8 @@ abstract class AbstractNativeSessionManager :
     private Session lookupRequiredSession(SessionKey key){
         Session session = lookupSession(key);
         if (session  is null) {
-            string msg = "Unable to locate required Session instance based on SessionKey [" ~ key ~ "].";
+            string msg = "Unable to locate required Session instance based on SessionKey [" ~ 
+                (cast(Object)key).toString() ~ "].";
             throw new UnknownSessionException(msg);
         }
         return session;
@@ -234,9 +239,9 @@ abstract class AbstractNativeSessionManager :
      Collection!(Object) getAttributeKeys(SessionKey key) {
         Collection!(Object) c = lookupRequiredSession(key).getAttributeKeys();
         if (!CollectionUtils.isEmpty(c)) {
-            return Collections.unmodifiableCollection(c);
+            return c;
         }
-        return Collections.emptySet();
+        return Collections.emptySet!Object();
     }
 
      Object getAttribute(SessionKey sessionKey, Object attributeKey){

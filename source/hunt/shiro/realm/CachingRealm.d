@@ -30,6 +30,8 @@ import hunt.logging;
 
 import hunt.collection;
 
+import core.atomic;
+import std.conv;
 
 /**
  * A very basic abstract extension point for the {@link Realm} interface that provides caching support for subclasses.
@@ -65,7 +67,8 @@ abstract class CachingRealm : Realm, Nameable, CacheManagerAware, LogoutAware {
      */
      this() {
         this.cachingEnabled = true;
-        this.name = typeid(this).name ~ "_" ~ INSTANCE_COUNT.getAndIncrement();
+        this.name = typeid(this).name ~ "_" ~ INSTANCE_COUNT.to!string();
+        atomicOp!("+=")(INSTANCE_COUNT, 1);
     }
 
     /**
@@ -193,9 +196,9 @@ abstract class CachingRealm : Realm, Nameable, CacheManagerAware, LogoutAware {
     protected Object getAvailablePrincipal(PrincipalCollection principals) {
         Object primary = null;
         if (!isEmpty(principals)) {
-            Collection thisPrincipals = principals.fromRealm(getName());
+            Collection!Object thisPrincipals = principals.fromRealm(getName());
             if (!CollectionUtils.isEmpty(thisPrincipals)) {
-                primary = thisPrincipals.iterator().next();
+                primary = thisPrincipals.iterator().front();
             } else {
                 //no principals attributed to this particular realm.  Fall back to the 'master' primary:
                 primary = principals.getPrimaryPrincipal();

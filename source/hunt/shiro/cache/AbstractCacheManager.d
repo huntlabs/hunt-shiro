@@ -96,7 +96,7 @@ abstract class AbstractCacheManager(K, V) : CacheManager, Destroyable {
     void destroy() {
         while (caches !is null) {
             foreach (Cache!(K, V) cache; caches.byValue) {
-                LifecycleUtils.destroy(cache);
+                LifecycleUtils.destroy(cast(Object)cache);
             }
             caches.clear();
         }
@@ -113,7 +113,7 @@ abstract class AbstractCacheManager(K, V) : CacheManager, Destroyable {
             if (i > 0) {
                 sb.append(", ");
             }
-            sb.append(cache.toString());
+            sb.append((cast(Object)cache).toString());
             i++;
         }
         sb.append("]");

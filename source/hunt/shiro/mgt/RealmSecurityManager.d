@@ -20,14 +20,15 @@ module hunt.shiro.mgt.RealmSecurityManager;
 
 import hunt.shiro.mgt.CachingSecurityManager;
 
-// import hunt.shiro.cache.CacheManager;
-// import hunt.shiro.cache.CacheManagerAware;
-// import hunt.shiro.event.EventBus;
-// import hunt.shiro.event.EventBusAware;
+import hunt.shiro.cache.CacheManager;
+import hunt.shiro.cache.CacheManagerAware;
+import hunt.shiro.event.EventBus;
+import hunt.shiro.event.EventBusAware;
 import hunt.shiro.realm.Realm;
 import hunt.shiro.util.LifecycleUtils;
 
 import hunt.collection;
+import hunt.Exceptions;
 
 
 /**
@@ -92,7 +93,7 @@ abstract class RealmSecurityManager : CachingSecurityManager {
      *
      * @return the {@link Realm Realm}s managed by this SecurityManager instance.
      */
-     Collection!(Realm) getRealms() {
+    Collection!(Realm) getRealms() {
         return realms;
     }
 
@@ -164,7 +165,10 @@ abstract class RealmSecurityManager : CachingSecurityManager {
     }
 
     override void destroy() {
-        LifecycleUtils.destroy(getRealms());
+        // LifecycleUtils.destroy(getRealms());
+        foreach(Realm r; getRealms()) {
+            LifecycleUtils.destroy(cast(Object)r);
+        }
         this.realms = null;
         super.destroy();
     }

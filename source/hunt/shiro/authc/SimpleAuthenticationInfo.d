@@ -44,6 +44,7 @@ class SimpleAuthenticationInfo : MergableAuthenticationInfo, SaltedAuthenticatio
      * The principals identifying the account associated with this AuthenticationInfo instance.
      */
     protected PrincipalCollection principals;
+    
     /**
      * The credentials verifying the account principals.
      */
@@ -58,7 +59,7 @@ class SimpleAuthenticationInfo : MergableAuthenticationInfo, SaltedAuthenticatio
     /**
      * Default no-argument constructor.
      */
-     this() {
+    this() {
     }
 
     /**

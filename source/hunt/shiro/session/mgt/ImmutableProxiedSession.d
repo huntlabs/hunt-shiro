@@ -22,6 +22,7 @@ import hunt.shiro.Exceptions;
 import hunt.shiro.session.ProxiedSession;
 import hunt.shiro.session.Session;
 
+import hunt.Exceptions;
 
 /**
  * Implementation of the {@link Session Session} interface that proxies another <code>Session</code>, but does not

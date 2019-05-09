@@ -46,7 +46,7 @@ import hunt.shiro.util.ByteSource;
  *
  * @since 1.1
  */
-public interface RandomNumberGenerator {
+interface RandomNumberGenerator {
 
     /**
      * Generates a byte array of fixed length filled with random data, often useful for generating salts,

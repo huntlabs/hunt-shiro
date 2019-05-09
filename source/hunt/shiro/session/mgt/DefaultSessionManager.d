@@ -22,6 +22,10 @@ import hunt.shiro.session.mgt.AbstractValidatingSessionManager;
 import hunt.shiro.session.mgt.SessionContext;
 import hunt.shiro.session.mgt.SessionFactory;
 import hunt.shiro.session.mgt.SessionKey;
+import hunt.shiro.session.mgt.SimpleSession;
+import hunt.shiro.session.mgt.SimpleSessionFactory;
+
+
 
 import hunt.shiro.cache.CacheManager;
 import hunt.shiro.cache.CacheManagerAware;
@@ -35,6 +39,8 @@ import hunt.util.Common;
 import hunt.collection;
 import hunt.collection.Collections;
 // import java.util.Date;
+
+alias Date = long;
 
 /**
  * Default business-tier implementation of a {@link ValidatingSessionManager}.  All session CRUD operations are
@@ -176,7 +182,7 @@ class DefaultSessionManager : AbstractValidatingSessionManager, CacheManagerAwar
     protected void onStop(Session session) {
         SimpleSession ss = cast(SimpleSession) session;
         if (ss !is null) {
-            Date stopTs = ss.getStopTimestamp();
+            Date stopTs = ss.getStopTimestamp().value;
             ss.setLastAccessTime(stopTs);
         }
         onChange(session);
@@ -218,7 +224,7 @@ class DefaultSessionManager : AbstractValidatingSessionManager, CacheManagerAwar
         Session s = retrieveSessionFromDataSource(sessionId);
         if (s  is null) {
             //session ID was provided, meaning one is expected to be found, but we couldn't find one:
-            string msg = "Could not find session with ID [" ~ sessionId ~ "]";
+            string msg = "Could not find session with ID [" ~ (cast(Object)sessionId).toString() ~ "]";
             throw new UnknownSessionException(msg);
         }
         return s;

@@ -34,8 +34,12 @@ import hunt.collection.HashSet;
 import hunt.collection.LinkedHashMap;
 import hunt.collection.Map;
 import hunt.collection.Set;
+import hunt.Exceptions;
 
 import core.sync.rwmutex;
+
+import std.array;
+import std.string;
 
 /**
  * A simple implementation of the {@link Realm Realm} interface that
@@ -88,9 +92,10 @@ class SimpleAccountRealm : AuthorizingRealm {
     }
 
      void addAccount(string username, string password, string[] roles...) {
-        Set!(string) roleNames = CollectionUtils.asSet(roles);
-        SimpleAccount account = new SimpleAccount(username, password, getName(), roleNames, null);
-        add(account);
+        // Set!(string) roleNames = CollectionUtils.asSet(roles);
+        // SimpleAccount account = new SimpleAccount(username, password, getName(), roleNames, null);
+        // add(account);
+        implementationMissing(false);
     }
 
     protected string getUsername(SimpleAccount account) {
@@ -138,15 +143,15 @@ class SimpleAccountRealm : AuthorizingRealm {
     }
 
     protected static Set!(string) toSet(string delimited, string delimiter) {
-        if (delimited  is null || delimited.trim().equals("")) {
+        if (delimited.empty) {
             return null;
         }
 
         Set!(string) values = new HashSet!(string)();
         string[] rolenamesArray = delimited.split(delimiter);
         foreach(string s ; rolenamesArray) {
-            string trimmed = s.trim();
-            if (trimmed.length() > 0) {
+            string trimmed = s.strip();
+            if (trimmed.length > 0) {
                 values.add(trimmed);
             }
         }
@@ -175,11 +180,11 @@ class SimpleAccountRealm : AuthorizingRealm {
 
     override protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         string username = getUsername(principals);
-        USERS_LOCK.readLock().lock();
+        USERS_LOCK.reader().lock();
         try {
             return this.users.get(username);
         } finally {
-            USERS_LOCK.readLock().unlock();
+            USERS_LOCK.reader().unlock();
         }
     }
 }

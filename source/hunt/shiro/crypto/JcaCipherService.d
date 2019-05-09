@@ -23,6 +23,10 @@ import hunt.shiro.crypto.CipherService;
 // import hunt.shiro.util.ByteSource;
 // import hunt.shiro.util.StringUtils;
 
+import hunt.Exceptions;
+
+import std.array;
+
 // import javax.crypto.CipherInputStream;
 // import javax.crypto.spec.IvParameterSpec;
 // import javax.crypto.spec.SecretKeySpec;
@@ -106,37 +110,37 @@ abstract class JcaCipherService : CipherService {
 
     // private SecureRandom secureRandom;
 
-    // /**
-    //  * Creates a new {@code JcaCipherService} instance which will use the specified cipher {@code algorithmName}
-    //  * for all encryption, decryption, and key operations.  Also, the following defaults are set:
-    //  * <ul>
-    //  * <li>{@link #setKeySize keySize} = 128 bits</li>
-    //  * <li>{@link #setInitializationVectorSize(int) initializationVectorSize} = 128 bits</li>
-    //  * <li>{@link #setStreamingBufferSize(int) streamingBufferSize} = 512 bytes</li>
-    //  * </ul>
-    //  *
-    //  * @param algorithmName the name of the cipher algorithm to use for all encryption, decryption, and key operations
-    //  */
-    // protected JcaCipherService(string algorithmName) {
-    //     if (!StringUtils.hasText(algorithmName)) {
-    //         throw new IllegalArgumentException("algorithmName argument cannot be null or empty.");
-    //     }
-    //     this.algorithmName = algorithmName;
-    //     this.keySize = DEFAULT_KEY_SIZE;
-    //     this.initializationVectorSize = DEFAULT_KEY_SIZE; //default to same size as the key size (a common algorithm practice)
-    //     this.streamingBufferSize = DEFAULT_STREAMING_BUFFER_SIZE;
-    //     this.generateInitializationVectors = true;
-    // }
+    /**
+     * Creates a new {@code JcaCipherService} instance which will use the specified cipher {@code algorithmName}
+     * for all encryption, decryption, and key operations.  Also, the following defaults are set:
+     * <ul>
+     * <li>{@link #setKeySize keySize} = 128 bits</li>
+     * <li>{@link #setInitializationVectorSize(int) initializationVectorSize} = 128 bits</li>
+     * <li>{@link #setStreamingBufferSize(int) streamingBufferSize} = 512 bytes</li>
+     * </ul>
+     *
+     * @param algorithmName the name of the cipher algorithm to use for all encryption, decryption, and key operations
+     */
+    protected this(string algorithmName) {
+        if (algorithmName.empty()) {
+            throw new IllegalArgumentException("algorithmName argument cannot be null or empty.");
+        }
+        this.algorithmName = algorithmName;
+        this.keySize = DEFAULT_KEY_SIZE;
+        this.initializationVectorSize = DEFAULT_KEY_SIZE; //default to same size as the key size (a common algorithm practice)
+        this.streamingBufferSize = DEFAULT_STREAMING_BUFFER_SIZE;
+        this.generateInitializationVectors = true;
+    }
 
-    // /**
-    //  * Returns the cipher algorithm name that will be used for all encryption, decryption, and key operations (for
-    //  * example, 'AES', 'Blowfish', 'RSA', 'DSA', 'TripleDES', etc).
-    //  *
-    //  * @return the cipher algorithm name that will be used for all encryption, decryption, and key operations
-    //  */
-    // string getAlgorithmName() {
-    //     return algorithmName;
-    // }
+    /**
+     * Returns the cipher algorithm name that will be used for all encryption, decryption, and key operations (for
+     * example, 'AES', 'Blowfish', 'RSA', 'DSA', 'TripleDES', etc).
+     *
+     * @return the cipher algorithm name that will be used for all encryption, decryption, and key operations
+     */
+    string getAlgorithmName() {
+        return algorithmName;
+    }
 
     /**
      * Returns the size in bits (not bytes) of generated cipher keys.
@@ -183,7 +187,7 @@ abstract class JcaCipherService : CipherService {
      */
     void setInitializationVectorSize(int initializationVectorSize) {
         if (initializationVectorSize % BITS_PER_BYTE != 0) {
-            string msg = "Initialization vector sizes are specified in bits, but must be a multiple of 8 so they " +
+            string msg = "Initialization vector sizes are specified in bits, but must be a multiple of 8 so they " ~
                     "can be easily represented as a byte array.";
             throw new IllegalArgumentException(msg);
         }
@@ -276,24 +280,26 @@ abstract class JcaCipherService : CipherService {
     //     return getAlgorithmName();
     // }
 
-    // protected byte[] generateInitializationVector(bool streaming) {
-    //     int size = getInitializationVectorSize();
-    //     if (size <= 0) {
-    //         string msg = "initializationVectorSize property must be greater than zero.  This number is " +
-    //                 "typically set in the " + CipherService.class.getSimpleName() + " subclass constructor.  " +
-    //                 "Also check your configuration to ensure that if you are setting a value, it is positive.";
-    //         throw new IllegalStateException(msg);
-    //     }
-    //     if (size % BITS_PER_BYTE != 0) {
-    //         string msg = "initializationVectorSize property must be a multiple of 8 to represent as a byte array.";
-    //         throw new IllegalStateException(msg);
-    //     }
-    //     int sizeInBytes = size / BITS_PER_BYTE;
-    //     byte[] ivBytes = new byte[sizeInBytes];
-    //     SecureRandom random = ensureSecureRandom();
-    //     random.nextBytes(ivBytes);
-    //     return ivBytes;
-    // }
+    protected byte[] generateInitializationVector(bool streaming) {
+        // int size = getInitializationVectorSize();
+        // if (size <= 0) {
+        //     string msg = "initializationVectorSize property must be greater than zero.  This number is " +
+        //             "typically set in the " + CipherService.class.getSimpleName() + " subclass constructor.  " +
+        //             "Also check your configuration to ensure that if you are setting a value, it is positive.";
+        //     throw new IllegalStateException(msg);
+        // }
+        // if (size % BITS_PER_BYTE != 0) {
+        //     string msg = "initializationVectorSize property must be a multiple of 8 to represent as a byte array.";
+        //     throw new IllegalStateException(msg);
+        // }
+        // int sizeInBytes = size / BITS_PER_BYTE;
+        // byte[] ivBytes = new byte[sizeInBytes];
+        // SecureRandom random = ensureSecureRandom();
+        // random.nextBytes(ivBytes);
+        // return ivBytes;
+        implementationMissing(false);
+        return null;
+    }
 
     // ByteSource encrypt(byte[] plaintext, byte[] key) {
     //     byte[] ivBytes = null;
@@ -336,7 +342,7 @@ abstract class JcaCipherService : CipherService {
     //                 "byte array is size " + (output != null ? output.length : 0));
     //     }
 
-    //     return ByteSource.Util.bytes(output);
+    //     return ByteSourceUtil.bytes(output);
     // }
 
     // ByteSource decrypt(byte[] ciphertext, byte[] key) throws CryptoException {
@@ -383,7 +389,7 @@ abstract class JcaCipherService : CipherService {
     //                 (ciphertext != null ? ciphertext.length : 0));
     //     }
     //     byte[] decrypted = crypt(ciphertext, key, iv, javax.crypto.Cipher.DECRYPT_MODE);
-    //     return decrypted == null ? null : ByteSource.Util.bytes(decrypted);
+    //     return decrypted == null ? null : ByteSourceUtil.bytes(decrypted);
     // }
 
     // /**

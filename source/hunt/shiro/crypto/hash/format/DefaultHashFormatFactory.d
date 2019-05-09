@@ -18,17 +18,20 @@
  */
 module hunt.shiro.crypto.hash.format.DefaultHashFormatFactory;
 
+import hunt.shiro.crypto.hash.format.ModularCryptFormat;
 // import hunt.shiro.util.ClassUtils;
 // import hunt.shiro.util.StringUtils;
 // import hunt.shiro.util.UnknownClassException;
 import hunt.shiro.crypto.hash.format.HashFormat;
-
 import hunt.shiro.crypto.hash.format.HashFormatFactory;
 
 import hunt.collection.HashMap;
 import hunt.collection.HashSet;
 import hunt.collection.Map;
 import hunt.collection.Set;
+import hunt.Exceptions;
+
+import std.string;
 
 /**
  * This default {@code HashFormatFactory} implementation heuristically determines a {@code HashFormat} class to
@@ -119,16 +122,17 @@ class DefaultHashFormatFactory : HashFormatFactory {
         }
 
         HashFormat hashFormat = null;
-        Class clazz = null;
+        TypeInfo_Class clazz = null;
+        enum delimiter = ModularCryptFormat.TOKEN_DELIMITER;
 
         //NOTE: this code block occurs BEFORE calling getHashFormatClass(in) on purpose as a performance
         //optimization.  If the input arg is an MCF-formatted string, there will be many unnecessary ClassLoader
         //misses which can be slow.  By checking the MCF-formatted option, we can significantly improve performance
-        if (in1.startsWith(ModularCryptFormat.TOKEN_DELIMITER)) {
+        if (in1.startsWith(delimiter)) {
             //odds are high that the input argument is not a fully qualified class name or a format key (e.g. 'hex',
             //base64' or 'shiro1').  Try to find the key and lookup via that:
-            string test = in1.substring(ModularCryptFormat.TOKEN_DELIMITER.length());
-            string[] tokens = test.split("\\" ~ ModularCryptFormat.TOKEN_DELIMITER);
+            string test = in1[delimiter.length .. $];
+            string[] tokens = test.split("\\" ~ delimiter);
             //the MCF ID is always the first token in the delimited string:
             string possibleMcfId = (tokens !is null && tokens.length > 0) ? tokens[0] : null;
             if (possibleMcfId !is null) {
@@ -181,8 +185,10 @@ class DefaultHashFormatFactory : HashFormatFactory {
      * @param token the string token from which a class name will be heuristically determined.
      * @return the discovered HashFormat class implementation or {@code null} if no class could be heuristically determined.
      */
-    // protected Class getHashFormatClass(string token) {
+    protected TypeInfo_Class getHashFormatClass(string token) {
 
+        implementationMissing(false);
+        return null;
     //     Class clazz = null;
 
     //     //check to see if the token is a configured FQCN alias.  This is faster than searching packages,
@@ -226,7 +232,7 @@ class DefaultHashFormatFactory : HashFormatFactory {
     //     }
 
     //     return clazz;
-    // }
+    }
 
     /**
      * Heuristically determine the fully qualified {@code HashFormat} implementation class name in the specified

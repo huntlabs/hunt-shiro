@@ -20,11 +20,13 @@ module hunt.shiro.env.DefaultEnvironment;
 
 import hunt.shiro.env.NamedObjectEnvironment;
 
+import hunt.shiro.Exceptions;
 import hunt.shiro.mgt.SecurityManager;
 import hunt.shiro.util.Common;
 import hunt.shiro.util.LifecycleUtils;
 
 import hunt.collection;
+import hunt.Exceptions;
 
 /**
  * Simple/default {@code Environment} implementation that stores Shiro objects as key-value pairs in a
@@ -46,7 +48,7 @@ class DefaultEnvironment : NamedObjectEnvironment, Destroyable {
      * Creates a new instance with a thread-safe {@link ConcurrentHashMap} backing map.
      */
     this() {
-        this(new ConcurrentHashMap!(string, Object)());
+        this(new HashMap!(string, Object)());
     }
 
     /**
@@ -89,7 +91,7 @@ class DefaultEnvironment : NamedObjectEnvironment, Destroyable {
             throw new IllegalArgumentException("Null SecurityManager instances are not allowed.");
         }
         string name = getSecurityManagerName();
-        setObject(name, securityManager);
+        setObject(name, cast(Object)securityManager);
     }
 
     /**
@@ -99,7 +101,7 @@ class DefaultEnvironment : NamedObjectEnvironment, Destroyable {
      */
     protected SecurityManager lookupSecurityManager() {
         string name = getSecurityManagerName();
-        return getObject(name, typeid(SecurityManager));
+        return cast(SecurityManager)getObject(name, typeid(SecurityManager));
     }
 
     /**
@@ -134,19 +136,19 @@ class DefaultEnvironment : NamedObjectEnvironment, Destroyable {
     }
 
     //@SuppressWarnings({"unchecked"})
-    Object getObject(string name, TypeInfo_Class requiredType){
+    Object getObject(string name, TypeInfo requiredType){
         if (name  is null) {
             throw new NullPointerException("name parameter cannot be null.");
         }
-        if (requiredType  is null) {
+        if (requiredType is null) {
             throw new NullPointerException("requiredType parameter cannot be null.");
         }
         Object o = this.objects.get(name);
         if (o  is null) {
             return null;
         }
-        if (!requiredType.isInstance(o)) {
-            string msg = "Object named '" ~ name ~ "' is not of required type [" ~ requiredType.getName() ~ "].";
+        if (requiredType != typeid(o)) {
+            string msg = "Object named '" ~ name ~ "' is not of required type [" ~ requiredType.toString() ~ "].";
             throw new RequiredTypeException(msg);
         }
         return o;

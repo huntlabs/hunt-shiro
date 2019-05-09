@@ -27,6 +27,7 @@ import hunt.String;
 import hunt.util.Common;
 import hunt.collection.Map;
 
+import std.array;
 import std.traits;
 
 /**
@@ -48,21 +49,22 @@ class DefaultSessionContext : MapContext, SessionContext {
         super(map);
     }
 
-     string getHost() {
-        return getTypedValue(HOST, typeid(String));
+    string getHost() {
+        String str = getTypedValue!String(HOST);
+        return str.value;
     }
 
      void setHost(string host) {
-        if (StringUtils.hasText(host)) {
-            put(HOST, host);
+        if (!host.empty()) {
+            put(HOST, new String(host));
         }
     }
 
-     Serializable getSessionId() {
-        return getTypedValue(SESSION_ID, typeid(Serializable));
+    Serializable getSessionId() {
+        return getTypedValue!Serializable(SESSION_ID);
     }
 
      void setSessionId(Serializable sessionId) {
-        nullSafePut(SESSION_ID, sessionId);
+        nullSafePut(SESSION_ID, cast(Object)sessionId);
     }
 }

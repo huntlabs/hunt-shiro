@@ -34,6 +34,8 @@ import hunt.logging;
 
 import hunt.util.Common;
 
+import std.traits;
+
 /**
  * Default implementation of the {@link SubjectContext} interface.  Note that the getters and setters are not
  * simple pass-through methods to an underlying attribute;  the getters will employ numerous heuristics to acquire
@@ -42,47 +44,49 @@ import hunt.util.Common;
  * principals from those objects).
  *
  */
-// class DefaultSubjectContext : MapContext, SubjectContext {
+class DefaultSubjectContext : MapContext, SubjectContext {
 
-//     private enum string SECURITY_MANAGER = typeid(DefaultSubjectContext).name ~ ".SECURITY_MANAGER";
+    
 
-//     private enum string SESSION_ID = typeid(DefaultSubjectContext).name ~ ".SESSION_ID";
+    private enum string SECURITY_MANAGER = fullyQualifiedName!(DefaultSubjectContext) ~ ".SECURITY_MANAGER";
 
-//     private enum string AUTHENTICATION_TOKEN = typeid(DefaultSubjectContext).name ~ ".AUTHENTICATION_TOKEN";
+    private enum string SESSION_ID = fullyQualifiedName!(DefaultSubjectContext) ~ ".SESSION_ID";
 
-//     private enum string AUTHENTICATION_INFO = typeid(DefaultSubjectContext).name ~ ".AUTHENTICATION_INFO";
+    private enum string AUTHENTICATION_TOKEN = fullyQualifiedName!(DefaultSubjectContext) ~ ".AUTHENTICATION_TOKEN";
 
-//     private enum string SUBJECT = typeid(DefaultSubjectContext).name ~ ".SUBJECT";
+    private enum string AUTHENTICATION_INFO = fullyQualifiedName!(DefaultSubjectContext) ~ ".AUTHENTICATION_INFO";
 
-//     private enum string PRINCIPALS = typeid(DefaultSubjectContext).name ~ ".PRINCIPALS";
+    private enum string SUBJECT = fullyQualifiedName!(DefaultSubjectContext) ~ ".SUBJECT";
 
-//     private enum string SESSION = typeid(DefaultSubjectContext).name ~ ".SESSION";
+    private enum string PRINCIPALS = fullyQualifiedName!(DefaultSubjectContext) ~ ".PRINCIPALS";
 
-//     private enum string AUTHENTICATED = typeid(DefaultSubjectContext).name ~ ".AUTHENTICATED";
+    private enum string SESSION = fullyQualifiedName!(DefaultSubjectContext) ~ ".SESSION";
 
-//     private enum string HOST = typeid(DefaultSubjectContext).name ~ ".HOST";
+    private enum string AUTHENTICATED = fullyQualifiedName!(DefaultSubjectContext) ~ ".AUTHENTICATED";
 
-//     enum string SESSION_CREATION_ENABLED = typeid(DefaultSubjectContext).name ~ ".SESSION_CREATION_ENABLED";
+    private enum string HOST = fullyQualifiedName!(DefaultSubjectContext) ~ ".HOST";
 
-//     /**
-//      * The session key that is used to store subject principals.
-//      */
-//     enum string PRINCIPALS_SESSION_KEY = typeid(DefaultSubjectContext).name ~ "_PRINCIPALS_SESSION_KEY";
+    enum string SESSION_CREATION_ENABLED = fullyQualifiedName!(DefaultSubjectContext) ~ ".SESSION_CREATION_ENABLED";
 
-//     /**
-//      * The session key that is used to store whether or not the user is authenticated.
-//      */
-//     enum string AUTHENTICATED_SESSION_KEY = typeid(DefaultSubjectContext).name ~ "_AUTHENTICATED_SESSION_KEY";
+    /**
+     * The session key that is used to store subject principals.
+     */
+    enum string PRINCIPALS_SESSION_KEY = fullyQualifiedName!(DefaultSubjectContext) ~ "_PRINCIPALS_SESSION_KEY";
+
+    /**
+     * The session key that is used to store whether or not the user is authenticated.
+     */
+    enum string AUTHENTICATED_SESSION_KEY = fullyQualifiedName!(DefaultSubjectContext) ~ "_AUTHENTICATED_SESSION_KEY";
 
 
 
-//     this() {
-//         super();
-//     }
+    this() {
+        super();
+    }
 
-//     this(SubjectContext ctx) {
-//         super(ctx);
-//     }
+    this(SubjectContext ctx) {
+        super(ctx);
+    }
 
 //      SecurityManager getSecurityManager() {
 //         return getTypedValue(SECURITY_MANAGER, typeid(SecurityManager));
@@ -275,4 +279,4 @@ import hunt.util.Common;
 
 //         return host;
 //     }
-// }
+}

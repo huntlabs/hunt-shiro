@@ -53,7 +53,6 @@ class ExecutorServiceSessionValidationScheduler : SessionValidationScheduler, Ru
     private string threadNamePrefix = "SessionValidationThread-";
 
     this() {
-        super();
     }
 
     this(ValidatingSessionManager sessionManager) {

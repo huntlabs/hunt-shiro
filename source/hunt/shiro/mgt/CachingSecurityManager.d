@@ -142,9 +142,9 @@ abstract class CachingSecurityManager : SecurityManager,
      * Destroys the {@link #getCacheManager() cacheManager} via {@link LifecycleUtils#destroy LifecycleUtils.destroy}.
      */
      void destroy() {
-        LifecycleUtils.destroy(getCacheManager());
+        LifecycleUtils.destroy(cast(Object)getCacheManager());
         this.cacheManager = null;
-        LifecycleUtils.destroy(getEventBus());
+        LifecycleUtils.destroy(cast(Object)getEventBus());
         // this.eventBus = new DefaultEventBus();
         implementationMissing(false);
     }

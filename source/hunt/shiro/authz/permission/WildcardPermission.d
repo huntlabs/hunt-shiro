@@ -242,12 +242,13 @@ class WildcardPermission : Permission {
             if (buffer.length() > 0) {
                 buffer.append(PART_DIVIDER_TOKEN);
             }
-            Iterator!(string) partIt = part.iterator();
-            while(partIt.hasNext()) {
-                buffer.append(partIt.next());
-                if (partIt.hasNext()) {
+            bool isFirst = true;
+            foreach(string s; part) {
+                if (!isFirst) {
                     buffer.append(SUBPART_DIVIDER_TOKEN);
                 }
+                isFirst = false;
+                buffer.append(s);
             }
         }
         return buffer.toString();

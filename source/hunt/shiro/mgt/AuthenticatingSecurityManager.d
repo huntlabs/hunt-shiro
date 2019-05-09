@@ -27,6 +27,8 @@ import hunt.shiro.authc.Authenticator;
 import hunt.shiro.authc.pam.ModularRealmAuthenticator;
 import hunt.shiro.util.LifecycleUtils;
 
+import hunt.Exceptions;
+
 
 /**
  * Shiro support of a {@link SecurityManager} class hierarchy that delegates all
@@ -109,7 +111,7 @@ abstract class AuthenticatingSecurityManager : RealmSecurityManager {
     }
 
     override void destroy() {
-        LifecycleUtils.destroy(getAuthenticator());
+        LifecycleUtils.destroy(cast(Object)getAuthenticator());
         this.authenticator = null;
         super.destroy();
     }

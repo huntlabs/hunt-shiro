@@ -25,6 +25,7 @@ import hunt.shiro.cache.Cache;
 // import java.util.Map;
 // import java.util.Set;
 
+import hunt.Exceptions;
 import hunt.text.StringBuilder;
 
 import std.array;
@@ -67,7 +68,9 @@ class MapCache(K, V) : Cache!(K, V) {
     }
 
     V remove(K key) {
-        return map.remove(key);
+        V v = map[key];
+        map.remove(key);
+        return v;
     }
 
     void clear() {

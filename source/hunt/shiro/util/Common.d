@@ -1,6 +1,8 @@
 module hunt.shiro.util.Common;
 
 
+extern(C) bool _d_isbaseof(ClassInfo child, ClassInfo parent);
+
 /**
  * Shiro container-agnostic interface that indicates that this object requires a callback during destruction.
  *

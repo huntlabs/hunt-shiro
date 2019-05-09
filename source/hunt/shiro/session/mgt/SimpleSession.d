@@ -19,15 +19,19 @@
 module hunt.shiro.session.mgt.SimpleSession;
 
 import hunt.shiro.session.mgt.ValidatingSession;
+import hunt.shiro.session.mgt.DefaultSessionManager;
 
 import hunt.shiro.Exceptions;
 import hunt.shiro.util.CollectionUtils;
 
 import hunt.collection.Collection;
 import hunt.collection.Map;
+import hunt.Exceptions;
 import hunt.logging;
 import hunt.util.Common;
 import hunt.util.DateTime;
+
+import hunt.Long;
 
 // import java.io.IOException;
 // import java.io.ObjectInputStream;
@@ -35,6 +39,7 @@ import hunt.util.DateTime;
 // import java.text.DateFormat;
 
 alias Date = long;
+
 
 /**
  * Simple {@link hunt.shiro.session.Session} JavaBeans-compatible POJO implementation, intended to be used on the
@@ -86,7 +91,7 @@ class SimpleSession : ValidatingSession, Serializable {
     // ==============================================================
     private  Serializable id;
     private  Date startTimestamp;
-    private  Date stopTimestamp;
+    private  Long stopTimestamp;
     private  Date lastAccessTime;
     private  long timeout;
     private  bool expired;
@@ -137,15 +142,15 @@ class SimpleSession : ValidatingSession, Serializable {
      * @return The time the session was stopped, or <tt>null</tt> if the session is still
      *         active.
      */
-     Date getStopTimestamp() {
+    Long getStopTimestamp() {
         return stopTimestamp;
     }
 
-     void setStopTimestamp(Date stopTimestamp) {
+     void setStopTimestamp(Long stopTimestamp) {
         this.stopTimestamp = stopTimestamp;
     }
 
-     Date getLastAccessTime() {
+    Date getLastAccessTime() {
         return lastAccessTime;
     }
 
@@ -183,7 +188,7 @@ class SimpleSession : ValidatingSession, Serializable {
         this.host = host;
     }
 
-     Map!(Object, Object) getAttributes() {
+    Map!(Object, Object) getAttributes() {
         return attributes;
     }
 
@@ -197,7 +202,7 @@ class SimpleSession : ValidatingSession, Serializable {
 
      void stop() {
         if (this.stopTimestamp  is null) {
-            this.stopTimestamp = DateTimeHelper.currentTimeMillis();
+            this.stopTimestamp = new Long(DateTimeHelper.currentTimeMillis());
         }
     }
 
@@ -235,7 +240,7 @@ class SimpleSession : ValidatingSession, Serializable {
 
             if (lastAccessTime  is null) {
                 string msg = "session.lastAccessTime for session with id [" ~
-                        getId() ~ "] is null.  This value must be set at " ~
+                        (cast(Object)getId()).toString() ~ "] is null.  This value must be set at " ~
                         "least once, preferably at least upon instantiation.  Please check the " ~
                         typeid(this).name ~ " implementation and ensure " ~
                         "this value will be set (perhaps in the constructor?)";
@@ -247,9 +252,10 @@ class SimpleSession : ValidatingSession, Serializable {
             // from the current time the amount of time that a session can
             // be inactive before expiring.  If the session was last accessed
             // before this time, it is expired.
-            long expireTimeMillis = DateTimeHelper.currentTimeMillis()() - timeout;
-            Date expireTime = new Date(expireTimeMillis);
-            return lastAccessTime.before(expireTime);
+            long expireTimeMillis = DateTimeHelper.currentTimeMillis() - timeout;
+            // Date expireTime = new Date(expireTimeMillis);
+            // return lastAccessTime.before(expireTime);
+            return lastAccessTime > expireTimeMillis;
         } else {
             version(HUNT_DEBUG) {
                 tracef("No timeout for session with id [" ~ getId() +
@@ -376,13 +382,15 @@ class SimpleSession : ValidatingSession, Serializable {
      * @return true if all the attributes, except the id, are equal to this object's attributes.
      */
     protected bool onEquals(SimpleSession ss) {
-        return (getStartTimestamp() !is null ? getStartTimestamp()== ss.getStartTimestamp() : ss.getStartTimestamp()  is null) &&
-                (getStopTimestamp() !is null ? getStopTimestamp()== ss.getStopTimestamp() : ss.getStopTimestamp()  is null) &&
-                (getLastAccessTime() !is null ? getLastAccessTime()== ss.getLastAccessTime() : ss.getLastAccessTime()  is null) &&
-                (getTimeout() == ss.getTimeout()) &&
-                (isExpired() == ss.isExpired()) &&
-                (getHost() !is null ? getHost()== ss.getHost() : ss.getHost()  is null) &&
-                (getAttributes() !is null ? getAttributes()== ss.getAttributes() : ss.getAttributes()  is null);
+        implementationMissing(false);
+        return true;
+        // return (getStartTimestamp() !is null ? getStartTimestamp()== ss.getStartTimestamp() : ss.getStartTimestamp()  is null) &&
+        //         (getStopTimestamp() !is null ? getStopTimestamp()== ss.getStopTimestamp() : ss.getStopTimestamp()  is null) &&
+        //         (getLastAccessTime() !is null ? getLastAccessTime()== ss.getLastAccessTime() : ss.getLastAccessTime()  is null) &&
+        //         (getTimeout() == ss.getTimeout()) &&
+        //         (isExpired() == ss.isExpired()) &&
+        //         (getHost() !is null ? getHost()== ss.getHost() : ss.getHost()  is null) &&
+        //         (getAttributes() !is null ? getAttributes()== ss.getAttributes() : ss.getAttributes()  is null);
     }
 
     /**
@@ -398,15 +406,17 @@ class SimpleSession : ValidatingSession, Serializable {
     size_t toHash() @trusted nothrow {
         Serializable id = getId();
         if (id !is null) {
-            return id.hashCode();
+            return (cast(Object)id).toHash();
         }
-        int hashCode = getStartTimestamp() != null ? getStartTimestamp().hashCode() : 0;
-        hashCode = 31 * hashCode + (getStopTimestamp() !is null ? getStopTimestamp().hashCode() : 0);
-        hashCode = 31 * hashCode + (getLastAccessTime() !is null ? getLastAccessTime().hashCode() : 0);
-        hashCode = 31 * hashCode + Long.valueOf(Math.max(getTimeout(), 0)).hashCode();
-        hashCode = 31 * hashCode + bool.valueOf(isExpired()).hashCode();
-        hashCode = 31 * hashCode + (getHost() !is null ? getHost().hashCode() : 0);
-        hashCode = 31 * hashCode + (getAttributes() !is null ? getAttributes().hashCode() : 0);
+        size_t hashCode;
+        implementationMissing(false);
+        // size_t hashCode = getStartTimestamp() != null ? getStartTimestamp().hashCode() : 0;
+        // hashCode = 31 * hashCode + (getStopTimestamp() !is null ? getStopTimestamp().hashCode() : 0);
+        // hashCode = 31 * hashCode + (getLastAccessTime() !is null ? getLastAccessTime().hashCode() : 0);
+        // hashCode = 31 * hashCode + Long.valueOf(max(getTimeout(), 0)).hashCode();
+        // hashCode = 31 * hashCode + bool.valueOf(isExpired()).hashCode();
+        // hashCode = 31 * hashCode + (getHost() !is null ? getHost().hashCode() : 0);
+        // hashCode = 31 * hashCode + (getAttributes() !is null ? getAttributes().hashCode() : 0);
         return hashCode;
     }
 

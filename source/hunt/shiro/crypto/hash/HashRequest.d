@@ -18,7 +18,10 @@
  */
 module hunt.shiro.crypto.hash.HashRequest;
 
+import hunt.shiro.crypto.hash.SimpleHashRequest;
+
 import hunt.shiro.util.ByteSource;
+import hunt.shiro.util.SimpleByteSource;
 
 /**
  * A {@code HashRequest} is composed of data that will be used by a {@link HashService} to compute a hash (aka
@@ -113,7 +116,7 @@ interface HashRequest {
          * <p/>
          * This is a convenience alternative to {@link #setSource(ByteSource)}: it will attempt to convert the
          * argument into a {@link ByteSource} instance using Shiro's default conversion heuristics
-         * (as defined by {@link ByteSource.Util#isCompatible(Object) ByteSource.Util.isCompatible}.  If the object
+         * (as defined by {@link ByteSourceUtil#isCompatible(Object) ByteSourceUtil.isCompatible}.  If the object
          * cannot be heuristically converted to a {@code ByteSource}, an {@code IllegalArgumentException} will be
          * thrown.
          *
@@ -125,7 +128,7 @@ interface HashRequest {
          * @see #setSource(ByteSource)
          */
         Builder setSource(Object source) {
-            this.source = ByteSource.Util.bytes(source);
+            this.source = ByteSourceUtil.bytes(source);
             return this;
         }
 
@@ -152,7 +155,7 @@ interface HashRequest {
          * <p/>
          * This is a convenience alternative to {@link #setSalt(ByteSource)}: it will attempt to convert the
          * argument into a {@link ByteSource} instance using Shiro's default conversion heuristics
-         * (as defined by {@link ByteSource.Util#isCompatible(Object) ByteSource.Util.isCompatible}.  If the object
+         * (as defined by {@link ByteSourceUtil#isCompatible(Object) ByteSourceUtil.isCompatible}.  If the object
          * cannot be heuristically converted to a {@code ByteSource}, an {@code IllegalArgumentException} will be
          * thrown.
          *
@@ -164,7 +167,7 @@ interface HashRequest {
          * @see HashRequest#getSalt()
          */
         Builder setSalt(Object salt) {
-            this.salt = ByteSource.Util.bytes(salt);
+            this.salt = ByteSourceUtil.bytes(salt);
             return this;
         }
 

@@ -20,6 +20,7 @@ module hunt.shiro.session.ProxiedSession;
 
 import hunt.shiro.session.Session;
 
+import hunt.Exceptions;
 import hunt.util.Common;
 import hunt.collection;
 // // import java.util.Date;

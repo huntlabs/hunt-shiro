@@ -158,7 +158,7 @@ abstract class SessionsSecurityManager : AuthorizingSecurityManager {
     }
 
     override void destroy() {
-        LifecycleUtils.destroy(getSessionManager());
+        LifecycleUtils.destroy(cast(Object)getSessionManager());
         this.sessionManager = null;
         super.destroy();
     }

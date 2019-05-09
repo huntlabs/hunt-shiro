@@ -18,6 +18,11 @@
  */
 module hunt.shiro.codec.Hex;
 
+import hunt.Exceptions;
+import hunt.text.CharacterData;
+
+import std.conv;
+
 /**
  * <a href="http://en.wikipedia.org/wiki/Hexadecimal">Hexadecimal</a> encoder and decoder.
  * <p/>
@@ -33,129 +38,125 @@ module hunt.shiro.codec.Hex;
  */
 class Hex {
 
-    // /**
-    //  * Used to build output as Hex
-    //  */
-    // private static final char[] DIGITS = {
-    //         '0', '1', '2', '3', '4', '5', '6', '7',
-    //         '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
-    // };
+    /**
+     * Used to build output as Hex
+     */
+    private enum char[] DIGITS = [
+            '0', '1', '2', '3', '4', '5', '6', '7',
+            '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
+    ];
 
-    // /**
-    //  * Encodes the specified byte array to a character array and then returns that character array
-    //  * as a String.
-    //  *
-    //  * @param bytes the byte array to Hex-encode.
-    //  * @return A String representation of the resultant hex-encoded char array.
-    //  */
-    // static String encodeToString(byte[] bytes) {
-    //     char[] encodedChars = encode(bytes);
-    //     return new String(encodedChars);
-    // }
+    /**
+     * Encodes the specified byte array to a character array and then returns that character array
+     * as a string.
+     *
+     * @param bytes the byte array to Hex-encode.
+     * @return A string representation of the resultant hex-encoded char array.
+     */
+    static string encodeToString(byte[] bytes) {
+        char[] encodedChars = encode(bytes);
+        return cast(string)(encodedChars);
+    }
 
-    // /**
-    //  * Converts an array of bytes into an array of characters representing the hexadecimal values of each byte in order.
-    //  * The returned array will be double the length of the passed array, as it takes two characters to represent any
-    //  * given byte.
-    //  *
-    //  * @param data byte[] to convert to Hex characters
-    //  * @return A char[] containing hexadecimal characters
-    //  */
-    // static char[] encode(byte[] data) {
+    /**
+     * Converts an array of bytes into an array of characters representing the hexadecimal values of each byte in order.
+     * The returned array will be double the length of the passed array, as it takes two characters to represent any
+     * given byte.
+     *
+     * @param data byte[] to convert to Hex characters
+     * @return A char[] containing hexadecimal characters
+     */
+    static char[] encode(byte[] data) {
+        int l = cast(int)data.length;
+        char[] o = new char[l << 1];
 
-    //     int l = data.length;
+        // two characters form the hex value.
+        for (int i = 0, j = 0; i < l; i++) {
+            o[j++] = DIGITS[(0xF0 & data[i]) >>> 4];
+            o[j++] = DIGITS[0x0F & data[i]];
+        }
 
-    //     char[] out = new char[l << 1];
+        return o;
+    }
 
-    //     // two characters form the hex value.
-    //     for (int i = 0, j = 0; i < l; i++) {
-    //         out[j++] = DIGITS[(0xF0 & data[i]) >>> 4];
-    //         out[j++] = DIGITS[0x0F & data[i]];
-    //     }
+    /**
+     * Converts an array of character bytes representing hexadecimal values into an
+     * array of bytes of those same values. The returned array will be half the
+     * length of the passed array, as it takes two characters to represent any
+     * given byte. An exception is thrown if the passed char array has an odd
+     * number of elements.
+     *
+     * @param array An array of character bytes containing hexadecimal digits
+     * @return A byte array containing binary data decoded from
+     *         the supplied byte array (representing characters).
+     * @throws IllegalArgumentException Thrown if an odd number of characters is supplied
+     *                                  to this function
+     * @see #decode(char[])
+     */
+    static byte[] decode(byte[] array) {
+        return decode(cast(char[])array);
+    }
 
-    //     return out;
-    // }
+    /**
+     * Converts the specified Hex-encoded string into a raw byte array.  This is a
+     * convenience method that merely delegates to {@link #decode(char[])} using the
+     * argument's hex.toCharArray() value.
+     *
+     * @param hex a Hex-encoded string.
+     * @return A byte array containing binary data decoded from the supplied string's char array.
+     */
+    static byte[] decode(string hex) {
+        return decode(cast(char[])hex);
+    }
 
-    // /**
-    //  * Converts an array of character bytes representing hexadecimal values into an
-    //  * array of bytes of those same values. The returned array will be half the
-    //  * length of the passed array, as it takes two characters to represent any
-    //  * given byte. An exception is thrown if the passed char array has an odd
-    //  * number of elements.
-    //  *
-    //  * @param array An array of character bytes containing hexadecimal digits
-    //  * @return A byte array containing binary data decoded from
-    //  *         the supplied byte array (representing characters).
-    //  * @throws IllegalArgumentException Thrown if an odd number of characters is supplied
-    //  *                                  to this function
-    //  * @see #decode(char[])
-    //  */
-    // static byte[] decode(byte[] array) throws IllegalArgumentException {
-    //     String s = CodecSupport.toString(array);
-    //     return decode(s);
-    // }
+    /**
+     * Converts an array of characters representing hexadecimal values into an
+     * array of bytes of those same values. The returned array will be half the
+     * length of the passed array, as it takes two characters to represent any
+     * given byte. An exception is thrown if the passed char array has an odd
+     * number of elements.
+     *
+     * @param data An array of characters containing hexadecimal digits
+     * @return A byte array containing binary data decoded from
+     *         the supplied char array.
+     * @throws IllegalArgumentException if an odd number or illegal of characters
+     *                                  is supplied
+     */
+    static byte[] decode(char[] data) {
+        int len = cast(int)data.length;
+        if ((len & 0x01) != 0) {
+            throw new IllegalArgumentException("Odd number of characters.");
+        }
 
-    // /**
-    //  * Converts the specified Hex-encoded String into a raw byte array.  This is a
-    //  * convenience method that merely delegates to {@link #decode(char[])} using the
-    //  * argument's hex.toCharArray() value.
-    //  *
-    //  * @param hex a Hex-encoded String.
-    //  * @return A byte array containing binary data decoded from the supplied String's char array.
-    //  */
-    // static byte[] decode(String hex) {
-    //     return decode(hex.toCharArray());
-    // }
+        byte[] o = new byte[len >> 1];
 
-    // /**
-    //  * Converts an array of characters representing hexadecimal values into an
-    //  * array of bytes of those same values. The returned array will be half the
-    //  * length of the passed array, as it takes two characters to represent any
-    //  * given byte. An exception is thrown if the passed char array has an odd
-    //  * number of elements.
-    //  *
-    //  * @param data An array of characters containing hexadecimal digits
-    //  * @return A byte array containing binary data decoded from
-    //  *         the supplied char array.
-    //  * @throws IllegalArgumentException if an odd number or illegal of characters
-    //  *                                  is supplied
-    //  */
-    // static byte[] decode(char[] data) {
+        // two characters form the hex value.
+        for (int i = 0, j = 0; j < len; i++) {
+            int f = toDigit(data[j], j) << 4;
+            j++;
+            f = f | toDigit(data[j], j);
+            j++;
+            o[i] = cast(byte) (f & 0xFF);
+        }
 
-    //     int len = data.length;
+        return o;
+    }
 
-    //     if ((len & 0x01) != 0) {
-    //         throw new IllegalArgumentException("Odd number of characters.");
-    //     }
-
-    //     byte[] out = new byte[len >> 1];
-
-    //     // two characters form the hex value.
-    //     for (int i = 0, j = 0; j < len; i++) {
-    //         int f = toDigit(data[j], j) << 4;
-    //         j++;
-    //         f = f | toDigit(data[j], j);
-    //         j++;
-    //         out[i] = (byte) (f & 0xFF);
-    //     }
-
-    //     return out;
-    // }
-
-    // /**
-    //  * Converts a hexadecimal character to an integer.
-    //  *
-    //  * @param ch    A character to convert to an integer digit
-    //  * @param index The index of the character in the source
-    //  * @return An integer
-    //  * @throws IllegalArgumentException if ch is an illegal hex character
-    //  */
-    // protected static int toDigit(char ch, int index) {
-    //     int digit = Character.digit(ch, 16);
-    //     if (digit == -1) {
-    //         throw new IllegalArgumentException("Illegal hexadecimal character " + ch + " at index " + index);
-    //     }
-    //     return digit;
-    // }
+    /**
+     * Converts a hexadecimal character to an integer.
+     *
+     * @param ch    A character to convert to an integer digit
+     * @param index The index of the character in the source
+     * @return An integer
+     * @throws IllegalArgumentException if ch is an illegal hex character
+     */
+    protected static int toDigit(char ch, int index) {
+        int digit = CharacterHelper.digit(ch, 16);
+        if (digit == -1) {
+            throw new IllegalArgumentException("Illegal hexadecimal character " ~
+             ch.to!string() ~ " at index " ~ index.to!string());
+        }
+        return digit;
+    }
 
 }

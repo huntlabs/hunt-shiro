@@ -18,10 +18,13 @@
  */
 module hunt.shiro.mgt.DefaultSecurityManager;
 
+import hunt.shiro.mgt.DefaultSubjectFactory;
+import hunt.shiro.mgt.DefaultSubjectDAO;
 import hunt.shiro.mgt.RememberMeManager;
 import hunt.shiro.mgt.SessionsSecurityManager;
 import hunt.shiro.mgt.SubjectFactory;
 import hunt.shiro.mgt.SubjectDAO;
+
 
 import hunt.shiro.Exceptions;
 import hunt.shiro.authc.AuthenticationInfo;
@@ -42,8 +45,9 @@ import hunt.shiro.subject.support.DefaultSubjectContext;
 import hunt.shiro.util.CollectionUtils;
 import hunt.logging;
 
-import hunt.util.Common;
+import hunt.Exceptions;
 import hunt.collection;
+import hunt.util.Common;
 
 /**
  * The Shiro framework's default concrete implementation of the {@link SecurityManager} interface,
@@ -562,15 +566,15 @@ class DefaultSecurityManager : SessionsSecurityManager {
                 string msg = "Unable to cleanly unbind Subject.  Ignoring (logging out).";
                 tracef(msg, e);
             }
-        } finally {
-            try {
-                stopSession(subject);
-            } catch (Exception e) {
-                version(HUNT_DEBUG) {
-                    string msg = "Unable to cleanly stop Session for Subject [" ~ subject.getPrincipal() ~ "] " ~
-                            "Ignoring (logging out).";
-                    tracef(msg, e);
-                }
+        } 
+
+        try {
+            stopSession(subject);
+        } catch (Exception e) {
+            version(HUNT_DEBUG) {
+                string msg = "Unable to cleanly stop Session for Subject [" ~ subject.getPrincipal() ~ "] " ~
+                        "Ignoring (logging out).";
+                tracef(msg, e);
             }
         }
     }

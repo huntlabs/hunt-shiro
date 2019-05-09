@@ -21,6 +21,9 @@ module hunt.shiro.crypto.hash.SimpleHashRequest;
 import hunt.shiro.crypto.hash.HashRequest;
 
 import hunt.shiro.util.ByteSource;
+import hunt.Exceptions;
+
+import std.algorithm;
 
 /**
  * Simple implementation of {@link HashRequest} that can be used when interacting with a {@link HashService}.
@@ -54,7 +57,7 @@ class SimpleHashRequest : HashRequest {
         this.source = source;
         this.salt = salt;
         this.algorithmName = algorithmName;
-        this.iterations = Math.max(0, iterations);
+        this.iterations = max(0, iterations);
     }
 
     ByteSource getSource() {

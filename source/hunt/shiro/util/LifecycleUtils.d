@@ -84,4 +84,14 @@ abstract class LifecycleUtils {
             destroy(o);
         }
     }
+
+    static void destroy(Object[] c) {
+        if (c is null) {
+            return;
+        }
+
+        foreach (Object o ; c) {
+            destroy(o);
+        }
+    }
 }

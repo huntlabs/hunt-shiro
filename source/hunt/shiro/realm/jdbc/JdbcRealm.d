@@ -245,7 +245,7 @@ module hunt.shiro.realm.jdbc.JdbcRealm;
 //             info = new SimpleAuthenticationInfo(username, password.toCharArray(), getName());
             
 //             if (salt !is null) {
-//                 info.setCredentialsSalt(ByteSource.Util.bytes(salt));
+//                 info.setCredentialsSalt(ByteSourceUtil.bytes(salt));
 //             }
 
 //         } catch (SQLException e) {

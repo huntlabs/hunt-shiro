@@ -60,7 +60,7 @@ module hunt.shiro.session.mgt.eis.RandomSessionIdGenerator;
 //      * @param session the {@link Session} instance to which the ID will be applied.
 //      * @return the string value of the configured {@link Random}'s {@link Random#nextLong()} invocation.
 //      */
-//     Serializable generateId(Session session) {
+//     string generateId(Session session) {
 //         //ignore the argument - just call the Random:
 //         return Long.toString(getRandom().nextLong());
 //     }

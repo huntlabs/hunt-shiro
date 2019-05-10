@@ -50,13 +50,13 @@ class DelegatingSession : Session {
     private SessionKey key;
 
     //cached fields to avoid a server-side method call if out-of-process:
-    // private Date startTimestamp = null;
+    private Date startTimestamp; // = null;
     private string host = null;
 
     /**
      * Handle to the target NativeSessionManager that will support the delegate calls.
      */
-    private  NativeSessionManager sessionManager;
+    private NativeSessionManager sessionManager;
 
 
     this(NativeSessionManager sessionManager, SessionKey key) {
@@ -86,20 +86,21 @@ class DelegatingSession : Session {
     /**
      * @see hunt.shiro.session.Session#getStartTimestamp()
      */
-    //  Date getStartTimestamp() {
-    //     if (startTimestamp  is null) {
-    //         startTimestamp = sessionManager.getStartTimestamp(key);
-    //     }
-    //     return startTimestamp;
-    // }
+    Date getStartTimestamp() {
+        // if (startTimestamp  is null) {
+        //     startTimestamp = sessionManager.getStartTimestamp(key);
+        // }
+        // return startTimestamp;
+        return sessionManager.getStartTimestamp(key);
+    }
 
     /**
      * @see hunt.shiro.session.Session#getLastAccessTime()
      */
-    //  Date getLastAccessTime() {
-    //     //can't cache - only business pojo knows the accurate time:
-    //     return sessionManager.getLastAccessTime(key);
-    // }
+    Date getLastAccessTime() {
+        //can't cache - only business pojo knows the accurate time:
+        return sessionManager.getLastAccessTime(key);
+    }
 
      long getTimeout(){
         return sessionManager.getTimeout(key);
@@ -119,35 +120,35 @@ class DelegatingSession : Session {
     /**
      * @see hunt.shiro.session.Session#touch()
      */
-     void touch(){
+    void touch(){
         sessionManager.touch(key);
     }
 
     /**
      * @see hunt.shiro.session.Session#stop()
      */
-     void stop(){
+    void stop(){
         sessionManager.stop(key);
     }
 
     /**
      * @see hunt.shiro.session.Session#getAttributeKeys
      */
-     Collection!(Object) getAttributeKeys(){
+    Object[] getAttributeKeys(){
         return sessionManager.getAttributeKeys(key);
     }
 
     /**
      * @see hunt.shiro.session.Session#getAttribute(Object key)
      */
-     Object getAttribute(Object attributeKey){
+    Object getAttribute(Object attributeKey){
         return sessionManager.getAttribute(this.key, attributeKey);
     }
 
     /**
      * @see Session#setAttribute(Object key, Object value)
      */
-     void setAttribute(Object attributeKey, Object value){
+    void setAttribute(Object attributeKey, Object value){
         if (value  is null) {
             removeAttribute(attributeKey);
         } else {

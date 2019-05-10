@@ -28,7 +28,7 @@ import hunt.collection;
  * used internally by Realms to maintain authorization state.
  *
  */
-class SimpleRole : Serializable {
+class SimpleRole {
 
     protected string name = null;
     protected Set!(Permission) permissions;

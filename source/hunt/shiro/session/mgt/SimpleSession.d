@@ -35,12 +35,6 @@ import hunt.util.DateTime;
 import hunt.Long;
 import std.array;
 
-// import java.io.IOException;
-// import java.io.ObjectInputStream;
-// import java.io.ObjectOutputStream;
-// import java.text.DateFormat;
-
-
 
 /**
  * Simple {@link hunt.shiro.session.Session} JavaBeans-compatible POJO implementation, intended to be used on the

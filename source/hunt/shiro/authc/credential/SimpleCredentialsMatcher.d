@@ -56,7 +56,7 @@ class SimpleCredentialsMatcher : CodecSupport, CredentialsMatcher {
      * @param token the {@code AuthenticationToken} submitted during the authentication attempt.
      * @return the {@code token}'s associated credentials.
      */
-    protected Object getCredentials(AuthenticationToken token) {
+    protected char[] getCredentials(AuthenticationToken token) {
         return token.getCredentials();
     }
 
@@ -130,9 +130,11 @@ class SimpleCredentialsMatcher : CodecSupport, CredentialsMatcher {
      *         {@code false} otherwise
      */
      bool doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
-        Object tokenCredentials = getCredentials(token);
-        Object accountCredentials = getCredentials(info);
-        return equals(tokenCredentials, accountCredentials);
+        // char[] tokenCredentials = getCredentials(token);
+        // char[] accountCredentials = getCredentials(info);
+        // return equals(tokenCredentials, accountCredentials);
+        implementationMissing(false);
+        return false;
     }
 
 }

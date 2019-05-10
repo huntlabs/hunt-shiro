@@ -56,7 +56,7 @@ import hunt.collection;
  * @see hunt.shiro.authc.AuthenticationInfo AuthenticationInfo
  * @see hunt.shiro.authc.Account
  */
-interface AuthorizationInfo : Serializable {
+interface AuthorizationInfo {
 
     /**
      * Returns the names of all roles assigned to a corresponding Subject.

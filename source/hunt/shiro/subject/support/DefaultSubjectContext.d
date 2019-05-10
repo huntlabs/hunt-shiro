@@ -33,6 +33,8 @@ import hunt.shiro.util.MapContext;
 import hunt.logging.ConsoleLogger;
 
 import hunt.util.Common;
+import hunt.Boolean;
+import hunt.String;
 
 import std.traits;
 
@@ -88,195 +90,195 @@ class DefaultSubjectContext : MapContext, SubjectContext {
         super(ctx);
     }
 
-//      SecurityManager getSecurityManager() {
-//         return getTypedValue(SECURITY_MANAGER, typeid(SecurityManager));
-//     }
+     SecurityManager getSecurityManager() {
+        return getTypedValue(SECURITY_MANAGER, typeid(SecurityManager));
+    }
 
-//      void setSecurityManager(SecurityManager securityManager) {
-//         nullSafePut(SECURITY_MANAGER, securityManager);
-//     }
+     void setSecurityManager(SecurityManager securityManager) {
+        nullSafePut(SECURITY_MANAGER, securityManager);
+    }
 
-//      SecurityManager resolveSecurityManager() {
-//         SecurityManager securityManager = getSecurityManager();
-//         if (securityManager  is null) {
-//             version(HUNT_DEBUG) {
-//                 tracef("No SecurityManager available in subject context map.  " ~
-//                         "Falling back to SecurityUtils.getSecurityManager() lookup.");
-//             }
-//             try {
-//                 securityManager = SecurityUtils.getSecurityManager();
-//             } catch (UnavailableSecurityManagerException e) {
-//                 version(HUNT_DEBUG) {
-//                     tracef("No SecurityManager available via SecurityUtils.  Heuristics exhausted.", e);
-//                 }
-//             }
-//         }
-//         return securityManager;
-//     }
+    SecurityManager resolveSecurityManager() {
+        SecurityManager securityManager = getSecurityManager();
+        if (securityManager  is null) {
+            version(HUNT_DEBUG) {
+                tracef("No SecurityManager available in subject context map.  " ~
+                        "Falling back to SecurityUtils.getSecurityManager() lookup.");
+            }
+            try {
+                securityManager = SecurityUtils.getSecurityManager();
+            } catch (UnavailableSecurityManagerException e) {
+                version(HUNT_DEBUG) {
+                    tracef("No SecurityManager available via SecurityUtils.  Heuristics exhausted.", e);
+                }
+            }
+        }
+        return securityManager;
+    }
 
-//      Serializable getSessionId() {
-//         return getTypedValue(SESSION_ID, Serializable.class);
-//     }
+    string getSessionId() {
+        return getTypedValue!String(SESSION_ID).value;
+    }
 
-//      void setSessionId(Serializable sessionId) {
-//         nullSafePut(SESSION_ID, sessionId);
-//     }
+     void setSessionId(string sessionId) {
+        nullSafePut(SESSION_ID, sessionId);
+    }
 
-//      Subject getSubject() {
-//         return getTypedValue(SUBJECT, Subject.class);
-//     }
+    Subject getSubject() {
+        return getTypedValue!Subject(SUBJECT);
+    }
 
-//      void setSubject(Subject subject) {
-//         nullSafePut(SUBJECT, subject);
-//     }
+     void setSubject(Subject subject) {
+        nullSafePut(SUBJECT, subject);
+    }
 
-//      PrincipalCollection getPrincipals() {
-//         return getTypedValue(PRINCIPALS, PrincipalCollection.class);
-//     }
+     PrincipalCollection getPrincipals() {
+        return getTypedValue!PrincipalCollection(PRINCIPALS);
+    }
 
-//     private static bool isEmpty(PrincipalCollection pc) {
-//         return pc  is null || pc.isEmpty();
-//     }
+    private static bool isEmpty(PrincipalCollection pc) {
+        return pc  is null || pc.isEmpty();
+    }
 
-//      void setPrincipals(PrincipalCollection principals) {
-//         if (!isEmpty(principals)) {
-//             put(PRINCIPALS, principals);
-//         }
-//     }
+    void setPrincipals(PrincipalCollection principals) {
+        if (!isEmpty(principals)) {
+            put(PRINCIPALS, principals);
+        }
+    }
 
-//      PrincipalCollection resolvePrincipals() {
-//         PrincipalCollection principals = getPrincipals();
+    PrincipalCollection resolvePrincipals() {
+        PrincipalCollection principals = getPrincipals();
 
-//         if (isEmpty(principals)) {
-//             //check to see if they were just authenticated:
-//             AuthenticationInfo info = getAuthenticationInfo();
-//             if (info !is null) {
-//                 principals = info.getPrincipals();
-//             }
-//         }
+        if (isEmpty(principals)) {
+            //check to see if they were just authenticated:
+            AuthenticationInfo info = getAuthenticationInfo();
+            if (info !is null) {
+                principals = info.getPrincipals();
+            }
+        }
 
-//         if (isEmpty(principals)) {
-//             Subject subject = getSubject();
-//             if (subject !is null) {
-//                 principals = subject.getPrincipals();
-//             }
-//         }
+        if (isEmpty(principals)) {
+            Subject subject = getSubject();
+            if (subject !is null) {
+                principals = subject.getPrincipals();
+            }
+        }
 
-//         if (isEmpty(principals)) {
-//             //try the session:
-//             Session session = resolveSession();
-//             if (session !is null) {
-//                 principals = cast(PrincipalCollection) session.getAttribute(PRINCIPALS_SESSION_KEY);
-//             }
-//         }
+        if (isEmpty(principals)) {
+            //try the session:
+            Session session = resolveSession();
+            if (session !is null) {
+                principals = cast(PrincipalCollection) session.getAttribute(PRINCIPALS_SESSION_KEY);
+            }
+        }
 
-//         return principals;
-//     }
+        return principals;
+    }
 
 
-//      Session getSession() {
-//         return getTypedValue(SESSION, Session.class);
-//     }
+    Session getSession() {
+        return getTypedValue!Session(SESSION);
+    }
 
-//      void setSession(Session session) {
-//         nullSafePut(SESSION, session);
-//     }
+    void setSession(Session session) {
+        nullSafePut(SESSION, session);
+    }
 
-//      Session resolveSession() {
-//         Session session = getSession();
-//         if (session  is null) {
-//             //try the Subject if it exists:
-//             Subject existingSubject = getSubject();
-//             if (existingSubject !is null) {
-//                 session = existingSubject.getSession(false);
-//             }
-//         }
-//         return session;
-//     }
+     Session resolveSession() {
+        Session session = getSession();
+        if (session  is null) {
+            //try the Subject if it exists:
+            Subject existingSubject = getSubject();
+            if (existingSubject !is null) {
+                session = existingSubject.getSession(false);
+            }
+        }
+        return session;
+    }
 
-//      bool isSessionCreationEnabled() {
-//         bool val = getTypedValue(SESSION_CREATION_ENABLED, bool.class);
-//         return val  is null || val;
-//     }
+    bool isSessionCreationEnabled() {
+        Boolean val = getTypedValue!(Boolean)(SESSION_CREATION_ENABLED);
+        return val is null || val.value;
+    }
 
-//      void setSessionCreationEnabled(bool enabled) {
-//         nullSafePut(SESSION_CREATION_ENABLED, enabled);
-//     }
+    void setSessionCreationEnabled(bool enabled) {
+        nullSafePut(SESSION_CREATION_ENABLED, enabled);
+    }
 
-//      bool isAuthenticated() {
-//         bool authc = getTypedValue(AUTHENTICATED, bool.class);
-//         return authc !is null && authc;
-//     }
+    bool isAuthenticated() {
+        Boolean authc = getTypedValue!(Boolean)(AUTHENTICATED);
+        return authc !is null && authc.value;
+    }
 
-//      void setAuthenticated(bool authc) {
-//         put(AUTHENTICATED, authc);
-//     }
+    void setAuthenticated(bool authc) {
+        put(AUTHENTICATED, authc);
+    }
 
-//      bool resolveAuthenticated() {
-//         bool authc = getTypedValue(AUTHENTICATED, bool.class);
-//         if (authc  is null) {
-//             //see if there is an AuthenticationInfo object.  If so, the very presence of one indicates a successful
-//             //authentication attempt:
-//             AuthenticationInfo info = getAuthenticationInfo();
-//             authc = info !is null;
-//         }
-//         if (!authc) {
-//             //fall back to a session check:
-//             Session session = resolveSession();
-//             if (session !is null) {
-//                 bool sessionAuthc = (bool) session.getAttribute(AUTHENTICATED_SESSION_KEY);
-//                 authc = sessionAuthc !is null && sessionAuthc;
-//             }
-//         }
+    bool resolveAuthenticated() {
+        Boolean authc = getTypedValue!Boolean(AUTHENTICATED);
+        if (authc is null) {
+            //see if there is an AuthenticationInfo object.  If so, the very presence of one indicates a successful
+            //authentication attempt:
+            AuthenticationInfo info = getAuthenticationInfo();
+            authc = info !is null;
+        }
+        if (!authc) {
+            //fall back to a session check:
+            Session session = resolveSession();
+            if (session !is null) {
+                Boolean sessionAuthc = cast(Boolean) session.getAttribute(AUTHENTICATED_SESSION_KEY);
+                authc = sessionAuthc !is null && sessionAuthc;
+            }
+        }
 
-//         return authc;
-//     }
+        return authc.value;
+    }
 
-//      AuthenticationInfo getAuthenticationInfo() {
-//         return getTypedValue(AUTHENTICATION_INFO, AuthenticationInfo.class);
-//     }
+    AuthenticationInfo getAuthenticationInfo() {
+        return getTypedValue!AuthenticationInfo(AUTHENTICATION_INFO);
+    }
 
-//      void setAuthenticationInfo(AuthenticationInfo info) {
-//         nullSafePut(AUTHENTICATION_INFO, info);
-//     }
+    void setAuthenticationInfo(AuthenticationInfo info) {
+        nullSafePut(AUTHENTICATION_INFO, info);
+    }
 
-//      AuthenticationToken getAuthenticationToken() {
-//         return getTypedValue(AUTHENTICATION_TOKEN, AuthenticationToken.class);
-//     }
+    AuthenticationToken getAuthenticationToken() {
+        return getTypedValue!AuthenticationToken(AUTHENTICATION_TOKEN);
+    }
 
-//      void setAuthenticationToken(AuthenticationToken token) {
-//         nullSafePut(AUTHENTICATION_TOKEN, token);
-//     }
+    void setAuthenticationToken(AuthenticationToken token) {
+        nullSafePut(AUTHENTICATION_TOKEN, token);
+    }
 
-//      string getHost() {
-//         return getTypedValue(HOST, string.class);
-//     }
+    string getHost() {
+        return getTypedValue!String(HOST).value;
+    }
 
-//      void setHost(string host) {
-//         if (StringUtils.hasText(host)) {
-//             put(HOST, host);
-//         }
-//     }
+    void setHost(string host) {
+        if (!host.empty()) {
+            put(HOST, new String(host));
+        }
+    }
 
-//      string resolveHost() {
-//         string host = getHost();
+    string resolveHost() {
+        string host = getHost();
 
-//         if (host  is null) {
-//             //check to see if there is an AuthenticationToken from which to retrieve it:
-//             AuthenticationToken token = getAuthenticationToken();
-//             HostAuthenticationToken hat = cast(HostAuthenticationToken) token;
-//             if (hat !is null) {
-//                 host = hat.getHost();
-//             }
-//         }
+        if (host  is null) {
+            //check to see if there is an AuthenticationToken from which to retrieve it:
+            AuthenticationToken token = getAuthenticationToken();
+            HostAuthenticationToken hat = cast(HostAuthenticationToken) token;
+            if (hat !is null) {
+                host = hat.getHost();
+            }
+        }
 
-//         if (host is null) {
-//             Session session = resolveSession();
-//             if (session !is null) {
-//                 host = session.getHost();
-//             }
-//         }
+        if (host is null) {
+            Session session = resolveSession();
+            if (session !is null) {
+                host = session.getHost();
+            }
+        }
 
-//         return host;
-//     }
+        return host;
+    }
 }

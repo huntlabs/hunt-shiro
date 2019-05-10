@@ -32,7 +32,7 @@ import hunt.shiro.authz.Permission;
  * is typically only assigned only to "root" or "administrator" users or roles.
  *
  */
-class AllPermission : Permission, Serializable {
+class AllPermission : Permission {
 
     /**
      * Always returns <tt>true</tt>, indicating any Subject granted this permission can do anything.
@@ -40,7 +40,11 @@ class AllPermission : Permission, Serializable {
      * @param p the Permission to check for implies logic.
      * @return <tt>true</tt> always, indicating any Subject grated this permission can do anything.
      */
-     bool implies(Permission p) {
+    bool implies(Permission p) {
         return true;
+    }
+
+    int opCmp(Permission o) {
+        return super.opCmp(cast(AllPermission)o);
     }
 }

@@ -23,8 +23,10 @@ import hunt.shiro.util.CollectionUtils;
 
 import hunt.collection;
 import hunt.Exceptions;
+import hunt.Object;
 
 import std.array;
+import std.range;
 
 /**
  * Default implementation of the {@link PrincipalMap} interface.
@@ -287,4 +289,113 @@ class SimplePrincipalMap : PrincipalMap {
         }
         return null;
     }
+
+    bool remove(string key, Object value) {
+        Object curValue = get(key);
+        if (curValue != value || !containsKey(key))
+            return false;
+        remove(key);
+        return true;
+    }
+
+    // void putAll(Map!(string, Object) map) {
+    //     realmPrincipals.putAll(map);
+    // }
+
+    // void clear() {
+    //     realmPrincipals.clear();
+    // }
+
+    bool replace(string key, Object oldValue, Object newValue) {
+        Object curValue = get(key);
+        if (curValue != oldValue || !containsKey(key)) {
+            return false;
+        }
+        put(key, newValue);
+        return true;
+    }
+
+    Object replace(string key, Object value) {
+        Object curValue = Object.init;
+        if (containsKey(key)) {
+            curValue = put(key, value);
+        }
+        return curValue;
+    }
+
+    override string toString() {
+        if (isEmpty())
+            return "{}";
+
+        Appender!string sb;
+        sb.put("{");
+        bool isFirst = true;
+        foreach (string key, Object value; this) {
+            if (!isFirst) {
+                sb.put(", ");
+            }
+            sb.put(key ~ "=" ~ value.toString());
+            isFirst = false;
+        }
+        sb.put("}");
+
+        return sb.data;
+    }
+
+    Object putIfAbsent(string key, Object value) {
+        Object v = Object.init;
+
+        if (!containsKey(key))
+            v = put(key, value);
+
+        return v;
+    }
+
+    Object[] values() {
+        return byValue().array();
+    }
+
+    Object opIndex(string key) {
+        return get(key);
+    }
+
+    
+    int opApply(scope int delegate(ref Object) dg) {
+        throw new NotImplementedException();
+    }
+
+    int opApply(scope int delegate(ref string, ref Object) dg) {
+        throw new NotImplementedException();
+    }
+
+    int opApply(scope int delegate(MapEntry!(string, Object) entry) dg) {
+        throw new NotImplementedException();
+    }
+
+    InputRange!string byKey() {
+        throw new NotImplementedException();
+    }
+
+    InputRange!Object byValue() {
+        throw new NotImplementedException();
+    }
+
+    override bool opEquals(Object o) {
+        throw new UnsupportedOperationException();
+    }
+
+    bool opEquals(IObject o) {
+        return opEquals(cast(Object) o);
+    }
+
+    override size_t toHash() @trusted nothrow {
+        size_t h = 0;
+        try {
+            foreach (MapEntry!(string, Object) i; this) {
+                h += i.toHash();
+            }
+        } catch (Exception ex) {
+        }
+        return h;
+    } 
 }

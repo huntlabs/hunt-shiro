@@ -49,20 +49,22 @@ class PasswordMatcher : CredentialsMatcher {
 
      bool doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
 
-        PasswordService service = ensurePasswordService();
+        // PasswordService service = ensurePasswordService();
 
-        Object submittedPassword = getSubmittedPassword(token);
-        Object storedCredentials = getStoredPassword(info);
-        assertStoredCredentialsType(storedCredentials);
-        auto storedCredentialsCast = cast(Hash) storedCredentials;
-        if (storedCredentialsCast !is null) {
-            Hash hashedPassword = storedCredentialsCast;
-            HashingPasswordService hashingService = assertHashingPasswordService(service);
-            return hashingService.passwordsMatch(submittedPassword, hashedPassword);
-        }
-        //otherwise they are a string (asserted in the 'assertStoredCredentialsType' method call above):
-        string formatted = (cast(String)storedCredentials).value;
-        return passwordService.passwordsMatch(submittedPassword, formatted);
+        // Object submittedPassword = getSubmittedPassword(token);
+        // Object storedCredentials = getStoredPassword(info);
+        // assertStoredCredentialsType(storedCredentials);
+        // auto storedCredentialsCast = cast(Hash) storedCredentials;
+        // if (storedCredentialsCast !is null) {
+        //     Hash hashedPassword = storedCredentialsCast;
+        //     HashingPasswordService hashingService = assertHashingPasswordService(service);
+        //     return hashingService.passwordsMatch(submittedPassword, hashedPassword);
+        // }
+        // //otherwise they are a string (asserted in the 'assertStoredCredentialsType' method call above):
+        // string formatted = (cast(String)storedCredentials).value;
+        // return passwordService.passwordsMatch(submittedPassword, formatted);
+        implementationMissing(false);
+        return false;
     }
 
     private HashingPasswordService assertHashingPasswordService(PasswordService service) {
@@ -86,7 +88,7 @@ class PasswordMatcher : CredentialsMatcher {
         return service;
     }
 
-    protected Object getSubmittedPassword(AuthenticationToken token) {
+    protected char[] getSubmittedPassword(AuthenticationToken token) {
         return token !is null ? token.getCredentials() : null;
     }
 

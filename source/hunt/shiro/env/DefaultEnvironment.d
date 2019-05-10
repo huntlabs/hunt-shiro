@@ -28,6 +28,8 @@ import hunt.shiro.util.LifecycleUtils;
 import hunt.collection;
 import hunt.Exceptions;
 
+import std.array;
+
 /**
  * Simple/default {@code Environment} implementation that stores Shiro objects as key-value pairs in a
  * {@link java.util.Map Map} instance.  The key is the object name, the value is the object itself.
@@ -39,7 +41,7 @@ class DefaultEnvironment : NamedObjectEnvironment, Destroyable {
      * The default name under which the application's {@code SecurityManager} instance may be acquired, equal to
      * {@code securityManager}.
      */
-     enum string DEFAULT_SECURITY_MANAGER_KEY = "securityManager";
+    enum string DEFAULT_SECURITY_MANAGER_KEY = "securityManager";
 
     protected Map!(string, Object) objects;
     private string securityManagerName;
@@ -101,7 +103,7 @@ class DefaultEnvironment : NamedObjectEnvironment, Destroyable {
      */
     protected SecurityManager lookupSecurityManager() {
         string name = getSecurityManagerName();
-        return cast(SecurityManager)getObject(name, typeid(SecurityManager));
+        return cast(SecurityManager)getObject(name);
     }
 
     /**
@@ -136,21 +138,22 @@ class DefaultEnvironment : NamedObjectEnvironment, Destroyable {
     }
 
     //@SuppressWarnings({"unchecked"})
-    Object getObject(string name, TypeInfo requiredType){
-        if (name  is null) {
+    Object getObject(string name) { // , TypeInfo requiredType
+        if (name.empty()) {
             throw new NullPointerException("name parameter cannot be null.");
         }
-        if (requiredType is null) {
-            throw new NullPointerException("requiredType parameter cannot be null.");
-        }
+        // if (requiredType is null) {
+        //     throw new NullPointerException("requiredType parameter cannot be null.");
+        // }
         Object o = this.objects.get(name);
-        if (o  is null) {
+        if (o is null) {
             return null;
         }
-        if (requiredType != typeid(o)) {
-            string msg = "Object named '" ~ name ~ "' is not of required type [" ~ requiredType.toString() ~ "].";
-            throw new RequiredTypeException(msg);
-        }
+
+        // if (requiredType != typeid(o)) {
+        //     string msg = "Object named '" ~ name ~ "' is not of required type [" ~ requiredType.toString() ~ "].";
+        //     throw new RequiredTypeException(msg);
+        // }
         return o;
     }
 

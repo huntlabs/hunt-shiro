@@ -54,7 +54,7 @@ import hunt.util.Common;
  * @see hunt.shiro.authz.AuthorizationInfo AuthorizationInfo
  * @see Account
  */
-interface AuthenticationInfo : Serializable {
+interface AuthenticationInfo {
 
     /**
      * Returns all principals associated with the corresponding Subject.  Each principal is an identifying piece of

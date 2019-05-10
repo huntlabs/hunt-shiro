@@ -38,7 +38,7 @@ import hunt.collection.Map;
  * @see hunt.shiro.session.mgt.SessionManager#start SessionManager.start(SessionContext)
  * @see hunt.shiro.session.mgt.SessionFactory SessionFactory
  */
-interface SessionContext : Map!(string, Object) {
+interface SessionContext { // : Map!(string, Object)
 
     /**
      * Sets the originating host name or IP address (as a string) from where the {@code Subject} is initiating the
@@ -82,8 +82,8 @@ interface SessionContext : Map!(string, Object) {
      */
     string getHost();
 
-    Serializable getSessionId();
+    string getSessionId();
 
-    void setSessionId(Serializable sessionId);
+    void setSessionId(string sessionId);
 
 }

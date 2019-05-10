@@ -284,25 +284,23 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager,
 
         int invalidCount = 0;
 
-        Collection!(Session) activeSessions = getActiveSessions();
+        Session[] activeSessions = getActiveSessions();
 
-        if (activeSessions !is null && !activeSessions.isEmpty()) {
-            foreach(Session s ; activeSessions) {
-                try {
-                    //simulate a lookup key to satisfy the method signature.
-                    //this could probably stand to be cleaned up in future versions:
-                    SessionKey key = new DefaultSessionKey(s.getId());
-                    validate(s, key);
-                } catch (InvalidSessionException e) {
-                    version(HUNT_DEBUG) {
-                        ExpiredSessionException ee = cast(ExpiredSessionException)e;
-                        bool expired = ee !is null;
-                        string msg = "Invalidated session with id [" ~ s.getId() ~ "]" ~
-                                (expired ? " (expired)" : " (stopped)");
-                        tracef(msg);
-                    }
-                    invalidCount++;
+        foreach(Session s ; activeSessions) {
+            try {
+                //simulate a lookup key to satisfy the method signature.
+                //this could probably stand to be cleaned up in future versions:
+                SessionKey key = new DefaultSessionKey(s.getId());
+                validate(s, key);
+            } catch (InvalidSessionException e) {
+                version(HUNT_DEBUG) {
+                    ExpiredSessionException ee = cast(ExpiredSessionException)e;
+                    bool expired = ee !is null;
+                    string msg = "Invalidated session with id [" ~ s.getId() ~ "]" ~
+                            (expired ? " (expired)" : " (stopped)");
+                    tracef(msg);
                 }
+                invalidCount++;
             }
         }
 
@@ -317,5 +315,5 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager,
         }
     }
 
-    protected abstract Collection!(Session) getActiveSessions();
+    protected abstract Session[] getActiveSessions();
 }

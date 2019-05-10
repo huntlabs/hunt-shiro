@@ -20,7 +20,7 @@ module hunt.shiro.crypto.JcaCipherService;
 
 import hunt.shiro.crypto.CipherService;
 
-// import hunt.shiro.util.ByteSource;
+import hunt.shiro.util.ByteSource;
 // import hunt.shiro.util.StringUtils;
 
 import hunt.Exceptions;
@@ -301,96 +301,108 @@ abstract class JcaCipherService : CipherService {
         return null;
     }
 
-    // ByteSource encrypt(byte[] plaintext, byte[] key) {
-    //     byte[] ivBytes = null;
-    //     bool generate = isGenerateInitializationVectors(false);
-    //     if (generate) {
-    //         ivBytes = generateInitializationVector(false);
-    //         if (ivBytes == null || ivBytes.length == 0) {
-    //             throw new IllegalStateException("Initialization vector generation is enabled - generated vector" +
-    //                     "cannot be null or empty.");
-    //         }
-    //     }
-    //     return encrypt(plaintext, key, ivBytes, generate);
-    // }
+    ByteSource encrypt(byte[] plaintext, byte[] key) {
 
-    // private ByteSource encrypt(byte[] plaintext, byte[] key, byte[] iv, bool prependIv) throws CryptoException {
+        implementationMissing(false);
+        return null;
+        // byte[] ivBytes = null;
+        // bool generate = isGenerateInitializationVectors(false);
+        // if (generate) {
+        //     ivBytes = generateInitializationVector(false);
+        //     if (ivBytes == null || ivBytes.length == 0) {
+        //         throw new IllegalStateException("Initialization vector generation is enabled - generated vector" +
+        //                 "cannot be null or empty.");
+        //     }
+        // }
+        // return encrypt(plaintext, key, ivBytes, generate);
+    }
 
-    //     final int MODE = javax.crypto.Cipher.ENCRYPT_MODE;
+    private ByteSource encrypt(byte[] plaintext, byte[] key, byte[] iv, bool prependIv) {
 
-    //     byte[] output;
+        implementationMissing(false);
+        return null;
 
-    //     if (prependIv && iv != null && iv.length > 0) {
+        // final int MODE = javax.crypto.Cipher.ENCRYPT_MODE;
 
-    //         byte[] encrypted = crypt(plaintext, key, iv, MODE);
+        // byte[] output;
 
-    //         output = new byte[iv.length + encrypted.length];
+        // if (prependIv && iv != null && iv.length > 0) {
 
-    //         //now copy the iv bytes + encrypted bytes into one output array:
+        //     byte[] encrypted = crypt(plaintext, key, iv, MODE);
 
-    //         // iv bytes:
-    //         System.arraycopy(iv, 0, output, 0, iv.length);
+        //     output = new byte[iv.length + encrypted.length];
 
-    //         // + encrypted bytes:
-    //         System.arraycopy(encrypted, 0, output, iv.length, encrypted.length);
-    //     } else {
-    //         output = crypt(plaintext, key, iv, MODE);
-    //     }
+        //     //now copy the iv bytes + encrypted bytes into one output array:
 
-    //     if (log.isTraceEnabled()) {
-    //         log.trace("Incoming plaintext of size " + (plaintext != null ? plaintext.length : 0) + ".  Ciphertext " +
-    //                 "byte array is size " + (output != null ? output.length : 0));
-    //     }
+        //     // iv bytes:
+        //     System.arraycopy(iv, 0, output, 0, iv.length);
 
-    //     return ByteSourceUtil.bytes(output);
-    // }
+        //     // + encrypted bytes:
+        //     System.arraycopy(encrypted, 0, output, iv.length, encrypted.length);
+        // } else {
+        //     output = crypt(plaintext, key, iv, MODE);
+        // }
 
-    // ByteSource decrypt(byte[] ciphertext, byte[] key) throws CryptoException {
+        // if (log.isTraceEnabled()) {
+        //     log.trace("Incoming plaintext of size " + (plaintext != null ? plaintext.length : 0) + ".  Ciphertext " +
+        //             "byte array is size " + (output != null ? output.length : 0));
+        // }
 
-    //     byte[] encrypted = ciphertext;
+        // return ByteSourceUtil.bytes(output);
+    }
 
-    //     //No IV, check if we need to read the IV from the stream:
-    //     byte[] iv = null;
+    ByteSource decrypt(byte[] ciphertext, byte[] key) {
 
-    //     if (isGenerateInitializationVectors(false)) {
-    //         try {
-    //             //We are generating IVs, so the ciphertext argument array is not actually 100% cipher text.  Instead, it
-    //             //is:
-    //             // - the first N bytes is the initialization vector, where N equals the value of the
-    //             // 'initializationVectorSize' attribute.
-    //             // - the remaining bytes in the method argument (arg.length - N) is the real cipher text.
+        implementationMissing(false);
+        return null;
 
-    //             //So we need to chunk the method argument into its constituent parts to find the IV and then use
-    //             //the IV to decrypt the real ciphertext:
+        // byte[] encrypted = ciphertext;
 
-    //             int ivSize = getInitializationVectorSize();
-    //             int ivByteSize = ivSize / BITS_PER_BYTE;
+        // //No IV, check if we need to read the IV from the stream:
+        // byte[] iv = null;
 
-    //             //now we know how large the iv is, so extract the iv bytes:
-    //             iv = new byte[ivByteSize];
-    //             System.arraycopy(ciphertext, 0, iv, 0, ivByteSize);
+        // if (isGenerateInitializationVectors(false)) {
+        //     try {
+        //         //We are generating IVs, so the ciphertext argument array is not actually 100% cipher text.  Instead, it
+        //         //is:
+        //         // - the first N bytes is the initialization vector, where N equals the value of the
+        //         // 'initializationVectorSize' attribute.
+        //         // - the remaining bytes in the method argument (arg.length - N) is the real cipher text.
 
-    //             //remaining data is the actual encrypted ciphertext.  Isolate it:
-    //             int encryptedSize = ciphertext.length - ivByteSize;
-    //             encrypted = new byte[encryptedSize];
-    //             System.arraycopy(ciphertext, ivByteSize, encrypted, 0, encryptedSize);
-    //         } catch (Exception e) {
-    //             string msg = "Unable to correctly extract the Initialization Vector or ciphertext.";
-    //             throw new CryptoException(msg, e);
-    //         }
-    //     }
+        //         //So we need to chunk the method argument into its constituent parts to find the IV and then use
+        //         //the IV to decrypt the real ciphertext:
 
-    //     return decrypt(encrypted, key, iv);
-    // }
+        //         int ivSize = getInitializationVectorSize();
+        //         int ivByteSize = ivSize / BITS_PER_BYTE;
 
-    // private ByteSource decrypt(byte[] ciphertext, byte[] key, byte[] iv) throws CryptoException {
-    //     if (log.isTraceEnabled()) {
-    //         log.trace("Attempting to decrypt incoming byte array of length " +
-    //                 (ciphertext != null ? ciphertext.length : 0));
-    //     }
-    //     byte[] decrypted = crypt(ciphertext, key, iv, javax.crypto.Cipher.DECRYPT_MODE);
-    //     return decrypted == null ? null : ByteSourceUtil.bytes(decrypted);
-    // }
+        //         //now we know how large the iv is, so extract the iv bytes:
+        //         iv = new byte[ivByteSize];
+        //         System.arraycopy(ciphertext, 0, iv, 0, ivByteSize);
+
+        //         //remaining data is the actual encrypted ciphertext.  Isolate it:
+        //         int encryptedSize = ciphertext.length - ivByteSize;
+        //         encrypted = new byte[encryptedSize];
+        //         System.arraycopy(ciphertext, ivByteSize, encrypted, 0, encryptedSize);
+        //     } catch (Exception e) {
+        //         string msg = "Unable to correctly extract the Initialization Vector or ciphertext.";
+        //         throw new CryptoException(msg, e);
+        //     }
+        // }
+
+        // return decrypt(encrypted, key, iv);
+    }
+
+    private ByteSource decrypt(byte[] ciphertext, byte[] key, byte[] iv) {
+        // if (log.isTraceEnabled()) {
+        //     log.trace("Attempting to decrypt incoming byte array of length " +
+        //             (ciphertext != null ? ciphertext.length : 0));
+        // }
+        // byte[] decrypted = crypt(ciphertext, key, iv, javax.crypto.Cipher.DECRYPT_MODE);
+        // return decrypted == null ? null : ByteSourceUtil.bytes(decrypted);
+
+        implementationMissing(false);
+        return null;
+    }
 
     // /**
     //  * Returns a new {@link javax.crypto.Cipher Cipher} instance to use for encryption/decryption operations.  The
@@ -403,7 +415,7 @@ abstract class JcaCipherService : CipherService {
     //  * @throws CryptoException if a new Cipher instance cannot be constructed based on the
     //  *                         {@link #getTransformationString(bool) getTransformationString} value.
     //  */
-    // private javax.crypto.Cipher newCipherInstance(bool streaming) throws CryptoException {
+    // private javax.crypto.Cipher newCipherInstance(bool streaming) {
     //     string transformationString = getTransformationString(streaming);
     //     try {
     //         return javax.crypto.Cipher.getInstance(transformationString);
@@ -455,7 +467,7 @@ abstract class JcaCipherService : CipherService {
     //  * @return the resulting crypted byte array.
     //  * @throws CryptoException if there is an illegal block size or bad padding
     //  */
-    // private byte[] crypt(javax.crypto.Cipher cipher, byte[] bytes) throws CryptoException {
+    // private byte[] crypt(javax.crypto.Cipher cipher, byte[] bytes) {
     //     try {
     //         return cipher.doFinal(bytes);
     //     } catch (Exception e) {
@@ -476,7 +488,7 @@ abstract class JcaCipherService : CipherService {
     //  * @throws CryptoException if the key is invalid
     //  */
     // private void init(javax.crypto.Cipher cipher, int mode, java.security.Key key,
-    //                   AlgorithmParameterSpec spec, SecureRandom random) throws CryptoException {
+    //                   AlgorithmParameterSpec spec, SecureRandom random) {
     //     try {
     //         if (random != null) {
     //             if (spec != null) {
@@ -498,7 +510,7 @@ abstract class JcaCipherService : CipherService {
     // }
 
 
-    // void encrypt(InputStream in, OutputStream out, byte[] key) throws CryptoException {
+    // void encrypt(InputStream in, OutputStream out, byte[] key) {
     //     byte[] iv = null;
     //     bool generate = isGenerateInitializationVectors(true);
     //     if (generate) {
@@ -511,7 +523,7 @@ abstract class JcaCipherService : CipherService {
     //     encrypt(in, out, key, iv, generate);
     // }
 
-    // private void encrypt(InputStream in, OutputStream out, byte[] key, byte[] iv, bool prependIv) throws CryptoException {
+    // private void encrypt(InputStream in, OutputStream out, byte[] key, byte[] iv, bool prependIv) {
     //     if (prependIv && iv != null && iv.length > 0) {
     //         try {
     //             //first write the IV:
@@ -524,11 +536,11 @@ abstract class JcaCipherService : CipherService {
     //     crypt(in, out, key, iv, javax.crypto.Cipher.ENCRYPT_MODE);
     // }
 
-    // void decrypt(InputStream in, OutputStream out, byte[] key) throws CryptoException {
+    // void decrypt(InputStream in, OutputStream out, byte[] key) {
     //     decrypt(in, out, key, isGenerateInitializationVectors(true));
     // }
 
-    // private void decrypt(InputStream in, OutputStream out, byte[] key, bool ivPrepended) throws CryptoException {
+    // private void decrypt(InputStream in, OutputStream out, byte[] key, bool ivPrepended) {
 
     //     byte[] iv = null;
     //     //No Initialization Vector provided as a method argument - check if we need to read the IV from the stream:
@@ -557,11 +569,11 @@ abstract class JcaCipherService : CipherService {
     //     decrypt(in, out, key, iv);
     // }
 
-    // private void decrypt(InputStream in, OutputStream out, byte[] decryptionKey, byte[] iv) throws CryptoException {
+    // private void decrypt(InputStream in, OutputStream out, byte[] decryptionKey, byte[] iv) {
     //     crypt(in, out, decryptionKey, iv, javax.crypto.Cipher.DECRYPT_MODE);
     // }
 
-    // private void crypt(InputStream in, OutputStream out, byte[] keyBytes, byte[] iv, int cryptMode) throws CryptoException {
+    // private void crypt(InputStream in, OutputStream out, byte[] keyBytes, byte[] iv, int cryptMode) {
     //     if (in == null) {
     //         throw new NullPointerException("InputStream argument cannot be null.");
     //     }
@@ -587,7 +599,7 @@ abstract class JcaCipherService : CipherService {
     // }
 
     // private javax.crypto.Cipher initNewCipher(int jcaCipherMode, byte[] key, byte[] iv, bool streaming)
-    //         throws CryptoException {
+    //         {
 
     //     javax.crypto.Cipher cipher = newCipherInstance(streaming);
     //     java.security.Key jdkKey = new SecretKeySpec(key, getAlgorithmName());

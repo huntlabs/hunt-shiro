@@ -37,5 +37,5 @@ interface NamedObjectEnvironment : Environment {
      * @return the object in Shiro's environment with the specified name (of the specified type) or {@code null} if
      * no object with that name was found.
      */
-    Object getObject(string name, TypeInfo_Class requiredType);
+    Object getObject(string name); // , TypeInfo_Class requiredType
 }

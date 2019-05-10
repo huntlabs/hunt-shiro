@@ -240,9 +240,9 @@ class DefaultSessionManager : AbstractValidatingSessionManager, CacheManagerAwar
         sessionDAO.remove(session);
     }
 
-    override protected Collection!(Session) getActiveSessions() {
-        Collection!(Session) active = sessionDAO.getActiveSessions();
-        return active !is null ? active : Collections.emptySet!Session();
+    override protected Session[] getActiveSessions() {
+        Session[] active = sessionDAO.getActiveSessions();
+        return active;
     }
 
 }

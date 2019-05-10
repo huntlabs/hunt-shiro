@@ -34,7 +34,7 @@ import hunt.collection;
  * @see #fromRealm(string realmName)
  * @see #getRealmNames()
  */
-interface PrincipalCollection : Iterable!Object, Serializable {
+interface PrincipalCollection : Iterable!Object {
 
     /**
      * Returns the primary principal used application-wide to uniquely identify the owning account/Subject.
@@ -125,14 +125,14 @@ interface PrincipalCollection : Iterable!Object, Serializable {
      * @return the Subject's principals from the specified Realm only as a Collection or an empty Collection if there
      *         are not any principals from that realm.
      */
-    Collection!Object fromRealm(string realmName);
+    Object[] fromRealm(string realmName);
 
     /**
      * Returns the realm names that this collection has principals for.
      *
      * @return the names of realms that this collection has one or more principals for.
      */
-    Set!(string) getRealmNames();
+    string[] getRealmNames();
 
     /**
      * Returns {@code true} if this collection is empty, {@code false} otherwise.

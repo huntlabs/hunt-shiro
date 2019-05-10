@@ -63,16 +63,16 @@ class ProxiedSession : Session {
     /**
      * Immediately delegates to the underlying proxied session.
      */
-    //  Date getStartTimestamp() {
-    //     return session.getStartTimestamp();
-    // }
+    Date getStartTimestamp() {
+        return session.getStartTimestamp();
+    }
 
-    // /**
-    //  * Immediately delegates to the underlying proxied session.
-    //  */
-    //  Date getLastAccessTime() {
-    //     return session.getLastAccessTime();
-    // }
+    /**
+     * Immediately delegates to the underlying proxied session.
+     */
+    Date getLastAccessTime() {
+        return session.getLastAccessTime();
+    }
 
     /**
      * Immediately delegates to the underlying proxied session.
@@ -112,14 +112,14 @@ class ProxiedSession : Session {
     /**
      * Immediately delegates to the underlying proxied session.
      */
-     Collection!(Object) getAttributeKeys(){
+    Object[] getAttributeKeys(){
         return session.getAttributeKeys();
     }
 
     /**
      * Immediately delegates to the underlying proxied session.
      */
-     Object getAttribute(Object key){
+    Object getAttribute(Object key){
         return session.getAttribute(key);
     }
 

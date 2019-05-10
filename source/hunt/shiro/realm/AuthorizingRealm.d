@@ -60,7 +60,7 @@ import std.string;
  * @see hunt.shiro.authz.SimpleAuthorizationInfo
  */
 abstract class AuthorizingRealm : AuthenticatingRealm,
-        Authorizer, Initializable, PermissionResolverAware, RolePermissionResolverAware {
+        Authorizer, PermissionResolverAware, RolePermissionResolverAware {
 
     /*-------------------------------------------
     |             C O N S T A N T S             |
@@ -92,19 +92,19 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
     |         C O N S T R U C T O R S           |
     ============================================*/
 
-     this() {
+    this() {
         this(null, null);
     }
 
-     this(CacheManager cacheManager) {
+    this(CacheManager cacheManager) {
         this(cacheManager, null);
     }
 
-     this(CredentialsMatcher matcher) {
+    this(CredentialsMatcher matcher) {
         this(null, matcher);
     }
 
-     this(CacheManager cacheManager, CredentialsMatcher matcher) {
+    this(CacheManager cacheManager, CredentialsMatcher matcher) {
         super();
         if (cacheManager !is null) setCacheManager(cacheManager);
         if (matcher !is null) setCredentialsMatcher(matcher);
@@ -135,20 +135,20 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
         }
     }
 
-     void setAuthorizationCache(Cache!(Object, AuthorizationInfo) authorizationCache) {
+    void setAuthorizationCache(Cache!(Object, AuthorizationInfo) authorizationCache) {
         this.authorizationCache = authorizationCache;
     }
 
-     Cache!(Object, AuthorizationInfo) getAuthorizationCache() {
+    Cache!(Object, AuthorizationInfo) getAuthorizationCache() {
         return this.authorizationCache;
     }
 
-     string getAuthorizationCacheName() {
+    string getAuthorizationCacheName() {
         return authorizationCacheName;
     }
 
     //@SuppressWarnings({"UnusedDeclaration"})
-     void setAuthorizationCacheName(string authorizationCacheName) {
+    void setAuthorizationCacheName(string authorizationCacheName) {
         this.authorizationCacheName = authorizationCacheName;
     }
 
@@ -160,7 +160,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
      *
      * @return {@code true} if authorization caching should be utilized, {@code false} otherwise.
      */
-     bool isAuthorizationCachingEnabled() {
+    bool isAuthorizationCachingEnabled() {
         return isCachingEnabled() && authorizationCachingEnabled;
     }
 
@@ -173,27 +173,27 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
      * @param authenticationCachingEnabled the value to set
      */
     //@SuppressWarnings({"UnusedDeclaration"})
-     void setAuthorizationCachingEnabled(bool authenticationCachingEnabled) {
+    void setAuthorizationCachingEnabled(bool authenticationCachingEnabled) {
         this.authorizationCachingEnabled = authenticationCachingEnabled;
         if (authenticationCachingEnabled) {
             setCachingEnabled(true);
         }
     }
 
-     PermissionResolver getPermissionResolver() {
+    PermissionResolver getPermissionResolver() {
         return permissionResolver;
     }
 
-     void setPermissionResolver(PermissionResolver permissionResolver) {
+    void setPermissionResolver(PermissionResolver permissionResolver) {
         if (permissionResolver  is null) throw new IllegalArgumentException("Null PermissionResolver is not allowed");
         this.permissionResolver = permissionResolver;
     }
 
-     RolePermissionResolver getRolePermissionResolver() {
+    RolePermissionResolver getRolePermissionResolver() {
         return permissionRoleResolver;
     }
 
-     void setRolePermissionResolver(RolePermissionResolver permissionRoleResolver) {
+    void setRolePermissionResolver(RolePermissionResolver permissionRoleResolver) {
         this.permissionRoleResolver = permissionRoleResolver;
     }
 

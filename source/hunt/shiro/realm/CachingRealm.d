@@ -31,6 +31,7 @@ import hunt.logging.ConsoleLogger;
 import hunt.collection;
 
 import core.atomic;
+import std.array;
 import std.conv;
 
 /**
@@ -196,9 +197,9 @@ abstract class CachingRealm : Realm, Nameable, CacheManagerAware, LogoutAware {
     protected Object getAvailablePrincipal(PrincipalCollection principals) {
         Object primary = null;
         if (!isEmpty(principals)) {
-            Collection!Object thisPrincipals = principals.fromRealm(getName());
-            if (!CollectionUtils.isEmpty(thisPrincipals)) {
-                primary = thisPrincipals.toArray()[0];
+            Object[] thisPrincipals = principals.fromRealm(getName());
+            if (!thisPrincipals.empty()) {
+                primary = thisPrincipals[0];
             } else {
                 //no principals attributed to this particular realm.  Fall back to the 'master' primary:
                 primary = principals.getPrimaryPrincipal();

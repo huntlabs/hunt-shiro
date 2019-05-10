@@ -208,13 +208,13 @@ abstract class AbstractNativeSessionManager :
         }
     }
 
-    //  Date getStartTimestamp(SessionKey key) {
-    //     return lookupRequiredSession(key).getStartTimestamp();
-    // }
+    Date getStartTimestamp(SessionKey key) {
+        return lookupRequiredSession(key).getStartTimestamp();
+    }
 
-    //  Date getLastAccessTime(SessionKey key) {
-    //     return lookupRequiredSession(key).getLastAccessTime();
-    // }
+    Date getLastAccessTime(SessionKey key) {
+        return lookupRequiredSession(key).getLastAccessTime();
+    }
 
      long getTimeout(SessionKey key){
         return lookupRequiredSession(key).getTimeout();
@@ -236,15 +236,12 @@ abstract class AbstractNativeSessionManager :
         return lookupRequiredSession(key).getHost();
     }
 
-     Collection!(Object) getAttributeKeys(SessionKey key) {
-        Collection!(Object) c = lookupRequiredSession(key).getAttributeKeys();
-        if (!CollectionUtils.isEmpty(c)) {
-            return c;
-        }
-        return Collections.emptySet!Object();
+    Object[] getAttributeKeys(SessionKey key) {
+        Object[] c = lookupRequiredSession(key).getAttributeKeys();
+        return c;
     }
 
-     Object getAttribute(SessionKey sessionKey, Object attributeKey){
+    Object getAttribute(SessionKey sessionKey, Object attributeKey){
         return lookupRequiredSession(sessionKey).getAttribute(attributeKey);
     }
 

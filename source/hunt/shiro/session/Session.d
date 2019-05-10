@@ -167,7 +167,7 @@ interface Session {
      *         there are no session attributes.
      * @throws InvalidSessionException if this session has stopped or expired prior to calling this method.
      */
-    Collection!(Object) getAttributeKeys();
+    Object[] getAttributeKeys();
 
     /**
      * Returns the object bound to this session identified by the specified key.  If there is no

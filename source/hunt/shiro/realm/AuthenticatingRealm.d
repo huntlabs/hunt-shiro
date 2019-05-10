@@ -35,6 +35,7 @@ import hunt.shiro.util.Common;
 
 import hunt.Exceptions;
 import hunt.logging.ConsoleLogger;
+import hunt.String;
 
 import core.atomic;
 import std.conv;
@@ -481,8 +482,8 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
         Cache!(Object, AuthenticationInfo) cache = getAvailableAuthenticationCache();
         if (cache !is null && token !is null) {
             tracef("Attempting to retrieve the AuthenticationInfo from cache.");
-            Object key = getAuthenticationCacheKey(token);
-            info = cache.get(key);
+            string key = getAuthenticationCacheKey(token);
+            info = cache.get(new String(key));
             if (info  is null) {
                 tracef("No AuthorizationInfo found in cache for key [%s]", key);
             } else {
@@ -510,8 +511,8 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
 
         Cache!(Object, AuthenticationInfo) cache = getAvailableAuthenticationCache();
         if (cache !is null) {
-            Object key = getAuthenticationCacheKey(token);
-            cache.put(key, info);
+            string key = getAuthenticationCacheKey(token);
+            cache.put(new String(key), info);
             tracef("Cached AuthenticationInfo for continued authentication.  key=[%s], value=[%s].", key, info);
         }
     }
@@ -618,7 +619,7 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
      * @param token the authentication token for which any successful authentication will be cached.
      * @return the cache key to use to cache the associated {@link AuthenticationInfo} after a successful authentication.
      */
-    protected Object getAuthenticationCacheKey(AuthenticationToken token) {
+    protected string getAuthenticationCacheKey(AuthenticationToken token) {
         return token !is null ? token.getPrincipal() : null;
     }
 

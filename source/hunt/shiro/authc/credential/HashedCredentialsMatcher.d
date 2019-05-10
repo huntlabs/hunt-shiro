@@ -319,7 +319,7 @@ class HashedCredentialsMatcher : SimpleCredentialsMatcher {
      *             are almost impossible to break.  This method will be removed in Shiro 2.0.
      */
     deprecated("")
-    protected Object getSalt(AuthenticationToken token) {
+    protected string getSalt(AuthenticationToken token) {
         return token.getPrincipal();
     }
 
@@ -401,17 +401,20 @@ class HashedCredentialsMatcher : SimpleCredentialsMatcher {
      * @since 1.1
      */
     protected Object hashProvidedCredentials(AuthenticationToken token, AuthenticationInfo info) {
-        Object salt = null;
-        SaltedAuthenticationInfo infoCast = cast(SaltedAuthenticationInfo)info;
-        if (infoCast !is null) {
-            salt = cast(Object)infoCast.getCredentialsSalt();
-        } else {
-            //retain 1.0 backwards compatibility:
-            if (isHashSalted()) {
-                salt = getSalt(token);
-            }
-        }
-        return cast(Object)hashProvidedCredentials(token.getCredentials(), salt, getHashIterations());
+        // Object salt = null;
+        // SaltedAuthenticationInfo infoCast = cast(SaltedAuthenticationInfo)info;
+        // if (infoCast !is null) {
+        //     salt = cast(Object)infoCast.getCredentialsSalt();
+        // } else {
+        //     //retain 1.0 backwards compatibility:
+        //     if (isHashSalted()) {
+        //         salt = getSalt(token);
+        //     }
+        // }
+        // return cast(Object)hashProvidedCredentials(token.getCredentials(), salt, getHashIterations());
+
+        implementationMissing(false);
+        return null;
     }
 
     /**

@@ -56,7 +56,7 @@ import hunt.util.Common;
  * @see HostAuthenticationToken
  * @see UsernamePasswordToken
  */
-interface AuthenticationToken : Serializable {
+interface AuthenticationToken {
 
     /**
      * Returns the account identity submitted during the authentication process.
@@ -72,7 +72,7 @@ interface AuthenticationToken : Serializable {
      * @return the account identity submitted during the authentication process.
      * @see UsernamePasswordToken
      */
-    Object getPrincipal();
+    string getPrincipal();
 
     /**
      * Returns the credentials submitted by the user during the authentication process that verifies
@@ -88,6 +88,6 @@ interface AuthenticationToken : Serializable {
      *
      * @return the credential submitted by the user during the authentication process.
      */
-    Object getCredentials();
+    char[] getCredentials();
 
 }

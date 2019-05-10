@@ -125,5 +125,5 @@ interface SessionDAO {
      * @return a Collection of {@code Session}s that are considered active, or an
      *         empty collection or {@code null} if there are no active sessions.
      */
-    Collection!(Session) getActiveSessions();
+    Session[] getActiveSessions();
 }

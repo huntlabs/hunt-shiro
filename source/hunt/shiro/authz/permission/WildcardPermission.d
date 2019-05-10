@@ -267,4 +267,8 @@ class WildcardPermission : Permission {
         return parts.toHash();
     }
 
+    int opCmp(Permission o) {
+        return super.opCmp(cast(WildcardPermission)o);
+    }
+
 }

@@ -171,13 +171,13 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
     //     return Collections.unmodifiableSet(typed);
     // }
 
-    // List!Object asList() {
-    //     Set all = asSet();
-    //     if (all.isEmpty()) {
-    //         return Collections.EMPTY_LIST;
-    //     }
-    //     return Collections.unmodifiableList(new ArrayList(all));
-    // }
+    List!Object asList() {
+        Set!Object all = asSet();
+        if (all.isEmpty()) {
+            return Collections.emptyList!Object();
+        }
+        return new ArrayList!Object(all);
+    }
 
     Set!Object asSet() {
         if (realmPrincipals is null || realmPrincipals.isEmpty()) {
@@ -194,24 +194,25 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
         return aggregated; 
     }
 
-    //  Collection fromRealm(string realmName) {
-    //     if (realmPrincipals  is null || realmPrincipals.isEmpty()) {
-    //         return Collections.EMPTY_SET;
-    //     }
-    //     Set principals = realmPrincipals.get(realmName);
-    //     if (principals  is null || principals.isEmpty()) {
-    //         principals = Collections.EMPTY_SET;
-    //     }
-    //     return Collections.unmodifiableSet(principals);
-    // }
+    Object[] fromRealm(string realmName) {
+        if (realmPrincipals is null || realmPrincipals.isEmpty()) {
+            return null;
+        }
+        Set!Object principals = realmPrincipals.get(realmName);
+        if (principals is null || principals.isEmpty()) {
+            return null;
+        } else {
+            return principals.toArray();
+        }
+    }
 
-    //  Set!(string) getRealmNames() {
-    //     if (realmPrincipals  is null) {
-    //         return null;
-    //     } else {
-    //         return realmPrincipals.keySet();
-    //     }
-    // }
+    string[] getRealmNames() {
+        if (realmPrincipals  is null) {
+            return null;
+        } else {
+            return realmPrincipals.byKey.array();
+        }
+    }
 
      bool isEmpty() {
         return realmPrincipals  is null || realmPrincipals.isEmpty();
@@ -311,4 +312,10 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
     //         this.realmPrincipals = (Map!(string, Set)) in.readObject();
     //     }
     // }
+
+
+    int opApply(scope int delegate(ref Object) dg) {
+        throw new NotImplementedException();
+        // return 0;
+    }
 }

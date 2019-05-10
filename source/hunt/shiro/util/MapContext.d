@@ -24,7 +24,12 @@ import hunt.shiro.util.Common;
 import hunt.collection.HashMap;
 import hunt.collection.Map;
 import hunt.Exceptions;
+import hunt.Object;
 import hunt.util.Common;
+import hunt.util.ObjectUtils;
+
+import std.array;
+import std.range;
 
 
 /**
@@ -34,7 +39,7 @@ import hunt.util.Common;
  * @see hunt.shiro.subject.SubjectContext SubjectContext
  * @see hunt.shiro.session.mgt.SessionContext SessionContext
  */
-class MapContext : Map!(string, Object), Serializable {
+class MapContext : Map!(string, Object) {
 
     private Map!(string, Object) backingMap;
 
@@ -114,7 +119,15 @@ class MapContext : Map!(string, Object), Serializable {
         return backingMap.remove(o);
     }
 
-     void putAll(Map!(string, Object) map) {
+    bool remove(string key, Object value) {
+        Object curValue = get(key);
+        if (curValue != value || !containsKey(key))
+            return false;
+        remove(key);
+        return true;
+    }
+
+    void putAll(Map!(string, Object) map) {
         backingMap.putAll(map);
     }
 
@@ -122,6 +135,82 @@ class MapContext : Map!(string, Object), Serializable {
         backingMap.clear();
     }
 
+    bool replace(string key, Object oldValue, Object newValue) {
+        Object curValue = get(key);
+        if (curValue != oldValue || !containsKey(key)) {
+            return false;
+        }
+        put(key, newValue);
+        return true;
+    }
+
+    Object replace(string key, Object value) {
+        Object curValue = Object.init;
+        if (containsKey(key)) {
+            curValue = put(key, value);
+        }
+        return curValue;
+    }
+
+    override string toString() {
+        if (isEmpty())
+            return "{}";
+
+        Appender!string sb;
+        sb.put("{");
+        bool isFirst = true;
+        foreach (string key, Object value; this) {
+            if (!isFirst) {
+                sb.put(", ");
+            }
+            sb.put(key ~ "=" ~ value.toString());
+            isFirst = false;
+        }
+        sb.put("}");
+
+        return sb.data;
+    }
+
+    Object putIfAbsent(string key, Object value) {
+        Object v = Object.init;
+
+        if (!containsKey(key))
+            v = put(key, value);
+
+        return v;
+    }
+
+    Object[] values() {
+        return byValue().array();
+    }
+
+    Object opIndex(string key) {
+        return get(key);
+    }
+
+    int opApply(scope int delegate(ref string, ref Object) dg) {
+        throw new NotImplementedException();
+    }
+
+    int opApply(scope int delegate(MapEntry!(string, Object) entry) dg) {
+        throw new NotImplementedException();
+    }
+
+    InputRange!string byKey() {
+        throw new NotImplementedException();
+    }
+
+    InputRange!Object byValue() {
+        throw new NotImplementedException();
+    }
+
+    override bool opEquals(Object o) {
+        throw new UnsupportedOperationException();
+    }
+
+    bool opEquals(IObject o) {
+        return opEquals(cast(Object) o);
+    }
 //      Set!(string) keySet() {
 //         return Collections.unmodifiableSet(backingMap.keySet());
 //     }

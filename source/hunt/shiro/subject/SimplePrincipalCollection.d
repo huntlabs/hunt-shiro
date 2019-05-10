@@ -27,6 +27,8 @@ import hunt.shiro.subject.MutablePrincipalCollection;
 import hunt.collection;
 import hunt.logging.ConsoleLogger;
 import hunt.Exceptions;
+import hunt.String;
+import hunt.text.StringUtils;
 
 import std.array;
 import std.range;
@@ -263,8 +265,7 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
         if (this.cachedToString  is null) {
             Set!(Object) principals = asSet();
             if (!CollectionUtils.isEmpty(principals)) {
-                // this.cachedToString = StringUtils.toString(principals.toArray());
-                implementationMissing(false);
+                this.cachedToString = StringUtils.toCommaDelimitedString(principals.toArray());
             } else {
                 this.cachedToString = "empty";
             }

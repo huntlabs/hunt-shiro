@@ -52,27 +52,27 @@ import hunt.util.Common;
  */
 class MemorySessionDAO : AbstractSessionDAO {
 
-    private Map!(Serializable, Session) sessions;
+    private Map!(string, Session) sessions;
 
     this() {
-        this.sessions = new HashMap!(Serializable, Session)();
+        this.sessions = new HashMap!(string, Session)();
     }
 
-    override protected Serializable doCreate(Session session) {
-        Serializable sessionId = generateSessionId(session);
+    override protected string doCreate(Session session) {
+        string sessionId = generateSessionId(session);
         assignSessionId(session, sessionId);
         storeSession(sessionId, session);
         return sessionId;
     }
 
-    protected Session storeSession(Serializable id, Session session) {
+    protected Session storeSession(string id, Session session) {
         if (id is null) {
             throw new NullPointerException("id argument cannot be null.");
         }
         return sessions.putIfAbsent(id, session);
     }
 
-    override protected Session doReadSession(Serializable sessionId) {
+    override protected Session doReadSession(string sessionId) {
         return sessions.get(sessionId);
     }
 
@@ -84,7 +84,7 @@ class MemorySessionDAO : AbstractSessionDAO {
         if (session is null) {
             throw new NullPointerException("session argument cannot be null.");
         }
-        Serializable id = session.getId();
+        string id = session.getId();
         if (id !is null) {
             sessions.remove(id);
         }

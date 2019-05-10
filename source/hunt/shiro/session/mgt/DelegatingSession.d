@@ -43,7 +43,7 @@ import hunt.collection;
  * JVM, a remote method call will not be incurred.
  *
  */
-class DelegatingSession : Session, Serializable {
+class DelegatingSession : Session {
 
     //TODO - complete JavaDoc
 
@@ -79,7 +79,7 @@ class DelegatingSession : Session, Serializable {
     /**
      * @see hunt.shiro.session.Session#getId()
      */
-     Serializable getId() {
+    string getId() {
         return key.getSessionId();
     }
 

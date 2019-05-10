@@ -22,6 +22,7 @@ import hunt.shiro.subject.PrincipalMap;
 import hunt.shiro.util.CollectionUtils;
 
 import hunt.collection;
+import hunt.Exceptions;
 
 /**
  * Default implementation of the {@link PrincipalMap} interface.

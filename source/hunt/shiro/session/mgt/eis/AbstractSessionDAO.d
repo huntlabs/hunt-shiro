@@ -102,7 +102,7 @@ abstract class AbstractSessionDAO : SessionDAO {
      * @param session the new session instance for which an ID will be generated and then assigned
      * @return the generated ID to assign
      */
-    protected Serializable generateSessionId(Session session) {
+    protected string generateSessionId(Session session) {
         if (this.sessionIdGenerator  is null) {
             string msg = "sessionIdGenerator attribute has not been configured.";
             throw new IllegalStateException(msg);
@@ -116,8 +116,8 @@ abstract class AbstractSessionDAO : SessionDAO {
      *
      * @param session Session object to create in the EIS and associate with an ID.
      */
-     Serializable create(Session session) {
-        Serializable sessionId = doCreate(session);
+     string create(Session session) {
+        string sessionId = doCreate(session);
         verifySessionId(sessionId);
         return sessionId;
     }
@@ -128,7 +128,7 @@ abstract class AbstractSessionDAO : SessionDAO {
      *
      * @param sessionId session id returned from the subclass implementation of {@link #doCreate}
      */
-    private void verifySessionId(Serializable sessionId) {
+    private void verifySessionId(string sessionId) {
         if (sessionId  is null) {
             string msg = "sessionId returned from doCreate implementation is null.  Please verify the implementation.";
             throw new IllegalStateException(msg);
@@ -146,7 +146,7 @@ abstract class AbstractSessionDAO : SessionDAO {
      * @param session   the session instance to which the sessionId will be applied
      * @param sessionId the id to assign to the specified session instance.
      */
-    protected void assignSessionId(Session session, Serializable sessionId) {
+    protected void assignSessionId(Session session, string sessionId) {
         (cast(SimpleSession) session).setId(sessionId);
     }
 
@@ -157,7 +157,7 @@ abstract class AbstractSessionDAO : SessionDAO {
      * @return the id of the session created in the EIS (i.e. this is almost always a primary key and should be the
      *         value returned from {@link hunt.shiro.session.Session#getId() Session.getId()}.
      */
-    protected abstract Serializable doCreate(Session session);
+    protected abstract string doCreate(Session session);
 
     /**
      * Retrieves the Session object from the underlying EIS identified by <tt>sessionId</tt> by delegating to
@@ -168,11 +168,11 @@ abstract class AbstractSessionDAO : SessionDAO {
      * @return the session identified by <tt>sessionId</tt> in the EIS.
      * @throws UnknownSessionException if the id specified does not correspond to any session in the EIS.
      */
-     Session readSession(Serializable sessionId){
+     Session readSession(string sessionId){
         Session s = doReadSession(sessionId);
         if (s  is null) {
             throw new UnknownSessionException("There is no session with id [" ~ 
-                (cast(Object)sessionId).toString() ~ "]");
+                sessionId ~ "]");
         }
         return s;
     }
@@ -185,6 +185,6 @@ abstract class AbstractSessionDAO : SessionDAO {
      * @return the Session in the EIS identified by <tt>sessionId</tt> or {@code null} if a
      *         session with that ID could not be found.
      */
-    protected abstract Session doReadSession(Serializable sessionId);
+    protected abstract Session doReadSession(string sessionId);
 
 }

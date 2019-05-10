@@ -54,17 +54,17 @@ class DefaultSessionContext : MapContext, SessionContext {
         return str.value;
     }
 
-     void setHost(string host) {
+    void setHost(string host) {
         if (!host.empty()) {
             put(HOST, new String(host));
         }
     }
 
-    Serializable getSessionId() {
-        return getTypedValue!Serializable(SESSION_ID);
+    string getSessionId() {
+        return SESSION_ID; // getTypedValue!Serializable(SESSION_ID);
     }
 
-     void setSessionId(Serializable sessionId) {
-        nullSafePut(SESSION_ID, cast(Object)sessionId);
+     void setSessionId(string sessionId) {
+        nullSafePut(SESSION_ID, new String(sessionId));
     }
 }

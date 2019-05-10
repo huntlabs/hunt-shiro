@@ -39,6 +39,7 @@ import hunt.shiro.util.CollectionUtils;
 import hunt.logging.ConsoleLogger;
 
 import hunt.collection;
+import hunt.Exceptions;
 import hunt.util.Common;
 
 import std.traits;
@@ -194,7 +195,7 @@ class DelegatingSubject : Subject {
             string msg = "This subject is anonymous - it does not have any identifying principals and " ~
                     "authorization operations require an identity to check against.  A Subject instance will " ~
                     "acquire these identifying principals automatically after a successful login is performed " ~
-                    "be executing " ~ typeid(Subject).name ~ ".login(AuthenticationToken) or when 'Remember Me' " ~
+                    "be executing " ~ typeid(Subject).toString() ~ ".login(AuthenticationToken) or when 'Remember Me' " ~
                     "functionality is enabled by the SecurityManager.  This exception can also occur when a " ~
                     "previously logged-in Subject has logged out which " ~
                     "makes it anonymous again.  Because an identity is currently not known due to any of these " ~

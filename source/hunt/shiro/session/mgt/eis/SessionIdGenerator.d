@@ -45,6 +45,6 @@ interface SessionIdGenerator {
      * @param session the {@link Session} instance to which the ID will be applied.
      * @return the id to assign to the specified {@link Session} instance before adding a record to the EIS data store.
      */
-    Serializable generateId(Session session);
+    string generateId(Session session);
 
 }

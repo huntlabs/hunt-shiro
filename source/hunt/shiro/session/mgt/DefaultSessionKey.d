@@ -24,22 +24,22 @@ import hunt.util.Common;
  * {@code Session} instance.
  *
  */
-class DefaultSessionKey : SessionKey, Serializable {
+class DefaultSessionKey : SessionKey {
 
-    private Serializable sessionId;
+    private string sessionId;
 
     this() {
     }
 
-    this(Serializable sessionId) {
+    this(string sessionId) {
         this.sessionId = sessionId;
     }
 
-     void setSessionId(Serializable sessionId) {
+    void setSessionId(string sessionId) {
         this.sessionId = sessionId;
     }
 
-     Serializable getSessionId() {
+    string getSessionId() {
         return this.sessionId;
     }
 }

@@ -57,7 +57,7 @@ interface SessionDAO {
      * @param session the {@link hunt.shiro.session.Session} object to create in the EIS.
      * @return the EIS id (e.g. primary key) of the created {@code Session} object.
      */
-    Serializable create(Session session);
+    string create(Session session);
 
     /**
      * Retrieves the session from the EIS uniquely identified by the specified
@@ -69,7 +69,7 @@ interface SessionDAO {
      * @throws UnknownSessionException if there is no EIS record for any session with the
      *                                 specified {@code sessionId}
      */
-    Session readSession(Serializable sessionId);
+    Session readSession(string sessionId);
 
     /**
      * Updates (persists) data from a previously created Session instance in the EIS identified by

@@ -459,7 +459,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
     }
 
     protected SessionKey getSessionKey(SubjectContext context) {
-        Serializable sessionId = context.getSessionId();
+        string sessionId = context.getSessionId();
         if (sessionId !is null) {
             return new DefaultSessionKey(sessionId);
         }
@@ -528,7 +528,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
         if (!CollectionUtils.isEmpty(subjectContext)) {
             sessionContext.putAll(subjectContext);
         }
-        Serializable sessionId = subjectContext.getSessionId();
+        string sessionId = subjectContext.getSessionId();
         if (sessionId !is null) {
             sessionContext.setSessionId(sessionId);
         }

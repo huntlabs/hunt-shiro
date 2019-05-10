@@ -99,7 +99,7 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
         if (isEmpty()) {
             return null;
         }
-        return asSet().front();
+        return asSet().toArray()[0];
     }
 
      void add(Object principal, string realmName) {

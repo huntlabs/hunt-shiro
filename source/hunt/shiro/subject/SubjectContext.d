@@ -94,7 +94,7 @@ interface SubjectContext : Map!(string, Object) {
      *
      * @return the session id of the session that should be associated with the constructed {@link Subject} instance.
      */
-    Serializable getSessionId();
+    string getSessionId();
 
     /**
      * Sets the session id of the session that should be associated with the constructed {@link Subject} instance.
@@ -105,7 +105,7 @@ interface SubjectContext : Map!(string, Object) {
      * @param sessionId the session id of the session that should be associated with the constructed {@link Subject}
      *                  instance.
      */
-    void setSessionId(Serializable sessionId);
+    void setSessionId(string sessionId);
 
     /**
      * Returns any existing {@code Subject} that may be in use at the time the new {@code Subject} instance is

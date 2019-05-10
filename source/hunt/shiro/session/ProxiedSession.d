@@ -56,7 +56,7 @@ class ProxiedSession : Session {
     /**
      * Immediately delegates to the underlying proxied session.
      */
-     Serializable getId() {
+    string getId() {
         return session.getId();
     }
 

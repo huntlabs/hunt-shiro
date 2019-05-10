@@ -40,8 +40,6 @@ import hunt.collection;
 import hunt.collection.Collections;
 // import java.util.Date;
 
-alias Date = long;
-
 /**
  * Default business-tier implementation of a {@link ValidatingSessionManager}.  All session CRUD operations are
  * delegated to an internal {@link SessionDAO}.
@@ -215,7 +213,7 @@ class DefaultSessionManager : AbstractValidatingSessionManager, CacheManagerAwar
     }
 
     override protected Session retrieveSession(SessionKey sessionKey){
-        Serializable sessionId = getSessionId(sessionKey);
+        string sessionId = getSessionId(sessionKey);
         if (sessionId  is null) {
             tracef("Unable to resolve session ID from SessionKey [%s].  Returning null to indicate a " ~
                     "session could not be found.", sessionKey);
@@ -224,17 +222,17 @@ class DefaultSessionManager : AbstractValidatingSessionManager, CacheManagerAwar
         Session s = retrieveSessionFromDataSource(sessionId);
         if (s  is null) {
             //session ID was provided, meaning one is expected to be found, but we couldn't find one:
-            string msg = "Could not find session with ID [" ~ (cast(Object)sessionId).toString() ~ "]";
+            string msg = "Could not find session with ID [" ~ sessionId ~ "]";
             throw new UnknownSessionException(msg);
         }
         return s;
     }
 
-    protected Serializable getSessionId(SessionKey sessionKey) {
+    protected string getSessionId(SessionKey sessionKey) {
         return sessionKey.getSessionId();
     }
 
-    protected Session retrieveSessionFromDataSource(Serializable sessionId){
+    protected Session retrieveSessionFromDataSource(string sessionId){
         return sessionDAO.readSession(sessionId);
     }
 

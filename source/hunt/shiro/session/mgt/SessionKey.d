@@ -15,8 +15,6 @@
  */
 module hunt.shiro.session.mgt.SessionKey;
 
-import hunt.util.Common;
-
 /**
  * A {@code SessionKey} is a key that allows look-up of any particular {@link hunt.shiro.session.Session Session}
  * instance.  This is not to be confused what is probably better recognized as a session <em>attribute</em> key - a key
@@ -41,5 +39,5 @@ interface SessionKey {
      *
      * @return the id of the session to acquire.
      */
-    Serializable getSessionId();
+    string getSessionId();
 }

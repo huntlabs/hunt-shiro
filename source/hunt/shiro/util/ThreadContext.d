@@ -18,6 +18,8 @@
  */
 module hunt.shiro.util.ThreadContext;
 
+import hunt.shiro.util.CollectionUtils;
+
 import hunt.shiro.mgt.SecurityManager;
 import hunt.shiro.subject.Subject;
 import hunt.logging.ConsoleLogger;
@@ -25,6 +27,7 @@ import hunt.logging.ConsoleLogger;
 import hunt.collection.Collections;
 import hunt.collection.HashMap;
 import hunt.collection.Map;
+import hunt.Exceptions;
 
 import core.thread;
 import std.traits;
@@ -53,7 +56,7 @@ abstract class ThreadContext {
      enum string SECURITY_MANAGER_KEY = fullyQualifiedName!(ThreadContext) ~ "_SECURITY_MANAGER_KEY";
      enum string SUBJECT_KEY = fullyQualifiedName!(ThreadContext) ~ "_SUBJECT_KEY";
 
-    private static Map!(Object, Object) resources;
+    private static Map!(string, Object) resources;
 
 
     /**
@@ -68,11 +71,11 @@ abstract class ThreadContext {
      *
      * @return the map of bound resources
      */
-     static Map!(Object, Object) getResources() {
+     static Map!(string, Object) getResources() {
         if (resources is null){
-            return Collections.emptyMap!(Object, Object)();
+            return Collections.emptyMap!(string, Object)();
         } else {
-            return new HashMap!(Object, Object)(resources);
+            return new HashMap!(string, Object)(resources);
         }
     }
 
@@ -83,8 +86,8 @@ abstract class ThreadContext {
      *
      * @param newResources the resources to replace the existing {@link #getResources() resources}.
      */
-     static void setResources(Map!(Object, Object) newResources) {
-        if (CollectionUtils.isEmpty(newResources)) {
+     static void setResources(Map!(string, Object) newResources) {
+        if (CollectionUtils.isEmpty!(string, Object)(newResources)) {
             return;
         }
         ensureResourcesInitialized();
@@ -100,14 +103,14 @@ abstract class ThreadContext {
      * @return the value bound in the {@code ThreadContext} under the specified {@code key}, or {@code null} if there
      *         is no value for that {@code key}.
      */
-    private static Object getValue(Object key) {
-        Map!(Object, Object) perThreadResources = resources;
+    private static Object getValue(string key) {
+        Map!(string, Object) perThreadResources = resources;
         return perThreadResources !is null ? perThreadResources.get(key) : null;
     }
 
     private static void ensureResourcesInitialized(){
         if (resources  is null){
-           resources = new HashMap!(Object, Object)();
+           resources = new HashMap!(string, Object)();
         }
     }
 
@@ -119,7 +122,7 @@ abstract class ThreadContext {
      * @return the object keyed by <code>key</code> or <code>null</code> if
      *         no value exists for the specified <code>key</code>
      */
-     static Object get(Object key) {
+     static Object get(string key) {
         version(HUNT_DEBUG) {
             string msg = "get() - in thread [" ~ Thread.getThis().name()() ~ "]"; 
             tracef(msg);
@@ -151,7 +154,7 @@ abstract class ThreadContext {
      * @param value The value to bind to the thread.
      * @throws IllegalArgumentException if the <code>key</code> argument is <tt>null</tt>.
      */
-     static void put(Object key, Object value) {
+     static void put(string key, Object value) {
         if (key  is null) {
             throw new IllegalArgumentException("key cannot be null");
         }
@@ -179,14 +182,16 @@ abstract class ThreadContext {
      * @return the object unbound or <tt>null</tt> if there was nothing bound
      *         under the specified <tt>key</tt> name.
      */
-     static Object remove(Object key) {
-        Map!(Object, Object) perThreadResources = resources;
+     static Object remove(string key) {
+        Map!(string, Object) perThreadResources = resources;
         Object value = perThreadResources !is null ? perThreadResources.remove(key) : null;
 
-        if ((value !is null) && log.isTraceEnabled()) {
-            string msg = "Removed value of type [" ~ typeid(value).name ~ "] for key [" ~
-                    key ~ "]" ~ "from thread [" ~ Thread.getThis()().name()() ~ "]";
-            tracef(msg);
+        version(HUNT_DEBUG) {
+            if ((value !is null) && log.isTraceEnabled()) {
+                string msg = "Removed value of type [" ~ typeid(value).name ~ "] for key [" ~
+                        key ~ "]" ~ "from thread [" ~ Thread.getThis()().name() ~ "]";
+                tracef(msg);
+            }
         }
 
         return value;
@@ -199,8 +204,9 @@ abstract class ThreadContext {
      * prevent thread corruption in pooled thread environments.
      *
      */
-     static void remove() {
-        resources.remove();
+    static void remove() {
+        // resources.remove();
+        implementationMissing(false);
     }
 
     /**
@@ -239,7 +245,7 @@ abstract class ThreadContext {
      */
      static void bind(SecurityManager securityManager) {
         if (securityManager !is null) {
-            put(SECURITY_MANAGER_KEY, securityManager);
+            put(SECURITY_MANAGER_KEY, cast(Object)securityManager);
         }
     }
 
@@ -294,7 +300,7 @@ abstract class ThreadContext {
      */
      static void bind(Subject subject) {
         if (subject !is null) {
-            put(SUBJECT_KEY, subject);
+            put(SUBJECT_KEY, cast(Object)subject);
         }
     }
 

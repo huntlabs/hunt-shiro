@@ -18,6 +18,9 @@
  */
 module hunt.shiro.subject.support.SubjectThreadState;
 
+import hunt.shiro.subject.support.DelegatingSubject;
+import hunt.shiro.subject.support.SubjectThreadState;
+
 import hunt.shiro.mgt.SecurityManager;
 import hunt.shiro.subject.Subject;
 import hunt.shiro.util.CollectionUtils;
@@ -25,6 +28,7 @@ import hunt.shiro.util.ThreadContext;
 import hunt.shiro.util.ThreadState;
 
 import hunt.collection.Map;
+import hunt.Exceptions;
 
 /**
  * Manages thread-state for {@link Subject Subject} access (supporting
@@ -40,7 +44,7 @@ import hunt.collection.Map;
  */
 class SubjectThreadState : ThreadState {
 
-    private Map!(Object, Object) originalResources;
+    private Map!(string, Object) originalResources;
 
     private Subject subject;
     private SecurityManager securityManager;

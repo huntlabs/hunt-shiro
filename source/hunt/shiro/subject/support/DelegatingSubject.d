@@ -18,6 +18,8 @@
  */
 module hunt.shiro.subject.support.DelegatingSubject;
 
+import hunt.shiro.subject.support.SubjectRunnable;
+
 import hunt.shiro.Exceptions;
 import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.authc.HostAuthenticationToken;
@@ -39,9 +41,12 @@ import hunt.shiro.util.CollectionUtils;
 import hunt.logging.ConsoleLogger;
 
 import hunt.collection;
+import hunt.concurrency.thread;
 import hunt.Exceptions;
+import hunt.String;
 import hunt.util.Common;
 
+import std.array;
 import std.traits;
 
 
@@ -345,7 +350,7 @@ class DelegatingSubject : Subject {
 
     protected SessionContext createSessionContext() {
         SessionContext sessionContext = new DefaultSessionContext();
-        if (StringUtils.hasText(host)) {
+        if (!host.empty()) {
             sessionContext.setHost(host);
         }
         return sessionContext;
@@ -435,7 +440,7 @@ class DelegatingSubject : Subject {
         if (!hasPrincipals()) {
             string msg = "This subject does not yet have an identity.  Assuming the identity of another " ~
                     "Subject is only allowed for Subjects with an existing identity.  Try logging this subject in " ~
-                    "first, or using the " ~ typeid(Builder).name ~ " to build ad hoc Subject instances " ~
+                    "first, or using the " ~ typeid(SubjectBuilder).name ~ " to build ad hoc Subject instances " ~
                     "with identities as necessary.";
             throw new IllegalStateException(msg);
         }
@@ -471,7 +476,7 @@ class DelegatingSubject : Subject {
     private List!(PrincipalCollection) getRunAsPrincipalsStack() {
         Session session = getSession(false);
         if (session !is null) {
-            return cast(List!(PrincipalCollection)) session.getAttribute(RUN_AS_PRINCIPALS_SESSION_KEY);
+            return cast(List!(PrincipalCollection)) session.getAttribute(new String(RUN_AS_PRINCIPALS_SESSION_KEY));
         }
         return null;
     }
@@ -479,7 +484,7 @@ class DelegatingSubject : Subject {
     private void clearRunAsIdentities() {
         Session session = getSession(false);
         if (session !is null) {
-            session.removeAttribute(RUN_AS_PRINCIPALS_SESSION_KEY);
+            session.removeAttribute(new String(RUN_AS_PRINCIPALS_SESSION_KEY));
         }
     }
 
@@ -490,24 +495,25 @@ class DelegatingSubject : Subject {
         }
         List!(PrincipalCollection) stack = getRunAsPrincipalsStack();
         if (stack  is null) {
-            stack = new CopyOnWriteArrayList!(PrincipalCollection)();
+            // stack = new CopyOnWriteArrayList!(PrincipalCollection)();
+            stack = new ArrayList!(PrincipalCollection)();
         }
         stack.add(0, principals);
         Session session = getSession();
-        session.setAttribute(RUN_AS_PRINCIPALS_SESSION_KEY, stack);
+        session.setAttribute(new String(RUN_AS_PRINCIPALS_SESSION_KEY), cast(Object)stack);
     }
 
     private PrincipalCollection popIdentity() {
         PrincipalCollection popped = null;
 
         List!(PrincipalCollection) stack = getRunAsPrincipalsStack();
-        if (!CollectionUtils.isEmpty(stack)) {
-            popped = stack.remove(0);
+        if (!CollectionUtils.isEmpty!(PrincipalCollection)(stack)) {
+            popped = stack.removeAt(0);
             Session session;
             if (!CollectionUtils.isEmpty(stack)) {
                 //persist the changed stack to the session
                 session = getSession();
-                session.setAttribute(RUN_AS_PRINCIPALS_SESSION_KEY, stack);
+                session.setAttribute(new String(RUN_AS_PRINCIPALS_SESSION_KEY), cast(Object)stack);
             } else {
                 //stack is empty, remove it from the session:
                 clearRunAsIdentities();

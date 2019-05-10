@@ -179,20 +179,19 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
     //     return Collections.unmodifiableList(new ArrayList(all));
     // }
 
-    Set!(Set!Object) asSet() {
+    Set!Object asSet() {
         if (realmPrincipals is null || realmPrincipals.isEmpty()) {
-            return Collections.emptySet!(Set!Object)();
+            return Collections.emptySet!(Object)();
         }
 
-        Set!(Set!Object) aggregated = new LinkedHashSet();
-        Collection!((Set!Object)) values = realmPrincipals.values();
-        foreach(Set!(Object) set ; values) {
+        Set!Object aggregated = new LinkedHashSet!Object();
+        foreach(Set!(Object) set ; realmPrincipals.values()) {
             aggregated.addAll(set);
         }
         if (aggregated.isEmpty()) {
-            return Collections.emptySet!Set();
+            return Collections.emptySet!(Object)();
         }
-        return aggregated; // Collections.unmodifiableSet(aggregated);
+        return aggregated; 
     }
 
     //  Collection fromRealm(string realmName) {

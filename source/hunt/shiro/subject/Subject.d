@@ -31,9 +31,11 @@ import hunt.shiro.session.Session;
 import hunt.shiro.subject.support.DefaultSubjectContext;
 // import hunt.shiro.util.StringUtils;
 
-import hunt.util.Common;
 import hunt.collection;
+import hunt.Exceptions;
+import hunt.util.Common;
 
+import std.array;
 
 /**
  * A {@code Subject} represents state and security operations for a <em>single</em> application user.
@@ -675,7 +677,7 @@ class SubjectBuilder {
      * @param sessionId the id of the session that backs the desired Subject being acquired.
      * @return this {@code Builder} instance for method chaining.
      */
-    SubjectBuilder sessionId(Serializable sessionId) {
+    SubjectBuilder sessionId(string sessionId) {
         if (sessionId !is null) {
             this.subjectContext.setSessionId(sessionId);
         }
@@ -690,7 +692,7 @@ class SubjectBuilder {
      * @return this {@code Builder} instance for method chaining.
      */
     SubjectBuilder host(string host) {
-        if (StringUtils.hasText(host)) {
+        if (!host.empty()) {
             this.subjectContext.setHost(host);
         }
         return this;

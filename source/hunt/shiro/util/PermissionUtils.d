@@ -21,8 +21,9 @@ module hunt.shiro.util.PermissionUtils;
 import hunt.shiro.authz.Permission;
 import hunt.shiro.authz.permission.PermissionResolver;
 
-import hunt.util.ArrayHelper;
 import hunt.collection;
+import hunt.Exceptions;
+import hunt.util.ArrayHelper;
 
 
 /**
@@ -37,10 +38,11 @@ class PermissionUtils {
     }
 
      static Set!(string) toPermissionStrings(string permissionsString) {
-        string[] tokens = StringUtils.split(permissionsString);
-        if (tokens !is null && tokens.length > 0) {
-            return new LinkedHashSet!(string)(ArrayHelper.asList(tokens));
-        }
+        // string[] tokens = StringUtils.split(permissionsString);
+        // if (tokens !is null && tokens.length > 0) {
+        //     return new LinkedHashSet!(string)(ArrayHelper.asList(tokens));
+        // }
+        
         return null;
     }
 

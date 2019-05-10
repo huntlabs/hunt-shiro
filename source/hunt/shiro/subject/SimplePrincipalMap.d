@@ -24,6 +24,8 @@ import hunt.shiro.util.CollectionUtils;
 import hunt.collection;
 import hunt.Exceptions;
 
+import std.array;
+
 /**
  * Default implementation of the {@link PrincipalMap} interface.
  *
@@ -49,7 +51,7 @@ class SimplePrincipalMap : PrincipalMap {
     this(Map!(string, Map!(string, Object)) backingMap) {
         if (!CollectionUtils.isEmpty(backingMap)) {
             this.realmPrincipals = backingMap;
-            foreach (Map!(string, Object) principals; this.realmPrincipals) {
+            foreach (Map!(string, Object) principals; this.realmPrincipals.byValue()) {
                 if (!CollectionUtils.isEmpty(principals) ) {
                     ensureCombinedPrincipals().putAll(principals);
                 }
@@ -58,7 +60,7 @@ class SimplePrincipalMap : PrincipalMap {
     }
 
     int size() {
-        return CollectionUtils.size(this.combinedPrincipals);
+        return CollectionUtils.size!(string, Object)(this.combinedPrincipals);
     }
 
     protected Map!(string, Object) ensureCombinedPrincipals() {
@@ -73,11 +75,13 @@ class SimplePrincipalMap : PrincipalMap {
     }
 
     bool containsValue(Object o) {
-        return this.combinedPrincipals !is null && this.combinedPrincipals.containsKey(o);
+        return this.combinedPrincipals !is null && this.combinedPrincipals.containsValue(o);
     }
 
     Object get(string o) {
-        return this.combinedPrincipals !is null && this.combinedPrincipals.containsKey(o);
+        implementationMissing(false);
+        return null;
+        // return this.combinedPrincipals !is null && this.combinedPrincipals.containsKey(o);
     }
 
     Object put(string s, Object o) {
@@ -94,11 +98,11 @@ class SimplePrincipalMap : PrincipalMap {
         }
     }
 
-    Set!(string) keySet() {
-        return CollectionUtils.isEmpty(this.combinedPrincipals) ?
-                Collections.emptySet!string() :
-                Collections.unmodifiableSet(this.combinedPrincipals.keySet());
-    }
+    // Set!(string) keySet() {
+    //     return CollectionUtils.isEmpty(this.combinedPrincipals) ?
+    //             Collections.emptySet!string() :
+    //             Collections.unmodifiableSet(this.combinedPrincipals.keySet());
+    // }
 
     // Collection!(Object) values() {
     //     return CollectionUtils.isEmpty(this.combinedPrincipals) ?
@@ -140,7 +144,7 @@ class SimplePrincipalMap : PrincipalMap {
 
     Collection!(T) byType(T)(TypeInfo_Class type) {
         if (CollectionUtils.isEmpty(this.combinedPrincipals)) {
-            return Collections.emptySet();
+            return Collections.emptySet!T();
         }
         Collection!(T) instances = null;
         foreach( Object value ; this.combinedPrincipals.values()) {
@@ -156,7 +160,7 @@ class SimplePrincipalMap : PrincipalMap {
 
     List!(Object) asList() {
         if (CollectionUtils.isEmpty(this.combinedPrincipals)) {
-            return Collections.emptyList();
+            return Collections.emptyList!Object();
         }
         List!(Object) list = new ArrayList!(Object)(this.combinedPrincipals.size());
         list.addAll(this.combinedPrincipals.values());
@@ -165,7 +169,7 @@ class SimplePrincipalMap : PrincipalMap {
 
     Set!(Object) asSet() {
         if (CollectionUtils.isEmpty(this.combinedPrincipals)) {
-            return Collections.emptySet();
+            return Collections.emptySet!Object();
         }
         Set!(Object) set = new HashSet!(Object)(this.combinedPrincipals.size());
         set.addAll(this.combinedPrincipals.values());
@@ -174,20 +178,20 @@ class SimplePrincipalMap : PrincipalMap {
 
     Object[] fromRealm(string realmName) {
         if (CollectionUtils.isEmpty(this.realmPrincipals)) {
-            return Collections.emptySet();
+            return null;
         }
         Map!(string,Object) principals = this.realmPrincipals.get(realmName);
         if (CollectionUtils.isEmpty(principals)) {
-            return Collections.emptySet();
+            return null;
         }
         return principals.values();
     }
 
     string[] getRealmNames() {
         if (CollectionUtils.isEmpty(this.realmPrincipals)) {
-            return Collections.emptySet();
+            return null;
         }
-        return this.realmPrincipals.keys;
+        return this.realmPrincipals.byKey.array();
     }
 
      bool isEmpty() {
@@ -206,7 +210,7 @@ class SimplePrincipalMap : PrincipalMap {
         if (principals  is null) {
             return null;
         }
-        return Collections.unmodifiableMap(principals);
+        return principals;
     }
 
      Map!(string,Object) setRealmPrincipals(string realmName, Map!(string, Object) principals) {

@@ -21,6 +21,7 @@ module hunt.shiro.util.MapContext;
 import hunt.shiro.util.CollectionUtils;
 import hunt.shiro.util.Common;
 
+import hunt.collection.HashMap;
 import hunt.collection.Map;
 import hunt.Exceptions;
 import hunt.util.Common;
@@ -93,7 +94,7 @@ class MapContext : Map!(string, Object), Serializable {
         return backingMap.isEmpty();
     }
 
-    bool containsKey(Object o) {
+    bool containsKey(string o) {
         return backingMap.containsKey(o);
     }
 
@@ -109,7 +110,7 @@ class MapContext : Map!(string, Object), Serializable {
         return backingMap.put(s, o);
     }
 
-    Object remove(Object o) {
+    Object remove(string o) {
         return backingMap.remove(o);
     }
 

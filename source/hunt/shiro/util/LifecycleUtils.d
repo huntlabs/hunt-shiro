@@ -54,7 +54,7 @@ abstract class LifecycleUtils {
     }
 
     static void destroy(Destroyable d) {
-        if (d != null) {
+        if (d !is null) {
             try {
                 d.destroy();
             } catch (Throwable t) {

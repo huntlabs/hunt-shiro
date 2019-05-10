@@ -85,7 +85,7 @@ class CollectionUtils {
      * @param m the map to check
      * @return the size of the specified map or {@code 0} if the map is {@code null}.
      */
-    static int size(T)(Map!T m) {
+    static int size(K, V)(Map!(K, V) m) {
         return m !is null ? m.size() : 0;
     }
 

@@ -19,6 +19,9 @@
 module hunt.shiro.util.SimpleByteSource;
 
 import hunt.shiro.util.ByteSource;
+import hunt.shiro.codec.Base64;
+import hunt.shiro.codec.Hex;
+// import hunt.shiro.util.Hex;
 
 import hunt.Exceptions;
 import std.array;
@@ -66,7 +69,7 @@ class SimpleByteSource : ByteSource {
      * @since 1.1
      */
     this(char[] chars) {
-        this.bytes = CodecSupport.toBytes(chars);
+        this.bytes = cast(byte[])(chars);
     }
 
     /**
@@ -76,7 +79,7 @@ class SimpleByteSource : ByteSource {
      * @since 1.1
      */
     this(string string) {
-        this.bytes = CodecSupport.toBytes(string);
+        this.bytes = cast(byte[])(string);
     }
 
     /**
@@ -172,7 +175,7 @@ class SimpleByteSource : ByteSource {
         return hashOf(this.bytes);
     }
 
-    override bool opEquals(Object obj) {
+    override bool opEquals(Object o) {
         if (o is this) {
             return true;
         }

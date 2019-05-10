@@ -799,10 +799,11 @@ class SubjectBuilder {
             string msg = "Subject context map key cannot be null.";
             throw new IllegalArgumentException(msg);
         }
-        if (attributeValue  is null) {
-            this.subjectContext.remove(attributeKey);
+        Map!(string, Object) contextMap = cast(Map!(string, Object))subjectContext;
+        if (attributeValue is null) {
+            contextMap.remove(attributeKey);
         } else {
-            this.subjectContext.put(attributeKey, attributeValue);
+            contextMap.put(attributeKey, attributeValue);
         }
         return this;
     }

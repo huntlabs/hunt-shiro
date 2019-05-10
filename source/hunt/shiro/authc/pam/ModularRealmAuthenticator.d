@@ -270,7 +270,7 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
         assertRealmsConfigured();
         Collection!(Realm) realms = getRealms();
         if (realms.size() == 1) {
-            return doSingleRealmAuthentication(realms.iterator().front, authenticationToken);
+            return doSingleRealmAuthentication(realms.toArray()[0], authenticationToken);
         } else {
             return doMultiRealmAuthentication(realms, authenticationToken);
         }

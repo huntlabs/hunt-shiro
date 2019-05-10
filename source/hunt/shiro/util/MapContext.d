@@ -211,6 +211,17 @@ class MapContext : Map!(string, Object) {
     bool opEquals(IObject o) {
         return opEquals(cast(Object) o);
     }
+
+    override size_t toHash() @trusted nothrow {
+        size_t h = 0;
+        try {
+            foreach (MapEntry!(string, Object) i; this) {
+                h += i.toHash();
+            }
+        } catch (Exception ex) {
+        }
+        return h;
+    }    
 //      Set!(string) keySet() {
 //         return Collections.unmodifiableSet(backingMap.keySet());
 //     }

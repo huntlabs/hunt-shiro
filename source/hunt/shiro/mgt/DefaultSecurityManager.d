@@ -524,9 +524,10 @@ class DefaultSecurityManager : SessionsSecurityManager {
     }
 
     protected SessionContext createSessionContext(SubjectContext subjectContext) {
+        Map!(string, Object) contextMap = cast(Map!(string, Object))subjectContext;
         DefaultSessionContext sessionContext = new DefaultSessionContext();
-        if (!CollectionUtils.isEmpty(subjectContext)) {
-            sessionContext.putAll(subjectContext);
+        if (!CollectionUtils.isEmpty(contextMap)) {
+            sessionContext.putAll(contextMap);
         }
         string sessionId = subjectContext.getSessionId();
         if (sessionId !is null) {

@@ -32,10 +32,12 @@ import hunt.shiro.util.MapContext;
 // // import hunt.shiro.util.StringUtils;
 import hunt.logging.ConsoleLogger;
 
-import hunt.util.Common;
 import hunt.Boolean;
+import hunt.collection.Map;
 import hunt.String;
+import hunt.util.Common;
 
+import std.array;
 import std.traits;
 
 /**
@@ -87,15 +89,15 @@ class DefaultSubjectContext : MapContext, SubjectContext {
     }
 
     this(SubjectContext ctx) {
-        super(ctx);
+        super(cast(Map!(string, Object))ctx);
     }
 
-     SecurityManager getSecurityManager() {
-        return getTypedValue(SECURITY_MANAGER, typeid(SecurityManager));
+    SecurityManager getSecurityManager() {
+        return getTypedValue!SecurityManager(SECURITY_MANAGER);
     }
 
-     void setSecurityManager(SecurityManager securityManager) {
-        nullSafePut(SECURITY_MANAGER, securityManager);
+    void setSecurityManager(SecurityManager securityManager) {
+        nullSafePut(SECURITY_MANAGER, cast(Object)securityManager);
     }
 
     SecurityManager resolveSecurityManager() {
@@ -120,8 +122,8 @@ class DefaultSubjectContext : MapContext, SubjectContext {
         return getTypedValue!String(SESSION_ID).value;
     }
 
-     void setSessionId(string sessionId) {
-        nullSafePut(SESSION_ID, sessionId);
+    void setSessionId(string sessionId) {
+        nullSafePut(SESSION_ID, new String(sessionId));
     }
 
     Subject getSubject() {
@@ -129,7 +131,7 @@ class DefaultSubjectContext : MapContext, SubjectContext {
     }
 
      void setSubject(Subject subject) {
-        nullSafePut(SUBJECT, subject);
+        nullSafePut(SUBJECT, cast(Object)subject);
     }
 
      PrincipalCollection getPrincipals() {
@@ -142,7 +144,7 @@ class DefaultSubjectContext : MapContext, SubjectContext {
 
     void setPrincipals(PrincipalCollection principals) {
         if (!isEmpty(principals)) {
-            put(PRINCIPALS, principals);
+            put(PRINCIPALS, cast(Object)principals);
         }
     }
 
@@ -168,7 +170,7 @@ class DefaultSubjectContext : MapContext, SubjectContext {
             //try the session:
             Session session = resolveSession();
             if (session !is null) {
-                principals = cast(PrincipalCollection) session.getAttribute(PRINCIPALS_SESSION_KEY);
+                principals = cast(PrincipalCollection) session.getAttribute(new String(PRINCIPALS_SESSION_KEY));
             }
         }
 
@@ -181,7 +183,7 @@ class DefaultSubjectContext : MapContext, SubjectContext {
     }
 
     void setSession(Session session) {
-        nullSafePut(SESSION, session);
+        nullSafePut(SESSION, cast(Object)session);
     }
 
      Session resolveSession() {
@@ -202,7 +204,7 @@ class DefaultSubjectContext : MapContext, SubjectContext {
     }
 
     void setSessionCreationEnabled(bool enabled) {
-        nullSafePut(SESSION_CREATION_ENABLED, enabled);
+        nullSafePut(SESSION_CREATION_ENABLED, new Boolean(enabled));
     }
 
     bool isAuthenticated() {
@@ -211,7 +213,7 @@ class DefaultSubjectContext : MapContext, SubjectContext {
     }
 
     void setAuthenticated(bool authc) {
-        put(AUTHENTICATED, authc);
+        put(AUTHENTICATED, new Boolean(authc));
     }
 
     bool resolveAuthenticated() {
@@ -226,7 +228,7 @@ class DefaultSubjectContext : MapContext, SubjectContext {
             //fall back to a session check:
             Session session = resolveSession();
             if (session !is null) {
-                Boolean sessionAuthc = cast(Boolean) session.getAttribute(AUTHENTICATED_SESSION_KEY);
+                Boolean sessionAuthc = cast(Boolean) session.getAttribute(new String(AUTHENTICATED_SESSION_KEY));
                 authc = sessionAuthc !is null && sessionAuthc;
             }
         }
@@ -239,7 +241,7 @@ class DefaultSubjectContext : MapContext, SubjectContext {
     }
 
     void setAuthenticationInfo(AuthenticationInfo info) {
-        nullSafePut(AUTHENTICATION_INFO, info);
+        nullSafePut(AUTHENTICATION_INFO, cast(Object)info);
     }
 
     AuthenticationToken getAuthenticationToken() {
@@ -247,7 +249,7 @@ class DefaultSubjectContext : MapContext, SubjectContext {
     }
 
     void setAuthenticationToken(AuthenticationToken token) {
-        nullSafePut(AUTHENTICATION_TOKEN, token);
+        nullSafePut(AUTHENTICATION_TOKEN, cast(Object)token);
     }
 
     string getHost() {
@@ -281,4 +283,5 @@ class DefaultSubjectContext : MapContext, SubjectContext {
 
         return host;
     }
+
 }

@@ -57,7 +57,7 @@ import hunt.collection.Map;
  * @see hunt.shiro.mgt.SecurityManager#createSubject SecurityManager.createSubject
  * @see hunt.shiro.mgt.SubjectFactory SubjectFactory
  */
-interface SubjectContext : Map!(string, Object) {
+interface SubjectContext  { // : Map!(string, Object)
 
     /**
      * Returns the SecurityManager instance that should be used to back the constructed {@link Subject} instance or

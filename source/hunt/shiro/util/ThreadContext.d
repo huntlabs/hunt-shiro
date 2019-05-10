@@ -124,14 +124,14 @@ abstract class ThreadContext {
      */
      static Object get(string key) {
         version(HUNT_DEBUG) {
-            string msg = "get() - in thread [" ~ Thread.getThis().name()() ~ "]"; 
+            string msg = "get() - in thread [" ~ Thread.getThis().name() ~ "]"; 
             tracef(msg);
         }
 
         Object value = getValue(key);
         version(HUNT_DEBUG) {
             if (value !is null) {
-                string msg = "Retrieved value of type [" ~ typeid(value).name ~ "] for key [" ~
+                msg = "Retrieved value of type [" ~ typeid(value).name ~ "] for key [" ~
                         key ~ "] " ~ "bound to thread [" ~ Thread.getThis().name() ~ "]";
                 tracef(msg);
             }
@@ -169,7 +169,7 @@ abstract class ThreadContext {
 
         version(HUNT_DEBUG) {
             string msg = "Bound value of type [" ~ typeid(value).name ~ "] for key [" ~
-                    key ~ "] to thread " ~ "[" ~ Thread.getThis()().name()() ~ "]";
+                    key ~ "] to thread " ~ "[" ~ Thread.getThis().name() ~ "]";
             tracef(msg);
         }
     }
@@ -187,9 +187,9 @@ abstract class ThreadContext {
         Object value = perThreadResources !is null ? perThreadResources.remove(key) : null;
 
         version(HUNT_DEBUG) {
-            if ((value !is null) && log.isTraceEnabled()) {
-                string msg = "Removed value of type [" ~ typeid(value).name ~ "] for key [" ~
-                        key ~ "]" ~ "from thread [" ~ Thread.getThis()().name() ~ "]";
+            if (value !is null) {
+                string msg = "Removed value of type [" ~ typeid(cast(Object)value).name ~ "] for key [" ~
+                        key ~ "]" ~ "from thread [" ~ Thread.getThis().name() ~ "]";
                 tracef(msg);
             }
         }

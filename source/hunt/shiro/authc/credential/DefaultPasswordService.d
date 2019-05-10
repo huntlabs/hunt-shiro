@@ -106,11 +106,11 @@ class DefaultPasswordService : HashingPasswordService {
                 if (!(formatCast !is null)) {
                     string msg = "The configured hashFormat instance [" ~ 
                             typeid(cast(Object)format).name ~ "] is not a " ~
-                            typeid(ParsableHashFormat).name ~ " implementation.  This is " ~
+                            typeid(ParsableHashFormat).toString() ~ " implementation.  This is " ~
                             "required if you wish to support backwards compatibility " ~ 
                             "for saved password checking (almost " ~
                             "always desirable).  Without a " ~ 
-                            typeid(cast(Object)ParsableHashFormat).name ~ " instance, " ~
+                            typeid(ParsableHashFormat).toString() ~ " instance, " ~
                             "any hashService configuration changes will break previously hashed/saved passwords.";
                     warning(msg);
                     this.hashFormatWarned = true;

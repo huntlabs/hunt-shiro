@@ -61,7 +61,7 @@ abstract class LifecycleUtils {
                 version(HUNT_DEBUG) {
                     string msg = "Unable to cleanly destroy instance [" ~ 
                         (cast(Object)d).toString() ~ "] of type [" ~ 
-                        (cast(Object)d).name ~ "].";
+                        typeid(cast(Object)d).name ~ "].";
                     trace(msg, t);
                 }
             }

@@ -226,7 +226,8 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
                 } catch (Throwable throwable) {
                     t = throwable;
                     version(HUNT_DEBUG) {
-                        string msg = "Realm [" ~ realm ~ "] threw an exception during a multi-realm authentication attempt:";
+                        string msg = "Realm [" ~ (cast(Object)realm).toString() ~ 
+                            "] threw an exception during a multi-realm authentication attempt:";
                         tracef(msg, t);
                     }
                 }

@@ -171,7 +171,7 @@ class DefaultSessionManager : AbstractValidatingSessionManager, CacheManagerAwar
      */
     protected void create(Session session) {
         version(HUNT_DEBUG) {
-            tracef("Creating new EIS record for new session instance [" ~ session ~ "]");
+            tracef("Creating new EIS record for new session instance [" ~ (cast(Object)session).toString() ~ "]");
         }
         sessionDAO.create(session);
     }

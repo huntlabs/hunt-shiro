@@ -40,7 +40,6 @@ import std.range;
  * by storing them in a {@link LinkedHashMap}.
  *
  */
-//@SuppressWarnings({"unchecked"})
 class SimplePrincipalCollection : MutablePrincipalCollection {
 
     // Serialization reminder:

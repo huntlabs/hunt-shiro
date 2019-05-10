@@ -246,7 +246,8 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
             if (cacheManager !is null) {
                 string cacheName = getAuthorizationCacheName();
                 version(HUNT_DEBUG) {
-                    tracef("CacheManager [" ~ cacheManager ~ "] has been configured.  Building " ~
+                    tracef("CacheManager [" ~ (cast(Object)cacheManager).toString() ~ 
+                            "] has been configured.  Building " ~
                             "authorization cache named [" ~ cacheName ~ "]");
                 }
                 // this.authorizationCache = cacheManager.getCache(cacheName);
@@ -324,7 +325,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
         AuthorizationInfo info = null;
 
         version(HUNT_DEBUG) {
-            tracef("Retrieving AuthorizationInfo for principals [" ~ principals ~ "]");
+            tracef("Retrieving AuthorizationInfo for principals [" ~ (cast(Object)principals).toString() ~ "]");
         }
 
         Cache!(Object, AuthorizationInfo) cache = getAvailableAuthorizationCache();
@@ -336,9 +337,11 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
             info = cache.get(key);
             version(HUNT_DEBUG) {
                 if (info  is null) {
-                    tracef("No AuthorizationInfo found in cache for principals [" ~ principals ~ "]");
+                    tracef("No AuthorizationInfo found in cache for principals [" ~ 
+                        (cast(Object)principals).toString() ~ "]");
                 } else {
-                    tracef("AuthorizationInfo found in cache for principals [" ~ principals ~ "]");
+                    tracef("AuthorizationInfo found in cache for principals [" ~ 
+                        (cast(Object)principals).toString() ~ "]");
                 }
             }
         }
@@ -350,7 +353,8 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
             // If the info is not null and the cache has been created, then cache the authorization info.
             if (info !is null && cache !is null) {
                 version(HUNT_DEBUG) {
-                    tracef("Caching authorization info for principals: [" ~ principals ~ "].");
+                    tracef("Caching authorization info for principals: [" ~ 
+                        (cast(Object)principals).toString() ~ "].");
                 }
                 Object key = getAuthorizationCacheKey(principals);
                 cache.put(key, info);

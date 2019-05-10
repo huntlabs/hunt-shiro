@@ -28,7 +28,6 @@ import hunt.shiro.session.mgt.ValidatingSessionManager;
 import hunt.shiro.session.mgt.ValidatingSession;
 
 
-
 import hunt.shiro.Exceptions;
 import hunt.shiro.session.Session;
 import hunt.shiro.util.Common;
@@ -37,6 +36,8 @@ import hunt.shiro.util.LifecycleUtils;
 import hunt.Exceptions;
 import hunt.collection;
 import hunt.logging.ConsoleLogger;
+
+import std.conv;
 
 
 /**
@@ -307,9 +308,9 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager,
         version(HUNT_DEBUG) {
             string msg = "Finished session validation.";
             if (invalidCount > 0) {
-                msg += "  [" ~ invalidCount ~ "] sessions were stopped.";
+                msg ~= "  [" ~ invalidCount.to!string() ~ "] sessions were stopped.";
             } else {
-                msg += "  No sessions were stopped.";
+                msg ~= "  No sessions were stopped.";
             }
             info(msg);
         }

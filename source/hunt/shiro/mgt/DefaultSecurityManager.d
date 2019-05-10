@@ -25,7 +25,6 @@ import hunt.shiro.mgt.SessionsSecurityManager;
 import hunt.shiro.mgt.SubjectFactory;
 import hunt.shiro.mgt.SubjectDAO;
 
-
 import hunt.shiro.Exceptions;
 import hunt.shiro.authc.AuthenticationInfo;
 import hunt.shiro.authc.AuthenticationToken;
@@ -48,6 +47,8 @@ import hunt.logging.ConsoleLogger;
 import hunt.Exceptions;
 import hunt.collection;
 import hunt.util.Common;
+
+import std.conv;
 
 /**
  * The Shiro framework's default concrete implementation of the {@link SecurityManager} interface,
@@ -212,17 +213,17 @@ class DefaultSecurityManager : SessionsSecurityManager {
                 rmm.onSuccessfulLogin(subject, token, info);
             } catch (Exception e) {
                 version(HUNT_DEBUG) {
-                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(rmm).name +
+                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(cast(Object)rmm).name ~
                             "] threw an exception during onSuccessfulLogin.  RememberMe services will not be " ~
-                            "performed for account [" ~ info.toString() ~ "].";
+                            "performed for account [" ~ typeid(cast(Object)info).name ~ "].";
                     warning(msg, e);
                 }
             }
         } else {
             version(HUNT_DEBUG) {
                 tracef("This " ~ typeid(this).name ~ " instance does not have a " ~
-                        "[" ~ typeid(RememberMeManager).name ~ "] instance configured.  RememberMe services " ~
-                        "will not be performed for account [" ~ info ~ "].");
+                        "[" ~ typeid(RememberMeManager).toString() ~ "] instance configured.  RememberMe services " ~
+                        "will not be performed for account [" ~ (cast(Object)info).toString() ~ "].");
             }
         }
     }
@@ -234,9 +235,9 @@ class DefaultSecurityManager : SessionsSecurityManager {
                 rmm.onFailedLogin(subject, token, ex);
             } catch (Exception e) {
                 version(HUNT_DEBUG) {
-                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(rmm).name +
+                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(cast(Object)rmm).name ~
                             "] threw an exception during onFailedLogin for AuthenticationToken [" ~
-                            token ~ "].";
+                            typeid(cast(Object)token).name ~ "].";
                     warning(msg, e);
                 }
             }
@@ -250,9 +251,10 @@ class DefaultSecurityManager : SessionsSecurityManager {
                 rmm.onLogout(subject);
             } catch (Exception e) {
                 version(HUNT_DEBUG) {
-                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(rmm).name +
+                    PrincipalCollection pc = (subject !is null ? subject.getPrincipals() : null);
+                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(rmm).toString() ~
                             "] threw an exception during onLogout for subject with principals [" ~
-                            (subject !is null ? subject.getPrincipals() : null) ~ "]";
+                             pc.to!string() ~ "]";
                     warning(msg, e);
                 }
             }
@@ -279,7 +281,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
                 onFailedLogin(token, ae, subject);
             } catch (Exception e) {
                 version(HUNT_DEBUG) {
-                    info("onFailedLogin method threw an " ~
+                    infof("onFailedLogin method threw an " ~
                             "exception.  Logging and propagating original AuthenticationException.", e);
                 }
             }
@@ -573,7 +575,8 @@ class DefaultSecurityManager : SessionsSecurityManager {
             stopSession(subject);
         } catch (Exception e) {
             version(HUNT_DEBUG) {
-                string msg = "Unable to cleanly stop Session for Subject [" ~ subject.getPrincipal() ~ "] " ~
+                string msg = "Unable to cleanly stop Session for Subject [" ~ 
+                        subject.getPrincipal().toString() ~ "] " ~
                         "Ignoring (logging out).";
                 tracef(msg, e);
             }
@@ -609,7 +612,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
                 return rmm.getRememberedPrincipals(subjectContext);
             } catch (Exception e) {
                 version(HUNT_DEBUG) {
-                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(rmm).name +
+                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(cast(Object)rmm).name ~
                             "] threw an exception during getRememberedPrincipals().";
                     warning(msg, e);
                 }

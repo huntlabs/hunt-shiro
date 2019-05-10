@@ -323,9 +323,9 @@ class DelegatingSubject : Subject {
 
      Session getSession(bool create) {
         version(HUNT_DEBUG) {
-            tracef("attempting to get session; create = " ~ create +
-                    "; session is null = " ~ (this.session  is null) +
-                    "; session has id = " ~ (this.session !is null && session.getId() !is null));
+            tracef("attempting to get session; create = %s; session is null = %s; session has id = %s" ,
+                    create, (this.session is null), 
+                    (this.session !is null && session.getId() !is null));
         }
 
         if (this.session  is null && create) {

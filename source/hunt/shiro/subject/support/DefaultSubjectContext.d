@@ -30,7 +30,7 @@ import hunt.shiro.subject.Subject;
 import hunt.shiro.subject.SubjectContext;
 import hunt.shiro.util.MapContext;
 // // import hunt.shiro.util.StringUtils;
-import hunt.logging;
+import hunt.logging.ConsoleLogger;
 
 import hunt.util.Common;
 

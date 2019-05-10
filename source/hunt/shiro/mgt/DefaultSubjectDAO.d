@@ -32,7 +32,7 @@ import hunt.shiro.subject.support.DelegatingSubject;
 
 import hunt.Boolean;
 import hunt.Exceptions;
-import hunt.logging;
+import hunt.logging.ConsoleLogger;
 
 // import java.lang.reflect.Field;
 

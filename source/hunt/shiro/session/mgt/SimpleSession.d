@@ -24,14 +24,15 @@ import hunt.shiro.session.mgt.DefaultSessionManager;
 import hunt.shiro.Exceptions;
 import hunt.shiro.util.CollectionUtils;
 
-import hunt.collection.Collection;
-import hunt.collection.Map;
+import hunt.collection;
 import hunt.Exceptions;
-import hunt.logging;
+import hunt.logging.ConsoleLogger;
+import hunt.text.StringBuilder;
 import hunt.util.Common;
 import hunt.util.DateTime;
 
 import hunt.Long;
+import std.array;
 
 // import java.io.IOException;
 // import java.io.ObjectInputStream;
@@ -109,11 +110,11 @@ class SimpleSession : ValidatingSession, Serializable {
         this.host = host;
     }
 
-     Serializable getId() {
+     Serializable getId() @trusted nothrow {
         return this.id;
     }
 
-     void setId(Serializable id) {
+     void setId(Serializable id) @trusted nothrow {
         this.id = id;
     }
 
@@ -238,14 +239,14 @@ class SimpleSession : ValidatingSession, Serializable {
 
             Date lastAccessTime = getLastAccessTime();
 
-            if (lastAccessTime  is null) {
-                string msg = "session.lastAccessTime for session with id [" ~
-                        (cast(Object)getId()).toString() ~ "] is null.  This value must be set at " ~
-                        "least once, preferably at least upon instantiation.  Please check the " ~
-                        typeid(this).name ~ " implementation and ensure " ~
-                        "this value will be set (perhaps in the constructor?)";
-                throw new IllegalStateException(msg);
-            }
+            // if (lastAccessTime is null) {
+            //     string msg = "session.lastAccessTime for session with id [" ~
+            //             (cast(Object)getId()).toString() ~ "] is null.  This value must be set at " ~
+            //             "least once, preferably at least upon instantiation.  Please check the " ~
+            //             typeid(this).name ~ " implementation and ensure " ~
+            //             "this value will be set (perhaps in the constructor?)";
+            //     throw new IllegalStateException(msg);
+            // }
 
             // Calculate at what time a session would have been last accessed
             // for it to be expired at this point.  In other words, subtract
@@ -255,10 +256,10 @@ class SimpleSession : ValidatingSession, Serializable {
             long expireTimeMillis = DateTimeHelper.currentTimeMillis() - timeout;
             // Date expireTime = new Date(expireTimeMillis);
             // return lastAccessTime.before(expireTime);
-            return lastAccessTime > expireTimeMillis;
+            return lastAccessTime < expireTimeMillis;
         } else {
             version(HUNT_DEBUG) {
-                tracef("No timeout for session with id [" ~ getId() +
+                tracef("No timeout for session with id [" ~ (cast(Object)getId()).toString() ~
                         "].  Session is not considered expired.");
             }
         }
@@ -270,7 +271,7 @@ class SimpleSession : ValidatingSession, Serializable {
         //check for stopped:
         if (isStopped()) {
             //timestamp is set, so the session is considered stopped:
-            string msg = "Session with id [" ~ getId() ~ "] has been " ~
+            string msg = "Session with id [" ~ (cast(Object)getId()).toString() ~ "] has been " ~
                     "explicitly stopped.  No further interaction under this session is " ~
                     "allowed.";
             throw new StoppedSessionException(msg);
@@ -288,7 +289,7 @@ class SimpleSession : ValidatingSession, Serializable {
 
             // DateFormat df = DateFormat.getInstance();
             import std.conv;
-            string msg = "Session with id [" ~ sessionId.toString() ~ "] has expired. " ~
+            string msg = "Session with id [" ~ (cast(Object)sessionId).toString() ~ "] has expired. " ~
                     "Last access time: " ~ lastAccessTime.to!string() ~
                     ".  Current time: " ~ DateTimeHelper.getTimeAsGMT() ~
                     ".  Session timeout is set to " ~ to!string(timeout / MILLIS_PER_SECOND) ~ " seconds (" ~
@@ -309,15 +310,15 @@ class SimpleSession : ValidatingSession, Serializable {
         return attributes;
     }
 
-     Collection!(Object) getAttributeKeys(){
+    Object[] getAttributeKeys(){
         Map!(Object, Object) attributes = getAttributes();
-        if (attributes  is null) {
-            return Collections.emptySet();
+        if (attributes is null) {
+            return null;
         }
-        return attributes.keySet();
+        return attributes.byKey.array; // .keySet();
     }
 
-     Object getAttribute(Object key) {
+    Object getAttribute(Object key) {
         Map!(Object, Object) attributes = getAttributes();
         if (attributes  is null) {
             return null;
@@ -325,7 +326,7 @@ class SimpleSession : ValidatingSession, Serializable {
         return attributes.get(key);
     }
 
-     void setAttribute(Object key, Object value) {
+    void setAttribute(Object key, Object value) {
         if (value  is null) {
             removeAttribute(key);
         } else {
@@ -333,7 +334,7 @@ class SimpleSession : ValidatingSession, Serializable {
         }
     }
 
-     Object removeAttribute(Object key) {
+    Object removeAttribute(Object key) {
         Map!(Object, Object) attributes = getAttributes();
         if (attributes  is null) {
             return null;
@@ -355,7 +356,7 @@ class SimpleSession : ValidatingSession, Serializable {
      * @return {@code true} if this object is equivalent to the specified argument, {@code false} otherwise.
      */
     override
-     bool opEquals(Object obj) {
+    bool opEquals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -365,7 +366,7 @@ class SimpleSession : ValidatingSession, Serializable {
             Serializable thisId = getId();
             Serializable otherId = other.getId();
             if (thisId !is null && otherId !is null) {
-                return thisId== otherId;
+                return thisId == otherId;
             } else {
                 //fall back to an attribute based comparison:
                 return onEquals(other);
@@ -409,7 +410,11 @@ class SimpleSession : ValidatingSession, Serializable {
             return (cast(Object)id).toHash();
         }
         size_t hashCode;
+        try{
         implementationMissing(false);
+        } catch(Exception) {
+            
+        }
         // size_t hashCode = getStartTimestamp() != null ? getStartTimestamp().hashCode() : 0;
         // hashCode = 31 * hashCode + (getStopTimestamp() !is null ? getStopTimestamp().hashCode() : 0);
         // hashCode = 31 * hashCode + (getLastAccessTime() !is null ? getLastAccessTime().hashCode() : 0);
@@ -430,7 +435,7 @@ class SimpleSession : ValidatingSession, Serializable {
     override
     string toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(typeid(this).name).append(",id=").append(getId());
+        sb.append(typeid(this).name).append(",id=").append((cast(Object)this.id).toString());
         return sb.toString();
     }
 

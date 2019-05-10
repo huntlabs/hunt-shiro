@@ -20,7 +20,7 @@ module hunt.shiro.util.ThreadContext;
 
 import hunt.shiro.mgt.SecurityManager;
 import hunt.shiro.subject.Subject;
-import hunt.logging;
+import hunt.logging.ConsoleLogger;
 
 import hunt.collection.Collections;
 import hunt.collection.HashMap;

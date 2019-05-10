@@ -33,7 +33,7 @@ module hunt.shiro.realm.jdbc.JdbcRealm;
 // import hunt.shiro.subject.PrincipalCollection;
 // import hunt.shiro.util.ByteSource;
 // import hunt.shiro.util.JdbcUtils;
-// import hunt.logging;
+// import hunt.logging.ConsoleLogger;
 
 // import javax.sql.DataSource;
 // import java.sql.Connection;

@@ -21,9 +21,7 @@ module hunt.shiro.subject.SimplePrincipalMap;
 import hunt.shiro.subject.PrincipalMap;
 import hunt.shiro.util.CollectionUtils;
 
-import hunt.collection.List;
-import hunt.collection.Map;
-import hunt.collection.Set;
+import hunt.collection;
 
 /**
  * Default implementation of the {@link PrincipalMap} interface.
@@ -69,7 +67,7 @@ class SimplePrincipalMap : PrincipalMap {
         return this.combinedPrincipals;
     }
 
-    bool containsKey(Object o) {
+    bool containsKey(string o) {
         return this.combinedPrincipals !is null && this.combinedPrincipals.containsKey(o);
     }
 
@@ -77,7 +75,7 @@ class SimplePrincipalMap : PrincipalMap {
         return this.combinedPrincipals !is null && this.combinedPrincipals.containsKey(o);
     }
 
-    Object get(Object o) {
+    Object get(string o) {
         return this.combinedPrincipals !is null && this.combinedPrincipals.containsKey(o);
     }
 
@@ -85,7 +83,7 @@ class SimplePrincipalMap : PrincipalMap {
         return ensureCombinedPrincipals().put(s, o);
     }
 
-    Object remove(Object o) {
+    Object remove(string o) {
         return this.combinedPrincipals !is null ? this.combinedPrincipals.remove(o) : null;
     }
 
@@ -113,16 +111,18 @@ class SimplePrincipalMap : PrincipalMap {
     //             Collections.unmodifiableSet(this.combinedPrincipals.entrySet());
     // }
 
-     void clear() {
+    void clear() {
         this.realmPrincipals = null;
         this.combinedPrincipals = null;
     }
 
-     Object getPrimaryPrincipal() {
+    Object getPrimaryPrincipal() {
         //heuristic - just use the first one we come across:
-        return !CollectionUtils.isEmpty(this.combinedPrincipals) ?
-                this.combinedPrincipals.values().iterator().next() :
-                null;
+        if(CollectionUtils.isEmpty(this.combinedPrincipals))
+            return null;
+        else {
+            return this.combinedPrincipals.values()[0];
+        }
     }
 
     T oneByType(T)(TypeInfo_Class type) {

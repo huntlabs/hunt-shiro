@@ -43,7 +43,7 @@ import hunt.shiro.subject.Subject;
 import hunt.shiro.subject.SubjectContext;
 import hunt.shiro.subject.support.DefaultSubjectContext;
 import hunt.shiro.util.CollectionUtils;
-import hunt.logging;
+import hunt.logging.ConsoleLogger;
 
 import hunt.Exceptions;
 import hunt.collection;

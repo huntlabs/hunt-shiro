@@ -28,7 +28,7 @@ module hunt.shiro.config.IniSecurityManagerFactory;
 // import hunt.shiro.util.Factory;
 // import hunt.shiro.util.LifecycleUtils;
 // import hunt.shiro.util.Nameable;
-// import hunt.logging;
+// import hunt.logging.ConsoleLogger;
 // import hunt.loggerFactory;
 
 // import hunt.collection;

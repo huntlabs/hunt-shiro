@@ -25,7 +25,11 @@ import hunt.shiro.util.CollectionUtils;
 import hunt.shiro.subject.MutablePrincipalCollection;
 
 import hunt.collection;
+import hunt.logging.ConsoleLogger;
+import hunt.Exceptions;
 
+import std.array;
+import std.range;
 // import java.io.IOException;
 // import java.io.ObjectInputStream;
 // import java.io.ObjectOutputStream;
@@ -95,7 +99,7 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
         if (isEmpty()) {
             return null;
         }
-        return iterator().next();
+        return asSet().front();
     }
 
      void add(Object principal, string realmName) {
@@ -175,20 +179,21 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
     //     return Collections.unmodifiableList(new ArrayList(all));
     // }
 
-    // Set!Set asSet() {
-    //     if (realmPrincipals  is null || realmPrincipals.isEmpty()) {
-    //         return Collections.EMPTY_SET;
-    //     }
-    //     Set!Set aggregated = new LinkedHashSet();
-    //     Collection!(Set) values = realmPrincipals.values();
-    //     foreach(Set set ; values) {
-    //         aggregated.addAll(set);
-    //     }
-    //     if (aggregated.isEmpty()) {
-    //         return Collections.EMPTY_SET;
-    //     }
-    //     return aggregated; // Collections.unmodifiableSet(aggregated);
-    // }
+    Set!(Set!Object) asSet() {
+        if (realmPrincipals is null || realmPrincipals.isEmpty()) {
+            return Collections.emptySet!(Set!Object)();
+        }
+
+        Set!(Set!Object) aggregated = new LinkedHashSet();
+        Collection!((Set!Object)) values = realmPrincipals.values();
+        foreach(Set!(Object) set ; values) {
+            aggregated.addAll(set);
+        }
+        if (aggregated.isEmpty()) {
+            return Collections.emptySet!Set();
+        }
+        return aggregated; // Collections.unmodifiableSet(aggregated);
+    }
 
     //  Collection fromRealm(string realmName) {
     //     if (realmPrincipals  is null || realmPrincipals.isEmpty()) {
@@ -240,8 +245,12 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
     }
 
     override size_t toHash() @trusted nothrow {
-        if (this.realmPrincipals !is null && !realmPrincipals.isEmpty()) {
-            return realmPrincipals.toHash();
+        try {
+            if (this.realmPrincipals !is null && !realmPrincipals.isEmpty()) {
+                return realmPrincipals.toHash();
+            }
+        } catch(Exception ex) {
+            warning(ex.msg);
         }
         return super.toHash();
     }
@@ -255,7 +264,8 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
         if (this.cachedToString  is null) {
             Set!(Object) principals = asSet();
             if (!CollectionUtils.isEmpty(principals)) {
-                this.cachedToString = StringUtils.toString(principals.toArray());
+                // this.cachedToString = StringUtils.toString(principals.toArray());
+                implementationMissing(false);
             } else {
                 this.cachedToString = "empty";
             }

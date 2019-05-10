@@ -25,7 +25,7 @@ import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.codec.CodecSupport;
 
 import hunt.Exceptions;
-import hunt.logging;
+import hunt.logging.ConsoleLogger;
 
 //import java.security.MessageDigest;
 //import hunt.util.ArrayHelper;

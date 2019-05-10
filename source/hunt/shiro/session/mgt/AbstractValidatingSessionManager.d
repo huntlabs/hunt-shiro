@@ -36,7 +36,7 @@ import hunt.shiro.util.LifecycleUtils;
 
 import hunt.Exceptions;
 import hunt.collection;
-import hunt.logging;
+import hunt.logging.ConsoleLogger;
 
 
 /**

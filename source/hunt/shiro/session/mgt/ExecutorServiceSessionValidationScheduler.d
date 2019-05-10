@@ -31,8 +31,9 @@ import hunt.concurrency.ThreadFactory;
 import hunt.util.DateTime;
 import hunt.util.Common;
 
-import hunt.logging;
+import hunt.logging.ConsoleLogger;
 
+import core.thread;
 import std.conv;
 
 /**
@@ -105,8 +106,10 @@ class ExecutorServiceSessionValidationScheduler : SessionValidationScheduler, Ru
 	                thread.name = threadNamePrefix ~ c.to!string();
 	                return thread;  
 	            }  
-            });                  
-            this.service.scheduleAtFixedRate(this, interval, interval, TimeUnit.MILLISECONDS);
+            });
+
+            Duration dur = interval.msecs;              
+            this.service.scheduleAtFixedRate(this, dur, dur);
         }
         this.enabled = true;
     }

@@ -3,7 +3,7 @@ module hunt.shiro.util.LifecycleUtils;
 import hunt.shiro.util.Common;
 
 import hunt.collection.Collection;
-import hunt.logging;
+import hunt.logging.ConsoleLogger;
 
 
 /**

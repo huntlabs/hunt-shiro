@@ -23,10 +23,11 @@ import hunt.shiro.session.mgt.eis.AbstractSessionDAO;
 import hunt.shiro.session.Session;
 import hunt.shiro.Exceptions;
 import hunt.shiro.util.CollectionUtils;
-import hunt.logging;
 
-import hunt.util.Common;
 import hunt.collection;
+import hunt.Exceptions;
+import hunt.logging.ConsoleLogger;
+import hunt.util.Common;
 
 /**
  * Simple memory-based implementation of the SessionDAO that stores all of its sessions in an in-memory
@@ -89,13 +90,9 @@ class MemorySessionDAO : AbstractSessionDAO {
         }
     }
 
-     Collection!(Session) getActiveSessions() {
-        Collection!(Session) values = sessions.values();
-        if (CollectionUtils.isEmpty(values)) {
-            return Collections.emptySet!Session();
-        } else {
-            return values;
-        }
+    Session[] getActiveSessions() {
+        Session[] values = sessions.values();
+        return values;
     }
 
 }

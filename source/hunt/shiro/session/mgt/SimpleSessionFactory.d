@@ -20,6 +20,7 @@ module hunt.shiro.session.mgt.SimpleSessionFactory;
 
 import hunt.shiro.session.mgt.SessionContext;
 import hunt.shiro.session.mgt.SessionFactory;
+import hunt.shiro.session.mgt.SimpleSession;
 import hunt.shiro.session.Session;
 
 /**

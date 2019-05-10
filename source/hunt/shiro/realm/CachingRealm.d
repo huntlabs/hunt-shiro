@@ -26,7 +26,7 @@ import hunt.shiro.cache.CacheManagerAware;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.CollectionUtils;
 import hunt.shiro.util.Common;
-import hunt.logging;
+import hunt.logging.ConsoleLogger;
 
 import hunt.collection;
 
@@ -198,7 +198,7 @@ abstract class CachingRealm : Realm, Nameable, CacheManagerAware, LogoutAware {
         if (!isEmpty(principals)) {
             Collection!Object thisPrincipals = principals.fromRealm(getName());
             if (!CollectionUtils.isEmpty(thisPrincipals)) {
-                primary = thisPrincipals.iterator().front();
+                primary = thisPrincipals.toArray()[0];
             } else {
                 //no principals attributed to this particular realm.  Fall back to the 'master' primary:
                 primary = principals.getPrimaryPrincipal();

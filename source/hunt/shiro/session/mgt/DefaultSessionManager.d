@@ -33,7 +33,7 @@ import hunt.shiro.session.Session;
 import hunt.shiro.Exceptions;
 import hunt.shiro.session.mgt.eis.MemorySessionDAO;
 import hunt.shiro.session.mgt.eis.SessionDAO;
-import hunt.logging;
+import hunt.logging.ConsoleLogger;
 
 import hunt.util.Common;
 import hunt.collection;

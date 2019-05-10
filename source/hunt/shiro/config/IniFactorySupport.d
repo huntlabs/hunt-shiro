@@ -22,7 +22,7 @@ module hunt.shiro.config.IniFactorySupport;
 // import hunt.shiro.util.AbstractFactory;
 // import hunt.shiro.util.CollectionUtils;
 // import hunt.shiro.util.Factory;
-// import hunt.logging;
+// import hunt.logging.ConsoleLogger;
 // import hunt.loggerFactory;
 
 // import hunt.collection.HashMap;

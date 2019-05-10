@@ -34,7 +34,7 @@ import hunt.shiro.util.CollectionUtils;
 
 import hunt.Exceptions;
 import hunt.collection;
-import hunt.logging;
+import hunt.logging.ConsoleLogger;
 
 /**
  * A {@code ModularRealmAuthenticator} delegates account lookups to a pluggable (modular) collection of

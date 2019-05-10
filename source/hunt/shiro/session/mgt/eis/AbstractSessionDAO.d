@@ -25,6 +25,7 @@ import hunt.shiro.session.Session;
 import hunt.shiro.Exceptions;
 import hunt.shiro.session.mgt.SimpleSession;
 
+import hunt.Exceptions;
 import hunt.util.Common;
 
 
@@ -58,7 +59,8 @@ abstract class AbstractSessionDAO : SessionDAO {
      * {@link hunt.shiro.session.mgt.eis.JavaUuidSessionIdGenerator}.
      */
     this() {
-        this.sessionIdGenerator = new JavaUuidSessionIdGenerator();
+        // this.sessionIdGenerator = new JavaUuidSessionIdGenerator();
+        implementationMissing(false);
     }
 
     /**
@@ -169,7 +171,8 @@ abstract class AbstractSessionDAO : SessionDAO {
      Session readSession(Serializable sessionId){
         Session s = doReadSession(sessionId);
         if (s  is null) {
-            throw new UnknownSessionException("There is no session with id [" ~ sessionId ~ "]");
+            throw new UnknownSessionException("There is no session with id [" ~ 
+                (cast(Object)sessionId).toString() ~ "]");
         }
         return s;
     }

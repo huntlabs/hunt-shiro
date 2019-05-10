@@ -36,7 +36,7 @@ import hunt.shiro.util.CollectionUtils;
 
 import hunt.Exceptions;
 import hunt.collection;
-import hunt.logging;
+import hunt.logging.ConsoleLogger;
 
 /**
  * Abstract implementation supporting the {@link NativeSessionManager NativeSessionManager} interface, supporting

@@ -444,7 +444,7 @@ interface Subject {
      * @return the resulting object returned by the {@code Callable}'s execution.
      * @throws ExecutionException if the {@code Callable}'s {@link Callable#call call} method.
      */
-    V execute(V)(Callable!(V) callable);
+    // V execute(V)(Callable!(V) callable);
 
     /**
      * Associates the specified {@code Runnable} with this {@code Subject} instance and then executes it on the
@@ -472,7 +472,7 @@ interface Subject {
      * @param <V>      the {@code Callable}s return value type
      * @return a {@code Callable} that can be run as this {@code Subject}.
      */
-    Callable!(V) associateWith(V)(Callable!(V) callable);
+    // Callable!(V) associateWith(V)(Callable!(V) callable);
 
     /**
      * Returns a {@code Runnable} instance matching the given argument while additionally ensuring that it will

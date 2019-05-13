@@ -72,18 +72,6 @@ class EnvironmentException : ShiroException {
 }
 
 /**
- * Exception wrapping any potential checked exception thrown when a {@code Subject} executes a
- * {@link java.util.concurrent.Callable}.  This is a nicer alternative than forcing calling code to catch
- * a normal checked {@code Exception} when it may not be necessary.
- * <p/>
- * If thrown, the causing exception will always be accessible via the {@link #getCause() getCause()} method.
- *
- */
-class ExecutionException : ShiroException {
-    mixin BasicExceptionCtors;
-}
-
-/**
  * Thrown by {@link PermissionResolver#resolvePermission(string)} when the string being parsed is not
  * valid for that resolver.
  */

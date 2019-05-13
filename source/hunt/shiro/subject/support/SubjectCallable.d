@@ -18,9 +18,11 @@
  */
 module hunt.shiro.subject.support.SubjectCallable;
 
+import hunt.shiro.subject.support.SubjectThreadState;
 import hunt.shiro.subject.Subject;
 import hunt.shiro.util.ThreadState;
 
+import hunt.Exceptions;
 import hunt.util.Common;
 
 /**
@@ -58,8 +60,8 @@ import hunt.util.Common;
  */
 class SubjectCallable(V) : Callable!(V) {
 
-    protected final ThreadState threadState;
-    private final Callable!(V) callable;
+    protected ThreadState threadState;
+    private Callable!(V) callable;
 
     this(Subject subject, Callable!(V) dg) {
         this(new SubjectThreadState(subject), dg);

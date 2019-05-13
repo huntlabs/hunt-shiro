@@ -18,7 +18,9 @@
  */
 module hunt.shiro.subject.support.DelegatingSubject;
 
+import hunt.shiro.subject.support.SubjectCallable;
 import hunt.shiro.subject.support.SubjectRunnable;
+
 
 import hunt.shiro.Exceptions;
 import hunt.shiro.authc.AuthenticationToken;

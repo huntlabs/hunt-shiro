@@ -58,7 +58,6 @@ class DefaultEnvironment : NamedObjectEnvironment, Destroyable {
      *
      * @param seed backing map to use to maintain Shiro objects.
      */
-    //@SuppressWarnings({"unchecked"})
     this(Map!(string, Object) seed) {
         this.securityManagerName = DEFAULT_SECURITY_MANAGER_KEY;
         if (seed is null) {

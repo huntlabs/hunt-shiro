@@ -58,6 +58,10 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
     this() {
     }
 
+    this(string principal, string realmName) {
+        this(new String(principal), realmName);
+    }
+
     this(Object principal, string realmName) {
         Collection!Object c = cast(Collection!Object) principal;
         if (c !is null) {

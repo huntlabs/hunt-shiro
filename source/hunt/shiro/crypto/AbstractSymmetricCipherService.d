@@ -58,7 +58,7 @@ abstract class AbstractSymmetricCipherService : JcaCipherService {
         // try {
         //     kg = KeyGenerator.getInstance(getAlgorithmName());
         // } catch (NoSuchAlgorithmException e) {
-        //     string msg = "Unable to acquire " + getAlgorithmName() + " algorithm.  This is required to function.";
+        //     string msg = "Unable to acquire " ~ getAlgorithmName() + " algorithm.  This is required to function.";
         //     throw new IllegalStateException(msg, e);
         // }
         // kg.init(keyBitSize);

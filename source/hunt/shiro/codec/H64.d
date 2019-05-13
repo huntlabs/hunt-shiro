@@ -105,7 +105,7 @@ class H64 {
     //  * @return
     //  */
     // static String encodeToString(byte[] bytes) {
-    //     if (bytes == null || bytes.length == 0) return null;
+    //     if (bytes is null || bytes.length == 0) return null;
 
     //     StringBuilder buf = new StringBuilder();
 

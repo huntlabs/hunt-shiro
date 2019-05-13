@@ -1,0 +1,228 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+module hunt.shiro.event.support.DefaultEventBus;
+
+import hunt.shiro.event.support.AnnotationEventListenerResolver;
+import hunt.shiro.event.support.EventListener;
+import hunt.shiro.event.support.EventListenerResolver;
+import hunt.shiro.event.support.EventListenerComparator;
+import hunt.shiro.event.support.SingleArgumentMethodEventListener;
+
+import hunt.shiro.event.EventBus;
+
+import hunt.collection;
+import hunt.Exceptions;
+import hunt.logging;
+
+import core.sync.rwmutex;
+import std.array;
+import std.concurrency : initOnce;
+
+// import java.util.concurrent.locks.Lock;
+// import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+
+/**
+ * A default event bus implementation that synchronously publishes events to registered listeners.  Listeners can be
+ * registered or unregistered for events as necessary.
+ * <p/>
+ * An event bus enables a publish/subscribe paradigm within Shiro - components can publish or consume events they
+ * find relevant without needing to be tightly coupled to other components.  This affords great
+ * flexibility within Shiro by promoting loose coupling and high cohesion between components and a much safer
+ * pluggable architecture that is more resilient to change over time.
+ * <h2>Sending Events</h2>
+ * If a component wishes to publish events to other components:
+ * <pre>
+ *     MyEvent myEvent = createMyEvent();
+ *     eventBus.publish(myEvent);
+ * </pre>
+ * The event bus will determine the type of event and then dispatch the event to components that wish to receive
+ * events of that type.
+ * <h2>Receiving Events</h2>
+ * A component can receive events of interest by doing the following.
+ * <ol>
+ * <li>For each type of event you wish to consume, create a method that accepts a single event argument.
+ * The method argument type indicates the type of event to receive.</li>
+ * <li>Annotate each of these methods with the {@link hunt.shiro.event.Subscribe Subscribe} annotation.</li>
+ * <li>Register the component with the event bus:
+ * <pre>
+ *         eventBus.register(myComponent);
+ *     </pre>
+ * </li>
+ * </ol>
+ * After registering the component, when when an event of a respective type is published, the component's
+ * {@code Subscribe}-annotated method(s) will be invoked as expected.
+ *
+ * This design (and its constituent helper components) was largely influenced by
+ * Guava's <a href="http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/eventbus/EventBus.html">EventBus</a>
+ * concept, although no code was shared/imported (even though Guava is Apache 2.0 licensed and could have
+ * been used).
+ *
+ * This implementation is thread-safe and may be used concurrently.
+ *
+ * @since 1.3
+ */
+class DefaultEventBus : EventBus {
+
+    private enum string EVENT_LISTENER_ERROR_MSG = "Event listener processing failed.  Listeners should " ~
+            "generally handle exceptions directly and not propagate to the event bus.";
+
+    //this is stateless, we can retain a static final reference:
+    private static EventListenerComparator EVENT_LISTENER_COMPARATOR() {
+        __gshared EventListenerComparator inst;
+        return initOnce!inst(new EventListenerComparator);
+    }
+
+    private EventListenerResolver eventListenerResolver;
+
+    //We want to preserve registration order to deliver events to objects in the order that they are registered
+    //with the event bus.  This has the nice effect that any Shiro system-level components that are registered first
+    //(likely to happen upon startup) have precedence over those registered by end-user components later.
+    //
+    //One might think that this could have been done by just using a ConcurrentSkipListMap (which is available only on
+    //JDK 6 or later).  However, this approach requires the implementation of a Comparator to sort elements, and this
+    //surfaces a problem: for any given random event listener, there isn't any guaranteed property to exist that can be
+    //inspected to determine order of registration, since registration order is an artifact of this EventBus
+    //implementation, not the listeners themselves.
+    //
+    //Therefore, we use a simple concurrent lock to wrap a LinkedHashMap - the LinkedHashMap retains insertion order
+    //and the lock provides thread-safety in probably a much simpler mechanism than attempting to write a
+    //EventBus-specific Comparator.  This technique is also likely to be faster than a ConcurrentSkipListMap, which
+    //is about 3-5 times slower than a standard ConcurrentMap.
+    private Map!(Object, Subscription) registry;
+    private ReadWriteMutex.Reader registryReadLock;
+    private ReadWriteMutex.Writer registryWriteLock;
+
+    this() {
+        this.registry = new LinkedHashMap!(Object, Subscription)(); //not thread safe, so we need locks:
+
+        ReadWriteMutex rwl = new ReadWriteMutex();
+        this.registryReadLock = rwl.reader();
+        this.registryWriteLock = rwl.writer();
+        this.eventListenerResolver = new AnnotationEventListenerResolver();
+    }
+
+    EventListenerResolver getEventListenerResolver() {
+        return eventListenerResolver;
+    }
+
+    void setEventListenerResolver(EventListenerResolver eventListenerResolver) {
+        this.eventListenerResolver = eventListenerResolver;
+    }
+
+    void publish(Object event) {
+        if (event is null) {
+            info("Received null event for publishing.  Ignoring and returning.");
+            return;
+        }
+
+        registryReadLock.lock();
+        try {
+            //performing the entire iteration within the lock will be a slow operation if the registry has a lot of
+            //contention.  However, it is expected that the very large majority of cases the registry will be
+            //read-mostly with very little writes (registrations or removals) occurring during a typical application
+            //lifetime.
+            //
+            //The alternative would be to copy the registry.values() collection to a new LinkedHashSet within the lock
+            //only and the iteration on this new collection could be outside the lock.  This has the performance penalty
+            //however of always creating a new collection every time an event is published,  which could be more
+            //costly for the majority of applications, especially if the number of listeners is large.
+            //
+            //Finally, the read lock is re-entrant, so multiple publish calls will be
+            //concurrent without penalty since publishing is a read-only operation on the registry.
+
+            foreach (Subscription subscription ; this.registry.values()) {
+                subscription.onEvent(event);
+            }
+        } finally {
+            registryReadLock.unlock();
+        }
+    }
+
+    void register(Object instance) {
+        if (instance is null) {
+            info("Received null instance for event listener registration.  Ignoring registration request.");
+            return;
+        }
+
+        unregister(instance);
+        EventListener[] listeners = getEventListenerResolver().getEventListeners(instance);
+
+        if (listeners.empty()) {
+            warningf("Unable to resolve event listeners for subscriber instance [%s]. Ignoring registration request.",
+                    instance.toString());
+            return;
+        }
+
+        Subscription subscription = new Subscription(listeners);
+
+        this.registryWriteLock.lock();
+        try {
+            this.registry.put(instance, subscription);
+        } finally {
+            this.registryWriteLock.unlock();
+        }
+    }
+
+    void unregister(Object instance) {
+        if (instance is null) {
+            return;
+        }
+        this.registryWriteLock.lock();
+        try {
+            this.registry.remove(instance);
+        } finally {
+            this.registryWriteLock.unlock();
+        }
+    }
+
+    private class Subscription {
+
+        private List!EventListener listeners;
+
+        this(EventListener[] listeners) {
+            List!EventListener toSort = new ArrayList!EventListener(listeners);
+            // Collections.sort(toSort, EVENT_LISTENER_COMPARATOR);
+            toSort.sort(EVENT_LISTENER_COMPARATOR);
+            this.listeners = toSort;
+        }
+
+        void onEvent(Object event) {
+
+            Set!Object delivered = new HashSet!Object();
+
+            implementationMissing(false);
+            foreach (EventListener listener ; this.listeners) {
+                Object target = cast(Object)listener;
+                // SingleArgumentMethodEventListener singleArgListener = cast(SingleArgumentMethodEventListener) listener;
+                // if (singleArgListener !is null) {
+                //     target = singleArgListener.getTarget();
+                // }
+                if (listener.accepts(event) && !delivered.contains(target)) {
+                    try {
+                        listener.onEvent(event);
+                    } catch (Throwable t) {
+                        warning(EVENT_LISTENER_ERROR_MSG, t);
+                    }
+                    delivered.add(target);
+                }
+            }
+        }
+    }
+}

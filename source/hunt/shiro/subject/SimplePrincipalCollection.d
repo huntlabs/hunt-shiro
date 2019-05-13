@@ -76,11 +76,11 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
     }
 
     protected Collection!Object getPrincipalsLazy(string realmName) {
-        if (realmPrincipals  is null) {
+        if (realmPrincipals is null) {
             realmPrincipals = new LinkedHashMap!(string, Set!Object)();
         }
         Set!Object principals = realmPrincipals.get(realmName);
-        if (principals  is null) {
+        if (principals is null) {
             principals = new LinkedHashSet!Object();
             realmPrincipals.put(realmName, principals);
         }
@@ -102,12 +102,16 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
         }
         return asSet().toArray()[0];
     }
+    
+    void add(string principal, string realmName) {
+        add(new String(principal), realmName);
+    }
 
-     void add(Object principal, string realmName) {
-        if (realmName  is null) {
+    void add(Object principal, string realmName) {
+        if (realmName is null) {
             throw new IllegalArgumentException("realmName argument cannot be null.");
         }
-        if (principal  is null) {
+        if (principal is null) {
             throw new IllegalArgumentException("principal argument cannot be null.");
         }
         this.cachedToString = null;
@@ -115,10 +119,10 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
     }
 
      void addAll(Collection!Object principals, string realmName) {
-        if (realmName  is null) {
+        if (realmName is null) {
             throw new IllegalArgumentException("realmName argument cannot be null.");
         }
-        if (principals  is null) {
+        if (principals is null) {
             throw new IllegalArgumentException("principals argument cannot be null.");
         }
         if (principals.isEmpty()) {
@@ -139,7 +143,7 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
     }
 
     // T oneByType(T)(TypeInfo_Class type) {
-    //     if (realmPrincipals  is null || realmPrincipals.isEmpty()) {
+    //     if (realmPrincipals is null || realmPrincipals.isEmpty()) {
     //         return null;
     //     }
     //     Collection!(Set) values = realmPrincipals.values();
@@ -154,7 +158,7 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
     // }
 
     // Collection!(T) byType(T)(TypeInfo_Class type) {
-    //     if (realmPrincipals  is null || realmPrincipals.isEmpty()) {
+    //     if (realmPrincipals is null || realmPrincipals.isEmpty()) {
     //         return Collections.EMPTY_SET;
     //     }
     //     Set!(T) typed = new LinkedHashSet!(T)();
@@ -208,7 +212,7 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
     }
 
     string[] getRealmNames() {
-        if (realmPrincipals  is null) {
+        if (realmPrincipals is null) {
             return null;
         } else {
             return realmPrincipals.byKey.array();
@@ -216,7 +220,7 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
     }
 
      bool isEmpty() {
-        return realmPrincipals  is null || realmPrincipals.isEmpty();
+        return realmPrincipals is null || realmPrincipals.isEmpty();
     }
 
      void clear() {
@@ -262,7 +266,7 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
      * @return a simple string representation suitable for printing.
      */
     override string toString() {
-        if (this.cachedToString  is null) {
+        if (this.cachedToString is null) {
             Set!(Object) principals = asSet();
             if (!CollectionUtils.isEmpty(principals)) {
                 this.cachedToString = StringUtils.toCommaDelimitedString(principals.toArray());

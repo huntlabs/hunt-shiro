@@ -24,7 +24,7 @@ import hunt.shiro.cache.CacheManager;
 import hunt.shiro.cache.CacheManagerAware;
 import hunt.shiro.event.EventBus;
 import hunt.shiro.event.EventBusAware;
-// import hunt.shiro.event.support.DefaultEventBus;
+import hunt.shiro.event.support.DefaultEventBus;
 import hunt.shiro.util.Common;
 import hunt.shiro.util.LifecycleUtils;
 
@@ -57,8 +57,7 @@ abstract class CachingSecurityManager : SecurityManager,
      */
     this() {
         //use a default event bus:
-        // setEventBus(new DefaultEventBus());
-        implementationMissing(false);
+        setEventBus(new DefaultEventBus());
     }
 
     /**
@@ -145,8 +144,7 @@ abstract class CachingSecurityManager : SecurityManager,
         LifecycleUtils.destroy(cast(Object)getCacheManager());
         this.cacheManager = null;
         LifecycleUtils.destroy(cast(Object)getEventBus());
-        // this.eventBus = new DefaultEventBus();
-        implementationMissing(false);
+        this.eventBus = new DefaultEventBus();
     }
 
 }

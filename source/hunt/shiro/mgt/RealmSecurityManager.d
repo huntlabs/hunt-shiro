@@ -166,8 +166,11 @@ abstract class RealmSecurityManager : CachingSecurityManager {
 
     override void destroy() {
         // LifecycleUtils.destroy(getRealms());
-        foreach(Realm r; getRealms()) {
-            LifecycleUtils.destroy(cast(Object)r);
+        Collection!(Realm) realms = getRealms();
+        if(realms !is null) {
+            foreach(Realm r; getRealms()) {
+                LifecycleUtils.destroy(cast(Object)r);
+            }
         }
         this.realms = null;
         super.destroy();

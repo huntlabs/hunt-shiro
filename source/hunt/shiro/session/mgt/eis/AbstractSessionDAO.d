@@ -56,11 +56,10 @@ abstract class AbstractSessionDAO : SessionDAO {
 
     /**
      * Default no-arg constructor that defaults the {@link #setSessionIdGenerator sessionIdGenerator} to be a
-     * {@link hunt.shiro.session.mgt.eis.JavaUuidSessionIdGenerator}.
+     * {@link hunt.shiro.session.mgt.eis.UuidSessionIdGenerator}.
      */
     this() {
-        // this.sessionIdGenerator = new JavaUuidSessionIdGenerator();
-        implementationMissing(false);
+        this.sessionIdGenerator = new UuidSessionIdGenerator();
     }
 
     /**
@@ -103,7 +102,7 @@ abstract class AbstractSessionDAO : SessionDAO {
      * @return the generated ID to assign
      */
     protected string generateSessionId(Session session) {
-        if (this.sessionIdGenerator  is null) {
+        if (this.sessionIdGenerator is null) {
             string msg = "sessionIdGenerator attribute has not been configured.";
             throw new IllegalStateException(msg);
         }

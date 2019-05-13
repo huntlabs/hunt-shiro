@@ -147,18 +147,18 @@ class SimpleByteSource : ByteSource {
     }
 
     bool isEmpty() {
-        return this.bytes == null || this.bytes.length == 0;
+        return this.bytes is null || this.bytes.length == 0;
     }
 
     string toHex() {
-        if ( this.cachedHex == null ) {
+        if ( this.cachedHex is null ) {
             this.cachedHex = Hex.encodeToString(getBytes());
         }
         return this.cachedHex;
     }
 
     string toBase64() {
-        if ( this.cachedBase64 == null ) {
+        if ( this.cachedBase64 is null ) {
             this.cachedBase64 = Base64.encodeToString(getBytes());
         }
         return this.cachedBase64;
@@ -302,8 +302,8 @@ final class ByteSourceUtil {
         implementationMissing(false);
         return null;
         // if (!isCompatible(source)) {
-        //     string msg = "Unable to heuristically acquire bytes for object of type [" +
-        //             source.getClass().getName() + "].  If this type is indeed a byte-backed data type, you might " +
+        //     string msg = "Unable to heuristically acquire bytes for object of type [" ~
+        //             source.getClass().getName() + "].  If this type is indeed a byte-backed data type, you might " ~
         //             "want to write your own ByteSource implementation to extract its bytes explicitly.";
         //     throw new IllegalArgumentException(msg);
         // }
@@ -320,8 +320,8 @@ final class ByteSourceUtil {
         // } else if (source instanceof InputStream) {
         //     return bytes((InputStream) source);
         // } else {
-        //     throw new IllegalStateException("Encountered unexpected byte source.  This is a bug - please notify " +
-        //             "the Shiro developer list asap (the isCompatible implementation does not reflect this " +
+        //     throw new IllegalStateException("Encountered unexpected byte source.  This is a bug - please notify " ~
+        //             "the Shiro developer list asap (the isCompatible implementation does not reflect this " ~
         //             "method's implementation).");
         // }
     }

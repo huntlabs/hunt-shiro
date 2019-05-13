@@ -92,8 +92,8 @@ abstract class CodecSupport {
     //     try {
     //         return source.getBytes(encoding);
     //     } catch (UnsupportedEncodingException e) {
-    //         String msg = "Unable to convert source [" + source + "] to byte array using " +
-    //                 "encoding '" + encoding + "'";
+    //         String msg = "Unable to convert source [" ~ source + "] to byte array using " ~
+    //                 "encoding '" ~ encoding + "'";
     //         throw new CodecException(msg, e);
     //     }
     // }
@@ -124,7 +124,7 @@ abstract class CodecSupport {
     //     try {
     //         return new String(bytes, encoding);
     //     } catch (UnsupportedEncodingException e) {
-    //         String msg = "Unable to convert byte array to String with encoding '" + encoding + "'.";
+    //         String msg = "Unable to convert byte array to String with encoding '" ~ encoding + "'.";
     //         throw new CodecException(msg, e);
     //     }
     // }
@@ -237,7 +237,7 @@ abstract class CodecSupport {
     //  * @return a byte array representation of the Object argument.
     //  */
     // protected String toString(Object o) {
-    //     if (o == null) {
+    //     if (o is null) {
     //         String msg = "Argument for String conversion cannot be null.";
     //         throw new IllegalArgumentException(msg);
     //     }
@@ -253,13 +253,13 @@ abstract class CodecSupport {
     // }
 
     // protected byte[] toBytes(File file) {
-    //     if (file == null) {
+    //     if (file is null) {
     //         throw new IllegalArgumentException("File argument cannot be null.");
     //     }
     //     try {
     //         return toBytes(new FileInputStream(file));
     //     } catch (FileNotFoundException e) {
-    //         String msg = "Unable to acquire InputStream for file [" + file + "]";
+    //         String msg = "Unable to acquire InputStream for file [" ~ file + "]";
     //         throw new CodecException(msg, e);
     //     }
     // }
@@ -274,7 +274,7 @@ abstract class CodecSupport {
     //  * @since 1.0
     //  */
     // protected byte[] toBytes(InputStream in) {
-    //     if (in == null) {
+    //     if (in is null) {
     //         throw new IllegalArgumentException("InputStream argument cannot be null.");
     //     }
     //     final int BUFFER_SIZE = 512;
@@ -309,12 +309,12 @@ abstract class CodecSupport {
     //  * @return a byte array representation of the Object argument.
     //  */
     // protected byte[] objectToBytes(Object o) {
-    //     String msg = "The " + getClass().getName() + " implementation only supports conversion to " +
-    //             "byte[] if the source is of type byte[], char[], String, " + ByteSource.class.getName() +
-    //             " File or InputStream.  The instance provided as a method " +
-    //             "argument is of type [" + o.getClass().getName() + "].  If you would like to convert " +
-    //             "this argument type to a byte[], you can 1) convert the argument to one of the supported types " +
-    //             "yourself and then use that as the method argument or 2) subclass " + getClass().getName() +
+    //     String msg = "The " ~ getClass().getName() + " implementation only supports conversion to " ~
+    //             "byte[] if the source is of type byte[], char[], String, " ~ ByteSource.class.getName() +
+    //             " File or InputStream.  The instance provided as a method " ~
+    //             "argument is of type [" ~ o.getClass().getName() + "].  If you would like to convert " ~
+    //             "this argument type to a byte[], you can 1) convert the argument to one of the supported types " ~
+    //             "yourself and then use that as the method argument or 2) subclass " ~ getClass().getName() +
     //             "and override the objectToBytes(Object o) method.";
     //     throw new CodecException(msg);
     // }

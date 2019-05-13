@@ -21,7 +21,9 @@ module hunt.shiro.session.Session;
 import hunt.util.Common;
 import hunt.collection;
 import hunt.shiro.util.Common;
-// // import java.util.Date;
+// import java.util.Date;
+
+import hunt.String;
 
 alias Date = long;
 
@@ -195,6 +197,10 @@ interface Session {
      *                                 this method.
      */
     void setAttribute(Object key, Object value);
+
+    final void setAttribute(string key, string value) {
+        setAttribute(new String(key), new String(value));
+    }
 
     /**
      * Removes (unbinds) the object bound to this session under the specified {@code key} name.

@@ -36,7 +36,7 @@ import hunt.collection.Map;
 import hunt.collection.Set;
 import hunt.Exceptions;
 
-import core.sync.rwmutex;
+import core.sync.rwmutex; // ReentrantReadWriteLock
 
 import std.array;
 import std.string;

@@ -1,11 +1,14 @@
 import std.stdio;
 
 import test.shiro.subject.SimplePrincipalCollectionTest;
+import test.shiro.subject.DelegatingSubjectTest;
+
 
 import hunt.util.UnitTest;
 
 void main()
 {
 
-	testUnits!(SimplePrincipalCollectionTest);
+	testUnits!(DelegatingSubjectTest);
+	// testUnits!(SimplePrincipalCollectionTest);
 }

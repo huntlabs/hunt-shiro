@@ -33,7 +33,7 @@ abstract class LifecycleUtils {
     //  * @since 0.9
     //  */
     // static void init(Collection c) {
-    //     if (c == null || c.isEmpty()) {
+    //     if (c is null || c.isEmpty()) {
     //         return;
     //     }
     //     for (Object o : c) {

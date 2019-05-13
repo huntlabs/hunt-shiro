@@ -20,8 +20,6 @@ module test.shiro.subject.SimplePrincipalCollectionTest;
 
 import hunt.shiro.subject.SimplePrincipalCollection;
 
-import hunt.String;
-
 import hunt.util.UnitTest;
 import hunt.logging.ConsoleLogger;
 
@@ -34,9 +32,9 @@ public class SimplePrincipalCollectionTest {
     public void multiplePrincipalsTest()
     {
         SimplePrincipalCollection principalCollection = new SimplePrincipalCollection();
-        principalCollection.add(new String("frank"), "realm1");
-        principalCollection.add(new String("johnny"), "realm1");
-        principalCollection.add(new String("Alberto"), "realm2");
+        principalCollection.add("frank", "realm1");
+        principalCollection.add("johnny", "realm1");
+        principalCollection.add("Alberto", "realm2");
 
         trace(principalCollection);
     }

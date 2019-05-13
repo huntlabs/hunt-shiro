@@ -22,71 +22,86 @@ module test.shiro.subject.DelegatingSubjectTest;
 // import hunt.shiro.authc.UsernamePasswordToken;
 // import hunt.shiro.config.Ini;
 // import hunt.shiro.config.IniSecurityManagerFactory;
-// import hunt.shiro.mgt.DefaultSecurityManager;
-// import hunt.shiro.mgt.SecurityManager;
-// import hunt.shiro.session.Session;
-// import hunt.shiro.subject.support.DelegatingSubject;
+import hunt.shiro.mgt.DefaultSecurityManager;
+import hunt.shiro.mgt.SecurityManager;
+import hunt.shiro.session.Session;
+import hunt.shiro.subject.support.DelegatingSubject;
 // import hunt.shiro.util.CollectionUtils;
-// import hunt.shiro.util.LifecycleUtils;
-// import hunt.shiro.util.ThreadContext;
+import hunt.shiro.util.LifecycleUtils;
+import hunt.shiro.util.ThreadContext;
 // import org.junit.After;
 // import org.junit.Before;
 // import org.junit.Test;
 
+import hunt.util.UnitTest;
+import hunt.logging.ConsoleLogger;
+
 // import java.io.Serializable;
 // import java.util.concurrent.Callable;
 
-// import static org.easymock.EasyMock.createNiceMock;
-// import static org.junit.Assert.*;
+import hunt.Assert;
+
+alias assertTrue = Assert.assertTrue;
+alias assertFalse = Assert.assertFalse;
+alias assertThat = Assert.assertThat;
+alias assertEquals = Assert.assertEquals;
+alias assertNotNull = Assert.assertNotNull;
+alias assertNull = Assert.assertNull;
+alias fail = Assert.fail;
 
 
-// /**
-//  * @since Aug 1, 2008 2:11:17 PM
-//  */
-// public class DelegatingSubjectTest {
+/**
+ * @since Aug 1, 2008 2:11:17 PM
+ */
+class DelegatingSubjectTest {
 
-//     @Before
-//     public void setup() {
-//         ThreadContext.remove();
-//     }
+    @Before
+    void setup() {
+        ThreadContext.remove();
+    }
 
-//     @After
-//     public void tearDown() {
-//         ThreadContext.remove();
-//     }
+    @After
+    void tearDown() {
+        ThreadContext.remove();
+    }
 
-//     @Test
-//     public void testSessionStopThenStart() {
-//         String key = "testKey";
-//         String value = "testValue";
-//         DefaultSecurityManager sm = new DefaultSecurityManager();
+    @Test
+    void testSessionStopThenStart() {
+        // string key = "testKey";
+        // string value = "testValue";
 
-//         DelegatingSubject subject = new DelegatingSubject(sm);
+        import hunt.String;
+        
+        String key = new String("testKey");
+        String value = new String("testValue");
+        DefaultSecurityManager sm = new DefaultSecurityManager();
 
-//         Session session = subject.getSession();
-//         session.setAttribute(key, value);
-//         assertTrue(session.getAttribute(key).equals(value));
-//         Serializable firstSessionId = session.getId();
-//         assertNotNull(firstSessionId);
+        DelegatingSubject subject = new DelegatingSubject(sm);
 
-//         session.stop();
+        Session session = subject.getSession();
+        session.setAttribute(key, value);
+        assertTrue(session.getAttribute(key) == value);
+        string firstSessionId = session.getId();
+        assertNotNull(firstSessionId);
 
-//         session = subject.getSession();
-//         assertNotNull(session);
-//         assertNull(session.getAttribute(key));
-//         Serializable secondSessionId = session.getId();
-//         assertNotNull(secondSessionId);
-//         assertFalse(firstSessionId.equals(secondSessionId));
+        session.stop();
 
-//         subject.logout();
+        session = subject.getSession();
+        assertNotNull(session);
+        assertNull(session.getAttribute(key));
+        string secondSessionId = session.getId();
+        assertNotNull(secondSessionId);
+        assertFalse(firstSessionId == secondSessionId);
 
-//         sm.destroy();
-//     }
+        subject.logout();
 
-//     @Test
-//     public void testExecuteCallable() {
+        sm.destroy();
+    }
 
-//         String username = "jsmith";
+    @Test
+    void testExecuteCallable() {
+
+//         string username = "jsmith";
 
 //         SecurityManager securityManager = createNiceMock(SecurityManager.class);
 //         PrincipalCollection identity = new SimplePrincipalCollection(username, "testRealm");
@@ -95,28 +110,28 @@ module test.shiro.subject.DelegatingSubjectTest;
 //         assertNull(ThreadContext.getSubject());
 //         assertNull(ThreadContext.getSecurityManager());
 
-//         Callable<String> callable = new Callable<String>() {
-//             public String call() throws Exception {
+//         Callable<string> callable = new Callable<string>() {
+//             string call() throws Exception {
 //                 Subject callingSubject = SecurityUtils.getSubject();
 //                 assertNotNull(callingSubject);
 //                 assertNotNull(SecurityUtils.getSecurityManager());
 //                 assertEquals(callingSubject, sourceSubject);
-//                 return "Hello " + callingSubject.getPrincipal();
+//                 return "Hello " ~ callingSubject.getPrincipal();
 //             }
 //         };
-//         String response = sourceSubject.execute(callable);
+//         string response = sourceSubject.execute(callable);
 
 //         assertNotNull(response);
-//         assertEquals("Hello " + username, response);
+//         assertEquals("Hello " ~ username, response);
 
 //         assertNull(ThreadContext.getSubject());
 //         assertNull(ThreadContext.getSecurityManager());
-//     }
+    }
 
 //     @Test
-//     public void testExecuteRunnable() {
+//     void testExecuteRunnable() {
 
-//         String username = "jsmith";
+//         string username = "jsmith";
 
 //         SecurityManager securityManager = createNiceMock(SecurityManager.class);
 //         PrincipalCollection identity = new SimplePrincipalCollection(username, "testRealm");
@@ -126,7 +141,7 @@ module test.shiro.subject.DelegatingSubjectTest;
 //         assertNull(ThreadContext.getSecurityManager());
 
 //         Runnable runnable = new Runnable() {
-//             public void run() {
+//             void run() {
 //                 Subject callingSubject = SecurityUtils.getSubject();
 //                 assertNotNull(callingSubject);
 //                 assertNotNull(SecurityUtils.getSecurityManager());
@@ -140,7 +155,7 @@ module test.shiro.subject.DelegatingSubjectTest;
 //     }
 
 //     @Test
-//     public void testRunAs() {
+//     void testRunAs() {
 
 //         Ini ini = new Ini();
 //         Ini.Section users = ini.addSection("users");
@@ -171,7 +186,7 @@ module test.shiro.subject.DelegatingSubjectTest;
 
 //         //assert we still have the previous (user1) principals:
 //         PrincipalCollection previous = subject.getPreviousPrincipals();
-//         assertFalse(previous == null || previous.isEmpty());
+//         assertFalse(previous is null || previous.isEmpty());
 //         assertTrue(previous.getPrimaryPrincipal().equals("user1"));
 
 //         //test the stack functionality:  While as user2, run as user3:
@@ -184,7 +199,7 @@ module test.shiro.subject.DelegatingSubjectTest;
 
 //         //assert we still have the previous (user2) principals in the stack:
 //         previous = subject.getPreviousPrincipals();
-//         assertFalse(previous == null || previous.isEmpty());
+//         assertFalse(previous is null || previous.isEmpty());
 //         assertTrue(previous.getPrimaryPrincipal().equals("user2"));
 
 //         //drop down to user2:
@@ -199,7 +214,7 @@ module test.shiro.subject.DelegatingSubjectTest;
 
 //         //assert we still have the previous (user1) principals:
 //         previous = subject.getPreviousPrincipals();
-//         assertFalse(previous == null || previous.isEmpty());
+//         assertFalse(previous is null || previous.isEmpty());
 //         assertTrue(previous.getPrimaryPrincipal().equals("user1"));
 
 //         //drop down to original user1:
@@ -217,4 +232,4 @@ module test.shiro.subject.DelegatingSubjectTest;
 
 //         LifecycleUtils.destroy(sm);
 //     }
-// }
+}

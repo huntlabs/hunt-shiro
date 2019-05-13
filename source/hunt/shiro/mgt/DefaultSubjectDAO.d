@@ -33,6 +33,7 @@ import hunt.shiro.subject.support.DelegatingSubject;
 import hunt.Boolean;
 import hunt.Exceptions;
 import hunt.logging.ConsoleLogger;
+import hunt.String;
 
 // import java.lang.reflect.Field;
 
@@ -279,11 +280,10 @@ implementationMissing(false);
      */
     protected void removeFromSession(Subject subject) {
         Session session = subject.getSession(false);
-        implementationMissing(false);
-        // if (session !is null) {
-        //     session.removeAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
-        //     session.removeAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-        // }
+        if (session !is null) {
+            session.removeAttribute(new String(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY));
+            session.removeAttribute(new String(DefaultSubjectContext.PRINCIPALS_SESSION_KEY));
+        }
     }
 
     /**

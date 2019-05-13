@@ -454,12 +454,12 @@ class DefaultBlockCipherService : AbstractSymmetricCipherService {
      */
     protected string getTransformationString(bool streaming) {
         if (streaming) {
-            if (this.streamingTransformationString == null) {
+            if (this.streamingTransformationString is null) {
                 this.streamingTransformationString = buildStreamingTransformationString();
             }
             return this.streamingTransformationString;
         } else {
-            if (this.transformationString == null) {
+            if (this.transformationString is null) {
                 this.transformationString = buildTransformationString();
             }
             return this.transformationString;

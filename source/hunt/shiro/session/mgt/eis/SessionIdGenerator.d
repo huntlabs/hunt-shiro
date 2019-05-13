@@ -21,6 +21,7 @@ module hunt.shiro.session.mgt.eis.SessionIdGenerator;
 import hunt.shiro.session.Session;
 
 import hunt.util.Common;
+import std.uuid;
 
 /**
  * Interface allowing pluggable session ID generation strategies to be used with various {@link SessionDAO}
@@ -47,4 +48,24 @@ interface SessionIdGenerator {
      */
     string generateId(Session session);
 
+}
+
+
+/**
+ * {@link SessionIdGenerator} that generates string values of UUID as the session IDs.
+ *
+ * @since 1.0
+ */
+class UuidSessionIdGenerator : SessionIdGenerator {
+
+    /**
+     * Ignores the method argument and simply returns
+     * {@code UUID}.{@link java.util.UUID#randomUUID() randomUUID()}.{@code toString()}.
+     *
+     * @param session the {@link Session} instance to which the ID will be applied.
+     * @return the string value of the JDK's next {@link UUID#randomUUID() randomUUID()}.
+     */
+    string generateId(Session session) {
+        return randomUUID().toString();
+    }
 }

@@ -51,6 +51,8 @@ class DefaultSessionContext : MapContext, SessionContext {
 
     string getHost() {
         String str = getTypedValue!String(HOST);
+        if(str is null)
+            return null;
         return str.value;
     }
 

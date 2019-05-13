@@ -206,7 +206,7 @@ abstract class ThreadContext {
      */
     static void remove() {
         // resources.remove();
-        implementationMissing(false);
+        info("do nothing");
     }
 
     /**

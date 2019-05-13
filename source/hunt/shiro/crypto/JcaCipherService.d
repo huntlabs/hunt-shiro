@@ -252,7 +252,7 @@ abstract class JcaCipherService : CipherService {
     //     try {
     //         return java.security.SecureRandom.getInstance(RANDOM_NUM_GENERATOR_ALGORITHM_NAME);
     //     } catch (java.security.NoSuchAlgorithmException e) {
-    //         log.debug("The SecureRandom SHA1PRNG algorithm is not available on the current platform.  Using the " +
+    //         log.debug("The SecureRandom SHA1PRNG algorithm is not available on the current platform.  Using the " ~
     //                 "platform's default SecureRandom algorithm.", e);
     //         return new java.security.SecureRandom();
     //     }
@@ -260,7 +260,7 @@ abstract class JcaCipherService : CipherService {
 
     // protected SecureRandom ensureSecureRandom() {
     //     SecureRandom random = getSecureRandom();
-    //     if (random == null) {
+    //     if (random is null) {
     //         random = getDefaultSecureRandom();
     //     }
     //     return random;
@@ -283,8 +283,8 @@ abstract class JcaCipherService : CipherService {
     protected byte[] generateInitializationVector(bool streaming) {
         // int size = getInitializationVectorSize();
         // if (size <= 0) {
-        //     string msg = "initializationVectorSize property must be greater than zero.  This number is " +
-        //             "typically set in the " + CipherService.class.getSimpleName() + " subclass constructor.  " +
+        //     string msg = "initializationVectorSize property must be greater than zero.  This number is " ~
+        //             "typically set in the " ~ CipherService.class.getSimpleName() + " subclass constructor.  " ~
         //             "Also check your configuration to ensure that if you are setting a value, it is positive.";
         //     throw new IllegalStateException(msg);
         // }
@@ -309,8 +309,8 @@ abstract class JcaCipherService : CipherService {
         // bool generate = isGenerateInitializationVectors(false);
         // if (generate) {
         //     ivBytes = generateInitializationVector(false);
-        //     if (ivBytes == null || ivBytes.length == 0) {
-        //         throw new IllegalStateException("Initialization vector generation is enabled - generated vector" +
+        //     if (ivBytes is null || ivBytes.length == 0) {
+        //         throw new IllegalStateException("Initialization vector generation is enabled - generated vector" ~
         //                 "cannot be null or empty.");
         //     }
         // }
@@ -344,8 +344,8 @@ abstract class JcaCipherService : CipherService {
         // }
 
         // if (log.isTraceEnabled()) {
-        //     log.trace("Incoming plaintext of size " + (plaintext != null ? plaintext.length : 0) + ".  Ciphertext " +
-        //             "byte array is size " + (output != null ? output.length : 0));
+        //     log.trace("Incoming plaintext of size " ~ (plaintext != null ? plaintext.length : 0) + ".  Ciphertext " ~
+        //             "byte array is size " ~ (output != null ? output.length : 0));
         // }
 
         // return ByteSourceUtil.bytes(output);
@@ -394,11 +394,11 @@ abstract class JcaCipherService : CipherService {
 
     private ByteSource decrypt(byte[] ciphertext, byte[] key, byte[] iv) {
         // if (log.isTraceEnabled()) {
-        //     log.trace("Attempting to decrypt incoming byte array of length " +
+        //     log.trace("Attempting to decrypt incoming byte array of length " ~
         //             (ciphertext != null ? ciphertext.length : 0));
         // }
         // byte[] decrypted = crypt(ciphertext, key, iv, javax.crypto.Cipher.DECRYPT_MODE);
-        // return decrypted == null ? null : ByteSourceUtil.bytes(decrypted);
+        // return decrypted is null ? null : ByteSourceUtil.bytes(decrypted);
 
         implementationMissing(false);
         return null;
@@ -420,9 +420,9 @@ abstract class JcaCipherService : CipherService {
     //     try {
     //         return javax.crypto.Cipher.getInstance(transformationString);
     //     } catch (Exception e) {
-    //         string msg = "Unable to acquire a Java JCA Cipher instance using " +
-    //                 javax.crypto.Cipher.class.getName() + ".getInstance( \"" + transformationString + "\" ). " +
-    //                 getAlgorithmName() + " under this configuration is required for the " +
+    //         string msg = "Unable to acquire a Java JCA Cipher instance using " ~
+    //                 javax.crypto.Cipher.class.getName() + ".getInstance( \"" ~ transformationString + "\" ). " ~
+    //                 getAlgorithmName() + " under this configuration is required for the " ~
     //                 getClass().getName() + " instance to function.";
     //         throw new CryptoException(msg, e);
     //     }
@@ -451,7 +451,7 @@ abstract class JcaCipherService : CipherService {
     //  * @throws CryptoException          if Cipher initialization or the crypt operation fails
     //  */
     // private byte[] crypt(byte[] bytes, byte[] key, byte[] iv, int mode) throws IllegalArgumentException, CryptoException {
-    //     if (key == null || key.length == 0) {
+    //     if (key is null || key.length == 0) {
     //         throw new IllegalArgumentException("key argument cannot be null or empty.");
     //     }
     //     javax.crypto.Cipher cipher = initNewCipher(mode, key, iv, false);
@@ -471,7 +471,7 @@ abstract class JcaCipherService : CipherService {
     //     try {
     //         return cipher.doFinal(bytes);
     //     } catch (Exception e) {
-    //         string msg = "Unable to execute 'doFinal' with cipher instance [" + cipher + "].";
+    //         string msg = "Unable to execute 'doFinal' with cipher instance [" ~ cipher + "].";
     //         throw new CryptoException(msg, e);
     //     }
     // }
@@ -515,8 +515,8 @@ abstract class JcaCipherService : CipherService {
     //     bool generate = isGenerateInitializationVectors(true);
     //     if (generate) {
     //         iv = generateInitializationVector(true);
-    //         if (iv == null || iv.length == 0) {
-    //             throw new IllegalStateException("Initialization vector generation is enabled - generated vector" +
+    //         if (iv is null || iv.length == 0) {
+    //             throw new IllegalStateException("Initialization vector generation is enabled - generated vector" ~
     //                     "cannot be null or empty.");
     //         }
     //     }
@@ -560,8 +560,8 @@ abstract class JcaCipherService : CipherService {
     //         }
 
     //         if (read != ivByteSize) {
-    //             throw new CryptoException("Unable to read initialization vector bytes from the InputStream.  " +
-    //                     "This is required when initialization vectors are autogenerated during an encryption " +
+    //             throw new CryptoException("Unable to read initialization vector bytes from the InputStream.  " ~
+    //                     "This is required when initialization vectors are autogenerated during an encryption " ~
     //                     "operation.");
     //         }
     //     }
@@ -574,10 +574,10 @@ abstract class JcaCipherService : CipherService {
     // }
 
     // private void crypt(InputStream in, OutputStream out, byte[] keyBytes, byte[] iv, int cryptMode) {
-    //     if (in == null) {
+    //     if (in is null) {
     //         throw new NullPointerException("InputStream argument cannot be null.");
     //     }
-    //     if (out == null) {
+    //     if (out is null) {
     //         throw new NullPointerException("OutputStream argument cannot be null.");
     //     }
 

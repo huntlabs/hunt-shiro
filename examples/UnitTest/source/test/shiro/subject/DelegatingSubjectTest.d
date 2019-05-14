@@ -20,8 +20,9 @@ module test.shiro.subject.DelegatingSubjectTest;
 
 import hunt.shiro.SecurityUtils;
 import hunt.shiro.authc.UsernamePasswordToken;
-// import hunt.shiro.config.Ini;
-// import hunt.shiro.config.IniSecurityManagerFactory;
+import hunt.shiro.config.Ini;
+import hunt.shiro.config.IniFactorySupport;
+import hunt.shiro.config.IniSecurityManagerFactory;
 import hunt.shiro.mgt.DefaultSecurityManager;
 import hunt.shiro.mgt.SecurityManager;
 import hunt.shiro.session.Session;
@@ -147,7 +148,7 @@ class DelegatingSubjectTest {
     void testRunAs() {
 
         Ini ini = new Ini();
-        Ini.Section users = ini.addSection("users");
+        IniSection users = ini.addSection("users");
         users.put("user1", "user1,role1");
         users.put("user2", "user2,role2");
         users.put("user3", "user3,role3");
@@ -159,7 +160,7 @@ class DelegatingSubjectTest {
         subject.login(new UsernamePasswordToken("user1", "user1"));
 
         assertFalse(subject.isRunAs());
-        assertEquals("user1", subject.getPrincipal());
+        assertEquals(new String("user1"), subject.getPrincipal());
         assertTrue(subject.hasRole("role1"));
         assertFalse(subject.hasRole("role2"));
         assertFalse(subject.hasRole("role3"));
@@ -168,7 +169,7 @@ class DelegatingSubjectTest {
         //runAs user2:
         subject.runAs(new SimplePrincipalCollection("user2", IniSecurityManagerFactory.INI_REALM_NAME));
         assertTrue(subject.isRunAs());
-        assertEquals("user2", subject.getPrincipal());
+        assertEquals(new String("user2"), subject.getPrincipal());
         assertTrue(subject.hasRole("role2"));
         assertFalse(subject.hasRole("role1"));
         assertFalse(subject.hasRole("role3"));
@@ -176,12 +177,12 @@ class DelegatingSubjectTest {
         //assert we still have the previous (user1) principals:
         PrincipalCollection previous = subject.getPreviousPrincipals();
         assertFalse(previous is null || previous.isEmpty());
-        assertTrue(previous.getPrimaryPrincipal().equals("user1"));
+        assertTrue(previous.getPrimaryPrincipal() == new String("user1"));
 
         //test the stack functionality:  While as user2, run as user3:
         subject.runAs(new SimplePrincipalCollection("user3", IniSecurityManagerFactory.INI_REALM_NAME));
         assertTrue(subject.isRunAs());
-        assertEquals("user3", subject.getPrincipal());
+        assertEquals(new String("user3"), subject.getPrincipal());
         assertTrue(subject.hasRole("role3"));
         assertFalse(subject.hasRole("role1"));
         assertFalse(subject.hasRole("role2"));
@@ -189,14 +190,14 @@ class DelegatingSubjectTest {
         //assert we still have the previous (user2) principals in the stack:
         previous = subject.getPreviousPrincipals();
         assertFalse(previous is null || previous.isEmpty());
-        assertTrue(previous.getPrimaryPrincipal().equals("user2"));
+        assertTrue(previous.getPrimaryPrincipal() == new String("user2"));
 
         //drop down to user2:
         subject.releaseRunAs();
 
         //assert still run as:
         assertTrue(subject.isRunAs());
-        assertEquals("user2", subject.getPrincipal());
+        assertEquals(new String("user2"), subject.getPrincipal());
         assertTrue(subject.hasRole("role2"));
         assertFalse(subject.hasRole("role1"));
         assertFalse(subject.hasRole("role3"));
@@ -204,14 +205,14 @@ class DelegatingSubjectTest {
         //assert we still have the previous (user1) principals:
         previous = subject.getPreviousPrincipals();
         assertFalse(previous is null || previous.isEmpty());
-        assertTrue(previous.getPrimaryPrincipal().equals("user1"));
+        assertTrue(previous.getPrimaryPrincipal()  == new String("user1"));
 
         //drop down to original user1:
         subject.releaseRunAs();
 
         //assert we're no longer runAs:
         assertFalse(subject.isRunAs());
-        assertEquals("user1", subject.getPrincipal());
+        assertEquals(new String("user1"), subject.getPrincipal());
         assertTrue(subject.hasRole("role1"));
         assertFalse(subject.hasRole("role2"));
         assertFalse(subject.hasRole("role3"));
@@ -219,6 +220,6 @@ class DelegatingSubjectTest {
 
         subject.logout();
 
-        LifecycleUtils.destroy(sm);
+        LifecycleUtils.destroy(cast(Object)sm);
     }
 }

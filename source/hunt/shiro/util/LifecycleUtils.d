@@ -5,6 +5,7 @@ import hunt.shiro.util.Common;
 import hunt.collection.Collection;
 import hunt.logging.ConsoleLogger;
 
+import std.array;
 
 /**
  * Utility class to help call {@link hunt.shiro.util.Initializable#init() Initializable.init()} and
@@ -14,32 +15,42 @@ import hunt.logging.ConsoleLogger;
  */
 abstract class LifecycleUtils {
 
-    // static void init(Object o) {
-    //     if (o instanceof Initializable) {
-    //         init((Initializable) o);
-    //     }
-    // }
+    static void init(Object o) {
+        Initializable obj = cast(Initializable) o;
+        if (obj !is null) {
+            init(obj);
+        }
+    }
 
-    // static void init(Initializable initializable) {
-    //     initializable.init();
-    // }
+    static void init(Initializable initializable) {
+        initializable.init();
+    }
 
-    // /**
-    //  * Calls {@link #init(Object) init} for each object in the collection.  If the collection is {@code null} or empty,
-    //  * this method returns quietly.
-    //  *
-    //  * @param c the collection containing objects to {@link #init init}.
-    //  * @throws ShiroException if unable to initialize one or more instances.
-    //  * @since 0.9
-    //  */
-    // static void init(Collection c) {
-    //     if (c is null || c.isEmpty()) {
-    //         return;
-    //     }
-    //     for (Object o : c) {
-    //         init(o);
-    //     }
-    // }
+    /**
+     * Calls {@link #init(Object) init} for each object in the collection.  If the collection is {@code null} or empty,
+     * this method returns quietly.
+     *
+     * @param c the collection containing objects to {@link #init init}.
+     * @throws ShiroException if unable to initialize one or more instances.
+     * @since 0.9
+     */
+    static void init(Collection!Object c) {
+        if (c is null || c.isEmpty()) {
+            return;
+        }
+        foreach (Object o ; c) {
+            init(o);
+        }
+    }
+
+    static void init(Object[] c) {
+        if (c.empty()) {
+            return;
+        }
+        foreach (Object o ; c) {
+            init(o);
+        }
+    }
 
     static void destroy(Object o) {
         Destroyable d = cast(Destroyable)o;

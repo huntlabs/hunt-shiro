@@ -41,9 +41,9 @@ class CodecException : ShiroException {
  *
  * @since 0.9
  */
-class ConfigurationException : ShiroException{
-    mixin BasicExceptionCtors;
-}
+// class ConfigurationException : ShiroException{
+//     mixin BasicExceptionCtors;
+// }
 
 /**
  * Base Shiro exception for problems encountered during cryptographic operations.
@@ -301,5 +301,16 @@ public class UnknownAlgorithmException : CryptoException {
  *
  */
 class UnknownAccountException : AccountException {
+    mixin BasicExceptionCtors;
+}
+
+
+/**
+ * Exception thrown when a reference to an object is made, but that object cannot be found.  This is most likely
+ * thrown due to a configuration line that references an object that hasn't been defined yet.
+ *
+ * @since 0.9 RC2
+ */
+class UnresolveableReferenceException : ConfigurationException {
     mixin BasicExceptionCtors;
 }

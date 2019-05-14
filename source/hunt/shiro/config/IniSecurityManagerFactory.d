@@ -18,6 +18,10 @@
  */
 module hunt.shiro.config.IniSecurityManagerFactory;
 
+import hunt.shiro.config.Ini;
+import hunt.shiro.config.IniFactorySupport;
+import hunt.shiro.config.ReflectionBuilder;
+
 import hunt.shiro.mgt.DefaultSecurityManager;
 import hunt.shiro.mgt.RealmSecurityManager;
 import hunt.shiro.mgt.SecurityManager;
@@ -25,10 +29,17 @@ import hunt.shiro.realm.Realm;
 import hunt.shiro.realm.RealmFactory;
 import hunt.shiro.realm.text.IniRealm;
 import hunt.shiro.util.CollectionUtils;
+import hunt.shiro.util.Common;
 import hunt.shiro.util.LifecycleUtils;
 import hunt.logging.ConsoleLogger;
 
 import hunt.collection;
+import hunt.Exceptions;
+import hunt.util.Configuration;
+
+import std.string;
+import std.traits;
+
 
 /**
  * A {@link Factory} that creates {@link SecurityManager} instances based on {@link Ini} configuration.
@@ -36,7 +47,7 @@ import hunt.collection;
  * @since 1.0
  * deprecated("") use Shiro's {@code Environment} mechanisms instead.
  */
-deprecated("")
+// deprecated("")
 class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
 
      enum string MAIN_SECTION_NAME = "main";
@@ -65,9 +76,9 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
         this(Ini.fromResourcePath(iniResourcePath));
     }
 
-     Map!(string, T) getBeans() {
-        return this.builder !is null ? Collections.unmodifiableMap(builder.getObjects()) : null;
-    }
+    //  Map!(string, T) getBeans() {
+    //     return this.builder !is null ? Collections.unmodifiableMap(builder.getObjects()) : null;
+    // }
 
      void destroy() {
         if(getReflectionBuilder() !is null) {
@@ -76,15 +87,15 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
     }
 
     private SecurityManager getSecurityManagerBean() {
-        return getReflectionBuilder().getBean(SECURITY_MANAGER_NAME, typeid(SecurityManager));
+        return getReflectionBuilder().getBean!SecurityManager(SECURITY_MANAGER_NAME);
     }
 
-    protected SecurityManager createDefaultInstance() {
+    override protected SecurityManager createDefaultInstance() {
         return new DefaultSecurityManager();
     }
 
-    protected SecurityManager createInstance(Ini ini) {
-        if (CollectionUtils.isEmpty(ini)) {
+    override protected SecurityManager createInstance(Ini ini) {
+        if (ini is null || ini.isEmpty()) {
             throw new NullPointerException("Ini argument cannot be null or empty.");
         }
         SecurityManager securityManager = createSecurityManager(ini);
@@ -96,18 +107,19 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
     }
 
     private SecurityManager createSecurityManager(Ini ini) {
-        return createSecurityManager(ini, getConfigSection(ini));
+        // return createSecurityManager(ini, getConfigSection(ini));
+        return createSecurityManager(ini, null);
     }
 
-    private Ini.Section getConfigSection(Ini ini) {
+    // private Ini.Section getConfigSection(Ini ini) {
 
-        Ini.Section mainSection = ini.getSection(MAIN_SECTION_NAME);
-        if (CollectionUtils.isEmpty(mainSection)) {
-            //try the default:
-            mainSection = ini.getSection(Ini.DEFAULT_SECTION_NAME);
-        }
-        return mainSection;
-    }
+    //     Ini.Section mainSection = ini.getSection(MAIN_SECTION_NAME);
+    //     if (CollectionUtils.isEmpty(mainSection)) {
+    //         //try the default:
+    //         mainSection = ini.getSection(Ini.DEFAULT_SECTION_NAME);
+    //     }
+    //     return mainSection;
+    // }
 
     protected bool isAutoApplyRealms(SecurityManager securityManager) {
         bool autoApply = true;
@@ -126,10 +138,10 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
     }
 
     //@SuppressWarnings({"unchecked"})
-    private SecurityManager createSecurityManager(Ini ini, Ini.Section mainSection) {
+    private SecurityManager createSecurityManager(Ini ini, string mainSection) {
 
         getReflectionBuilder().setObjects(createDefaults(ini, mainSection));
-        Map!(string, T) objects = buildInstances(mainSection);
+        Map!(string, Object) objects = buildInstances(mainSection);
 
         SecurityManager securityManager = getSecurityManagerBean();
 
@@ -148,34 +160,39 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
         return securityManager;
     }
 
-    protected Map<string, ?> createDefaults(Ini ini, Ini.Section mainSection) {
+    protected Map!(string, Object) createDefaults(Ini ini, string mainSection) {
         Map!(string, Object) defaults = new LinkedHashMap!(string, Object)();
 
         SecurityManager securityManager = createDefaultInstance();
-        defaults.put(SECURITY_MANAGER_NAME, securityManager);
+        defaults.put(SECURITY_MANAGER_NAME, cast(Object)securityManager);
 
         if (shouldImplicitlyCreateRealm(ini)) {
             Realm realm = createRealm(ini);
             if (realm !is null) {
-                defaults.put(INI_REALM_NAME, realm);
+                defaults.put(INI_REALM_NAME, cast(Object)realm);
             }
         }
 
         // The values from 'getDefaults()' will override the above.
-        Map<string, ?> defaultBeans = getDefaults();
+        Map!(string, SecurityManager) defaultBeans = getDefaults();
         if (!CollectionUtils.isEmpty(defaultBeans)) {
-            defaults.putAll(defaultBeans);
+            foreach(string key, SecurityManager value; defaultBeans)
+            defaults.put(key, cast(Object)value);
         }
 
         return defaults;
     }
 
-    private Map<string, ?> buildInstances(Ini.Section section) {
-        return getReflectionBuilder().buildObjects(section);
+    private Map!(string, Object) buildInstances(string section) {
+        // TODO: Tasks pending completion -@zxp at 5/14/2019, 3:34:18 PM
+        // 
+        // return getReflectionBuilder().buildObjects(null); // section
+        implementationMissing(false);
+        return null;
     }
 
     private void addToRealms(Collection!(Realm) realms, RealmFactory factory) {
-        LifecycleUtils.init(factory);
+        LifecycleUtils.init(cast(Object)factory);
         Collection!(Realm) factoryRealms = factory.getRealms();
         //SHIRO-238: check factoryRealms (was 'realms'):
         if (!CollectionUtils.isEmpty(factoryRealms)) {
@@ -183,31 +200,29 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
         }
     }
 
-    private Collection!(Realm) getRealms(Map<string, ?> instances) {
+    private Collection!(Realm) getRealms(Map!(string, Object) instances) {
 
         //realms and realm factory might have been created - pull them out first so we can
         //initialize the securityManager:
         List!(Realm) realms = new ArrayList!(Realm)();
 
         //iterate over the map entries to pull out the realm factory(s):
-        for (Map.Entry<string, ?> entry : instances.entrySet()) {
-
-            string name = entry.getKey();
-            Object value = entry.getValue();
-
-            if (value instanceof RealmFactory) {
-                addToRealms(realms, (RealmFactory) value);
-            } else if (value instanceof Realm) {
-                Realm realm = (Realm) value;
+        foreach (string name, Object value; instances) {
+            RealmFactory bf = cast(RealmFactory) value;
+            Realm realm = cast(Realm) value;
+            if (bf !is null) {
+                addToRealms(realms, bf);
+            } else if (realm !is null) {
                 //set the name if null:
                 string existingName = realm.getName();
                 if (existingName  is null || existingName.startsWith(typeid(realm).name)) {
-                    if (realm instanceof Nameable) {
-                        ((Nameable) realm).setName(name);
+                    Nameable nameable = cast(Nameable) realm;
+                    if (nameable !is null) {
+                        nameable.setName(name);
                         tracef("Applied name '%s' to Nameable realm instance %s", name, realm);
                     } else {
                         info("Realm does not implement the %s interface.  Configured name will not be applied.",
-                                typeid(Nameable).name);
+                                fullyQualifiedName!(Nameable));
                     }
                 }
                 realms.add(realm);
@@ -221,8 +236,9 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
         if (securityManager  is null) {
             throw new NullPointerException("securityManager instance cannot be null");
         }
-        if (!(securityManager instanceof RealmSecurityManager)) {
-            string msg = "securityManager instance is not a " ~ typeid(RealmSecurityManager).name +
+        RealmSecurityManager rsm = cast(RealmSecurityManager)securityManager;
+        if (securityManager is null) {
+            string msg = "securityManager instance is not a " ~ typeid(RealmSecurityManager).name ~
                     " instance.  This is required to access or configure realms on the instance.";
             throw new ConfigurationException(msg);
         }
@@ -230,7 +246,7 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
 
     protected void applyRealmsToSecurityManager(Collection!(Realm) realms, SecurityManager securityManager) {
         assertRealmSecurityManager(securityManager);
-        ((RealmSecurityManager) securityManager).setRealms(realms);
+        (cast(RealmSecurityManager) securityManager).setRealms(realms);
     }
 
     /**
@@ -244,9 +260,11 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
      *         implicitly created.
      */
     protected bool shouldImplicitlyCreateRealm(Ini ini) {
-        return !CollectionUtils.isEmpty(ini) &&
-                (!CollectionUtils.isEmpty(ini.getSection(IniRealm.ROLES_SECTION_NAME)) ||
-                        !CollectionUtils.isEmpty(ini.getSection(IniRealm.USERS_SECTION_NAME)));
+        implementationMissing(false);
+        return false;
+        // return !CollectionUtils.isEmpty(ini) &&
+        //         (!CollectionUtils.isEmpty(ini.getSection(IniRealm.ROLES_SECTION_NAME)) ||
+        //                 !CollectionUtils.isEmpty(ini.getSection(IniRealm.USERS_SECTION_NAME)));
     }
 
     /**
@@ -268,7 +286,7 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
      * @return ReflectionBuilder instance used to create SecurityManagers object graph.
      * @since 1.4
      */
-     ReflectionBuilder getReflectionBuilder() {
+    ReflectionBuilder getReflectionBuilder() {
         return builder;
     }
 
@@ -279,7 +297,7 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
      * @since 1.4
      */
 
-     void setReflectionBuilder(ReflectionBuilder builder) {
+    void setReflectionBuilder(ReflectionBuilder builder) {
         this.builder = builder;
     }
 }

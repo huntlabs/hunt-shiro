@@ -18,6 +18,27 @@
  */
 module hunt.shiro.util.AbstractFactory;
 
+import hunt.Exceptions;
+
+/**
+ * Generics-aware interface supporting the
+ * <a href="http://en.wikipedia.org/wiki/Factory_method_pattern">Factory Method</a> design pattern.
+ *
+ * @param <T> The type of the instance returned by the Factory implementation.
+ * @since 1.0
+ */
+interface Factory(T) {
+
+    /**
+     * Returns an instance of the required type.  The implementation determines whether or not a new or cached
+     * instance is created every time this method is called.
+     *
+     * @return an instance of the required type.
+     */
+    T getInstance();
+}
+
+
 /**
  * TODO - Class JavaDoc
  *

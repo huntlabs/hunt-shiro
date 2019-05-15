@@ -237,7 +237,10 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
             throw ae;
         }
 
-        tracef("Authentication successful for token [%s].  Returned account [%s]", token, info);
+        version(HUNT_DEBUG) {
+            infof("Authentication successful for token [%s].  Returned account [%s]", 
+                token, info);
+        }
 
         notifySuccess(token, info);
 

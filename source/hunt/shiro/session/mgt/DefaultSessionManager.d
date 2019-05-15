@@ -38,6 +38,8 @@ import hunt.logging.ConsoleLogger;
 import hunt.util.Common;
 import hunt.collection;
 import hunt.collection.Collections;
+
+import std.array;
 // import java.util.Date;
 
 /**
@@ -214,13 +216,13 @@ class DefaultSessionManager : AbstractValidatingSessionManager, CacheManagerAwar
 
     override protected Session retrieveSession(SessionKey sessionKey){
         string sessionId = getSessionId(sessionKey);
-        if (sessionId  is null) {
+        if (sessionId.empty()) {
             tracef("Unable to resolve session ID from SessionKey [%s].  Returning null to indicate a " ~
                     "session could not be found.", sessionKey);
             return null;
         }
         Session s = retrieveSessionFromDataSource(sessionId);
-        if (s  is null) {
+        if (s is null) {
             //session ID was provided, meaning one is expected to be found, but we couldn't find one:
             string msg = "Could not find session with ID [" ~ sessionId ~ "]";
             throw new UnknownSessionException(msg);

@@ -156,24 +156,28 @@ class DelegatingSubject : Subject {
     /**
      * @see Subject#getPrincipal()
      */
-     Object getPrincipal() {
+    Object getPrincipal() {
         return getPrimaryPrincipal(getPrincipals());
     }
 
-     PrincipalCollection getPrincipals() {
+    PrincipalCollection getPrincipals() {
         List!(PrincipalCollection) runAsPrincipals = getRunAsPrincipalsStack();
+        // if(runAsPrincipals !is null)
+        // foreach(PrincipalCollection c; runAsPrincipals) {
+        //     info("ddddd=>", c);
+        // }
         return CollectionUtils.isEmpty(runAsPrincipals) ? this.principals : runAsPrincipals.get(0);
     }
 
-     bool isPermitted(string permission) {
+    bool isPermitted(string permission) {
         return hasPrincipals() && securityManager.isPermitted(getPrincipals(), permission);
     }
 
-     bool isPermitted(Permission permission) {
+    bool isPermitted(Permission permission) {
         return hasPrincipals() && securityManager.isPermitted(getPrincipals(), permission);
     }
 
-     bool[] isPermitted(string[] permissions...) {
+    bool[] isPermitted(string[] permissions...) {
         if (hasPrincipals()) {
             return securityManager.isPermitted(getPrincipals(), permissions);
         } else {
@@ -181,7 +185,7 @@ class DelegatingSubject : Subject {
         }
     }
 
-     bool[] isPermitted(List!(Permission) permissions) {
+    bool[] isPermitted(List!(Permission) permissions) {
         if (hasPrincipals()) {
             return securityManager.isPermitted(getPrincipals(), permissions);
         } else {
@@ -189,11 +193,11 @@ class DelegatingSubject : Subject {
         }
     }
 
-     bool isPermittedAll(string[] permissions...) {
+    bool isPermittedAll(string[] permissions...) {
         return hasPrincipals() && securityManager.isPermittedAll(getPrincipals(), permissions);
     }
 
-     bool isPermittedAll(Collection!(Permission) permissions) {
+    bool isPermittedAll(Collection!(Permission) permissions) {
         return hasPrincipals() && securityManager.isPermittedAll(getPrincipals(), permissions);
     }
 
@@ -324,13 +328,13 @@ class DelegatingSubject : Subject {
     }
 
      Session getSession(bool create) {
-        version(HUNT_DEBUG) {
-            tracef("attempting to get session; create = %s; session is null = %s; session has id = %s" ,
-                    create, (this.session is null), 
-                    (this.session !is null && session.getId() !is null));
-        }
+        // version(HUNT_DEBUG) {
+        //     tracef("attempting to get session; create = %s; session is null = %s; session has id = %s" ,
+        //             create, (this.session is null), 
+        //             (this.session !is null && session.getId() !is null));
+        // }
 
-        if (this.session  is null && create) {
+        if (this.session is null && create) {
 
             //added in 1.2:
             if (!isSessionCreationEnabled()) {
@@ -478,7 +482,14 @@ class DelegatingSubject : Subject {
     private List!(PrincipalCollection) getRunAsPrincipalsStack() {
         Session session = getSession(false);
         if (session !is null) {
-            return cast(List!(PrincipalCollection)) session.getAttribute(new String(RUN_AS_PRINCIPALS_SESSION_KEY));
+            Object obj = session.getAttribute(RUN_AS_PRINCIPALS_SESSION_KEY);
+            if(obj !is null) {
+                List!(PrincipalCollection) r = cast(List!(PrincipalCollection))obj;
+                if(r is null) {
+                    warning(typeid(obj));
+                } else
+                return r;
+            }
         }
         return null;
     }
@@ -486,7 +497,7 @@ class DelegatingSubject : Subject {
     private void clearRunAsIdentities() {
         Session session = getSession(false);
         if (session !is null) {
-            session.removeAttribute(new String(RUN_AS_PRINCIPALS_SESSION_KEY));
+            session.removeAttribute(RUN_AS_PRINCIPALS_SESSION_KEY);
         }
     }
 
@@ -496,13 +507,13 @@ class DelegatingSubject : Subject {
             throw new NullPointerException(msg);
         }
         List!(PrincipalCollection) stack = getRunAsPrincipalsStack();
-        if (stack  is null) {
+        if (stack is null) {
             // stack = new CopyOnWriteArrayList!(PrincipalCollection)();
             stack = new ArrayList!(PrincipalCollection)();
         }
         stack.add(0, principals);
         Session session = getSession();
-        session.setAttribute(new String(RUN_AS_PRINCIPALS_SESSION_KEY), cast(Object)stack);
+        session.setAttribute(RUN_AS_PRINCIPALS_SESSION_KEY, cast(Object)stack);
     }
 
     private PrincipalCollection popIdentity() {
@@ -515,7 +526,7 @@ class DelegatingSubject : Subject {
             if (!CollectionUtils.isEmpty(stack)) {
                 //persist the changed stack to the session
                 session = getSession();
-                session.setAttribute(new String(RUN_AS_PRINCIPALS_SESSION_KEY), cast(Object)stack);
+                session.setAttribute(RUN_AS_PRINCIPALS_SESSION_KEY, cast(Object)stack);
             } else {
                 //stack is empty, remove it from the session:
                 clearRunAsIdentities();

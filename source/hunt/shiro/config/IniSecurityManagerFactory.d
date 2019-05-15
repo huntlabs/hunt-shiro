@@ -107,19 +107,18 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
     }
 
     private SecurityManager createSecurityManager(Ini ini) {
-        // return createSecurityManager(ini, getConfigSection(ini));
-        return createSecurityManager(ini, null);
+        return createSecurityManager(ini, getConfigSection(ini));
     }
 
-    // private Ini.Section getConfigSection(Ini ini) {
+    private IniSection getConfigSection(Ini ini) {
 
-    //     Ini.Section mainSection = ini.getSection(MAIN_SECTION_NAME);
-    //     if (CollectionUtils.isEmpty(mainSection)) {
-    //         //try the default:
-    //         mainSection = ini.getSection(Ini.DEFAULT_SECTION_NAME);
-    //     }
-    //     return mainSection;
-    // }
+        IniSection mainSection = ini.getSection(MAIN_SECTION_NAME);
+        if (CollectionUtils.isEmpty(mainSection)) {
+            //try the default:
+            mainSection = ini.getSection(Ini.DEFAULT_SECTION_NAME);
+        }
+        return mainSection;
+    }
 
     protected bool isAutoApplyRealms(SecurityManager securityManager) {
         bool autoApply = true;
@@ -138,19 +137,20 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
     }
 
     //@SuppressWarnings({"unchecked"})
-    private SecurityManager createSecurityManager(Ini ini, string mainSection) {
+    private SecurityManager createSecurityManager(Ini ini, IniSection mainSection) {
 
         getReflectionBuilder().setObjects(createDefaults(ini, mainSection));
         Map!(string, Object) objects = buildInstances(mainSection);
 
         SecurityManager securityManager = getSecurityManagerBean();
-
         bool autoApplyRealms = isAutoApplyRealms(securityManager);
+
 
         if (autoApplyRealms) {
             //realms and realm factory might have been created - pull them out first so we can
             //initialize the securityManager:
             Collection!(Realm) realms = getRealms(objects);
+            version(HUNT_DEBUG) infof("realms=%d, objects=%d", realms.size(), objects.size());
             //set them on the SecurityManager
             if (!CollectionUtils.isEmpty(realms)) {
                 applyRealmsToSecurityManager(realms, securityManager);
@@ -160,7 +160,7 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
         return securityManager;
     }
 
-    protected Map!(string, Object) createDefaults(Ini ini, string mainSection) {
+    protected Map!(string, Object) createDefaults(Ini ini, IniSection mainSection) {
         Map!(string, Object) defaults = new LinkedHashMap!(string, Object)();
 
         SecurityManager securityManager = createDefaultInstance();
@@ -183,12 +183,8 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
         return defaults;
     }
 
-    private Map!(string, Object) buildInstances(string section) {
-        // TODO: Tasks pending completion -@zxp at 5/14/2019, 3:34:18 PM
-        // 
-        // return getReflectionBuilder().buildObjects(null); // section
-        implementationMissing(false);
-        return null;
+    private Map!(string, Object) buildInstances(IniSection section) {
+        return getReflectionBuilder().buildObjects(section);
     }
 
     private void addToRealms(Collection!(Realm) realms, RealmFactory factory) {
@@ -260,11 +256,9 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
      *         implicitly created.
      */
     protected bool shouldImplicitlyCreateRealm(Ini ini) {
-        implementationMissing(false);
-        return false;
-        // return !CollectionUtils.isEmpty(ini) &&
-        //         (!CollectionUtils.isEmpty(ini.getSection(IniRealm.ROLES_SECTION_NAME)) ||
-        //                 !CollectionUtils.isEmpty(ini.getSection(IniRealm.USERS_SECTION_NAME)));
+        return !CollectionUtils.isEmpty(ini) &&
+                (!CollectionUtils.isEmpty(ini.getSection(IniRealm.ROLES_SECTION_NAME)) ||
+                        !CollectionUtils.isEmpty(ini.getSection(IniRealm.USERS_SECTION_NAME)));
     }
 
     /**

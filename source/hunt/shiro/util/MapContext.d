@@ -189,19 +189,31 @@ class MapContext : Map!(string, Object) {
     }
 
     int opApply(scope int delegate(ref string, ref Object) dg) {
-        throw new NotImplementedException();
+        int result = 0;
+
+        foreach(string key, Object value; backingMap) {
+            result = dg(key, value);
+        }
+
+        return result;
     }
 
     int opApply(scope int delegate(MapEntry!(string, Object) entry) dg) {
-        throw new NotImplementedException();
+        int result = 0;
+
+        foreach(MapEntry!(string, Object) entry; backingMap) {
+            result = dg(entry);
+        }
+
+        return result;
     }
 
     InputRange!string byKey() {
-        throw new NotImplementedException();
+        return backingMap.byKey();
     }
 
     InputRange!Object byValue() {
-        throw new NotImplementedException();
+        return backingMap.byValue();
     }
 
     override bool opEquals(Object o) {
@@ -222,15 +234,4 @@ class MapContext : Map!(string, Object) {
         }
         return h;
     }    
-//      Set!(string) keySet() {
-//         return Collections.unmodifiableSet(backingMap.keySet());
-//     }
-
-//      Collection!(Object) values() {
-//         return Collections.unmodifiableCollection(backingMap.values());
-//     }
-
-//      Set!(Entry!(string, Object)) entrySet() {
-//         return Collections.unmodifiableSet(backingMap.entrySet());
-//     }
 }

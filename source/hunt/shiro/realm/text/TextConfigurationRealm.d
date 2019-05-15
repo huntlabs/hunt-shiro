@@ -25,13 +25,15 @@ import hunt.shiro.authz.SimpleRole;
 import hunt.shiro.Exceptions;
 import hunt.shiro.realm.SimpleAccountRealm;
 import hunt.shiro.util.PermissionUtils;
-// import hunt.shiro.util.StringUtils;
+import hunt.text.StringUtils;
 
 // import java.text.ParseException;
 
 import hunt.Exceptions;
 import hunt.collection;
 import hunt.String;
+
+import std.string;
 // import java.util.Scanner;
 
 
@@ -175,13 +177,11 @@ class TextConfigurationRealm : SimpleAccountRealm {
         if (userDefs  is null || userDefs.isEmpty()) {
             return;
         }
-        implementationMissing(false);
         foreach(string username ; userDefs.byKey()) {
 
             string value = userDefs.get(username);
 
-            string[] passwordAndRolesArray; // = StringUtils.split(value);
-
+            string[] passwordAndRolesArray = split(value, ","); 
             string password = passwordAndRolesArray[0];
 
             SimpleAccount account = getUser(username);

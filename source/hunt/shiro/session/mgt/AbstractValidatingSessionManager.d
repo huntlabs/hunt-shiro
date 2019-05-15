@@ -118,7 +118,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager,
     protected final Session doGetSession(SessionKey key){
         enableSessionValidationIfNecessary();
 
-        tracef("Attempting to retrieve session with key %s", key);
+        // tracef("Attempting to retrieve session with key %s", key);
 
         Session s = retrieveSession(key);
         if (s !is null) {

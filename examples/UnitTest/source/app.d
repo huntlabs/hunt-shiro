@@ -10,7 +10,7 @@ import hunt.util.UnitTest;
 void main()
 {
 
-	// testUnits!(DelegatingSubjectTest);
-	testUnits!(IniTest);
+	testUnits!(DelegatingSubjectTest);
+	// testUnits!(IniTest);
 	// testUnits!(SimplePrincipalCollectionTest);
 }

@@ -42,4 +42,8 @@ class DefaultSessionKey : SessionKey {
     string getSessionId() {
         return this.sessionId;
     }
+
+    override string toString() {
+        return this.sessionId;
+    }
 }

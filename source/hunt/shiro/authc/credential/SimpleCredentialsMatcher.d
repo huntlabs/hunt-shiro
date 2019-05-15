@@ -27,6 +27,7 @@ import hunt.shiro.codec.CodecSupport;
 import hunt.Exceptions;
 import hunt.logging.ConsoleLogger;
 
+import hunt.String;
 //import java.security.MessageDigest;
 //import hunt.util.ArrayHelper;
 
@@ -130,11 +131,16 @@ class SimpleCredentialsMatcher : CodecSupport, CredentialsMatcher {
      *         {@code false} otherwise
      */
      bool doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
-        // char[] tokenCredentials = getCredentials(token);
-        // char[] accountCredentials = getCredentials(info);
-        // return equals(tokenCredentials, accountCredentials);
-        implementationMissing(false);
-        return false;
+        char[] tokenCredentials = getCredentials(token);
+        Object accountCredentials = getCredentials(info);
+
+        String str = cast(String)accountCredentials;
+        if(str is null) {
+            warning("accountCredentials: ", typeid(accountCredentials));
+            return false;
+        }
+
+        return cast(string)tokenCredentials == str.value;
     }
 
 }

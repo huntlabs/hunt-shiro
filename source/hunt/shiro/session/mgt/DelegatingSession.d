@@ -25,9 +25,9 @@ import hunt.shiro.Exceptions;
 import hunt.shiro.session.Session;
 
 import hunt.Exceptions;
-import hunt.util.Common;
 import hunt.collection;
-// import java.util.Date;
+import hunt.logging.ConsoleLogger;
+import hunt.util.Common;
 
 /**
  * A DelegatingSession is a client-tier representation of a server side
@@ -110,7 +110,7 @@ class DelegatingSession : Session {
         sessionManager.setTimeout(key, maxIdleTimeInMillis);
     }
 
-     string getHost() {
+    string getHost() {
         if (host  is null) {
             host = sessionManager.getHost(key);
         }
@@ -141,7 +141,7 @@ class DelegatingSession : Session {
     /**
      * @see hunt.shiro.session.Session#getAttribute(Object key)
      */
-    Object getAttribute(Object attributeKey){
+    Object getAttribute(Object attributeKey) {
         return sessionManager.getAttribute(this.key, attributeKey);
     }
 
@@ -149,7 +149,7 @@ class DelegatingSession : Session {
      * @see Session#setAttribute(Object key, Object value)
      */
     void setAttribute(Object attributeKey, Object value){
-        if (value  is null) {
+        if (value is null) {
             removeAttribute(attributeKey);
         } else {
             sessionManager.setAttribute(this.key, attributeKey, value);
@@ -159,7 +159,7 @@ class DelegatingSession : Session {
     /**
      * @see Session#removeAttribute(Object key)
      */
-     Object removeAttribute(Object attributeKey){
+    Object removeAttribute(Object attributeKey){
         return sessionManager.removeAttribute(this.key, attributeKey);
     }
 }

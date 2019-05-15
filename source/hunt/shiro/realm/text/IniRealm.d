@@ -34,7 +34,7 @@ import std.array;
  * {@link hunt.shiro.authc.SimpleAccount SimpleAccount} instances based on
  * {@link Ini} configuration.
  * <p/>
- * This implementation looks for two {@link Ini.Section sections} in the {@code Ini} configuration:
+ * This implementation looks for two {@link IniSection sections} in the {@code Ini} configuration:
  * <pre>
  * [users]
  * # One or more {@link hunt.shiro.realm.text.TextConfigurationRealm#setUserDefinitions(string) user definitions}
@@ -173,27 +173,25 @@ class IniRealm : TextConfigurationRealm {
 
     private void processDefinitions(Ini ini) {
 
-        implementationMissing(false);
-        
-        // if (CollectionUtils.isEmpty(ini)) {
-        //     warning("%s defined, but the ini instance is null or empty.", getClass().getSimpleName());
-        //     return;
-        // }
+        if (CollectionUtils.isEmpty(ini)) {
+            warning("%s defined, but the ini instance is null or empty.", typeid(this).name);
+            return;
+        }
 
-        // Ini.Section rolesSection = ini.getSection(ROLES_SECTION_NAME);
-        // if (!CollectionUtils.isEmpty(rolesSection)) {
-        //     tracef("Discovered the [%s] section.  Processing...", ROLES_SECTION_NAME);
-        //     processRoleDefinitions(rolesSection);
-        // }
+        IniSection rolesSection = ini.getSection(ROLES_SECTION_NAME);
+        if (!CollectionUtils.isEmpty(rolesSection)) {
+            tracef("Discovered the [%s] section.  Processing...", ROLES_SECTION_NAME);
+            processRoleDefinitions(rolesSection);
+        }
 
-        // Ini.Section usersSection = ini.getSection(USERS_SECTION_NAME);
-        // if (!CollectionUtils.isEmpty(usersSection)) {
-        //     tracef("Discovered the [%s] section.  Processing...", USERS_SECTION_NAME);
-        //     processUserDefinitions(usersSection);
-        // } else {
-        //     info("%s defined, but there is no [%s] section defined.  This realm will not be populated with any " ~
-        //             "users and it is assumed that they will be populated programatically.  Users must be defined " ~
-        //             "for this Realm instance to be useful.", getClass().getSimpleName(), USERS_SECTION_NAME);
-        // }
+        IniSection usersSection = ini.getSection(USERS_SECTION_NAME);
+        if (!CollectionUtils.isEmpty(usersSection)) {
+            tracef("Discovered the [%s] section.  Processing...", USERS_SECTION_NAME);
+            processUserDefinitions(usersSection);
+        } else {
+            info("%s defined, but there is no [%s] section defined.  This realm will not be populated with any " ~
+                    "users and it is assumed that they will be populated programatically.  Users must be defined " ~
+                    "for this Realm instance to be useful.", typeid(this).name, USERS_SECTION_NAME);
+        }
     }
 }

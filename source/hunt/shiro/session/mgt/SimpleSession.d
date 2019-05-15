@@ -196,7 +196,7 @@ class SimpleSession : ValidatingSession {
     }
 
      void stop() {
-        if (this.stopTimestamp  is null) {
+        if (this.stopTimestamp is null) {
             this.stopTimestamp = new Long(DateTimeHelper.currentTimeMillis());
         }
     }

@@ -140,7 +140,7 @@ abstract class AbstractNativeSessionManager :
     }
 
     private Session lookupSession(SessionKey key){
-        if (key  is null) {
+        if (key is null) {
             throw new NullPointerException("SessionKey argument cannot be null.");
         }
         return doGetSession(key);
@@ -148,7 +148,7 @@ abstract class AbstractNativeSessionManager :
 
     private Session lookupRequiredSession(SessionKey key){
         Session session = lookupSession(key);
-        if (session  is null) {
+        if (session is null) {
             string msg = "Unable to locate required Session instance based on SessionKey [" ~ 
                 (cast(Object)key).toString() ~ "].";
             throw new UnknownSessionException(msg);

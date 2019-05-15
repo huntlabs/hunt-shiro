@@ -119,7 +119,11 @@ class DefaultSubjectContext : MapContext, SubjectContext {
     }
 
     string getSessionId() {
-        return getTypedValue!String(SESSION_ID).value;
+        String s = getTypedValue!String(SESSION_ID);
+        if(s !is null)
+            return getTypedValue!String(SESSION_ID).value;
+        else
+            return null;
     }
 
     void setSessionId(string sessionId) {
@@ -222,14 +226,15 @@ class DefaultSubjectContext : MapContext, SubjectContext {
             //see if there is an AuthenticationInfo object.  If so, the very presence of one indicates a successful
             //authentication attempt:
             AuthenticationInfo info = getAuthenticationInfo();
-            authc = info !is null;
+            authc = new Boolean(info !is null);
         }
-        if (!authc) {
+
+        if (!authc.value) {
             //fall back to a session check:
             Session session = resolveSession();
             if (session !is null) {
                 Boolean sessionAuthc = cast(Boolean) session.getAttribute(new String(AUTHENTICATED_SESSION_KEY));
-                authc = sessionAuthc !is null && sessionAuthc;
+                return sessionAuthc !is null && sessionAuthc.value;
             }
         }
 
@@ -253,7 +258,11 @@ class DefaultSubjectContext : MapContext, SubjectContext {
     }
 
     string getHost() {
-        return getTypedValue!String(HOST).value;
+        String s = getTypedValue!String(HOST);
+        if(s is null)
+            return null;
+        else
+            return s.value;
     }
 
     void setHost(string host) {

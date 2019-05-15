@@ -56,93 +56,94 @@ class DelegatingSubjectTest {
         ThreadContext.remove();
     }
 
-    // @Test
-    // void testSessionStopThenStart() {
-    //     // string key = "testKey";
-    //     // string value = "testValue";
+    @Test
+    void testSessionStopThenStart() {
+        // string key = "testKey";
+        // string value = "testValue";
 
         
-    //     String key = new String("testKey");
-    //     String value = new String("testValue");
-    //     DefaultSecurityManager sm = new DefaultSecurityManager();
+        String key = new String("testKey");
+        String value = new String("testValue");
+        DefaultSecurityManager sm = new DefaultSecurityManager();
 
-    //     DelegatingSubject subject = new DelegatingSubject(sm);
+        DelegatingSubject subject = new DelegatingSubject(sm);
 
-    //     Session session = subject.getSession();
-    //     session.setAttribute(key, value);
-    //     assertTrue(session.getAttribute(key) == value);
-    //     string firstSessionId = session.getId();
-    //     assertNotNull(firstSessionId);
+        Session session = subject.getSession();
+        session.setAttribute(key, value);
+        assertTrue(session.getAttribute(key) == value);
+        string firstSessionId = session.getId();
+        assertNotNull(firstSessionId);
 
-    //     session.stop();
+        session.stop();
 
-    //     session = subject.getSession();
-    //     assertNotNull(session);
-    //     assertNull(session.getAttribute(key));
-    //     string secondSessionId = session.getId();
-    //     assertNotNull(secondSessionId);
-    //     assertFalse(firstSessionId == secondSessionId);
+        session = subject.getSession();
+        assertNotNull(session);
+        assertNull(session.getAttribute(key));
+        string secondSessionId = session.getId();
+        assertNotNull(secondSessionId);
+        assertFalse(firstSessionId == secondSessionId);
 
-    //     subject.logout();
+        subject.logout();
 
-    //     sm.destroy();
-    // }
+        sm.destroy();
+    }
 
-    // @Test
-    // void testExecuteCallable() {
+    @Test
+    void testExecuteCallable() {
 
-    //     string username = "jsmith";
+        string username = "jsmith";
 
-    //     SecurityManager securityManager = new DefaultSecurityManager();
-    //     PrincipalCollection identity = new SimplePrincipalCollection(username, "testRealm");
-    //     DelegatingSubject sourceSubject = new DelegatingSubject(identity, true, null, null, securityManager);
+        SecurityManager securityManager = new DefaultSecurityManager();
+        PrincipalCollection identity = new SimplePrincipalCollection(username, "testRealm");
+        DelegatingSubject sourceSubject = new DelegatingSubject(identity, true, null, null, securityManager);
 
-    //     assertNull(ThreadContext.getSubject());
-    //     assertNull(ThreadContext.getSecurityManager());
+        assertNull(ThreadContext.getSubject());
+        assertNull(ThreadContext.getSecurityManager());
 
-    //     Callable!string callable = new class Callable!string {
-    //         string call() {
-    //             Subject callingSubject = SecurityUtils.getSubject();
-    //             assertNotNull(callingSubject);
-    //             assertNotNull(SecurityUtils.getSecurityManager());
-    //             assertEquals(callingSubject, sourceSubject);
-    //             return "Hello " ~ callingSubject.getPrincipal().toString();
-    //         }
-    //     };
-    //     string response = sourceSubject.execute(callable);
+        Callable!string callable = new class Callable!string {
+            string call() {
+                Subject callingSubject = SecurityUtils.getSubject();
+                assertNotNull(callingSubject);
+                assertNotNull(SecurityUtils.getSecurityManager());
+                assertEquals(callingSubject, sourceSubject);
+                return "Hello " ~ callingSubject.getPrincipal().toString();
+            }
+        };
+        string response = sourceSubject.execute(callable);
 
-    //     assertNotNull(response);
-    //     assertEquals("Hello " ~ username, response);
+        assertNotNull(response);
+        assertEquals("Hello " ~ username, response);
 
-    //     assertNull(ThreadContext.getSubject());
-    //     assertNull(ThreadContext.getSecurityManager());
-    // }
+        assertNull(ThreadContext.getSubject());
+        assertNull(ThreadContext.getSecurityManager());
+    }
 
-    // @Test
-    // void testExecuteRunnable() {
+    @Test
+    void testExecuteRunnable() {
 
-    //     string username = "jsmith";
+        string username = "jsmith";
 
-    //     SecurityManager securityManager = new DefaultSecurityManager();
-    //     PrincipalCollection identity = new SimplePrincipalCollection(username, "testRealm");
-    //     Subject sourceSubject = new DelegatingSubject(identity, true, null, null, securityManager);
+        SecurityManager securityManager = new DefaultSecurityManager();
+        PrincipalCollection identity = new SimplePrincipalCollection(username, "testRealm");
+        Subject sourceSubject = new DelegatingSubject(identity, true, null, null, securityManager);
 
-    //     assertNull(ThreadContext.getSubject());
-    //     assertNull(ThreadContext.getSecurityManager());
+        assertNull(ThreadContext.getSubject());
+        assertNull(ThreadContext.getSecurityManager());
 
-    //     Runnable runnable = new class Runnable {
-    //         void run() {
-    //             Subject callingSubject = SecurityUtils.getSubject();
-    //             assertNotNull(callingSubject);
-    //             assertNotNull(SecurityUtils.getSecurityManager());
-    //             assertEquals(callingSubject, sourceSubject);
-    //         }
-    //     };
-    //     sourceSubject.execute(runnable);
+        Runnable runnable = new class Runnable {
+            void run() {
+                Subject callingSubject = SecurityUtils.getSubject();
+                assertNotNull(callingSubject);
+                assertNotNull(SecurityUtils.getSecurityManager());
+                assertEquals(callingSubject, sourceSubject);
+            }
+        };
+        sourceSubject.execute(runnable);
 
-    //     assertNull(ThreadContext.getSubject());
-    //     assertNull(ThreadContext.getSecurityManager());
-    // }
+        assertNull(ThreadContext.getSubject());
+        assertNull(ThreadContext.getSecurityManager());
+    }
+
 
     @Test
     void testRunAs() {
@@ -179,9 +180,13 @@ class DelegatingSubjectTest {
         assertFalse(previous is null || previous.isEmpty());
         assertTrue(previous.getPrimaryPrincipal() == new String("user1"));
 
+        trace("==================");
+
         //test the stack functionality:  While as user2, run as user3:
         subject.runAs(new SimplePrincipalCollection("user3", IniSecurityManagerFactory.INI_REALM_NAME));
         assertTrue(subject.isRunAs());
+        Object pri = subject.getPrincipal();
+
         assertEquals(new String("user3"), subject.getPrincipal());
         assertTrue(subject.hasRole("role3"));
         assertFalse(subject.hasRole("role1"));

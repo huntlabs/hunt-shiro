@@ -188,51 +188,52 @@ class DefaultSubjectDAO : SubjectDAO {
     protected void mergePrincipals(Subject subject) {
         //merge PrincipalCollection state:
 
-implementationMissing(false);
-        // PrincipalCollection currentPrincipals = null;
+        PrincipalCollection currentPrincipals = null;
 
-        // //SHIRO-380: added if/else block - need to retain original (source) principals
-        // //This technique (reflection) is only temporary - a proper long term solution needs to be found,
-        // //but this technique allowed an immediate fix that is API point-version forwards and backwards compatible
-        // //
-        // //A more comprehensive review / cleaning of runAs should be performed for Shiro 1.3 / 2.0 +
-        // if (subject.isRunAs() && subject instanceof DelegatingSubject) {
-        //     try {
-        //         Field field = DelegatingSubject.class.getDeclaredField("principals");
-        //         field.setAccessible(true);
-        //         currentPrincipals = cast(PrincipalCollection)field.get(subject);
-        //     } catch (Exception e) {
-        //         throw new IllegalStateException("Unable to access DelegatingSubject principals property.", e);
-        //     }
-        // }
-        // if (currentPrincipals  is null || currentPrincipals.isEmpty()) {
-        //     currentPrincipals = subject.getPrincipals();
-        // }
+        //SHIRO-380: added if/else block - need to retain original (source) principals
+        //This technique (reflection) is only temporary - a proper long term solution needs to be found,
+        //but this technique allowed an immediate fix that is API point-version forwards and backwards compatible
+        //
+        //A more comprehensive review / cleaning of runAs should be performed for Shiro 1.3 / 2.0 +
+        DelegatingSubject ds = cast(DelegatingSubject)subject;
+        if (subject.isRunAs() && ds !is null) {
+            implementationMissing(false);
+            // try {
+            //     Field field = DelegatingSubject.class.getDeclaredField("principals");
+            //     field.setAccessible(true);
+            //     currentPrincipals = cast(PrincipalCollection)field.get(subject);
+            // } catch (Exception e) {
+            //     throw new IllegalStateException("Unable to access DelegatingSubject principals property.", e);
+            // }
+        }
+        if (currentPrincipals is null || currentPrincipals.isEmpty()) {
+            currentPrincipals = subject.getPrincipals();
+        }
 
-        // Session session = subject.getSession(false);
+        Session session = subject.getSession(false);
 
-        // if (session  is null) {
-        //     if (!isEmpty(currentPrincipals)) {
-        //         session = subject.getSession();
-        //         session.setAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY, currentPrincipals);
-        //     }
-        //     // otherwise no session and no principals - nothing to save
-        // } else {
-        //     PrincipalCollection existingPrincipals =
-        //             (PrincipalCollection) session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+        if (session  is null) {
+            if (!isEmpty(currentPrincipals)) {
+                session = subject.getSession();
+                session.setAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY, cast(Object)currentPrincipals);
+            }
+            // otherwise no session and no principals - nothing to save
+        } else {
+            PrincipalCollection existingPrincipals =
+                    cast(PrincipalCollection) session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
 
-        //     if (isEmpty(currentPrincipals)) {
-        //         if (!isEmpty(existingPrincipals)) {
-        //             session.removeAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-        //         }
-        //         // otherwise both are null or empty - no need to update the session
-        //     } else {
-        //         if (!currentPrincipals== existingPrincipals) {
-        //             session.setAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY, currentPrincipals);
-        //         }
-        //         // otherwise they're the same - no need to update the session
-        //     }
-        // }
+            if (isEmpty(currentPrincipals)) {
+                if (!isEmpty(existingPrincipals)) {
+                    session.removeAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+                }
+                // otherwise both are null or empty - no need to update the session
+            } else {
+                if (currentPrincipals != existingPrincipals) {
+                    session.setAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY, cast(Object)currentPrincipals);
+                }
+                // otherwise they're the same - no need to update the session
+            }
+        }
     }
 
     /**
@@ -244,32 +245,30 @@ implementationMissing(false);
      */
     protected void mergeAuthenticationState(Subject subject) {
 
-        implementationMissing(false);
+        Session session = subject.getSession(false);
 
-        // Session session = subject.getSession(false);
+        if (session is null) {
+            if (subject.isAuthenticated()) {
+                session = subject.getSession();
+                session.setAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY, Boolean.TRUE);
+            }
+            //otherwise no session and not authenticated - nothing to save
+        } else {
+            Boolean existingAuthc = cast(Boolean) session.getAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
 
-        // if (session  is null) {
-        //     if (subject.isAuthenticated()) {
-        //         session = subject.getSession();
-        //         session.setAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY, Boolean.TRUE);
-        //     }
-        //     //otherwise no session and not authenticated - nothing to save
-        // } else {
-        //     Boolean existingAuthc = cast(Boolean) session.getAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
-
-        //     if (subject.isAuthenticated()) {
-        //         if (existingAuthc is null || !existingAuthc.value) {
-        //             session.setAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY, Boolean.TRUE);
-        //         }
-        //         //otherwise authc state matches - no need to update the session
-        //     } else {
-        //         if (existingAuthc !is null) {
-        //             //existing doesn't match the current state - remove it:
-        //             session.removeAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
-        //         }
-        //         //otherwise not in the session and not authenticated - no need to update the session
-        //     }
-        // }
+            if (subject.isAuthenticated()) {
+                if (existingAuthc is null || !existingAuthc.value) {
+                    session.setAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY, Boolean.TRUE);
+                }
+                //otherwise authc state matches - no need to update the session
+            } else {
+                if (existingAuthc !is null) {
+                    //existing doesn't match the current state - remove it:
+                    session.removeAttribute(DefaultSubjectContext.AUTHENTICATED_SESSION_KEY);
+                }
+                //otherwise not in the session and not authenticated - no need to update the session
+            }
+        }
     }
 
     /**

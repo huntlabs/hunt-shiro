@@ -124,8 +124,8 @@ abstract class ThreadContext {
      */
      static Object get(string key) {
         version(HUNT_DEBUG) {
-            string msg = "get() - in thread [" ~ Thread.getThis().name() ~ "]"; 
-            tracef(msg);
+            string msg = "get(%s) - in thread [" ~ Thread.getThis().name() ~ "]"; 
+            tracef(msg, key);
         }
 
         Object value = getValue(key);

@@ -126,7 +126,7 @@ class ProxiedSession : Session {
     /**
      * Immediately delegates to the underlying proxied session.
      */
-     void setAttribute(Object key, Object value){
+    void setAttribute(Object key, Object value){
         session.setAttribute(key, value);
     }
 

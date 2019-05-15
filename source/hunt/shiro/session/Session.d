@@ -183,6 +183,11 @@ interface Session {
      */
     Object getAttribute(Object key);
 
+    
+    final Object getAttribute(string key) {
+        return getAttribute(new String(key));
+    }
+
     /**
      * Binds the specified {@code value} to this session, uniquely identified by the specified
      * {@code key} name.  If there is already an object bound under the {@code key} name, that
@@ -198,6 +203,10 @@ interface Session {
      */
     void setAttribute(Object key, Object value);
 
+    final void setAttribute(string key, Object value) {
+        setAttribute(new String(key), value);
+    }
+
     final void setAttribute(string key, string value) {
         setAttribute(new String(key), new String(value));
     }
@@ -212,4 +221,8 @@ interface Session {
      *                                 this method.
      */
     Object removeAttribute(Object key);
+
+    final Object removeAttribute(string key) {
+        return removeAttribute(new String(key));
+    }
 }

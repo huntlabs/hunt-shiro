@@ -23,8 +23,10 @@ import hunt.shiro.authz.permission.PermissionResolver;
 
 import hunt.collection;
 import hunt.Exceptions;
+import hunt.text.StringUtils;
 import hunt.util.ArrayHelper;
 
+import std.array;
 
 /**
  * Utility class to help with string-to-Permission object resolution.
@@ -32,21 +34,21 @@ import hunt.util.ArrayHelper;
  */
 class PermissionUtils {
 
-     static Set!(Permission) resolveDelimitedPermissions(string s, PermissionResolver permissionResolver) {
+    static Set!(Permission) resolveDelimitedPermissions(string s, PermissionResolver permissionResolver) {
         Set!(string) permStrings = toPermissionStrings(s);
         return resolvePermissions(permStrings, permissionResolver);
     }
 
-     static Set!(string) toPermissionStrings(string permissionsString) {
-        // string[] tokens = StringUtils.split(permissionsString);
-        // if (tokens !is null && tokens.length > 0) {
-        //     return new LinkedHashSet!(string)(ArrayHelper.asList(tokens));
-        // }
-        
+    static Set!(string) toPermissionStrings(string permissionsString) {
+        string[] tokens = StringUtils.split(permissionsString);
+        if (!tokens.empty()) {
+            return new LinkedHashSet!(string)(tokens);
+        }
         return null;
     }
 
-     static Set!(Permission) resolvePermissions(Collection!(string) permissionStrings, PermissionResolver permissionResolver) {
+    static Set!(Permission) resolvePermissions(Collection!(string) permissionStrings, 
+        PermissionResolver permissionResolver) {
         Set!(Permission) permissions = new LinkedHashSet!(Permission)(permissionStrings.size());
         foreach(string permissionString ; permissionStrings) {
             permissions.add(permissionResolver.resolvePermission(permissionString));

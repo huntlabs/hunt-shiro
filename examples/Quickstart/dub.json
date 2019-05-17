@@ -1,0 +1,13 @@
+{
+	"name": "quickstart",
+	"description": "A quickstart for hunt-shiro.",
+	"copyright": "Copyright (C) 2018-2019, HuntLabs.net",
+	"homepage": "https://www.huntlabs.net",
+	"license": "Apache-2.0",
+	"dependencies": {
+		"hunt-shiro" :{"path": "../../"}
+	},
+	"versions": [
+		"HUNT_DEBUG", "HUNT_DEBUG_CONFIG"
+	]
+}

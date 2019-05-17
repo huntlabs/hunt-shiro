@@ -27,6 +27,7 @@ import hunt.shiro.util.CollectionUtils;
 import hunt.collection;
 import hunt.Exceptions;
 import hunt.text.StringBuilder;
+import hunt.text.StringUtils;
 
 import std.array;
 import std.string;
@@ -152,32 +153,33 @@ class WildcardPermission : Permission {
     }
 
     protected void setParts(string wildcardString, bool caseSensitive) {
-        // wildcardString = StringUtils.clean(wildcardString);
+        wildcardString = wildcardString.strip();
 
         if (wildcardString.empty()) {
-            throw new IllegalArgumentException("Wildcard string cannot be null or empty. Make sure permission strings are properly formatted.");
+            throw new IllegalArgumentException("Wildcard string cannot be null or empty." ~ 
+                " Make sure permission strings are properly formatted.");
         }
 
         if (!caseSensitive) {
             wildcardString = wildcardString.toLower();
         }
 
-        // List!(string) parts = CollectionUtils.asList(wildcardString.split(PART_DIVIDER_TOKEN));
+        string[] parts = wildcardString.split(PART_DIVIDER_TOKEN);
 
-        // this.parts = new ArrayList!(Set!(string))();
-        // foreach(string part ; parts) {
-        //     Set!(string) subparts = CollectionUtils.asSet(part.split(SUBPART_DIVIDER_TOKEN));
+        this.parts = new ArrayList!(Set!(string))();
+        foreach(string part ; parts) {
 
-        //     if (subparts.isEmpty()) {
-        //         throw new IllegalArgumentException("Wildcard string cannot contain parts with only dividers. Make sure permission strings are properly formatted.");
-        //     }
-        //     this.parts.add(subparts);
-        // }
+            string[] sp = part.split(SUBPART_DIVIDER_TOKEN);
+            if (sp.empty()) {
+                throw new IllegalArgumentException("Wildcard string cannot contain parts with only dividers. Make sure permission strings are properly formatted.");
+            }
+            Set!(string) subparts = new LinkedHashSet!string(sp);
+            this.parts.add(subparts);
+        }
 
-        // if (this.parts.isEmpty()) {
-        //     throw new IllegalArgumentException("Wildcard string cannot contain only dividers. Make sure permission strings are properly formatted.");
-        // }
-        implementationMissing(false);
+        if (this.parts.isEmpty()) {
+            throw new IllegalArgumentException("Wildcard string cannot contain only dividers. Make sure permission strings are properly formatted.");
+        }
     }
 
     /*--------------------------------------------

@@ -162,6 +162,7 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
     protected void assertRealmsConfigured(){
         Collection!(Realm) realms = getRealms();
         if (CollectionUtils.isEmpty(realms)) {
+            warning("No realms have been configured!");
             string msg = "Configuration error:  No realms have been configured!  One or more realms must be " ~
                     "present to execute an authentication attempt.";
             throw new IllegalStateException(msg);

@@ -158,7 +158,7 @@ class Ini : Map!(string, IniSection) {
 
     private static string cleanName(string sectionName) {
         string name = strip(sectionName);
-        if (name is null) {
+        if (name.empty) {
             trace("Specified name was null or empty.  Defaulting to the default section (name = \"\")");
             name = DEFAULT_SECTION_NAME;
         }
@@ -248,7 +248,9 @@ class Ini : Map!(string, IniSection) {
             return;
         scope (exit)
             f.close();
-        parsing(f.byLine());
+            
+        // https://dlang.org/phobos/std_stdio.html#byLine
+        parsing!(typeof(f.byLine()), true)(f.byLine());
     }
 
     /**
@@ -261,7 +263,7 @@ class Ini : Map!(string, IniSection) {
         parsing(iniConfig.lineSplitter());
     }
 
-    private void parsing(T)(T lines) {
+    private void parsing(T, bool needDup=false)(T lines) {
         // trace(typeid(T));
         
         string sectionName = DEFAULT_SECTION_NAME;
@@ -269,17 +271,23 @@ class Ini : Map!(string, IniSection) {
 
         while (!lines.empty()) {
             string rawLine = cast(string)lines.front();
-            lines.popFront();
+            // version(HUNT_DEBUG_CONFIG) trace(rawLine);
+            scope(exit)
+                lines.popFront();
             string line = strip(rawLine);
-            version(HUNT_DEBUG_CONFIG) trace(rawLine);
 
             if (line.empty() || line.startsWith(COMMENT_POUND) || line.startsWith(COMMENT_SEMICOLON)) {
                 //skip empty lines and comments:
                 continue;
             }
 
+            static if(needDup) {
+                line = line.idup();
+            }
+
             string newSectionName = getSectionName(line);
             if (!newSectionName.empty()) {
+                // infof("sectionName=%s, newSectionName=%s", sectionName, newSectionName);
                 //found a new section - convert the currently buffered one into a IniSection object
                 addSection(sectionName, sectionContent);
 
@@ -407,7 +415,7 @@ class Ini : Map!(string, IniSection) {
 
     protected static bool isSectionHeader(string line) {
         string s = strip(line);
-        return s !is null && s.startsWith(SECTION_PREFIX) && s.endsWith(SECTION_SUFFIX);
+        return !s.empty && s.startsWith(SECTION_PREFIX) && s.endsWith(SECTION_SUFFIX);
     }
 
     protected static string getSectionName(string line) {
@@ -579,7 +587,8 @@ class IniSection : Map!(string, string) {
     private Map!(string, string) props;
 
     private this(string name) {
-        if (name is null) {
+        trace("section: ", name);
+        if (name.empty) {
             throw new NullPointerException("name");
         }
         this.name = name;
@@ -587,7 +596,8 @@ class IniSection : Map!(string, string) {
     }
 
     private this(string name, string sectionContent) {
-        if (name is null) {
+        trace("section: ", name);
+        if (name.empty) {
             throw new NullPointerException("name");
         }
         this.name = name;
@@ -640,7 +650,7 @@ class IniSection : Map!(string, string) {
     //Protected to access in a test case - NOT considered part of Shiro's API
     static string[] splitKeyValue(string keyValueLine) {
         string line = strip(keyValueLine);
-        if (line is null) {
+        if (line.empty()) {
             return null;
         }
         StringBuilder keyBuffer = new StringBuilder();
@@ -669,7 +679,8 @@ class IniSection : Map!(string, string) {
         string key = strip(keyBuffer.toString());
         string value = strip(valueBuffer.toString());
 
-        if (key is null || value is null) {
+        if (key.empty() || value.empty()) {
+            version(HUNT_DEBUG) warningf("key/value is empty: %s = %s, line: %s", key, value, line);
             string msg = "Line argument must contain a key and a value.  Only one string token was found.";
             throw new IllegalArgumentException(msg);
         }
@@ -699,7 +710,8 @@ class IniSection : Map!(string, string) {
             line = lineBuffer.toString();
             lineBuffer = new StringBuilder();
             string[] kvPair = splitKeyValue(line);
-            props.put(kvPair[0], kvPair[1]);
+            if(kvPair !is null)
+                props.put(kvPair[0], kvPair[1]);
         }
 
         return props;

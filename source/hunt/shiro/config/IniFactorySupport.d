@@ -131,16 +131,17 @@ abstract class IniFactorySupport(T) : AbstractFactory!(T) {
         T instance;
 
         if (ini is null || ini.isEmpty()) {
-            tracef("No populated Ini available.  Creating a default instance.");
+            info("No populated Ini available.  Creating a default instance.");
             instance = createDefaultInstance();
-            if (instance  is null) {
+            if (instance is null) {
                 string msg = typeid(this).name ~ " implementation did not return a default instance in " ~
                         "the event of a null/empty Ini configuration.  This is required to support the " ~
                         "Factory interface.  Please check your implementation.";
+                warning(msg);
                 throw new IllegalStateException(msg);
             }
         } else {
-            tracef("Creating instance from Ini [" ~ ini.toString() ~ "]");
+            info("Creating instance from Ini [" ~ ini.toString() ~ "]");
             instance = createInstance(ini);
             if (instance  is null) {
                 string msg = typeid(this).name ~ " implementation did not return a constructed instance from " ~

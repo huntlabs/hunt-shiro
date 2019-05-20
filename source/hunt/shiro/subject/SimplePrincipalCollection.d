@@ -194,7 +194,7 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
         }
 
         Set!Object aggregated = new LinkedHashSet!Object();
-        foreach(Set!(Object) set ; realmPrincipals.values()) {
+        foreach(Set!(Object) set ; realmPrincipals.byValue()) {
             aggregated.addAll(set);
         }
         if (aggregated.isEmpty()) {
@@ -323,7 +323,11 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
 
 
     int opApply(scope int delegate(ref Object) dg) {
-        throw new NotImplementedException();
-        // return 0;
+        
+        int result = 0;
+        foreach(Object obj; asSet()) {
+            result = dg(obj);
+        }
+        return result;
     }
 }

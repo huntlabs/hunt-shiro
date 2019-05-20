@@ -31,6 +31,7 @@ import hunt.text.StringUtils;
 
 import hunt.Exceptions;
 import hunt.collection;
+import hunt.logging;
 import hunt.String;
 
 import std.string;
@@ -180,6 +181,7 @@ class TextConfigurationRealm : SimpleAccountRealm {
         foreach(string username ; userDefs.byKey()) {
 
             string value = userDefs.get(username);
+            // infof("username=%s, value=%s", username, value);
 
             string[] passwordAndRolesArray = split(value, ","); 
             string password = passwordAndRolesArray[0];
@@ -193,8 +195,10 @@ class TextConfigurationRealm : SimpleAccountRealm {
 
             if (passwordAndRolesArray.length > 1) {
                 for (int i = 1; i < passwordAndRolesArray.length; i++) {
-                    string rolename = passwordAndRolesArray[i];
+                    string rolename = passwordAndRolesArray[i].strip();
                     account.addRole(rolename);
+
+                    // tracef("username=%s, rolename=%s", username, rolename);
 
                     SimpleRole role = getRole(rolename);
                     if (role !is null) {

@@ -162,10 +162,17 @@ class DelegatingSubject : Subject {
 
     PrincipalCollection getPrincipals() {
         List!(PrincipalCollection) runAsPrincipals = getRunAsPrincipalsStack();
-        // if(runAsPrincipals !is null)
-        // foreach(PrincipalCollection c; runAsPrincipals) {
-        //     info("ddddd=>", c);
+
+        // if(runAsPrincipals !is null) {
+        //     foreach(PrincipalCollection c; runAsPrincipals) {
+        //         trace(c);
+        //     }
         // }
+        
+        // if(this.principals !is null) {
+        //     trace((cast(Object)this.principals).toString());
+        // }
+
         return CollectionUtils.isEmpty(runAsPrincipals) ? this.principals : runAsPrincipals.get(0);
     }
 

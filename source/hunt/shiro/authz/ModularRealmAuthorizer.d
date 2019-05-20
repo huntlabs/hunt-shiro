@@ -30,6 +30,7 @@ import hunt.shiro.subject.PrincipalCollection;
 
 import hunt.Exceptions;
 import hunt.collection;
+import hunt.logging;
 
 
 
@@ -371,10 +372,11 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * {@link #hasRole(hunt.shiro.subject.PrincipalCollection, string)} call returns <code>true</code>,
      * <code>false</code> otherwise.
      */
-     bool hasRole(PrincipalCollection principals, string roleIdentifier) {
+    bool hasRole(PrincipalCollection principals, string roleIdentifier) {
+        version(HUNT_DEBUG) tracef("checking: %s", roleIdentifier);
         assertRealmsConfigured();
         foreach(Realm realm ; getRealms()) {
-            auto realmCast = cast(Authorizer)realm;
+            Authorizer realmCast = cast(Authorizer)realm;
             if (realmCast is null) continue;
             if (realmCast.hasRole(principals, roleIdentifier)) {
                 return true;
@@ -387,7 +389,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * Calls {@link #hasRole(hunt.shiro.subject.PrincipalCollection, string)} for each role name in the specified
      * collection and places the return value from each call at the respective location in the returned array.
      */
-     bool[] hasRoles(PrincipalCollection principals, List!(string) roleIdentifiers) {
+    bool[] hasRoles(PrincipalCollection principals, List!(string) roleIdentifiers) {
         assertRealmsConfigured();
         if (roleIdentifiers !is null && !roleIdentifiers.isEmpty()) {
             bool[] hasRoles = new bool[roleIdentifiers.size()];

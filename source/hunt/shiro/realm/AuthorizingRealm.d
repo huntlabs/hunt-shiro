@@ -318,7 +318,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
      */
     protected AuthorizationInfo getAuthorizationInfo(PrincipalCollection principals) {
 
-        if (principals  is null) {
+        if (principals is null) {
             return null;
         }
 
@@ -347,7 +347,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
         }
 
 
-        if (info  is null) {
+        if (info is null) {
             // Call template method if the info was not found in a cache
             info = doGetAuthorizationInfo(principals);
             // If the info is not null and the cache has been created, then cache the authorization info.
@@ -587,7 +587,20 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
     }
 
     protected bool hasRole(string roleIdentifier, AuthorizationInfo info) {
-        return info !is null && info.getRoles() !is null && info.getRoles().contains(roleIdentifier);
+        // return info !is null && info.getRoles() !is null && info.getRoles().contains(roleIdentifier);
+        
+        version(HUNT_DEBUG) tracef("checking: %s", roleIdentifier);
+        if(info !is null) {
+            Collection!(string) roles = info.getRoles();
+            if(roles !is null) {
+                bool r = roles.contains(roleIdentifier);
+                version(HUNT_DEBUG) {
+                    infof("roles: %s, result: %s", roles, r);
+                }
+                return r;
+            }
+        }
+        return false;
     }
 
      bool[] hasRoles(PrincipalCollection principal, List!(string) roleIdentifiers) {

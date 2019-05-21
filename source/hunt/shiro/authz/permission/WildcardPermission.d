@@ -171,14 +171,16 @@ class WildcardPermission : Permission {
 
             string[] sp = part.split(SUBPART_DIVIDER_TOKEN);
             if (sp.empty()) {
-                throw new IllegalArgumentException("Wildcard string cannot contain parts with only dividers. Make sure permission strings are properly formatted.");
+                throw new IllegalArgumentException("Wildcard string cannot contain parts with only dividers." ~ 
+                    " Make sure permission strings are properly formatted.");
             }
             Set!(string) subparts = new LinkedHashSet!string(sp);
             this.parts.add(subparts);
         }
 
         if (this.parts.isEmpty()) {
-            throw new IllegalArgumentException("Wildcard string cannot contain only dividers. Make sure permission strings are properly formatted.");
+            throw new IllegalArgumentException("Wildcard string cannot contain only dividers." ~ 
+                " Make sure permission strings are properly formatted.");
         }
     }
 
@@ -260,7 +262,7 @@ class WildcardPermission : Permission {
         auto oCast = cast(WildcardPermission)o;
         if (oCast !is null) {
             WildcardPermission wp = oCast;
-            return parts== wp.parts;
+            return parts == wp.parts;
         }
         return false;
     }

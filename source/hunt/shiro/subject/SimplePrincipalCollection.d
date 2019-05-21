@@ -146,39 +146,40 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
         }
     }
 
-    // T oneByType(T)(TypeInfo_Class type) {
-    //     if (realmPrincipals is null || realmPrincipals.isEmpty()) {
-    //         return null;
-    //     }
-    //     Collection!(Set) values = realmPrincipals.values();
-    //     foreach(Set set ; values) {
-    //         foreach(Object o ; set) {
-    //             if (type.isAssignableFrom(o.getClass())) {
-    //                 return cast(T) o;
-    //             }
-    //         }
-    //     }
-    //     return null;
-    // }
+    T oneByType(T)() if(is(T == class) || is(T == interface)) {
+        if (realmPrincipals is null || realmPrincipals.isEmpty()) {
+            return null;
+        }
+        Set!(Object)[] values = realmPrincipals.values();
+        foreach(Set!Object set ; values) {
+            foreach(Object o ; set) {
+                T v = cast(T)o;
+                if(o !is null && v !is null)    
+                    return v;
+            }
+        }
+        return null;
+    }
 
-    // Collection!(T) byType(T)(TypeInfo_Class type) {
-    //     if (realmPrincipals is null || realmPrincipals.isEmpty()) {
-    //         return Collections.EMPTY_SET;
-    //     }
-    //     Set!(T) typed = new LinkedHashSet!(T)();
-    //     Collection!(Set) values = realmPrincipals.values();
-    //     foreach(Set set ; values) {
-    //         foreach(Object o ; set) {
-    //             if (type.isAssignableFrom(o.getClass())) {
-    //                 typed.add(cast(T) o);
-    //             }
-    //         }
-    //     }
-    //     if (typed.isEmpty()) {
-    //         return Collections.EMPTY_SET;
-    //     }
-    //     return Collections.unmodifiableSet(typed);
-    // }
+    Collection!(T) byType(T)() if(is(T == class) || is(T == interface)) {
+        if (realmPrincipals is null || realmPrincipals.isEmpty()) {
+            return Collections.emptySet!T;
+        }
+        Set!(T) typed = new LinkedHashSet!(T)();
+        Set!(Object)[] values = realmPrincipals.values();
+        foreach(Set set ; values) {
+            foreach(Object o ; set) {
+                T v = cast(T)o;
+                if(o !is null && v !is null) {
+                    typed.add(v);
+                }
+            }
+        }
+        if (typed.isEmpty()) {
+            return Collections.emptySet!T;
+        }
+        return typed;
+    }
 
     List!Object asList() {
         Set!Object all = asSet();

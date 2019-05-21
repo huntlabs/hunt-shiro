@@ -74,7 +74,7 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
     /**
      * Default no-argument constructor.
      */
-     this() {
+    this() {
     }
 
     /**

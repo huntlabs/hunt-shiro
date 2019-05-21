@@ -81,7 +81,7 @@ interface PrincipalCollection : Iterable!Object {
      * @param type the type of the principal that should be returned.
      * @return a principal of the specified type or {@code null} if there isn't one of the specified type.
      */
-    T oneByType(T)(TypeInfo_Class type);
+    // T oneByType(T)(TypeInfo_Class type);
 
     /**
      * Returns all principals assignable from the specified type, or an empty Collection if no principals of that
@@ -93,7 +93,7 @@ interface PrincipalCollection : Iterable!Object {
      * @return a Collection of principals that are assignable from the specified type, or
      *         an empty Collection if no principals of this type are associated.
      */
-    Collection!(T) byType(T)(TypeInfo_Class type);
+    // Collection!(T) byType(T)(TypeInfo_Class type);
 
     /**
      * Returns a single Subject's principals retrieved from all configured Realms as a List, or an empty List if

@@ -132,32 +132,31 @@ class SimplePrincipalMap : PrincipalMap {
         }
     }
 
-    T oneByType(T)(TypeInfo_Class type) {
+    T oneByType(T)() if(is(T == class) || is(T == interface)) {
         if (CollectionUtils.isEmpty(this.combinedPrincipals)) {
             return null;
         }
-        foreach( Object value ; this.combinedPrincipals.values()) {
-            if (type.isInstance(value) ) {
-                return cast(T)(value);
+        foreach(Object value; this.combinedPrincipals.values()) {
+            T v = cast(T)value;
+            if (value !is null && v !is null) {
+                return v;
             }
         }
         return null;
     }
 
-    Collection!(T) byType(T)(TypeInfo_Class type) {
+    Collection!(T) byType(T)() {
         if (CollectionUtils.isEmpty(this.combinedPrincipals)) {
             return Collections.emptySet!T();
         }
-        Collection!(T) instances = null;
-        foreach( Object value ; this.combinedPrincipals.values()) {
-            if (type.isInstance(value) ) {
-                if (instances  is null) {
-                    instances = new ArrayList!(T)();
-                }
-                instances.add(cast(T)(value));
+        Collection!(T) instances = new ArrayList!(T)();
+        foreach(Object value; this.combinedPrincipals.values()) {
+            T v = cast(T)value;
+            if (value !is null && v !is null) {
+                instances.add(v);
             }
         }
-        return instances !is null ? instances : Collections.emptyList!T();
+        return instances;
     }
 
     List!(Object) asList() {

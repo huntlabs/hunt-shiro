@@ -96,7 +96,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param username the username submitted for authentication
      * @param password the password character array submitted for authentication
      */
-     this(string username, char[] password) {
+    this(string username, char[] password) {
         this(username, password, false, null);
     }
 
@@ -112,7 +112,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param username the username submitted for authentication
      * @param password the password string submitted for authentication
      */
-     this(string username, string password) {
+    this(string username, string password) {
         this(username, password !is null ? password.dup : null, false, cast(string)null);
     }
 
@@ -124,7 +124,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param password the password string submitted for authentication
      * @param host     the host name or IP string from where the attempt is occurring
      */
-     this(string username, char[] password, string host) {
+    this(string username, char[] password, string host) {
         this(username, password, false, host);
     }
 
@@ -140,7 +140,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param password the password string submitted for authentication
      * @param host     the host name or IP string from where the attempt is occurring
      */
-     this(string username, string password, string host) {
+    this(string username, string password, string host) {
         this(username, password !is null ? password.dup : null, false, host);
     }
 
@@ -152,7 +152,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param password   the password string submitted for authentication
      * @param rememberMe if the user wishes their identity to be remembered across sessions
      */
-     this(string username, char[] password, bool rememberMe) {
+    this(string username, char[] password, bool rememberMe) {
         this(username, password, rememberMe, null);
     }
 
@@ -168,7 +168,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param password   the password string submitted for authentication
      * @param rememberMe if the user wishes their identity to be remembered across sessions
      */
-     this(string username, string password, bool rememberMe) {
+    this(string username, string password, bool rememberMe) {
         this(username, password !is null ? password.dup : null, rememberMe, cast(string)null);
     }
 
@@ -181,7 +181,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param rememberMe if the user wishes their identity to be remembered across sessions
      * @param host       the host name or IP string from where the attempt is occurring
      */
-     this(string username, char[] password, bool rememberMe, string host) {
+    this(string username, char[] password, bool rememberMe, string host) {
         this.username = username;
         this.password = password;
         this.rememberMe = rememberMe;
@@ -202,7 +202,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * @param rememberMe if the user wishes their identity to be remembered across sessions
      * @param host       the host name or IP string from where the attempt is occurring
      */
-     this(string username, string password, bool rememberMe, string host) {
+    this(string username, string password, bool rememberMe, string host) {
         this(username, password !is null ? password.dup : null, rememberMe, host);
     }
 

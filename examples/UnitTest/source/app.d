@@ -4,6 +4,9 @@ import test.shiro.authz.permission.AllPermissionTest;
 import test.shiro.authz.permission.WildcardPermissionTest;
 import test.shiro.config.IniTest;
 
+import test.shiro.mgt.DefaultSecurityManagerTest;
+import test.shiro.mgt.SingletonDefaultSecurityManagerTest;
+
 import test.shiro.realm.AuthorizingRealmTest;
 
 import test.shiro.subject.SimplePrincipalCollectionTest;
@@ -20,11 +23,18 @@ void main()
 	// testUnits!(AllPermissionTest);
 	// testUnits!(WildcardPermissionTest);
 
+
+
 	// testUnits!(DelegatingSubjectTest);
 	// testUnits!(IniTest);
+
+	// mgt
+	testUnits!(DefaultSecurityManagerTest);
+	// testUnits!(SingletonDefaultSecurityManagerTest);
+
 	// testUnits!(SimplePrincipalCollectionTest);
 
-	testUnits!(AuthorizingRealmTest);
+	// testUnits!(AuthorizingRealmTest);
 
 	// testUnits!(DefaultSessionManagerTest);
 }

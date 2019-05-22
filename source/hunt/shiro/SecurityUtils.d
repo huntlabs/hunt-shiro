@@ -31,13 +31,13 @@ import core.thread;
  * Accesses the currently accessible {@code Subject} for the calling code depending on runtime environment.
  *
  */
-abstract class SecurityUtils {
+struct SecurityUtils {
 
     /**
      * ONLY used as a 'backup' in VM Singleton environments (that is, standalone environments), since the
      * ThreadContext should always be the primary source for Subject instances when possible.
      */
-    private static SecurityManager securityManager;
+    private __gshared SecurityManager securityManager;
 
     /**
      * Returns the currently accessible {@code Subject} available to the calling code depending on
@@ -94,7 +94,7 @@ abstract class SecurityUtils {
      *
      * @param securityManager the securityManager instance to set as a VM static singleton.
      */
-     static void setSecurityManager(SecurityManager securityManager) {
+    static void setSecurityManager(SecurityManager securityManager) {
         SecurityUtils.securityManager = securityManager;
     }
 
@@ -116,10 +116,10 @@ abstract class SecurityUtils {
      */
      static SecurityManager getSecurityManager(){
         SecurityManager securityManager = ThreadContext.getSecurityManager();
-        if (securityManager  is null) {
+        if (securityManager is null) {
             securityManager = SecurityUtils.securityManager;
         }
-        if (securityManager  is null) {
+        if (securityManager is null) {
             string msg = "No SecurityManager accessible to the calling code, either bound to the " ~
             Thread.getThis().name() ~ " or as a vm static singleton.  This is an invalid application " ~
                     "configuration.";

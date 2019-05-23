@@ -18,7 +18,6 @@
  */
 module test.shiro.subject.DelegatingSubjectTest;
 
-import hunt.shiro.SecurityUtils;
 import hunt.shiro.authc.UsernamePasswordToken;
 import hunt.shiro.config.Ini;
 import hunt.shiro.config.IniFactorySupport;
@@ -26,6 +25,7 @@ import hunt.shiro.config.IniSecurityManagerFactory;
 import hunt.shiro.mgt.DefaultSecurityManager;
 import hunt.shiro.mgt.SecurityManager;
 import hunt.shiro.session.Session;
+import hunt.shiro.SecurityUtils;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.subject.SimplePrincipalCollection;
 import hunt.shiro.subject.support.DelegatingSubject;

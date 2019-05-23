@@ -30,7 +30,6 @@ import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.subject.SimplePrincipalCollection;
 import hunt.shiro.util.ByteSource;
 
-//import hunt.io.Serializable;
 import hunt.collection;
 
 

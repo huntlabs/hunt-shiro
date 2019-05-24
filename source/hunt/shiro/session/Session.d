@@ -27,6 +27,8 @@ import hunt.String;
 
 alias Date = long;
 
+alias ShiroSession = Session;
+
 /**
  * A {@code Session} is a stateful data context associated with a single Subject (user, daemon process,
  * etc) who interacts with a software system over a period of time.

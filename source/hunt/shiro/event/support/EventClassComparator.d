@@ -22,7 +22,7 @@ import hunt.shiro.event.support.SingleArgumentMethodEventListener;
 import hunt.util.Comparator;
 
 import hunt.Exceptions;
-import hunt.logging;
+import hunt.logging.ConsoleLogger;
 
 /**
  * Compares two event classes based on their position in a class hierarchy.  Classes higher up in a hierarchy are

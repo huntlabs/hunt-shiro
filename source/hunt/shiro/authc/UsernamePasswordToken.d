@@ -85,7 +85,7 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
     /**
      * JavaBeans compatible no-arg constructor.
      */
-     this() {
+    this() {
     }
 
     /**

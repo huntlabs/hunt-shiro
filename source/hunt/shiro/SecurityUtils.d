@@ -62,6 +62,10 @@ struct SecurityUtils {
         return subject;
     }
 
+    static Subject newSubject(string sessionId, string host = "") {
+        return new SubjectBuilder().sessionId(sessionId).host(host).buildSubject();
+    }
+
     /**
      * Sets a VM (static) singleton SecurityManager, specifically for transparent use in the
      * {@link #getSubject() getSubject()} implementation.

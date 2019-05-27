@@ -50,7 +50,9 @@ import hunt.logging.ConsoleLogger;
 // import javax.servlet.ServletResponse;
 import hunt.collection.Collection;
 
+import std.array;
 import std.traits;
+import std.string;
 
 
 /**
@@ -142,29 +144,30 @@ class DefaultWebSecurityManager : DefaultSecurityManager, WebSecurityManager {
      * @param sessionMode
      * @deprecated since 1.2
      */
-    // void setSessionMode(string sessionMode) {
-    //     log.warn("The 'sessionMode' property has been deprecated.  Please configure an appropriate WebSessionManager " ~
-    //             "instance instead of using this property.  This property/method will be removed in a later version.");
-    //     string mode = sessionMode;
-    //     if (mode is null) {
-    //         throw new IllegalArgumentException("sessionMode argument cannot be null.");
-    //     }
-    //     mode = sessionMode.toLowerCase();
-    //     if (!HTTP_SESSION_MODE.equals(mode) && !NATIVE_SESSION_MODE.equals(mode)) {
-    //         string msg = "Invalid sessionMode [" ~ sessionMode ~ "].  Allowed values are " ~
-    //                 "static final string constants in the " ~ getClass().getName() ~ " class: '"
-    //                 + HTTP_SESSION_MODE ~ "' or '" ~ NATIVE_SESSION_MODE ~ "', with '" ~
-    //                 HTTP_SESSION_MODE ~ "' being the default.";
-    //         throw new IllegalArgumentException(msg);
-    //     }
-    //     bool recreate = this.sessionMode is null || !this.sessionMode.equals(mode);
-    //     this.sessionMode = mode;
-    //     if (recreate) {
-    //         LifecycleUtils.destroy(getSessionManager());
-    //         SessionManager sessionManager = createSessionManager(mode);
-    //         this.setInternalSessionManager(sessionManager);
-    //     }
-    // }
+    void setSessionMode(string sessionMode) {
+        // log.warn("The 'sessionMode' property has been deprecated.  Please configure an appropriate WebSessionManager " ~
+        //         "instance instead of using this property.  This property/method will be removed in a later version.");
+        string mode = sessionMode;
+        if (mode.empty()) {
+            throw new IllegalArgumentException("sessionMode argument cannot be null.");
+        }
+        mode = sessionMode.toLower();
+        if (HTTP_SESSION_MODE !=  mode && NATIVE_SESSION_MODE != mode) {
+            string msg = "Invalid sessionMode [" ~ sessionMode ~ "].  Allowed values are " ~
+                    "static final string constants in the " ~ typeid(this).name ~ " class: '"
+                    ~ HTTP_SESSION_MODE ~ "' or '" ~ NATIVE_SESSION_MODE ~ "', with '" ~
+                    HTTP_SESSION_MODE ~ "' being the default.";
+            throw new IllegalArgumentException(msg);
+        }
+
+        bool recreate = this.sessionMode.empty || this.sessionMode != (mode);
+        this.sessionMode = mode;
+        if (recreate) {
+            LifecycleUtils.destroy(cast(Object)getSessionManager());
+            SessionManager sessionManager = createSessionManager(mode);
+            this.setInternalSessionManager(sessionManager);
+        }
+    }
 
     override
     void setSessionManager(SessionManager sessionManager) {
@@ -200,15 +203,16 @@ class DefaultWebSecurityManager : DefaultSecurityManager, WebSecurityManager {
         // return sessionManager instanceof WebSessionManager && ((WebSessionManager)sessionManager).isServletContainerSessions();
     }
 
-    // protected SessionManager createSessionManager(string sessionMode) {
-    //     if (sessionMode is null || !sessionMode.equalsIgnoreCase(NATIVE_SESSION_MODE)) {
-    //         log.info("{} mode - enabling ServletContainerSessionManager (HTTP-only Sessions)", HTTP_SESSION_MODE);
-    //         return new ServletContainerSessionManager();
-    //     } else {
-    //         log.info("{} mode - enabling DefaultWebSessionManager (non-HTTP and HTTP Sessions)", NATIVE_SESSION_MODE);
-    //         return new DefaultWebSessionManager();
-    //     }
-    // }
+    protected SessionManager createSessionManager(string sessionMode) {
+        if (sessionMode.empty() || icmp(sessionMode, NATIVE_SESSION_MODE) != 0) {
+            info("%s mode - enabling ServletContainerSessionManager (HTTP-only Sessions)", HTTP_SESSION_MODE);
+            // return new ServletContainerSessionManager();
+            return null;
+        } else {
+            info("%s mode - enabling DefaultWebSessionManager (non-HTTP and HTTP Sessions)", NATIVE_SESSION_MODE);
+            return new DefaultWebSessionManager();
+        }
+    }
 
     override
     protected SessionContext createSessionContext(SubjectContext subjectContext) {

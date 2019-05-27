@@ -31,10 +31,13 @@ class WebUtils {
     }
 
     static bool isWeb(RequestPairSource source) {
-        ServletRequest request = source.getServletRequest();
-        ServletResponse response = source.getServletResponse();
+        // ServletRequest request = source.getServletRequest();
+        // ServletResponse response = source.getServletResponse();
         // return request !is null && response !is null;
-        return true;
+        if(source is null)
+            return false;
+        else 
+            return true;
     }
 
     /**

@@ -504,7 +504,7 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
      */
     private void cacheAuthenticationInfoIfPossible(AuthenticationToken token, AuthenticationInfo info) {
         if (!isAuthenticationCachingEnabled(token, info)) {
-            tracef("AuthenticationInfo caching is disabled for info [%s].  Submitted token: [%s].", info, token);
+            version(HUNT_SHIRO_DEBUG) tracef("AuthenticationInfo caching is disabled for info [%s].  Submitted token: [%s].", info, token);
             //return quietly, caching is disabled for this token/info pair:
             return;
         }
@@ -513,7 +513,7 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
         if (cache !is null) {
             string key = getAuthenticationCacheKey(token);
             cache.put(new String(key), info);
-            tracef("Cached AuthenticationInfo for continued authentication.  key=[%s], value=[%s].", key, info);
+            version(HUNT_SHIRO_DEBUG) tracef("Cached AuthenticationInfo for continued authentication.  key=[%s], value=[%s].", key, info);
         }
     }
 
@@ -565,18 +565,20 @@ abstract class AuthenticatingRealm : CachingRealm, Initializable {
         if (info  is null) {
             //otherwise not cached, perform the lookup:
             info = doGetAuthenticationInfo(token);
-            tracef("Looked up AuthenticationInfo [%s] from doGetAuthenticationInfo", info);
+            version(HUNT_SHIRO_DEBUG) tracef("Looked up AuthenticationInfo [%s] from doGetAuthenticationInfo", info);
             if (token !is null && info !is null) {
                 cacheAuthenticationInfoIfPossible(token, info);
             }
         } else {
-            tracef("Using cached authentication info [%s] to perform credentials matching.", info);
+            version(HUNT_SHIRO_DEBUG) 
+                tracef("Using cached authentication info [%s] to perform credentials matching.", info);
         }
 
         if (info !is null) {
             assertCredentialsMatch(token, info);
         } else {
-            tracef("No AuthenticationInfo found for submitted AuthenticationToken [%s].  Returning null.", token);
+            version(HUNT_SHIRO_DEBUG) 
+                tracef("No AuthenticationInfo found for submitted AuthenticationToken [%s].  Returning null.", token);
         }
 
         return info;

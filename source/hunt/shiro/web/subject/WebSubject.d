@@ -94,12 +94,12 @@ static class WebSubjectBuilder : SubjectBuilder {
      */
     this(SecurityManager securityManager, ServletRequest request, ServletResponse response) {
         super(securityManager);
-        if (request is null) {
-            throw new IllegalArgumentException("ServletRequest argument cannot be null.");
-        }
-        if (response is null) {
-            throw new IllegalArgumentException("ServletResponse argument cannot be null.");
-        }
+        // if (request is null) {
+        //     throw new IllegalArgumentException("ServletRequest argument cannot be null.");
+        // }
+        // if (response is null) {
+        //     throw new IllegalArgumentException("ServletResponse argument cannot be null.");
+        // }
         setRequest(request);
         setResponse(response);
     }

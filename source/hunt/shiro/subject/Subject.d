@@ -678,7 +678,7 @@ class SubjectBuilder {
      * @return this {@code Builder} instance for method chaining.
      */
     SubjectBuilder sessionId(string sessionId) {
-        if (sessionId !is null) {
+        if (!sessionId.empty()) {
             this.subjectContext.setSessionId(sessionId);
         }
         return this;
@@ -829,4 +829,5 @@ class SubjectBuilder {
     Subject buildSubject() {
         return this.securityManager.createSubject(this.subjectContext);
     }
+
 }

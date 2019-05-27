@@ -156,7 +156,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager,
     }
 
     protected void onExpiration(Session s, ExpiredSessionException ese, SessionKey key) {
-        tracef("Session with id [%s] has expired.", s.getId());
+        infof("Session with id [%s] has expired.", s.getId());
         try {
             onExpiration(s);
             notifyExpiration(s);

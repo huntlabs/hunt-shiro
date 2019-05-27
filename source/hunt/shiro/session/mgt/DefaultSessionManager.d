@@ -214,10 +214,10 @@ class DefaultSessionManager : AbstractValidatingSessionManager, CacheManagerAwar
         sessionDAO.update(session);
     }
 
-    override protected Session retrieveSession(SessionKey sessionKey){
+    override protected Session retrieveSession(SessionKey sessionKey) {
         string sessionId = getSessionId(sessionKey);
         if (sessionId.empty()) {
-            tracef("Unable to resolve session ID from SessionKey [%s].  Returning null to indicate a " ~
+            warningf("Unable to resolve session ID from SessionKey [%s].  Returning null to indicate a " ~
                     "session could not be found.", sessionKey);
             return null;
         }

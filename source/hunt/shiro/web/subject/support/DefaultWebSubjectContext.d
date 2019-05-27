@@ -48,18 +48,18 @@ class DefaultWebSubjectContext : DefaultSubjectContext, WebSubjectContext {
         super(context);
     }
 
-    override
-    string resolveHost() {
-        string host = super.resolveHost();
-        // if (host is null) {
-        //     ServletRequest request = resolveServletRequest();
-        //     if (request is null) {
-        //         host = request.getRemoteHost();
-        //     }
-        // }
-        implementationMissing(false);
-        return host;
-    }
+    // override
+    // string resolveHost() {
+    //     string host = super.resolveHost();
+    //     // if (host is null) {
+    //     //     ServletRequest request = resolveServletRequest();
+    //     //     if (request is null) {
+    //     //         host = request.getRemoteHost();
+    //     //     }
+    //     // }
+    //     implementationMissing(false);
+    //     return host;
+    // }
 
     ServletRequest getServletRequest() {
         return getTypedValue!ServletRequest(SERVLET_REQUEST);
@@ -75,7 +75,7 @@ class DefaultWebSubjectContext : DefaultSubjectContext, WebSubjectContext {
 
         ServletRequest request = getServletRequest();
 
-        implementationMissing(false);
+        // implementationMissing(false);
 
         //fall back on existing subject instance if it exists:
         // if (request is null) {
@@ -102,7 +102,7 @@ class DefaultWebSubjectContext : DefaultSubjectContext, WebSubjectContext {
 
         ServletResponse response = getServletResponse();
 
-        implementationMissing(false);
+        // implementationMissing(false);
 
         //fall back on existing subject instance if it exists:
         // if (response is null) {

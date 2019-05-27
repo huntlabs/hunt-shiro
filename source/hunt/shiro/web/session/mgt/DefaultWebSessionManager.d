@@ -39,12 +39,6 @@ import hunt.logging.ConsoleLogger;
 
 import std.array;
 
-// import javax.servlet.ServletRequest;
-// import javax.servlet.ServletResponse;
-// import javax.servlet.http.HttpServletRequest;
-// import javax.servlet.http.HttpServletResponse;
-// import java.io.string;
-
 
 /**
  * Web-application capable {@link hunt.shiro.session.mgt.SessionManager SessionManager} implementation.
@@ -274,7 +268,9 @@ class DefaultWebSessionManager : DefaultSessionManager, WebSessionManager {
             // ServletRequest request = WebUtils.getRequest(key);
             // ServletResponse response = WebUtils.getResponse(key);
             // id = getSessionId(request, response);
-            implementationMissing(false);
+            // TODO: Tasks pending completion -@zhangxueping at 2019/5/27 下午3:41:58
+            // 
+            // implementationMissing(false);
         }
         return id;
     }

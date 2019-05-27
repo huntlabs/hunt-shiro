@@ -353,7 +353,7 @@ class DelegatingSubject : Subject {
                 throw new DisabledSessionException(msg);
             }
 
-            tracef("Starting session for host %s", getHost());
+            version(HUNT_SHIRO_DEBUG) tracef("Starting session for host %s", getHost());
             SessionContext sessionContext = createSessionContext();
             Session session = this.securityManager.start(sessionContext);
             this.session = decorate(session);

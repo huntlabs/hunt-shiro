@@ -37,7 +37,6 @@ import std.traits;
  */
 class DefaultSessionContext : MapContext, SessionContext {
 
-
     private enum string HOST = fullyQualifiedName!(DefaultSessionContext) ~ ".HOST";
     private enum string SESSION_ID = fullyQualifiedName!(DefaultSessionContext) ~ ".SESSION_ID";
 

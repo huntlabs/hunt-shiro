@@ -191,7 +191,7 @@ class DefaultSessionManagerTest {
     //     //Try to access the same session, but it should throw an UnknownSessionException due to timeout:
     //     try {
     //         sm.getTimeout(new DefaultSessionKey(sessionId1));
-    //         fail("Session with id [" ~ sessionId1 + "] should have expired due to timeout.");
+    //         fail("Session with id [" ~ sessionId1 ~ "] should have expired due to timeout.");
     //     } catch (ExpiredSessionException expected) {
     //         //expected
     //     }

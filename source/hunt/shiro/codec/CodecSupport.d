@@ -92,8 +92,8 @@ abstract class CodecSupport {
     //     try {
     //         return source.getBytes(encoding);
     //     } catch (UnsupportedEncodingException e) {
-    //         String msg = "Unable to convert source [" ~ source + "] to byte array using " ~
-    //                 "encoding '" ~ encoding + "'";
+    //         String msg = "Unable to convert source [" ~ source ~ "] to byte array using " ~
+    //                 "encoding '" ~ encoding ~ "'";
     //         throw new CodecException(msg, e);
     //     }
     // }
@@ -124,7 +124,7 @@ abstract class CodecSupport {
     //     try {
     //         return new String(bytes, encoding);
     //     } catch (UnsupportedEncodingException e) {
-    //         String msg = "Unable to convert byte array to String with encoding '" ~ encoding + "'.";
+    //         String msg = "Unable to convert byte array to String with encoding '" ~ encoding ~ "'.";
     //         throw new CodecException(msg, e);
     //     }
     // }
@@ -259,7 +259,7 @@ abstract class CodecSupport {
     //     try {
     //         return toBytes(new FileInputStream(file));
     //     } catch (FileNotFoundException e) {
-    //         String msg = "Unable to acquire InputStream for file [" ~ file + "]";
+    //         String msg = "Unable to acquire InputStream for file [" ~ file ~ "]";
     //         throw new CodecException(msg, e);
     //     }
     // }
@@ -309,10 +309,10 @@ abstract class CodecSupport {
     //  * @return a byte array representation of the Object argument.
     //  */
     // protected byte[] objectToBytes(Object o) {
-    //     String msg = "The " ~ getClass().getName() + " implementation only supports conversion to " ~
+    //     String msg = "The " ~ getClass().getName() ~ " implementation only supports conversion to " ~
     //             "byte[] if the source is of type byte[], char[], String, " ~ ByteSource.class.getName() +
     //             " File or InputStream.  The instance provided as a method " ~
-    //             "argument is of type [" ~ o.getClass().getName() + "].  If you would like to convert " ~
+    //             "argument is of type [" ~ o.getClass().getName() ~ "].  If you would like to convert " ~
     //             "this argument type to a byte[], you can 1) convert the argument to one of the supported types " ~
     //             "yourself and then use that as the method argument or 2) subclass " ~ getClass().getName() +
     //             "and override the objectToBytes(Object o) method.";

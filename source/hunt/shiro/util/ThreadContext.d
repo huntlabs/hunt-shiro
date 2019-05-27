@@ -242,7 +242,7 @@ abstract class ThreadContext {
      * @param securityManager the application's SecurityManager instance to bind to the thread.  If the argument is
      *                        null, nothing will be done.
      */
-     static void bind(SecurityManager securityManager) {
+    static void bind(SecurityManager securityManager) {
         if (securityManager !is null) {
             put(SECURITY_MANAGER_KEY, cast(Object)securityManager);
         }

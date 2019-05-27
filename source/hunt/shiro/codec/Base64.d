@@ -316,7 +316,7 @@ class Base64 {
     //         b2 = binaryData[dataIndex + 1];
     //         b3 = binaryData[dataIndex + 2];
 
-    //         // log.debug("b1= " ~ b1 +", b2= " ~ b2 + ", b3= " ~ b3);
+    //         // log.debug("b1= " ~ b1 +", b2= " ~ b2 ~ ", b3= " ~ b3);
 
     //         l = (byte) (b2 & 0x0f);
     //         k = (byte) (b1 & 0x03);

@@ -409,7 +409,7 @@ class SimpleSession : ValidatingSession {
         } catch(Exception) {
             
         }
-        // size_t hashCode = getStartTimestamp() != null ? getStartTimestamp().hashCode() : 0;
+        // size_t hashCode = getStartTimestamp() is null ? getStartTimestamp().hashCode() : 0;
         // hashCode = 31 * hashCode + (getStopTimestamp() !is null ? getStopTimestamp().hashCode() : 0);
         // hashCode = 31 * hashCode + (getLastAccessTime() !is null ? getLastAccessTime().hashCode() : 0);
         // hashCode = 31 * hashCode + Long.valueOf(max(getTimeout(), 0)).hashCode();

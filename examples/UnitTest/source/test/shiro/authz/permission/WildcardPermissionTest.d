@@ -34,22 +34,22 @@ import std.traits;
  */
 class WildcardPermissionTest {
 
-    @Test!(IllegalArgumentException)
+    @TestWith!(IllegalArgumentException)
     void testNull() {
         new WildcardPermission(null);
     }
 
-    @Test!(IllegalArgumentException)
+    @TestWith!(IllegalArgumentException)
     void testEmpty() {
         new WildcardPermission("");
     }
 
-    @Test!(IllegalArgumentException)
+    @TestWith!(IllegalArgumentException)
     void testBlank() {
         new WildcardPermission("   ");
     }
 
-    @Test!(IllegalArgumentException)
+    @TestWith!(IllegalArgumentException)
     void testOnlyDelimiters() {
         new WildcardPermission("::,,::,:");
     }

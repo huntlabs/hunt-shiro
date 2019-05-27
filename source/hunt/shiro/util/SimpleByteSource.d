@@ -303,7 +303,7 @@ final class ByteSourceUtil {
         return null;
         // if (!isCompatible(source)) {
         //     string msg = "Unable to heuristically acquire bytes for object of type [" ~
-        //             source.getClass().getName() + "].  If this type is indeed a byte-backed data type, you might " ~
+        //             source.getClass().getName() ~ "].  If this type is indeed a byte-backed data type, you might " ~
         //             "want to write your own ByteSource implementation to extract its bytes explicitly.";
         //     throw new IllegalArgumentException(msg);
         // }

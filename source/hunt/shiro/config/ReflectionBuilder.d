@@ -992,7 +992,7 @@ class ReflectionBuilder {
     //         super(lhs, rhs);
     //     }
 
-    //     @Override
+    //     override
     //     protected Object doExecute() {
     //         string beanName = this.lhs;
     //         createNewInstance(objects, beanName, this.rhs);
@@ -1021,7 +1021,7 @@ class ReflectionBuilder {
     //         this.rootBeanName = lhs.substring(0, index);
     //     }
 
-    //     @Override
+    //     override
     //     protected Object doExecute() {
     //         applyProperty(lhs, rhs, objects);
     //         Object bean = objects.get(this.rootBeanName);

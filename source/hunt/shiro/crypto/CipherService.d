@@ -109,12 +109,12 @@ interface CipherService {
      *     OutputStream out = ...
      *     cipherService.decrypt(in, out, decryptionKey);
      * } finally {
-     *     if (in != null) {
+     *     if (in is null) {
      *         try {
      *             in.close();
      *         } catch (IOException ioe1) { ... log, trigger event, etc }
      *     }
-     *     if (out != null) {
+     *     if (out is null) {
      *         try {
      *             out.close();
      *         } catch (IOException ioe2) { ... log, trigger event, etc }
@@ -152,12 +152,12 @@ interface CipherService {
      *     OutputStream out = ...
      *     cipherService.encrypt(in, out, encryptionKey);
      * } finally {
-     *     if (in != null) {
+     *     if (in is null) {
      *         try {
      *             in.close();
      *         } catch (IOException ioe1) { ... log, trigger event, etc }
      *     }
-     *     if (out != null) {
+     *     if (out is null) {
      *         try {
      *             out.close();
      *         } catch (IOException ioe2) { ... log, trigger event, etc }

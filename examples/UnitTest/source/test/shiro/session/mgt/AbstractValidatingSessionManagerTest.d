@@ -35,7 +35,7 @@ module test.shiro.session.mgt.AbstractValidatingSessionManagerTest;
 // import static org.junit.Assert.*;
 
 // /**
-//  * Unit tests for the {@link org.apache.shiro.session.mgt.AbstractValidatingSessionManager} class.
+//  * Unit tests for the {@link hunt.shiro.session.mgt.AbstractValidatingSessionManager} class.
 //  */
 // public class AbstractValidatingSessionManagerTest {
 
@@ -61,24 +61,24 @@ module test.shiro.session.mgt.AbstractValidatingSessionManagerTest;
 //         final AtomicInteger expirationCount = new AtomicInteger();
 
 //         SessionListener sessionListener = new SessionListenerAdapter() {
-//             @Override
+//             override
 //             public void onExpiration(Session session) {
 //                 expirationCount.incrementAndGet();
 //             }
 //         };
 
 //         AbstractValidatingSessionManager sessionManager = new AbstractValidatingSessionManager() {
-//             @Override
+//             override
 //             protected Session retrieveSession(SessionKey key) throws UnknownSessionException {
 //                 throw new UnsupportedOperationException("Should not be called in this test.");
 //             }
 
-//             @Override
+//             override
 //             protected Session doCreateSession(SessionContext initData) throws AuthorizationException {
 //                 throw new UnsupportedOperationException("Should not be called in this test.");
 //             }
 
-//             @Override
+//             override
 //             protected Collection<Session> getActiveSessions() {
 //                 Collection<Session> sessions = new ArrayList<Session>(2);
 //                 sessions.add(validSession);

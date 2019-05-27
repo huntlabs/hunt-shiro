@@ -284,7 +284,7 @@ abstract class JcaCipherService : CipherService {
         // int size = getInitializationVectorSize();
         // if (size <= 0) {
         //     string msg = "initializationVectorSize property must be greater than zero.  This number is " ~
-        //             "typically set in the " ~ CipherService.class.getSimpleName() + " subclass constructor.  " ~
+        //             "typically set in the " ~ CipherService.class.getSimpleName() ~ " subclass constructor.  " ~
         //             "Also check your configuration to ensure that if you are setting a value, it is positive.";
         //     throw new IllegalStateException(msg);
         // }
@@ -326,7 +326,7 @@ abstract class JcaCipherService : CipherService {
 
         // byte[] output;
 
-        // if (prependIv && iv != null && iv.length > 0) {
+        // if (prependIv && iv is null && iv.length > 0) {
 
         //     byte[] encrypted = crypt(plaintext, key, iv, MODE);
 
@@ -344,8 +344,8 @@ abstract class JcaCipherService : CipherService {
         // }
 
         // if (log.isTraceEnabled()) {
-        //     log.trace("Incoming plaintext of size " ~ (plaintext != null ? plaintext.length : 0) + ".  Ciphertext " ~
-        //             "byte array is size " ~ (output != null ? output.length : 0));
+        //     log.trace("Incoming plaintext of size " ~ (plaintext is null ? plaintext.length : 0) ~ ".  Ciphertext " ~
+        //             "byte array is size " ~ (output is null ? output.length : 0));
         // }
 
         // return ByteSourceUtil.bytes(output);
@@ -395,7 +395,7 @@ abstract class JcaCipherService : CipherService {
     private ByteSource decrypt(byte[] ciphertext, byte[] key, byte[] iv) {
         // if (log.isTraceEnabled()) {
         //     log.trace("Attempting to decrypt incoming byte array of length " ~
-        //             (ciphertext != null ? ciphertext.length : 0));
+        //             (ciphertext is null ? ciphertext.length : 0));
         // }
         // byte[] decrypted = crypt(ciphertext, key, iv, javax.crypto.Cipher.DECRYPT_MODE);
         // return decrypted is null ? null : ByteSourceUtil.bytes(decrypted);
@@ -421,9 +421,9 @@ abstract class JcaCipherService : CipherService {
     //         return javax.crypto.Cipher.getInstance(transformationString);
     //     } catch (Exception e) {
     //         string msg = "Unable to acquire a Java JCA Cipher instance using " ~
-    //                 javax.crypto.Cipher.class.getName() + ".getInstance( \"" ~ transformationString + "\" ). " ~
-    //                 getAlgorithmName() + " under this configuration is required for the " ~
-    //                 getClass().getName() + " instance to function.";
+    //                 javax.crypto.Cipher.class.getName() ~ ".getInstance( \"" ~ transformationString ~ "\" ). " ~
+    //                 getAlgorithmName() ~ " under this configuration is required for the " ~
+    //                 getClass().getName() ~ " instance to function.";
     //         throw new CryptoException(msg, e);
     //     }
     // }
@@ -471,7 +471,7 @@ abstract class JcaCipherService : CipherService {
     //     try {
     //         return cipher.doFinal(bytes);
     //     } catch (Exception e) {
-    //         string msg = "Unable to execute 'doFinal' with cipher instance [" ~ cipher + "].";
+    //         string msg = "Unable to execute 'doFinal' with cipher instance [" ~ cipher ~ "].";
     //         throw new CryptoException(msg, e);
     //     }
     // }
@@ -490,14 +490,14 @@ abstract class JcaCipherService : CipherService {
     // private void init(javax.crypto.Cipher cipher, int mode, java.security.Key key,
     //                   AlgorithmParameterSpec spec, SecureRandom random) {
     //     try {
-    //         if (random != null) {
-    //             if (spec != null) {
+    //         if (random is null) {
+    //             if (spec is null) {
     //                 cipher.init(mode, key, spec, random);
     //             } else {
     //                 cipher.init(mode, key, random);
     //             }
     //         } else {
-    //             if (spec != null) {
+    //             if (spec is null) {
     //                 cipher.init(mode, key, spec);
     //             } else {
     //                 cipher.init(mode, key);
@@ -524,7 +524,7 @@ abstract class JcaCipherService : CipherService {
     // }
 
     // private void encrypt(InputStream in, OutputStream out, byte[] key, byte[] iv, bool prependIv) {
-    //     if (prependIv && iv != null && iv.length > 0) {
+    //     if (prependIv && iv is null && iv.length > 0) {
     //         try {
     //             //first write the IV:
     //             out.write(iv);
@@ -604,7 +604,7 @@ abstract class JcaCipherService : CipherService {
     //     javax.crypto.Cipher cipher = newCipherInstance(streaming);
     //     java.security.Key jdkKey = new SecretKeySpec(key, getAlgorithmName());
     //     IvParameterSpec ivSpec = null;
-    //     if (iv != null && iv.length > 0) {
+    //     if (iv is null && iv.length > 0) {
     //         ivSpec = new IvParameterSpec(iv);
     //     }
 

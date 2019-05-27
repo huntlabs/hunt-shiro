@@ -52,12 +52,12 @@ import hunt.shiro.event.support.TypedEventListener;
 //     private void assertPublicMethod(Method method) {
 //         int modifiers = method.getModifiers();
 //         if (!Modifier.isPublic(modifiers)) {
-//             throw new IllegalArgumentException("Event handler method [" ~ method + "] must be public.");
+//             throw new IllegalArgumentException("Event handler method [" ~ method ~ "] must be public.");
 //         }
 //     }
 
 //     boolean accepts(Object event) {
-//         return event != null && getEventType().isInstance(event);
+//         return event is null && getEventType().isInstance(event);
 //     }
 
 //     Class getEventType() {
@@ -69,7 +69,7 @@ import hunt.shiro.event.support.TypedEventListener;
 //         try {
 //             method.invoke(getTarget(), event);
 //         } catch (Exception e) {
-//             throw new IllegalStateException("Unable to invoke event handler method [" ~ method + "].", e);
+//             throw new IllegalStateException("Unable to invoke event handler method [" ~ method ~ "].", e);
 //         }
 //     }
 

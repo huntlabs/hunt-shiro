@@ -36,6 +36,7 @@ import hunt.Exceptions;
 import hunt.util.Common;
 
 import std.array;
+import std.traits;
 
 /**
  * A {@code Subject} represents state and security operations for a <em>single</em> application user.
@@ -60,6 +61,8 @@ import std.array;
  *
  */
 interface Subject {
+
+    enum string DEFAULT_NAME = fullyQualifiedName!Subject;
 
     /**
      * Returns this Subject's application-wide uniquely identifying principal, or {@code null} if this

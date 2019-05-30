@@ -14,3 +14,6 @@ public import hunt.shiro.authc.SaltedAuthenticationInfo;
 public import hunt.shiro.authc.SimpleAccount;
 public import hunt.shiro.authc.SimpleAuthenticationInfo;
 public import hunt.shiro.authc.UsernamePasswordToken;
+
+public import hunt.shiro.authc.pam;
+public import hunt.shiro.authc.credential;

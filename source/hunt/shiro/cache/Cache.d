@@ -41,6 +41,9 @@ interface Cache(K, V) {
      */
     V get(K key);
 
+
+    V get(K key, V value);
+
     /**
      * Adds a Cache entry.
      *

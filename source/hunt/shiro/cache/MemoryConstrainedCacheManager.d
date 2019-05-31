@@ -37,7 +37,7 @@ import hunt.shiro.cache.MapCache;
  *
  * @since 1.0
  */
-class MemoryConstrainedCacheManager : AbstractCacheManager!(Object, Object) {
+class MemoryConstrainedCacheManager(K, V) : AbstractCacheManager!(K, V) {
 
     /**
      * Returns a new {@link MapCache MapCache} instance backed by a {@link SoftHashMap}.
@@ -45,7 +45,7 @@ class MemoryConstrainedCacheManager : AbstractCacheManager!(Object, Object) {
      * @param name the name of the cache
      * @return a new {@link MapCache MapCache} instance backed by a {@link SoftHashMap}.
      */
-    override protected Cache!(Object, Object) createCache(string name) {
-        return new MapCache!(Object, Object)(name, null);
+    override protected Cache!(K, V) createCache(string name) {
+        return new MapCache!(K, V)(name);
     }
 }

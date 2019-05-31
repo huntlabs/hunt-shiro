@@ -48,19 +48,28 @@ class MapCache(K, V) : Cache!(K, V) {
      */
     private string name;
 
-    this(string name, V[K] backingMap) {
+    this(string name) {
         if (name.empty) {
             throw new IllegalArgumentException("Cache name cannot be null.");
         }
-        if (backingMap is null) {
-            throw new IllegalArgumentException("Backing map cannot be null.");
-        }
+        // if (backingMap is null) {
+        //     throw new IllegalArgumentException("Backing map cannot be null.");
+        // }
         this.name = name;
-        this.map = backingMap;
+        // this.map = backingMap;
     }
 
     V get(K key) {
         return map[key];
+    }
+
+    V get(K key, V defaultValue) {
+        return map.get(key, defaultValue);
+    }
+
+    bool contain(K key) {
+        auto itemPtr = key in map;
+        return itemPtr !is null;
     }
 
     V put(K key, V value) {

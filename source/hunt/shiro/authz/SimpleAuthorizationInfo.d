@@ -68,7 +68,7 @@ class SimpleAuthorizationInfo : AuthorizationInfo {
      * Sets the roles assigned to the account.
      * @param roles the roles assigned to the account.
      */
-     void setRoles(Set!(string) roles) {
+    void setRoles(Set!(string) roles) {
         this.roles = roles;
     }
 
@@ -90,6 +90,13 @@ class SimpleAuthorizationInfo : AuthorizationInfo {
      * @param roles the roles to add to those associated with the account.
      */
      void addRoles(Collection!(string) roles) {
+        if (this.roles  is null) {
+            this.roles = new HashSet!(string)();
+        }
+        this.roles.addAll(roles);
+    }
+
+    void addRoles(string[] roles) {
         if (this.roles  is null) {
             this.roles = new HashSet!(string)();
         }

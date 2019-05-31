@@ -25,6 +25,7 @@ import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.authc.credential.CredentialsMatcher;
 import hunt.shiro.authz;
 import hunt.shiro.authz.permission;
+import hunt.shiro.cache.AbstractCacheManager;
 import hunt.shiro.cache.Cache;
 import hunt.shiro.cache.CacheManager;
 import hunt.shiro.Exceptions;
@@ -161,6 +162,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
      * @return {@code true} if authorization caching should be utilized, {@code false} otherwise.
      */
     bool isAuthorizationCachingEnabled() {
+        tracef("authorizationCachingEnabled=%s, isCachingEnabled=%s", authorizationCachingEnabled, isCachingEnabled());
         return isCachingEnabled() && authorizationCachingEnabled;
     }
 
@@ -237,7 +239,8 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
 
         if (this.authorizationCache  is null) {
 
-            version(HUNT_DEBUG) {
+            // version(HUNT_DEBUG) 
+            {
                 tracef("No authorizationCache instance set.  Checking for a cacheManager...");
             }
 
@@ -245,15 +248,19 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
 
             if (cacheManager !is null) {
                 string cacheName = getAuthorizationCacheName();
-                version(HUNT_DEBUG) {
+                // version(HUNT_DEBUG) 
+                {
                     tracef("CacheManager [" ~ (cast(Object)cacheManager).toString() ~ 
                             "] has been configured.  Building " ~
                             "authorization cache named [" ~ cacheName ~ "]");
                 }
-                // this.authorizationCache = cacheManager.getCache(cacheName);
-                implementationMissing(false);
+                auto acm = cast(AbstractCacheManager!(Object, AuthorizationInfo))cacheManager;
+                this.authorizationCache =  acm.getCache(cacheName);
+
+                tracef("authorizationCache: %s", this.authorizationCache is null);
             } else {
-                version(HUNT_DEBUG) {
+                // version(HUNT_DEBUG) 
+                {
                     tracef("No cache or cacheManager properties have been set.  Authorization cache cannot " ~
                             "be obtained.");
                 }
@@ -329,12 +336,13 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
         }
 
         Cache!(Object, AuthorizationInfo) cache = getAvailableAuthorizationCache();
+
         if (cache !is null) {
             version(HUNT_DEBUG) {
                 tracef("Attempting to retrieve the AuthorizationInfo from cache.");
             }
             Object key = getAuthorizationCacheKey(principals);
-            info = cache.get(key);
+            info = cache.get(key, null);
             version(HUNT_DEBUG) {
                 if (info  is null) {
                     tracef("No AuthorizationInfo found in cache for principals [" ~ 
@@ -465,12 +473,12 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
         return perms;
     }
 
-     bool isPermitted(PrincipalCollection principals, string permission) {
+    bool isPermitted(PrincipalCollection principals, string permission) {
         Permission p = getPermissionResolver().resolvePermission(permission);
         return isPermitted(principals, p);
     }
 
-     bool isPermitted(PrincipalCollection principals, Permission permission) {
+    bool isPermitted(PrincipalCollection principals, Permission permission) {
         AuthorizationInfo info = getAuthorizationInfo(principals);
         return isPermitted(permission, info);
     }

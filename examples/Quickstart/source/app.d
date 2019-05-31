@@ -1,11 +1,15 @@
 import std.stdio;
 
 import hunt.shiro.authc.UsernamePasswordToken;
+import hunt.shiro.authz.AuthorizationInfo;
+import hunt.shiro.cache.MemoryConstrainedCacheManager;
 import hunt.shiro.config.Ini;
 import hunt.shiro.config.IniFactorySupport;
 import hunt.shiro.config.IniSecurityManagerFactory;
 import hunt.shiro.Exceptions;
+import hunt.shiro.mgt.CachingSecurityManager;
 import hunt.shiro.mgt.DefaultSecurityManager;
+import hunt.shiro.mgt.RealmSecurityManager;
 import hunt.shiro.mgt.SecurityManager;
 import hunt.shiro.SecurityUtils;
 import hunt.shiro.session.Session;
@@ -17,6 +21,9 @@ import hunt.shiro.subject.Subject;
 import hunt.shiro.util.AbstractFactory;
 import hunt.shiro.util.LifecycleUtils;
 import hunt.shiro.util.ThreadContext;
+
+import hunt.shiro.realm.CachingRealm;
+import hunt.shiro.realm.Realm;
 
 import hunt.Exceptions;
 import hunt.logging.ConsoleLogger;
@@ -33,6 +40,17 @@ void main()
 	// (file: and url: prefixes load from files and urls respectively):
 	Factory!SecurityManager factory = new IniSecurityManagerFactory("resources/shiro.ini");
 	SecurityManager securityManager = factory.getInstance();
+
+	CachingSecurityManager csm = cast(CachingSecurityManager)securityManager;
+	auto cm = new MemoryConstrainedCacheManager!(Object, AuthorizationInfo)();
+	csm.setCacheManager(cm);
+
+
+    RealmSecurityManager rsm = cast(RealmSecurityManager)securityManager;
+	Realm rm = rsm.getRealms().toArray()[0];
+	CachingRealm cr = cast(CachingRealm)rm;
+	cr.setCachingEnabled(true);
+	
 
 	string HOST = typeid(DefaultSessionContext).name ~ ".HOST";
 

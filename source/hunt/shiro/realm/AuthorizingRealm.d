@@ -239,7 +239,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
 
         if (this.authorizationCache  is null) {
 
-            // version(HUNT_DEBUG) 
+            version(HUNT_SHIRO_DEBUG) 
             {
                 tracef("No authorizationCache instance set.  Checking for a cacheManager...");
             }
@@ -248,7 +248,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
 
             if (cacheManager !is null) {
                 string cacheName = getAuthorizationCacheName();
-                // version(HUNT_DEBUG) 
+                version(HUNT_SHIRO_DEBUG) 
                 {
                     tracef("CacheManager [" ~ (cast(Object)cacheManager).toString() ~ 
                             "] has been configured.  Building " ~
@@ -259,7 +259,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
 
                 tracef("authorizationCache: %s", this.authorizationCache is null);
             } else {
-                // version(HUNT_DEBUG) 
+                version(HUNT_SHIRO_DEBUG) 
                 {
                     tracef("No cache or cacheManager properties have been set.  Authorization cache cannot " ~
                             "be obtained.");
@@ -331,19 +331,19 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
 
         AuthorizationInfo info = null;
 
-        version(HUNT_DEBUG) {
+        version(HUNT_SHIRO_DEBUG_MORE) {
             tracef("Retrieving AuthorizationInfo for principals [" ~ (cast(Object)principals).toString() ~ "]");
         }
 
         Cache!(Object, AuthorizationInfo) cache = getAvailableAuthorizationCache();
 
         if (cache !is null) {
-            version(HUNT_DEBUG) {
+            version(HUNT_SHIRO_DEBUG_MORE) {
                 tracef("Attempting to retrieve the AuthorizationInfo from cache.");
             }
             Object key = getAuthorizationCacheKey(principals);
             info = cache.get(key, null);
-            version(HUNT_DEBUG) {
+            version(HUNT_SHIRO_DEBUG_MORE) {
                 if (info  is null) {
                     tracef("No AuthorizationInfo found in cache for principals [" ~ 
                         (cast(Object)principals).toString() ~ "]");
@@ -360,7 +360,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
             info = doGetAuthorizationInfo(principals);
             // If the info is not null and the cache has been created, then cache the authorization info.
             if (info !is null && cache !is null) {
-                version(HUNT_DEBUG) {
+                version(HUNT_SHIRO_DEBUG) {
                     tracef("Caching authorization info for principals: [" ~ 
                         (cast(Object)principals).toString() ~ "].");
                 }
@@ -597,12 +597,12 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
     protected bool hasRole(string roleIdentifier, AuthorizationInfo info) {
         // return info !is null && info.getRoles() !is null && info.getRoles().contains(roleIdentifier);
         
-        version(HUNT_DEBUG) tracef("checking: %s", roleIdentifier);
+        version(HUNT_SHIRO_DEBUG) tracef("checking: %s", roleIdentifier);
         if(info !is null) {
             Collection!(string) roles = info.getRoles();
             if(roles !is null) {
                 bool r = roles.contains(roleIdentifier);
-                version(HUNT_DEBUG) {
+                version(HUNT_SHIRO_DEBUG) {
                     infof("roles: %s, result: %s", roles, r);
                 }
                 return r;

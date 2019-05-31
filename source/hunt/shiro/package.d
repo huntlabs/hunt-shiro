@@ -2,6 +2,7 @@ module hunt.shiro;
 
 public import hunt.shiro.authc;
 public import hunt.shiro.authz;
+public import hunt.shiro.cache;
 
 public import hunt.shiro.Exceptions;
 

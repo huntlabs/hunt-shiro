@@ -257,7 +257,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
                 auto acm = cast(AbstractCacheManager!(Object, AuthorizationInfo))cacheManager;
                 this.authorizationCache =  acm.getCache(cacheName);
 
-                tracef("authorizationCache: %s", this.authorizationCache is null);
+                version(HUNT_SHIRO_DEBUG) tracef("authorizationCache: %s", this.authorizationCache is null);
             } else {
                 version(HUNT_SHIRO_DEBUG) 
                 {

@@ -88,7 +88,7 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
      */
     //@SuppressWarnings({"UnusedDeclaration"})
      void setAuthenticationListeners(Collection!(AuthenticationListener) listeners) {
-        if (listeners  is null) {
+        if (listeners is null) {
             this.listeners = new ArrayList!(AuthenticationListener)();
         } else {
             this.listeners = listeners;
@@ -192,7 +192,7 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
      */
      final AuthenticationInfo authenticate(AuthenticationToken token){
 
-        if (token  is null) {
+        if (token is null) {
             throw new IllegalArgumentException("Method argument (authentication token) cannot be null.");
         }
 
@@ -201,26 +201,28 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
         AuthenticationInfo info;
         try {
             info = doAuthenticate(token);
-            if (info  is null) {
+            if (info is null) {
                 string msg = "No account information found for authentication token [" ~ 
                         (cast(Object)token).toString() ~ "] by this " ~
                         "Authenticator instance.  Please check that it is configured correctly.";
                 throw new AuthenticationException(msg);
             }
         } catch (Throwable t) {
+            warning(t);
+
             AuthenticationException ae = null;
             auto tCast = cast(AuthenticationException)t;
             if (tCast !is null) {
                 ae = tCast;
             }
-            if (ae  is null) {
+            if (ae is null) {
                 //Exception thrown was not an expected AuthenticationException.  Therefore it is probably a little more
                 //severe or unexpected.  So, wrap in an AuthenticationException, log to warn, and propagate:
                 string msg = "Authentication failed for token submission [" ~ 
                         (cast(Object)token).toString() ~ "].  Possible unexpected " ~
                         "error? (Typical or expected login exceptions should extend from AuthenticationException).";
                 ae = new AuthenticationException(msg, t);
-                version(HUNT_DEBUG) warning(msg, t);
+                // version(HUNT_DEBUG) warning(msg, t);
             }
             try {
                 notifyFailure(token, ae);

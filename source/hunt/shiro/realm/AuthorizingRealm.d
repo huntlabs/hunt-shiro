@@ -162,7 +162,10 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
      * @return {@code true} if authorization caching should be utilized, {@code false} otherwise.
      */
     bool isAuthorizationCachingEnabled() {
-        tracef("authorizationCachingEnabled=%s, isCachingEnabled=%s", authorizationCachingEnabled, isCachingEnabled());
+        version(HUNT_SHIRO_DEBUG) {
+            tracef("authorizationCachingEnabled=%s, isCachingEnabled=%s", 
+                authorizationCachingEnabled, isCachingEnabled());
+        }
         return isCachingEnabled() && authorizationCachingEnabled;
     }
 

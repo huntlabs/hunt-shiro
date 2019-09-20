@@ -233,5 +233,7 @@ class MapContext : Map!(string, Object) {
         } catch (Exception ex) {
         }
         return h;
-    }    
+    }   
+
+     mixin CloneMemberTemplate!(typeof(this));
 }

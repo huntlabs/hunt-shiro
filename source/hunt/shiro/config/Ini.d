@@ -23,6 +23,7 @@ import hunt.Exceptions;
 import hunt.logging.ConsoleLogger;
 import hunt.Object;
 import hunt.text.StringBuilder;
+import hunt.util.ObjectUtils;
 
 import std.array;
 import std.file;
@@ -570,6 +571,8 @@ class Ini : Map!(string, IniSection) {
     // Set<Entry!(string, IniSection)> entrySet() {
     //     return Collections.unmodifiableSet(this.sections.entrySet());
     // }
+    
+    mixin CloneMemberTemplate!(typeof(this));
 
 }
 
@@ -857,4 +860,6 @@ class IniSection : Map!(string, string) {
     override size_t toHash() @trusted nothrow {
         return hashOf(this.name) * 31 + this.props.toHash();
     }
+
+    mixin CloneMemberTemplate!(typeof(this));
 }

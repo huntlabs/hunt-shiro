@@ -24,6 +24,7 @@ import hunt.shiro.util.CollectionUtils;
 import hunt.collection;
 import hunt.Exceptions;
 import hunt.Object;
+import hunt.util.ObjectUtils;
 
 import std.array;
 import std.range;
@@ -397,4 +398,6 @@ class SimplePrincipalMap : PrincipalMap {
         }
         return h;
     } 
+
+    mixin CloneMemberTemplate!(typeof(this));
 }

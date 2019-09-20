@@ -83,7 +83,16 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
         if (realmPrincipals is null) {
             realmPrincipals = new LinkedHashMap!(string, Set!Object)();
         }
-        Set!Object principals = realmPrincipals.get(realmName);
+
+        Set!Object principals = null; 
+        try {
+            if(realmPrincipals.containsKey(realmName)) {
+                principals = realmPrincipals.get(realmName);
+            }
+        } catch(Exception ex) {
+            version(HUNT_DEBUG) warning(ex.msg);
+        }
+
         if (principals is null) {
             principals = new LinkedHashSet!Object();
             realmPrincipals.put(realmName, principals);

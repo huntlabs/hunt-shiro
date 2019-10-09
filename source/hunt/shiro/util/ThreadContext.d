@@ -123,13 +123,13 @@ abstract class ThreadContext {
      *         no value exists for the specified <code>key</code>
      */
      static Object get(string key) {
-        version(HUNT_DEBUG) {
+        version(HUNT_SHIRO_DEBUG) {
             string msg = "get(%s) - in thread [" ~ Thread.getThis().name() ~ "]"; 
             tracef(msg, key);
         }
 
         Object value = getValue(key);
-        version(HUNT_DEBUG) {
+        version(HUNT_SHIRO_DEBUG) {
             if (value !is null) {
                 msg = "Retrieved value of type [" ~ typeid(value).name ~ "] for key [" ~
                         key ~ "] " ~ "bound to thread [" ~ Thread.getThis().name() ~ "]";
@@ -167,7 +167,7 @@ abstract class ThreadContext {
         ensureResourcesInitialized();
         resources.put(key, value);
 
-        version(HUNT_DEBUG) {
+        version(HUNT_SHIRO_DEBUG) {
             string msg = "Bound value of type [" ~ typeid(value).name ~ "] for key [" ~
                     key ~ "] to thread " ~ "[" ~ Thread.getThis().name() ~ "]";
             tracef(msg);
@@ -186,7 +186,7 @@ abstract class ThreadContext {
         Map!(string, Object) perThreadResources = resources;
         Object value = perThreadResources !is null ? perThreadResources.remove(key) : null;
 
-        version(HUNT_DEBUG) {
+        version(HUNT_SHIRO_DEBUG) {
             if (value !is null) {
                 string msg = "Removed value of type [" ~ typeid(cast(Object)value).name ~ "] for key [" ~
                         key ~ "]" ~ "from thread [" ~ Thread.getThis().name() ~ "]";

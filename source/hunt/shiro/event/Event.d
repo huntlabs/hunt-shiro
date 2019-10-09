@@ -32,7 +32,7 @@ abstract class Event : EventObject {
 
     this(Object source) {
         super(source);
-        this.timestamp = DateTimeHelper.currentTimeMillis();
+        this.timestamp = DateTime.currentTimeMillis();
     }
 
     /**

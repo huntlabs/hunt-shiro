@@ -477,13 +477,25 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
     }
 
     bool isPermitted(PrincipalCollection principals, string permission) {
-        Permission p = getPermissionResolver().resolvePermission(permission);
-        return isPermitted(principals, p);
+        try {
+            Permission p = getPermissionResolver().resolvePermission(permission);
+            return isPermitted(principals, p);
+        } catch(Exception ex) {
+            warning(ex.msg);
+            version(HUNT_DEBUG) warning(ex);
+            return false;
+        }
     }
 
     bool isPermitted(PrincipalCollection principals, Permission permission) {
-        AuthorizationInfo info = getAuthorizationInfo(principals);
-        return isPermitted(permission, info);
+        try {
+            AuthorizationInfo info = getAuthorizationInfo(principals);
+            return isPermitted(permission, info);
+        } catch(Exception ex) {
+            warning(ex.msg);
+            version(HUNT_DEBUG) warning(ex);
+            return false;
+        }
     }
 
     //visibility changed from private to protected per SHIRO-332

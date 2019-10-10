@@ -118,9 +118,9 @@ class ExecutorServiceSessionValidationScheduler : SessionValidationScheduler, Ru
         version(HUNT_DEBUG) {
             tracef("Executing session validation...");
         }
-        long startTime = DateTimeHelper.currentTimeMillis();
+        long startTime = DateTime.currentTimeMillis();
         this.sessionManager.validateSessions();
-        long stopTime = DateTimeHelper.currentTimeMillis();
+        long stopTime = DateTime.currentTimeMillis();
         version(HUNT_DEBUG) {
             tracef("Session validation completed successfully in " 
                 ~ to!string(stopTime - startTime) ~ " milliseconds.");

@@ -95,7 +95,7 @@ class SimpleSession : ValidatingSession {
 
     this() {
         this.timeout = DefaultSessionManager.DEFAULT_GLOBAL_SESSION_TIMEOUT; //TODO - remove concrete reference to DefaultSessionManager
-        this.startTimestamp = DateTimeHelper.currentTimeMillis(); // new Date();
+        this.startTimestamp = DateTime.currentTimeMillis(); // new Date();
         this.lastAccessTime = this.startTimestamp;
     }
 
@@ -192,12 +192,12 @@ class SimpleSession : ValidatingSession {
     }
 
      void touch() {
-        this.lastAccessTime = DateTimeHelper.currentTimeMillis();
+        this.lastAccessTime = DateTime.currentTimeMillis();
     }
 
      void stop() {
         if (this.stopTimestamp is null) {
-            this.stopTimestamp = new Long(DateTimeHelper.currentTimeMillis());
+            this.stopTimestamp = new Long(DateTime.currentTimeMillis());
         }
     }
 
@@ -247,7 +247,7 @@ class SimpleSession : ValidatingSession {
             // from the current time the amount of time that a session can
             // be inactive before expiring.  If the session was last accessed
             // before this time, it is expired.
-            long expireTimeMillis = DateTimeHelper.currentTimeMillis() - timeout;
+            long expireTimeMillis = DateTime.currentTimeMillis() - timeout;
             // Date expireTime = new Date(expireTimeMillis);
             // return lastAccessTime.before(expireTime);
             return lastAccessTime < expireTimeMillis;
@@ -285,7 +285,7 @@ class SimpleSession : ValidatingSession {
             import std.conv;
             string msg = "Session with id [" ~ sessionId ~ "] has expired. " ~
                     "Last access time: " ~ lastAccessTime.to!string() ~
-                    ".  Current time: " ~ DateTimeHelper.getTimeAsGMT() ~
+                    ".  Current time: " ~ DateTime.getTimeAsGMT() ~
                     ".  Session timeout is set to " ~ to!string(timeout / MILLIS_PER_SECOND) ~ " seconds (" ~
                     to!string(timeout / MILLIS_PER_MINUTE) ~ " minutes)";
             version(HUNT_DEBUG) {

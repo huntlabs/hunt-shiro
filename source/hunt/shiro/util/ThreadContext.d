@@ -278,8 +278,12 @@ abstract class ThreadContext {
      *
      * @return the Subject object bound to the thread, or <tt>null</tt> if there isn't one bound.
      */
-     static Subject getSubject() {
+    static Subject getSubject() {
         return cast(Subject) get(SUBJECT_KEY);
+    }
+
+    static Subject getSubject(string name) {
+        return cast(Subject) get(name ~ SUBJECT_KEY);
     }
 
 
@@ -297,9 +301,15 @@ abstract class ThreadContext {
      *
      * @param subject the Subject object to bind to the thread.  If the argument is null, nothing will be done.
      */
-     static void bind(Subject subject) {
+    static void bind(Subject subject) {
         if (subject !is null) {
             put(SUBJECT_KEY, cast(Object)subject);
+        }
+    }
+
+    static void bind(string name, Subject subject) {
+        if (subject !is null) {
+            put(name ~ SUBJECT_KEY, cast(Object)subject);
         }
     }
 

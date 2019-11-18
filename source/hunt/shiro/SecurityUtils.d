@@ -26,12 +26,16 @@ import hunt.shiro.Exceptions;
 
 import core.thread;
 
+enum DEFAULT_NAME = "default";
 
 /**
  * Accesses the currently accessible {@code Subject} for the calling code depending on runtime environment.
  *
  */
 struct SecurityUtils {
+
+    
+    private __gshared SecurityManager[string] securityManagers;
 
     /**
      * ONLY used as a 'backup' in VM Singleton environments (that is, standalone environments), since the
@@ -53,13 +57,30 @@ struct SecurityUtils {
      *                               a {@code Subject}, which which is considered an invalid application configuration
      *                               - a Subject should <em>always</em> be available to the caller.
      */
-     static Subject getSubject() {
+    static Subject getSubject() {
         Subject subject = ThreadContext.getSubject();
         if (subject  is null) {
             subject = (new SubjectBuilder()).buildSubject();
             ThreadContext.bind(subject);
         }
         return subject;
+    }
+
+    static Subject getSubject(string managerName) {
+        SecurityManager sm = getSecurityManager(managerName);
+        assert(sm !is null);
+        Subject subject = ThreadContext.getSubject(managerName);
+        if (subject  is null) {
+            subject = (new SubjectBuilder(sm)).buildSubject();
+            ThreadContext.bind(managerName, subject);
+        }
+        return subject;
+    }
+
+    static Subject newSubject(string managerName, string sessionId, string host = "") {
+        SecurityManager sm = getSecurityManager(managerName);
+        assert(sm !is null);
+        return new SubjectBuilder(sm).sessionId(sessionId).host(host).buildSubject();
     }
 
     static Subject newSubject(string sessionId, string host = "") {
@@ -100,6 +121,11 @@ struct SecurityUtils {
      */
     static void setSecurityManager(SecurityManager securityManager) {
         SecurityUtils.securityManager = securityManager;
+        // setSecurityManager(DEFAULT_NAME, securityManager);
+    }
+    
+    static void setSecurityManager(string name, SecurityManager securityManager) {
+        securityManagers[name] = securityManager;
     }
 
     /**
@@ -130,5 +156,9 @@ struct SecurityUtils {
             throw new UnavailableSecurityManagerException(msg);
         }
         return securityManager;
+    }
+
+    static SecurityManager getSecurityManager(string name){
+        return securityManagers.get(name, null);
     }
 }

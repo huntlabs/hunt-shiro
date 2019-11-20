@@ -20,7 +20,7 @@ module hunt.shiro.authz.permission.AllPermission;
 
 import hunt.util.Common;
 
-import hunt.shiro.authz.Permission;
+import hunt.shiro.authz.permission.Permission;
 
 
 /**

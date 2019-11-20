@@ -26,7 +26,7 @@ import hunt.shiro.Exceptions;
 import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.authc.HostAuthenticationToken;
 import hunt.shiro.Exceptions;
-import hunt.shiro.authz.Permission;
+import hunt.shiro.authz.permission.Permission;
 
 import hunt.shiro.mgt.SecurityManager;
 import hunt.shiro.Exceptions;

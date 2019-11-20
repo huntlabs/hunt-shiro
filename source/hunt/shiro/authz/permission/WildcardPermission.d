@@ -18,7 +18,7 @@
  */
 module hunt.shiro.authz.permission.WildcardPermission;
 
-import hunt.shiro.authz.Permission;
+import hunt.shiro.authz.permission.Permission;
 import hunt.shiro.util.CollectionUtils;
 // import hunt.shiro.util.StringUtils;
 

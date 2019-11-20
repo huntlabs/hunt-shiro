@@ -24,7 +24,7 @@ import test.shiro.realm.UserIdPrincipal;
 import hunt.shiro.authc;
 import hunt.shiro.authc.credential.AllowAllCredentialsMatcher;
 import hunt.shiro.authz.AuthorizationInfo;
-import hunt.shiro.authz.Permission;
+import hunt.shiro.authz.permission.Permission;
 import hunt.shiro.authz.SimpleAuthorizationInfo;
 import hunt.shiro.authz.permission.RolePermissionResolver;
 import hunt.shiro.authz.permission.WildcardPermission;

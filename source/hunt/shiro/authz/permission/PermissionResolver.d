@@ -18,7 +18,7 @@
  */
 module hunt.shiro.authz.permission.PermissionResolver;
 
-import hunt.shiro.authz.Permission;
+import hunt.shiro.authz.permission.Permission;
 
 /**
  * A {@code PermisisonResolver} resolves a string value and converts it into a

@@ -1,5 +1,6 @@
 module hunt.shiro.authz.permission;
 
+public import hunt.shiro.authz.permission.Permission;
 public import hunt.shiro.authz.permission.AllPermission;
 public import hunt.shiro.authz.permission.DomainPermission;
 public import hunt.shiro.authz.permission.PermissionResolver;

@@ -24,7 +24,7 @@ import hunt.shiro.authc.MergableAuthenticationInfo;
 import hunt.shiro.authc.SaltedAuthenticationInfo;
 import hunt.shiro.authc.SimpleAuthenticationInfo;
 
-import hunt.shiro.authz.Permission;
+import hunt.shiro.authz.permission.Permission;
 import hunt.shiro.authz.SimpleAuthorizationInfo;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.subject.SimplePrincipalCollection;

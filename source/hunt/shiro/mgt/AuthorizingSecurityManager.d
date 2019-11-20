@@ -23,7 +23,7 @@ import hunt.shiro.mgt.AuthenticatingSecurityManager;
 import hunt.shiro.Exceptions;
 import hunt.shiro.authz.Authorizer;
 import hunt.shiro.authz.ModularRealmAuthorizer;
-import hunt.shiro.authz.Permission;
+import hunt.shiro.authz.permission.Permission;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.LifecycleUtils;
 

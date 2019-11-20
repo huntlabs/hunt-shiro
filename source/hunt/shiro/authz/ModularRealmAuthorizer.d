@@ -19,7 +19,7 @@
 module hunt.shiro.authz.ModularRealmAuthorizer;
 
 import hunt.shiro.authz.Authorizer;
-import hunt.shiro.authz.Permission;
+import hunt.shiro.authz.permission.Permission;
 import hunt.shiro.authz.permission.PermissionResolver;
 import hunt.shiro.authz.permission.PermissionResolverAware;
 import hunt.shiro.authz.permission.RolePermissionResolver;

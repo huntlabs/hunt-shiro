@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-module hunt.shiro.authz.Permission;
+module hunt.shiro.authz.permission.Permission;
 
 import hunt.util.Common;
 

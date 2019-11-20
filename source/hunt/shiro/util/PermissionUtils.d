@@ -18,7 +18,7 @@
  */
 module hunt.shiro.util.PermissionUtils;
 
-import hunt.shiro.authz.Permission;
+import hunt.shiro.authz.permission.Permission;
 import hunt.shiro.authz.permission.PermissionResolver;
 
 import hunt.collection;

@@ -20,7 +20,7 @@ module hunt.shiro.realm.text.TextConfigurationRealm;
 
 
 import hunt.shiro.authc.SimpleAccount;
-import hunt.shiro.authz.Permission;
+import hunt.shiro.authz.permission.Permission;
 import hunt.shiro.authz.SimpleRole;
 import hunt.shiro.Exceptions;
 import hunt.shiro.realm.SimpleAccountRealm;

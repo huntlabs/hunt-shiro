@@ -24,7 +24,7 @@ import hunt.shiro.subject.SubjectContext;
 import hunt.shiro.SecurityUtils;
 import hunt.shiro.Exceptions;
 import hunt.shiro.authc.AuthenticationToken;
-import hunt.shiro.authz.Permission;
+import hunt.shiro.authz.permission.Permission;
 import hunt.shiro.mgt.SecurityManager;
 import hunt.shiro.mgt.SubjectFactory;
 import hunt.shiro.session.Session;

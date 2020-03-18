@@ -142,6 +142,13 @@ class SimpleAuthorizationInfo : AuthorizationInfo {
         this.stringPermissions.addAll(permissions);
     }
 
+    void addStringPermissions(string[] permissions) {
+        if (this.stringPermissions  is null) {
+            this.stringPermissions = new HashSet!(string)();
+        }
+        this.stringPermissions.addAll(permissions);
+    }
+
      Set!(Permission) getObjectPermissions() {
         return objectPermissions;
     }

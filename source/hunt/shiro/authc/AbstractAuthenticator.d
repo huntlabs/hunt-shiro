@@ -196,7 +196,7 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
             throw new IllegalArgumentException("Method argument (authentication token) cannot be null.");
         }
 
-        tracef("Authentication attempt received for token [%s]", token);
+        version(HUNT_DEBUG) tracef("Authentication attempt received for token [%s]", token);
 
         AuthenticationInfo info;
         try {

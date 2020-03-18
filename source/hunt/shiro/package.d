@@ -10,6 +10,8 @@ public import hunt.shiro.mgt.DefaultSecurityManager;
 public import hunt.shiro.mgt.SecurityManager;
 
 public import hunt.shiro.realm.AuthorizingRealm;
+public import hunt.shiro.realm.Realm;
+public import hunt.shiro.realm.text.IniRealm;
 
 public import hunt.shiro.SecurityUtils;
 public import hunt.shiro.session.Session;

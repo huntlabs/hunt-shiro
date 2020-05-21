@@ -22,7 +22,7 @@ import hunt.collection;
 import hunt.Exceptions;
 import hunt.logging.ConsoleLogger;
 import hunt.Object;
-import hunt.text.StringBuilder;
+import hunt.util.StringBuilder;
 import hunt.util.ObjectUtils;
 
 import std.array;

@@ -26,7 +26,7 @@ import hunt.shiro.cache.Cache;
 // import java.util.Set;
 
 import hunt.Exceptions;
-import hunt.text.StringBuilder;
+import hunt.util.StringBuilder;
 
 import std.array;
 

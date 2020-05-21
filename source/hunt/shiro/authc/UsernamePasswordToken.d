@@ -22,7 +22,7 @@ module hunt.shiro.authc.UsernamePasswordToken;
 import hunt.shiro.authc.RememberMeAuthenticationToken;
 import hunt.shiro.authc.HostAuthenticationToken;
 
-import hunt.text.StringBuilder;
+import hunt.util.StringBuilder;
 
 /**
  * <p>A simple username/password authentication token to support the most widely-used authentication mechanism.  This

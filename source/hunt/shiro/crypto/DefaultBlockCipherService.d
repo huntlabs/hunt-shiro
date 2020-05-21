@@ -24,7 +24,7 @@ import hunt.shiro.crypto.PaddingScheme;
 // import hunt.shiro.util.StringUtils;
 
 import hunt.Exceptions;
-import hunt.text.StringBuilder;   
+import hunt.util.StringBuilder;   
 
 import std.algorithm;
 import std.conv;

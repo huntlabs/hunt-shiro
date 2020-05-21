@@ -34,6 +34,7 @@ import hunt.shiro.subject.support.DefaultSubjectContext;
 import hunt.collection;
 import hunt.Exceptions;
 import hunt.util.Common;
+import hunt.util.Runnable;
 
 import std.array;
 import std.traits;

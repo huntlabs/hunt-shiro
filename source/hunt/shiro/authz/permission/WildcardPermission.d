@@ -26,7 +26,7 @@ import hunt.shiro.util.CollectionUtils;
 
 import hunt.collection;
 import hunt.Exceptions;
-import hunt.text.StringBuilder;
+import hunt.util.StringBuilder;
 import hunt.text.StringUtils;
 
 import std.array;

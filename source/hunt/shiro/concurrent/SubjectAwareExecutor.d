@@ -23,6 +23,7 @@ import hunt.shiro.subject.Subject;
 
 import hunt.Exceptions;
 import hunt.util.Common;
+import hunt.util.Runnable;
 
 
 /**

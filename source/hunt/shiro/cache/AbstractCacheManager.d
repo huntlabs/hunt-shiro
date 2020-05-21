@@ -26,7 +26,7 @@ import hunt.shiro.util.LifecycleUtils;
 // import hunt.shiro.util.StringUtils;
 
 import hunt.Exceptions;
-import hunt.text.StringBuilder;
+import hunt.util.StringBuilder;
 
 import std.array;
 

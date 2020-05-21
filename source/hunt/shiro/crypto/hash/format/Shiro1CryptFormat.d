@@ -29,7 +29,7 @@ import hunt.shiro.util.SimpleByteSource;
 // import hunt.shiro.util.StringUtils;
 
 import hunt.Exceptions;
-import hunt.text.StringBuilder;
+import hunt.util.StringBuilder;
 
 import std.conv;
 import std.string;

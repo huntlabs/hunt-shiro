@@ -22,6 +22,7 @@ import hunt.shiro.subject.PrincipalCollection;
 
 import hunt.util.ArrayHelper;
 import hunt.collection;
+import std.range;
 
 /**
  * Static helper class for use dealing with Collections.
@@ -29,21 +30,19 @@ import hunt.collection;
  */
 class CollectionUtils {
 
-//     //TODO - complete JavaDoc
+     static Set!(E) asSet(E)(E[] elements... ) {
+        if (elements.empty) {
+            return Collections.emptySet!(E)();
+        }
 
-//      static <E> Set!(E) asSet(E... elements) {
-//         if (elements  is null || elements.length == 0) {
-//             return Collections.emptySet();
-//         }
+        if (elements.length == 1) {
+            return Collections.singleton!(E)(elements[0]);
+        }
 
-//         if (elements.length == 1) {
-//             return Collections.singleton(elements[0]);
-//         }
-
-//         LinkedHashSet!(E) set = new LinkedHashSet!(E)(elements.length * 4 / 3 + 1);
-//         Collections.addAll(set, elements);
-//         return set;
-//     }
+        LinkedHashSet!(E) set = new LinkedHashSet!(E)(elements.length * 4 / 3 + 1);
+        set.addAll(elements);
+        return set;
+    }
 
     /**
      * Returns {@code true} if the specified {@code Collection} is {@code null} or {@link Collection#isEmpty empty},

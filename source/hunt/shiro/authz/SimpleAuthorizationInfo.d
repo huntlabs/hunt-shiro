@@ -60,7 +60,7 @@ class SimpleAuthorizationInfo : AuthorizationInfo {
         this.roles = roles;
     }
 
-     Set!(string) getRoles() {
+    Set!(string) getRoles() {
         return roles;
     }
 

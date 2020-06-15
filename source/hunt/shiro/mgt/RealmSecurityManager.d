@@ -29,6 +29,7 @@ import hunt.shiro.util.LifecycleUtils;
 
 import hunt.collection;
 import hunt.Exceptions;
+import std.range;
 
 
 /**
@@ -80,6 +81,16 @@ abstract class RealmSecurityManager : CachingSecurityManager {
             throw new IllegalArgumentException("Realms collection argument cannot be empty.");
         }
         this.realms = realms;
+        afterRealmsSet();
+    }
+
+    void setRealms(Realm[] realms) {
+        if (realms.empty) {
+            throw new IllegalArgumentException("Realms collection argument cannot be empty.");
+        }
+        
+        Collection!(Realm) r = new ArrayList!(Realm)(realms);
+        this.realms = r;
         afterRealmsSet();
     }
 

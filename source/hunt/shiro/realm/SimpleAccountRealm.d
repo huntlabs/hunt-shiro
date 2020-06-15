@@ -59,7 +59,16 @@ class SimpleAccountRealm : AuthorizingRealm {
     protected ReadWriteMutex USERS_LOCK;
     protected ReadWriteMutex ROLES_LOCK;
 
-     this() {
+    this() {
+        initialize();
+    }
+
+    this(string name) {
+        initialize();
+        setName(name);
+    }
+
+    private void initialize() {
         this.users = new LinkedHashMap!(string, SimpleAccount)();
         this.roles = new LinkedHashMap!(string, SimpleRole)();
         USERS_LOCK = new ReadWriteMutex();
@@ -67,11 +76,6 @@ class SimpleAccountRealm : AuthorizingRealm {
         //SimpleAccountRealms are memory-only realms - no need for an additional cache mechanism since we're
         //already as memory-efficient as we can be:
         setCachingEnabled(false);
-    }
-
-     this(string name) {
-        this();
-        setName(name);
     }
 
     protected SimpleAccount getUser(string username) {
@@ -83,19 +87,18 @@ class SimpleAccountRealm : AuthorizingRealm {
         }
     }
 
-     bool accountExists(string username) {
+    bool accountExists(string username) {
         return getUser(username) !is null;
     }
 
-     void addAccount(string username, string password) {
+    void addAccount(string username, string password) {
         addAccount(username, password, cast(string[]) null);
     }
 
-     void addAccount(string username, string password, string[] roles...) {
-        // Set!(string) roleNames = CollectionUtils.asSet(roles);
-        // SimpleAccount account = new SimpleAccount(username, password, getName(), roleNames, null);
-        // add(account);
-        implementationMissing(false);
+    void addAccount(string username, string password, string[] roles...) {
+        Set!(string) roleNames = CollectionUtils.asSet(roles);
+        SimpleAccount account = new SimpleAccount(username, password, getName(), roleNames, null);
+        add(account);
     }
 
     protected string getUsername(SimpleAccount account) {
@@ -125,11 +128,11 @@ class SimpleAccountRealm : AuthorizingRealm {
         }
     }
 
-     bool roleExists(string name) {
+    bool roleExists(string name) {
         return getRole(name) !is null;
     }
 
-     void addRole(string name) {
+    void addRole(string name) {
         add(new SimpleRole(name));
     }
 

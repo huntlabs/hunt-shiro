@@ -404,8 +404,8 @@ class SimpleSession : ValidatingSession {
             return hashOf(id);
         }
         size_t hashCode;
-        try{
-        implementationMissing(false);
+        try {
+            implementationMissing(false);
         } catch(Exception) {
             
         }
@@ -429,7 +429,7 @@ class SimpleSession : ValidatingSession {
     override
     string toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(typeid(this).name).append(",id=").append(id);
+        sb.append(typeid(this).name).append(", id=").append(id);
         return sb.toString();
     }
 

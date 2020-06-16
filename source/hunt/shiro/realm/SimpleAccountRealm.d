@@ -26,6 +26,7 @@ import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.authc.SimpleAccount;
 import hunt.shiro.authc.UsernamePasswordToken;
 import hunt.shiro.authz.AuthorizationInfo;
+import hunt.shiro.authz.permission.Permission;
 import hunt.shiro.authz.SimpleRole;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.CollectionUtils;
@@ -35,6 +36,7 @@ import hunt.collection.LinkedHashMap;
 import hunt.collection.Map;
 import hunt.collection.Set;
 import hunt.Exceptions;
+import hunt.String;
 
 import core.sync.rwmutex; // ReentrantReadWriteLock
 
@@ -97,7 +99,7 @@ class SimpleAccountRealm : AuthorizingRealm {
 
     void addAccount(string username, string password, string[] roles...) {
         Set!(string) roleNames = CollectionUtils.asSet(roles);
-        SimpleAccount account = new SimpleAccount(username, password, getName(), roleNames, null);
+        SimpleAccount account = new SimpleAccount(new String(username), new String(password), getName(), roleNames, cast(Set!(Permission))null);
         add(account);
     }
 

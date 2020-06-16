@@ -182,7 +182,8 @@ class SimpleAccount : Account, MergableAuthenticationInfo, SaltedAuthenticationI
      * @param roleNames   the names of the roles assigned to this account.
      * @param permissions the permissions assigned to this account directly (not those assigned to any of the realms).
      */
-     this(Collection!Object principals, Object credentials, string realmName, Set!(string) roleNames, Set!(Permission) permissions) {
+     this(Collection!Object principals, Object credentials, string realmName, Set!(string) roleNames, 
+            Set!(Permission) permissions) {
         this.authcInfo = new SimpleAuthenticationInfo(new SimplePrincipalCollection(principals, realmName), credentials);
         this.authzInfo = new SimpleAuthorizationInfo(roleNames);
         this.authzInfo.setObjectPermissions(permissions);

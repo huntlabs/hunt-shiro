@@ -217,8 +217,9 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
             aggregate = strategy.beforeAttempt(realm, token, aggregate);
 
             if (realm.supports(token)) {
-
-                tracef("Attempting to authenticate token [%s] using realm [%s]", token, realm);
+                version(HUNT_SHIRO_DEBUG) {
+                    tracef("Attempting to authenticate token [%s] using realm [%s]", token, realm);
+                }
 
                 AuthenticationInfo info = null;
                 Throwable t = null;
@@ -229,14 +230,16 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
                     version(HUNT_DEBUG) {
                         string msg = "Realm [" ~ (cast(Object)realm).toString() ~ 
                             "] threw an exception during a multi-realm authentication attempt:";
-                        tracef(msg, t);
+                        warning(msg, t);
                     }
                 }
 
                 aggregate = strategy.afterAttempt(realm, token, info, aggregate, t);
 
             } else {
-                tracef("Realm [%s] does not support token %s.  Skipping realm.", realm, token);
+                version(HUNT_SHIRO_DEBUG) {
+                    infof("Realm [%s] does not support token %s.  Skipping realm.", realm, token);
+                }
             }
         }
 

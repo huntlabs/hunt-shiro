@@ -58,7 +58,9 @@ abstract class AbstractAuthenticationStrategy : AuthenticationStrategy {
      * Base implementation that will aggregate the specified <code>singleRealmInfo</code> into the
      * <code>aggregateInfo</code> and then returns the aggregate.  Can be overridden by subclasses for custom behavior.
      */
-     AuthenticationInfo afterAttempt(Realm realm, AuthenticationToken token, AuthenticationInfo singleRealmInfo, AuthenticationInfo aggregateInfo, Throwable t){
+     AuthenticationInfo afterAttempt(Realm realm, AuthenticationToken token, 
+                AuthenticationInfo singleRealmInfo, AuthenticationInfo aggregateInfo, Throwable t){
+                    
         AuthenticationInfo info;
         if (singleRealmInfo  is null) {
             info = aggregateInfo;

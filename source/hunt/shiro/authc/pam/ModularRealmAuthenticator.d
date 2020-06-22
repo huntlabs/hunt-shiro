@@ -229,8 +229,12 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
                     t = throwable;
                     version(HUNT_DEBUG) {
                         string msg = "Realm [" ~ (cast(Object)realm).toString() ~ 
-                            "] threw an exception during a multi-realm authentication attempt:";
-                        warning(msg, t);
+                            "] threw an exception during a multi-realm authentication attempt: ";
+                        warning(msg, t.msg);
+                    }
+                    
+                    version(HUNT_SHIRO_DEBUG) {
+                        warning(t);
                     }
                 }
 

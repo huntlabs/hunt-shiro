@@ -9,6 +9,8 @@ import hunt.Exceptions;
 struct PrincipalCollectionHelper {
 
     static T oneByType(T)(PrincipalCollection pc) if(is(T == class) || is(T == interface)) {
+        if(pc is null) return T.init;
+        
         SimplePrincipalCollection spc = cast(SimplePrincipalCollection)pc;
         if(spc !is null) {
             return spc.oneByType!T();

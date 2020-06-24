@@ -217,13 +217,13 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager,
     protected SessionValidationScheduler createSessionValidationScheduler() {
         ExecutorServiceSessionValidationScheduler scheduler;
 
-        version(HUNT_DEBUG) {
-            tracef("No sessionValidationScheduler set.  Attempting to create default instance.");
+        version(HUNT_SHIRO_DEBUG) {
+            warningf("No sessionValidationScheduler set.  Attempting to create default instance.");
         }
         scheduler = new ExecutorServiceSessionValidationScheduler(this);
         scheduler.setInterval(getSessionValidationInterval());
-        version(HUNT_DEBUG) {
-            tracef("Created default SessionValidationScheduler instance of type [" ~ typeid(scheduler).name ~ "].");
+        version(HUNT_SHIRO_DEBUG) {
+            warningf("Created default SessionValidationScheduler instance of type [" ~ typeid(scheduler).name ~ "].");
         }
         return scheduler;
     }
@@ -237,7 +237,7 @@ abstract class AbstractValidatingSessionManager : AbstractNativeSessionManager,
         // it is possible that that a scheduler was already created and set via 'setSessionValidationScheduler()'
         // but would not have been enabled/started yet
         if (!scheduler.isEnabled()) {
-            version(HUNT_DEBUG) {
+            version(HUNT_SHIRO_DEBUG) {
                 info("Enabling session validation scheduler...");
             }
             scheduler.enableSessionValidation();

@@ -208,7 +208,7 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
 
         AuthenticationInfo aggregate = strategy.beforeAllAttempts(realms, token);
 
-        version(HUNT_DEBUG) {
+        version(HUNT_SHIRO_DEBUG) {
             tracef("Iterating through %s realms for PAM authentication", realms.size());
         }
 

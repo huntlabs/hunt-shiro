@@ -153,7 +153,7 @@ class DefaultSessionManager : AbstractValidatingSessionManager, CacheManagerAwar
 
     override protected Session doCreateSession(SessionContext context) {
         Session s = newSessionInstance(context);
-        version(HUNT_DEBUG) {
+        version(HUNT_SHIRO_DEBUG) {
             tracef("Creating session for host %s", s.getHost());
         }
         create(s);
@@ -172,7 +172,7 @@ class DefaultSessionManager : AbstractValidatingSessionManager, CacheManagerAwar
      * @param session the Session instance to persist to the underlying EIS.
      */
     protected void create(Session session) {
-        version(HUNT_DEBUG) {
+        version(HUNT_SHIRO_DEBUG) {
             tracef("Creating new EIS record for new session instance [" ~ (cast(Object)session).toString() ~ "]");
         }
         sessionDAO.create(session);

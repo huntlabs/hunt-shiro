@@ -273,6 +273,8 @@ interface Subject {
      */
     bool[] hasRoles(List!(string) roleIdentifiers);
 
+    bool[] hasRoles(string[] roleIdentifiers...);
+
     /**
      * Returns {@code true} if this Subject has all of the specified roles, {@code false} otherwise.
      *
@@ -280,6 +282,8 @@ interface Subject {
      * @return true if this Subject has all the roles, false otherwise.
      */
     bool hasAllRoles(Collection!(string) roleIdentifiers);
+
+    bool hasAllRoles(string[] roleIdentifiers);
 
     /**
      * Asserts this Subject has the specified role by returning quietly if they do or throwing an

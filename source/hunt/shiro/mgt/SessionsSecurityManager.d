@@ -32,7 +32,6 @@ import hunt.shiro.session.mgt.SessionKey;
 import hunt.shiro.session.mgt.SessionManager;
 import hunt.shiro.util.LifecycleUtils;
 
-
 /**
  * Shiro support of a {@link SecurityManager} class hierarchy that delegates all
  * {@link hunt.shiro.session.Session session} operations to a wrapped
@@ -59,7 +58,7 @@ abstract class SessionsSecurityManager : AuthorizingSecurityManager {
      * Default no-arg constructor, internally creates a suitable default {@link SessionManager SessionManager} delegate
      * instance.
      */
-     this() {
+    this() {
         super();
         this.sessionManager = new DefaultSessionManager();
         applyCacheManagerToSessionManager();
@@ -78,7 +77,7 @@ abstract class SessionsSecurityManager : AuthorizingSecurityManager {
      *
      * @param sessionManager delegate instance to use to support this manager's <tt>SessionManager</tt> method calls.
      */
-     void setSessionManager(SessionManager sessionManager) {
+    void setSessionManager(SessionManager sessionManager) {
         this.sessionManager = sessionManager;
         afterSessionManagerSet();
     }
@@ -94,7 +93,7 @@ abstract class SessionsSecurityManager : AuthorizingSecurityManager {
      * @return this security manager's internal delegate {@link SessionManager SessionManager}.
      * @see #setSessionManager(hunt.shiro.session.mgt.SessionManager) setSessionManager
      */
-     SessionManager getSessionManager() {
+    SessionManager getSessionManager() {
         return this.sessionManager;
     }
 
@@ -103,8 +102,7 @@ abstract class SessionsSecurityManager : AuthorizingSecurityManager {
      * {@link #applyCacheManagerToSessionManager() applyCacheManagerToSessionManager()} to ensure the
      * <code>CacheManager</code> is applied to the SessionManager as necessary.
      */
-    override
-    protected void afterCacheManagerSet() {
+    override protected void afterCacheManagerSet() {
         super.afterCacheManagerSet();
         applyCacheManagerToSessionManager();
     }
@@ -113,8 +111,7 @@ abstract class SessionsSecurityManager : AuthorizingSecurityManager {
      * Sets any configured EventBus on the SessionManager if necessary.
      *
      */
-    override
-    protected void afterEventBusSet() {
+    override protected void afterEventBusSet() {
         super.afterEventBusSet();
         applyEventBusToSessionManager();
     }
@@ -143,22 +140,22 @@ abstract class SessionsSecurityManager : AuthorizingSecurityManager {
      */
     protected void applyEventBusToSessionManager() {
         EventBus eventBus = getEventBus();
-        EventBusAware eba = cast(EventBusAware)this.sessionManager;
+        EventBusAware eba = cast(EventBusAware) this.sessionManager;
         if (eventBus !is null && eba !is null) {
             eba.setEventBus(eventBus);
         }
     }
 
-     Session start(SessionContext context){
+    Session start(SessionContext context) {
         return this.sessionManager.start(context);
     }
 
-     Session getSession(SessionKey key){
+    Session getSession(SessionKey key) {
         return this.sessionManager.getSession(key);
     }
 
     override void destroy() {
-        LifecycleUtils.destroy(cast(Object)getSessionManager());
+        LifecycleUtils.destroy(cast(Object) getSessionManager());
         this.sessionManager = null;
         super.destroy();
     }

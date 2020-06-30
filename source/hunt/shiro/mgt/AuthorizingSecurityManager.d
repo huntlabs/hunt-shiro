@@ -30,7 +30,6 @@ import hunt.shiro.util.LifecycleUtils;
 import hunt.collection;
 import hunt.Exceptions;
 
-
 /**
  * Shiro support of a {@link SecurityManager} class hierarchy that delegates all
  * authorization (access control) operations to a wrapped {@link Authorizer Authorizer} instance.  That is,
@@ -56,7 +55,7 @@ abstract class AuthorizingSecurityManager : AuthenticatingSecurityManager {
      * Default no-arg constructor that initializes an internal default
      * {@link hunt.shiro.authz.ModularRealmAuthorizer ModularRealmAuthorizer}.
      */
-     this() {
+    this() {
         super();
         this.authorizer = new ModularRealmAuthorizer();
     }
@@ -67,7 +66,7 @@ abstract class AuthorizingSecurityManager : AuthenticatingSecurityManager {
      *
      * @return the wrapped <tt>Authorizer</tt> used by this <tt>SecurityManager</tt> implementation.
      */
-     Authorizer getAuthorizer() {
+    Authorizer getAuthorizer() {
         return authorizer;
     }
 
@@ -78,8 +77,8 @@ abstract class AuthorizingSecurityManager : AuthenticatingSecurityManager {
      * @param authorizer the <tt>Authorizer</tt> this <tt>SecurityManager</tt> should wrap and delegate all of its
      *                   authorization calls to.
      */
-     void setAuthorizer(Authorizer authorizer) {
-        if (authorizer  is null) {
+    void setAuthorizer(Authorizer authorizer) {
+        if (authorizer is null) {
             string msg = "Authorizer argument cannot be null.";
             throw new IllegalArgumentException(msg);
         }
@@ -106,72 +105,80 @@ abstract class AuthorizingSecurityManager : AuthenticatingSecurityManager {
     }
 
     override void destroy() {
-        LifecycleUtils.destroy(cast(Object)getAuthorizer());
+        LifecycleUtils.destroy(cast(Object) getAuthorizer());
         this.authorizer = null;
         super.destroy();
     }
 
-     bool isPermitted(PrincipalCollection principals, string permissionString) {
+    bool isPermitted(PrincipalCollection principals, string permissionString) {
         return this.authorizer.isPermitted(principals, permissionString);
     }
 
-     bool isPermitted(PrincipalCollection principals, Permission permission) {
+    bool isPermitted(PrincipalCollection principals, Permission permission) {
         return this.authorizer.isPermitted(principals, permission);
     }
 
-     bool[] isPermitted(PrincipalCollection principals, string[] permissions...) {
+    bool[] isPermitted(PrincipalCollection principals, string[] permissions...) {
         return this.authorizer.isPermitted(principals, permissions);
     }
 
-     bool[] isPermitted(PrincipalCollection principals, List!(Permission) permissions) {
+    bool[] isPermitted(PrincipalCollection principals, List!(Permission) permissions) {
         return this.authorizer.isPermitted(principals, permissions);
     }
 
-     bool isPermittedAll(PrincipalCollection principals, string[] permissions...) {
+    bool isPermittedAll(PrincipalCollection principals, string[] permissions...) {
         return this.authorizer.isPermittedAll(principals, permissions);
     }
 
-     bool isPermittedAll(PrincipalCollection principals, Collection!(Permission) permissions) {
+    bool isPermittedAll(PrincipalCollection principals, Collection!(Permission) permissions) {
         return this.authorizer.isPermittedAll(principals, permissions);
     }
 
-     void checkPermission(PrincipalCollection principals, string permission){
+    void checkPermission(PrincipalCollection principals, string permission) {
         this.authorizer.checkPermission(principals, permission);
     }
 
-     void checkPermission(PrincipalCollection principals, Permission permission){
+    void checkPermission(PrincipalCollection principals, Permission permission) {
         this.authorizer.checkPermission(principals, permission);
     }
 
-     void checkPermissions(PrincipalCollection principals, string[] permissions...){
+    void checkPermissions(PrincipalCollection principals, string[] permissions...) {
         this.authorizer.checkPermissions(principals, permissions);
     }
 
-     void checkPermissions(PrincipalCollection principals, Collection!(Permission) permissions){
+    void checkPermissions(PrincipalCollection principals, Collection!(Permission) permissions) {
         this.authorizer.checkPermissions(principals, permissions);
     }
 
-     bool hasRole(PrincipalCollection principals, string roleIdentifier) {
+    bool hasRole(PrincipalCollection principals, string roleIdentifier) {
         return this.authorizer.hasRole(principals, roleIdentifier);
     }
 
-     bool[] hasRoles(PrincipalCollection principals, List!(string) roleIdentifiers) {
+    bool[] hasRoles(PrincipalCollection principals, List!(string) roleIdentifiers) {
         return this.authorizer.hasRoles(principals, roleIdentifiers);
     }
 
-     bool hasAllRoles(PrincipalCollection principals, Collection!(string) roleIdentifiers) {
+    bool[] hasRoles(PrincipalCollection principals, string[] roleIdentifiers) {
+        return this.authorizer.hasRoles(principals, roleIdentifiers);
+    }
+
+    bool hasAllRoles(PrincipalCollection principals, Collection!(string) roleIdentifiers) {
         return this.authorizer.hasAllRoles(principals, roleIdentifiers);
     }
 
-     void checkRole(PrincipalCollection principals, string role){
+    bool hasAllRoles(PrincipalCollection principals, string[] roleIdentifiers) {
+        return this.authorizer.hasAllRoles(principals, roleIdentifiers);
+    }
+
+    void checkRole(PrincipalCollection principals, string role) {
         this.authorizer.checkRole(principals, role);
     }
 
-     void checkRoles(PrincipalCollection principals, Collection!(string) roles){
+    void checkRoles(PrincipalCollection principals, Collection!(string) roles) {
         this.authorizer.checkRoles(principals, roles);
     }
-    
-     void checkRoles(PrincipalCollection principals, string[] roles...){
+
+    void checkRoles(PrincipalCollection principals, string[] roles...) {
         this.authorizer.checkRoles(principals, roles);
-    }    
+    }
 }

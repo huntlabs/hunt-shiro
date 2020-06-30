@@ -62,7 +62,8 @@ import std.string;
  */
 abstract class AuthorizingRealm : AuthenticatingRealm,
         Authorizer, PermissionResolverAware, RolePermissionResolverAware {
-
+    
+    
     /*-------------------------------------------
     |             C O N S T A N T S             |
     ============================================*/
@@ -502,7 +503,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
     protected bool isPermitted(Permission permission, AuthorizationInfo info) {
         Collection!(Permission) perms = getPermissions(info);
         if (perms !is null && !perms.isEmpty()) {
-            foreach(Permission perm ; perms) {
+            foreach (Permission perm; perms) {
                 if (perm.implies(permission)) {
                     return true;
                 }
@@ -511,15 +512,15 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
         return false;
     }
 
-     bool[] isPermitted(PrincipalCollection subjectIdentifier, string[] permissions...) {
-        List!(Permission) perms = new ArrayList!(Permission)(cast(int)permissions.length);
-        foreach(string permString ; permissions) {
+    bool[] isPermitted(PrincipalCollection subjectIdentifier, string[] permissions...) {
+        List!(Permission) perms = new ArrayList!(Permission)(cast(int) permissions.length);
+        foreach (string permString; permissions) {
             perms.add(getPermissionResolver().resolvePermission(permString));
         }
         return isPermitted(subjectIdentifier, perms);
     }
 
-     bool[] isPermitted(PrincipalCollection principals, List!(Permission) permissions) {
+    bool[] isPermitted(PrincipalCollection principals, List!(Permission) permissions) {
         AuthorizationInfo info = getAuthorizationInfo(principals);
         return isPermitted(permissions, info);
     }
@@ -530,7 +531,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
             int size = permissions.size();
             result = new bool[size];
             int i = 0;
-            foreach(Permission p ; permissions) {
+            foreach (Permission p; permissions) {
                 result[i++] = isPermitted(p, info);
             }
         } else {
@@ -539,10 +540,10 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
         return result;
     }
 
-     bool isPermittedAll(PrincipalCollection subjectIdentifier, string[] permissions...) {
+    bool isPermittedAll(PrincipalCollection subjectIdentifier, string[] permissions...) {
         if (permissions !is null && permissions.length > 0) {
-            Collection!(Permission) perms = new ArrayList!(Permission)(cast(int)permissions.length);
-            foreach(string permString ; permissions) {
+            Collection!(Permission) perms = new ArrayList!(Permission)(cast(int) permissions.length);
+            foreach (string permString; permissions) {
                 perms.add(getPermissionResolver().resolvePermission(permString));
             }
             return isPermittedAll(subjectIdentifier, perms);
@@ -550,14 +551,14 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
         return false;
     }
 
-     bool isPermittedAll(PrincipalCollection principal, Collection!(Permission) permissions) {
+    bool isPermittedAll(PrincipalCollection principal, Collection!(Permission) permissions) {
         AuthorizationInfo info = getAuthorizationInfo(principal);
         return info !is null && isPermittedAll(permissions, info);
     }
 
     protected bool isPermittedAll(Collection!(Permission) permissions, AuthorizationInfo info) {
         if (permissions !is null && !permissions.isEmpty()) {
-            foreach(Permission p ; permissions) {
+            foreach (Permission p; permissions) {
                 if (!isPermitted(p, info)) {
                     return false;
                 }
@@ -566,58 +567,59 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
         return true;
     }
 
-     void checkPermission(PrincipalCollection subjectIdentifier, string permission){
+    void checkPermission(PrincipalCollection subjectIdentifier, string permission) {
         Permission p = getPermissionResolver().resolvePermission(permission);
         checkPermission(subjectIdentifier, p);
     }
 
-     void checkPermission(PrincipalCollection principal, Permission permission){
+    void checkPermission(PrincipalCollection principal, Permission permission) {
         AuthorizationInfo info = getAuthorizationInfo(principal);
         checkPermission(permission, info);
     }
 
     protected void checkPermission(Permission permission, AuthorizationInfo info) {
         if (!isPermitted(permission, info)) {
-            string msg = "User is not permitted [" ~ (cast(Object)permission).toString() ~ "]";
+            string msg = "User is not permitted [" ~ (cast(Object) permission).toString() ~ "]";
             throw new UnauthorizedException(msg);
         }
     }
 
-     void checkPermissions(PrincipalCollection subjectIdentifier, string[] permissions...){
+    void checkPermissions(PrincipalCollection subjectIdentifier, string[] permissions...) {
         if (permissions !is null) {
-            foreach(string permString ; permissions) {
+            foreach (string permString; permissions) {
                 checkPermission(subjectIdentifier, permString);
             }
         }
     }
 
-     void checkPermissions(PrincipalCollection principal, Collection!(Permission) permissions){
+    void checkPermissions(PrincipalCollection principal, Collection!(Permission) permissions) {
         AuthorizationInfo info = getAuthorizationInfo(principal);
         checkPermissions(permissions, info);
     }
 
     protected void checkPermissions(Collection!(Permission) permissions, AuthorizationInfo info) {
         if (permissions !is null && !permissions.isEmpty()) {
-            foreach(Permission p ; permissions) {
+            foreach (Permission p; permissions) {
                 checkPermission(p, info);
             }
         }
     }
 
-     bool hasRole(PrincipalCollection principal, string roleIdentifier) {
+    bool hasRole(PrincipalCollection principal, string roleIdentifier) {
         AuthorizationInfo info = getAuthorizationInfo(principal);
         return hasRole(roleIdentifier, info);
     }
 
     protected bool hasRole(string roleIdentifier, AuthorizationInfo info) {
         // return info !is null && info.getRoles() !is null && info.getRoles().contains(roleIdentifier);
-        
-        version(HUNT_SHIRO_DEBUG) tracef("checking: %s", roleIdentifier);
-        if(info !is null) {
+
+        version (HUNT_SHIRO_DEBUG)
+            tracef("checking: %s", roleIdentifier);
+        if (info !is null) {
             Collection!(string) roles = info.getRoles();
-            if(roles !is null) {
+            if (roles !is null) {
                 bool r = roles.contains(roleIdentifier);
-                version(HUNT_SHIRO_DEBUG) {
+                version (HUNT_SHIRO_DEBUG) {
                     infof("roles: %s, result: %s", roles, r);
                 }
                 return r;
@@ -626,47 +628,75 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
         return false;
     }
 
-     bool[] hasRoles(PrincipalCollection principal, List!(string) roleIdentifiers) {
+    bool[] hasRoles(PrincipalCollection principal, List!(string) roleIdentifiers) {
         AuthorizationInfo info = getAuthorizationInfo(principal);
-        bool[] result = new bool[roleIdentifiers !is null ? roleIdentifiers.size() : 0];
+        if (roleIdentifiers is null || roleIdentifiers.isEmpty()) {
+            return new bool[0];
+        }
+
+        return hasRoles(roleIdentifiers.toArray(), info);
+    }
+
+    bool[] hasRoles(PrincipalCollection principal, string[] roleIdentifiers) {
+        AuthorizationInfo info = getAuthorizationInfo(principal);
+        bool[] result = new bool[roleIdentifiers.length];
         if (info !is null) {
             result = hasRoles(roleIdentifiers, info);
         }
         return result;
     }
 
-    protected bool[] hasRoles(List!(string) roleIdentifiers, AuthorizationInfo info) {
+    // protected bool[] hasRoles(List!(string) roleIdentifiers, AuthorizationInfo info) {
+    //     bool[] result;
+    //     if (roleIdentifiers is null || roleIdentifiers.isEmpty()) {
+    //         result = new bool[0];
+    //     } else {
+    //         result = hasRoles(roleIdentifiers.toArray(), info);
+    //     }
+    //     return result;
+    // }
+
+    protected bool[] hasRoles(string[] roleIdentifiers, AuthorizationInfo info) {
         bool[] result;
-        if (roleIdentifiers !is null && !roleIdentifiers.isEmpty()) {
-            int size = roleIdentifiers.size();
-            result = new bool[size];
+        if (roleIdentifiers.empty()) {
+            result = new bool[0];
+        } else {
+            result = new bool[roleIdentifiers.length];
             int i = 0;
-            foreach(string roleName ; roleIdentifiers) {
+            foreach (string roleName; roleIdentifiers) {
                 result[i++] = hasRole(roleName, info);
             }
-        } else {
-            result = new bool[0];
         }
         return result;
     }
 
-     bool hasAllRoles(PrincipalCollection principal, Collection!(string) roleIdentifiers) {
+    bool hasAllRoles(PrincipalCollection principal, Collection!(string) roleIdentifiers) {
+        AuthorizationInfo info = getAuthorizationInfo(principal);
+        return info !is null && hasAllRoles(roleIdentifiers, info);
+    }
+
+    bool hasAllRoles(PrincipalCollection principal, string[] roleIdentifiers) {
         AuthorizationInfo info = getAuthorizationInfo(principal);
         return info !is null && hasAllRoles(roleIdentifiers, info);
     }
 
     private bool hasAllRoles(Collection!(string) roleIdentifiers, AuthorizationInfo info) {
         if (roleIdentifiers !is null && !roleIdentifiers.isEmpty()) {
-            foreach(string roleName ; roleIdentifiers) {
-                if (!hasRole(roleName, info)) {
-                    return false;
-                }
+            return hasAllRoles(roleIdentifiers.toArray(), info);
+        }
+        return true;
+    }
+
+    private bool hasAllRoles(string[] roleIdentifiers, AuthorizationInfo info) {
+        foreach (string roleName; roleIdentifiers) {
+            if (!hasRole(roleName, info)) {
+                return false;
             }
         }
         return true;
     }
 
-     void checkRole(PrincipalCollection principal, string role){
+    void checkRole(PrincipalCollection principal, string role) {
         AuthorizationInfo info = getAuthorizationInfo(principal);
         checkRole(role, info);
     }
@@ -678,16 +708,16 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
         }
     }
 
-    void checkRoles(PrincipalCollection principal, Collection!(string) roles){
+    void checkRoles(PrincipalCollection principal, Collection!(string) roles) {
         AuthorizationInfo info = getAuthorizationInfo(principal);
         checkRoles(roles, info);
     }
 
-     void checkRoles(PrincipalCollection principal, string[] roles... ){
-        
+    void checkRoles(PrincipalCollection principal, string[] roles...) {
+
         AuthorizationInfo info = getAuthorizationInfo(principal);
         if (!roles.empty()) {
-            foreach(string roleName ; roles) {
+            foreach (string roleName; roles) {
                 checkRole(roleName, info);
             }
         }
@@ -695,7 +725,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
 
     protected void checkRoles(Collection!(string) roles, AuthorizationInfo info) {
         if (roles !is null && !roles.isEmpty()) {
-            foreach(string roleName ; roles) {
+            foreach (string roleName; roles) {
                 checkRole(roleName, info);
             }
         }
@@ -710,8 +740,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
      *
      * @param principals the principals of the account for which to clear any cached AuthorizationInfo
      */
-    override
-    protected void doClearCache(PrincipalCollection principals) {
+    override protected void doClearCache(PrincipalCollection principals) {
         super.doClearCache(principals);
         clearCachedAuthorizationInfo(principals);
     }

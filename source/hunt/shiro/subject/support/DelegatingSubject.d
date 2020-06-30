@@ -21,7 +21,6 @@ module hunt.shiro.subject.support.DelegatingSubject;
 import hunt.shiro.subject.support.SubjectCallable;
 import hunt.shiro.subject.support.SubjectRunnable;
 
-
 import hunt.shiro.Exceptions;
 import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.authc.HostAuthenticationToken;
@@ -39,6 +38,7 @@ import hunt.shiro.session.mgt.SessionContext;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.subject.Subject;
 import hunt.shiro.util.CollectionUtils;
+
 // import hunt.shiro.util.StringUtils;
 import hunt.logging.ConsoleLogger;
 
@@ -51,7 +51,6 @@ import hunt.util.Runnable;
 
 import std.array;
 import std.traits;
-
 
 /**
  * Implementation of the {@code Subject} interface that delegates
@@ -78,10 +77,8 @@ import std.traits;
  */
 class DelegatingSubject : Subject {
 
-
-
-    private enum string RUN_AS_PRINCIPALS_SESSION_KEY =
-            fullyQualifiedName!(DelegatingSubject) ~ ".RUN_AS_PRINCIPALS_SESSION_KEY";
+    private enum string RUN_AS_PRINCIPALS_SESSION_KEY = fullyQualifiedName!(DelegatingSubject)
+        ~ ".RUN_AS_PRINCIPALS_SESSION_KEY";
 
     protected PrincipalCollection principals;
     protected bool authenticated;
@@ -91,22 +88,21 @@ class DelegatingSubject : Subject {
      */
     protected bool sessionCreationEnabled;
 
-    protected  SecurityManager securityManager;
+    protected SecurityManager securityManager;
 
     this(SecurityManager securityManager) {
         this(null, false, null, null, securityManager);
     }
 
     this(PrincipalCollection principals, bool authenticated, string host,
-                             Session session, SecurityManager securityManager) {
+            Session session, SecurityManager securityManager) {
         this(principals, authenticated, host, session, true, securityManager);
     }
 
     //since 1.2
     this(PrincipalCollection principals, bool authenticated, string host,
-                             Session session, bool sessionCreationEnabled, 
-                             SecurityManager securityManager) {
-        if (securityManager  is null) {
+            Session session, bool sessionCreationEnabled, SecurityManager securityManager) {
+        if (securityManager is null) {
             throw new IllegalArgumentException("SecurityManager argument cannot be null.");
         }
         this.securityManager = securityManager;
@@ -120,18 +116,18 @@ class DelegatingSubject : Subject {
     }
 
     protected Session decorate(Session session) {
-        if (session  is null) {
+        if (session is null) {
             throw new IllegalArgumentException("session cannot be null");
         }
         return new StoppingAwareProxiedSession(session, this);
     }
 
-     SecurityManager getSecurityManager() {
+    SecurityManager getSecurityManager() {
         return securityManager;
     }
 
     private static bool isEmpty(PrincipalCollection pc) {
-        return pc  is null || pc.isEmpty();
+        return pc is null || pc.isEmpty();
     }
 
     protected bool hasPrincipals() {
@@ -143,7 +139,7 @@ class DelegatingSubject : Subject {
      *
      * @return the host name or IP associated with the client who created/is interacting with this Subject.
      */
-     string getHost() {
+    string getHost() {
         return this.host;
     }
 
@@ -169,7 +165,7 @@ class DelegatingSubject : Subject {
         //         trace(c);
         //     }
         // }
-        
+
         // if(this.principals !is null) {
         //     trace((cast(Object)this.principals).toString());
         // }
@@ -209,72 +205,83 @@ class DelegatingSubject : Subject {
         return hasPrincipals() && securityManager.isPermittedAll(getPrincipals(), permissions);
     }
 
-    protected void assertAuthzCheckPossible(){
+    protected void assertAuthzCheckPossible() {
+        // dfmt off
         if (!hasPrincipals()) {
-            string msg = "This subject is anonymous - it does not have any identifying principals and " ~
-                    "authorization operations require an identity to check against.  A Subject instance will " ~
-                    "acquire these identifying principals automatically after a successful login is performed " ~
-                    "be executing " ~ typeid(Subject).toString() ~ ".login(AuthenticationToken) or when 'Remember Me' " ~
-                    "functionality is enabled by the SecurityManager.  This exception can also occur when a " ~
-                    "previously logged-in Subject has logged out which " ~
-                    "makes it anonymous again.  Because an identity is currently not known due to any of these " ~
-                    "conditions, authorization is denied.";
+            string msg = "This subject is anonymous - it does not have any identifying principals and " ~ 
+                "authorization operations require an identity to check against.  A Subject instance will " ~ 
+                "acquire these identifying principals automatically after a successful login is performed " ~ 
+                "be executing " ~ typeid(Subject).toString() ~ 
+                ".login(AuthenticationToken) or when 'Remember Me' " ~ 
+                "functionality is enabled by the SecurityManager.  This exception can also occur when a " ~ 
+                "previously logged-in Subject has logged out which " ~ 
+                "makes it anonymous again.  Because an identity is currently not known due to any of these " ~ 
+                "conditions, authorization is denied.";
             throw new UnauthenticatedException(msg);
         }
+        // dfmt on
     }
 
-     void checkPermission(string permission){
+    void checkPermission(string permission) {
         assertAuthzCheckPossible();
         securityManager.checkPermission(getPrincipals(), permission);
     }
 
-     void checkPermission(Permission permission){
+    void checkPermission(Permission permission) {
         assertAuthzCheckPossible();
         securityManager.checkPermission(getPrincipals(), permission);
     }
 
-     void checkPermissions(string[] permissions...){
+    void checkPermissions(string[] permissions...) {
         assertAuthzCheckPossible();
         securityManager.checkPermissions(getPrincipals(), permissions);
     }
 
-     void checkPermissions(Collection!(Permission) permissions){
+    void checkPermissions(Collection!(Permission) permissions) {
         assertAuthzCheckPossible();
         securityManager.checkPermissions(getPrincipals(), permissions);
     }
 
-     bool hasRole(string roleIdentifier) {
+    bool hasRole(string roleIdentifier) {
         return hasPrincipals() && securityManager.hasRole(getPrincipals(), roleIdentifier);
     }
 
-     bool[] hasRoles(List!(string) roleIdentifiers) {
+    bool[] hasRoles(List!(string) roleIdentifiers) {
+        return hasRoles(roleIdentifiers.toArray());
+    }
+
+    bool[] hasRoles(string[] roleIdentifiers...) {
         if (hasPrincipals()) {
             return securityManager.hasRoles(getPrincipals(), roleIdentifiers);
         } else {
-            return new bool[roleIdentifiers.size()];
+            return new bool[roleIdentifiers.length];
         }
     }
 
-     bool hasAllRoles(Collection!(string) roleIdentifiers) {
+    bool hasAllRoles(Collection!(string) roleIdentifiers) {
+        return hasAllRoles(roleIdentifiers.toArray());
+    }
+
+    bool hasAllRoles(string[] roleIdentifiers) {
         return hasPrincipals() && securityManager.hasAllRoles(getPrincipals(), roleIdentifiers);
     }
 
-     void checkRole(string role){
+    void checkRole(string role) {
         assertAuthzCheckPossible();
         securityManager.checkRole(getPrincipals(), role);
     }
 
-     void checkRoles(string[] roleIdentifiers...){
+    void checkRoles(string[] roleIdentifiers...) {
         assertAuthzCheckPossible();
         securityManager.checkRoles(getPrincipals(), roleIdentifiers);
     }
 
-     void checkRoles(Collection!(string) roles){
+    void checkRoles(Collection!(string) roles) {
         assertAuthzCheckPossible();
         securityManager.checkRoles(getPrincipals(), roles);
     }
 
-     void login(AuthenticationToken token){
+    void login(AuthenticationToken token) {
         clearRunAsIdentitiesInternal();
         Subject subject = securityManager.login(this, token);
 
@@ -291,9 +298,9 @@ class DelegatingSubject : Subject {
             principals = subject.getPrincipals();
         }
 
-        if (principals  is null || principals.isEmpty()) {
-            string msg = "Principals returned from securityManager.login( token ) returned a null or " ~
-                    "empty value.  This value must be non null and populated with one or more elements.";
+        if (principals is null || principals.isEmpty()) {
+            string msg = "Principals returned from securityManager.login( token ) returned a null or "
+                ~ "empty value.  This value must be non null and populated with one or more elements.";
             throw new IllegalStateException(msg);
         }
         this.principals = principals;
@@ -313,11 +320,11 @@ class DelegatingSubject : Subject {
         }
     }
 
-     bool isAuthenticated() {
+    bool isAuthenticated() {
         return authenticated;
     }
 
-     bool isRemembered() {
+    bool isRemembered() {
         PrincipalCollection principals = getPrincipals();
         return principals !is null && !principals.isEmpty() && !isAuthenticated();
     }
@@ -331,11 +338,11 @@ class DelegatingSubject : Subject {
         return this.sessionCreationEnabled;
     }
 
-     Session getSession() {
+    Session getSession() {
         return getSession(true);
     }
 
-     Session getSession(bool create) {
+    Session getSession(bool create) {
         // version(HUNT_DEBUG) {
         //     tracef("attempting to get session; create = %s; session is null = %s; session has id = %s" ,
         //             create, (this.session is null), 
@@ -346,15 +353,16 @@ class DelegatingSubject : Subject {
 
             //added in 1.2:
             if (!isSessionCreationEnabled()) {
-                string msg = "Session creation has been disabled for the current subject.  This exception indicates " ~
-                        "that there is either a programming error (using a session when it should never be " ~
-                        "used) or that Shiro's configuration needs to be adjusted to allow Sessions to be created " ~
-                        "for the current Subject.  See the " ~ typeid(DisabledSessionException).name ~ " JavaDoc " ~
-                        "for more.";
+                string msg = "Session creation has been disabled for the current subject.  This exception indicates "
+                    ~ "that there is either a programming error (using a session when it should never be "
+                    ~ "used) or that Shiro's configuration needs to be adjusted to allow Sessions to be created "
+                    ~ "for the current Subject.  See the " ~ typeid(DisabledSessionException)
+                    .name ~ " JavaDoc " ~ "for more.";
                 throw new DisabledSessionException(msg);
             }
 
-            version(HUNT_SHIRO_DEBUG) tracef("Starting session for host %s", getHost());
+            version (HUNT_SHIRO_DEBUG)
+                tracef("Starting session for host %s", getHost());
             SessionContext sessionContext = createSessionContext();
             Session session = this.securityManager.start(sessionContext);
             this.session = decorate(session);
@@ -375,12 +383,12 @@ class DelegatingSubject : Subject {
         try {
             clearRunAsIdentities();
         } catch (SessionException se) {
-            tracef("Encountered session exception trying to clear 'runAs' identities during logout.  This " ~
-                    "can generally safely be ignored.", se);
+            tracef("Encountered session exception trying to clear 'runAs' identities during logout.  This "
+                    ~ "can generally safely be ignored.", se);
         }
     }
 
-     void logout() {
+    void logout() {
         try {
             clearRunAsIdentitiesInternal();
             this.securityManager.logout(this);
@@ -421,10 +429,10 @@ class DelegatingSubject : Subject {
     Runnable associateWith(Runnable runnable) {
         ThreadEx tx = cast(ThreadEx) runnable;
         if (tx !is null) {
-            string msg = "This implementation does not support Thread arguments because of JDK ThreadLocal " ~
-                    "inheritance mechanisms required by Shiro.  Instead, the method argument should be a non-Thread " ~
-                    "Runnable and the return value from this method can then be given to an ExecutorService or " ~
-                    "another Thread.";
+            string msg = "This implementation does not support Thread arguments because of JDK ThreadLocal "
+                ~ "inheritance mechanisms required by Shiro.  Instead, the method argument should be a non-Thread "
+                ~ "Runnable and the return value from this method can then be given to an ExecutorService or "
+                ~ "another Thread.";
             throw new UnsupportedOperationException(msg);
         }
         return new SubjectRunnable(this, runnable);
@@ -439,29 +447,28 @@ class DelegatingSubject : Subject {
             owner = owningSubject;
         }
 
-        override void stop(){
+        override void stop() {
             super.stop();
             owner.sessionStopped();
         }
     }
 
-
     // ======================================
     // 'Run As' support implementations
     // ======================================
 
-     void runAs(PrincipalCollection principals) {
+    void runAs(PrincipalCollection principals) {
         if (!hasPrincipals()) {
-            string msg = "This subject does not yet have an identity.  Assuming the identity of another " ~
-                    "Subject is only allowed for Subjects with an existing identity.  Try logging this subject in " ~
-                    "first, or using the " ~ typeid(SubjectBuilder).name ~ " to build ad hoc Subject instances " ~
-                    "with identities as necessary.";
+            string msg = "This subject does not yet have an identity.  Assuming the identity of another "
+                ~ "Subject is only allowed for Subjects with an existing identity.  Try logging this subject in "
+                ~ "first, or using the " ~ typeid(SubjectBuilder)
+                .name ~ " to build ad hoc Subject instances " ~ "with identities as necessary.";
             throw new IllegalStateException(msg);
         }
         pushIdentity(principals);
     }
 
-     bool isRunAs() {
+    bool isRunAs() {
         List!(PrincipalCollection) stack = getRunAsPrincipalsStack();
         return !CollectionUtils.isEmpty(stack);
     }
@@ -475,7 +482,7 @@ class DelegatingSubject : Subject {
                 previousPrincipals = this.principals;
             } else {
                 //always get the one behind the current:
-                assert (stack !is null);
+                assert(stack !is null);
                 previousPrincipals = stack.get(1);
             }
         }
@@ -486,17 +493,16 @@ class DelegatingSubject : Subject {
         return popIdentity();
     }
 
-
     private List!(PrincipalCollection) getRunAsPrincipalsStack() {
         Session session = getSession(false);
         if (session !is null) {
             Object obj = session.getAttribute(RUN_AS_PRINCIPALS_SESSION_KEY);
-            if(obj !is null) {
-                List!(PrincipalCollection) r = cast(List!(PrincipalCollection))obj;
-                if(r is null) {
+            if (obj !is null) {
+                List!(PrincipalCollection) r = cast(List!(PrincipalCollection)) obj;
+                if (r is null) {
                     warning(typeid(obj));
                 } else
-                return r;
+                    return r;
             }
         }
         return null;
@@ -509,7 +515,7 @@ class DelegatingSubject : Subject {
         }
     }
 
-    private void pushIdentity(PrincipalCollection principals){
+    private void pushIdentity(PrincipalCollection principals) {
         if (isEmpty(principals)) {
             string msg = "Specified Subject principals cannot be null or empty for 'run as' functionality.";
             throw new NullPointerException(msg);
@@ -521,7 +527,7 @@ class DelegatingSubject : Subject {
         }
         stack.add(0, principals);
         Session session = getSession();
-        session.setAttribute(RUN_AS_PRINCIPALS_SESSION_KEY, cast(Object)stack);
+        session.setAttribute(RUN_AS_PRINCIPALS_SESSION_KEY, cast(Object) stack);
     }
 
     private PrincipalCollection popIdentity() {
@@ -534,7 +540,7 @@ class DelegatingSubject : Subject {
             if (!CollectionUtils.isEmpty(stack)) {
                 //persist the changed stack to the session
                 session = getSession();
-                session.setAttribute(RUN_AS_PRINCIPALS_SESSION_KEY, cast(Object)stack);
+                session.setAttribute(RUN_AS_PRINCIPALS_SESSION_KEY, cast(Object) stack);
             } else {
                 //stack is empty, remove it from the session:
                 clearRunAsIdentities();

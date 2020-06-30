@@ -88,7 +88,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
     /**
      * Default no-arg constructor.
      */
-     this() {
+    this() {
         super();
         this.subjectFactory = new DefaultSubjectFactory();
         this.subjectDAO = new DefaultSubjectDAO();
@@ -99,7 +99,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
      *
      * @param singleRealm the single realm used by this SecurityManager.
      */
-     this(Realm singleRealm) {
+    this(Realm singleRealm) {
         this();
         setRealm(singleRealm);
     }
@@ -109,7 +109,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
      *
      * @param realms the realm instances backing this SecurityManager.
      */
-     this(Collection!(Realm) realms) {
+    this(Collection!(Realm) realms) {
         this();
         setRealms(realms);
     }
@@ -119,7 +119,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
      *
      * @return the {@code SubjectFactory} responsible for creating {@link Subject} instances exposed to the application.
      */
-     SubjectFactory getSubjectFactory() {
+    SubjectFactory getSubjectFactory() {
         return subjectFactory;
     }
 
@@ -128,7 +128,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
      *
      * @param subjectFactory the {@code SubjectFactory} responsible for creating {@link Subject} instances exposed to the application.
      */
-     void setSubjectFactory(SubjectFactory subjectFactory) {
+    void setSubjectFactory(SubjectFactory subjectFactory) {
         this.subjectFactory = subjectFactory;
     }
 
@@ -141,7 +141,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
      *         Subject identity is discovered (eg after RememberMe services).
      * @see DefaultSubjectDAO
      */
-     SubjectDAO getSubjectDAO() {
+    SubjectDAO getSubjectDAO() {
         return subjectDAO;
     }
 
@@ -154,15 +154,15 @@ class DefaultSecurityManager : SessionsSecurityManager {
      *                   Subject identity is discovered (eg after RememberMe services).
      * @see DefaultSubjectDAO
      */
-     void setSubjectDAO(SubjectDAO subjectDAO) {
+    void setSubjectDAO(SubjectDAO subjectDAO) {
         this.subjectDAO = subjectDAO;
     }
 
-     RememberMeManager getRememberMeManager() {
+    RememberMeManager getRememberMeManager() {
         return rememberMeManager;
     }
 
-     void setRememberMeManager(RememberMeManager rememberMeManager) {
+    void setRememberMeManager(RememberMeManager rememberMeManager) {
         this.rememberMeManager = rememberMeManager;
     }
 
@@ -179,7 +179,8 @@ class DefaultSecurityManager : SessionsSecurityManager {
      * @return the {@code Subject} instance that represents the context and session data for the newly
      *         authenticated subject.
      */
-    protected Subject createSubject(AuthenticationToken token, AuthenticationInfo info, Subject existing) {
+    protected Subject createSubject(AuthenticationToken token,
+            AuthenticationInfo info, Subject existing) {
         SubjectContext context = createSubjectContext();
         context.setAuthenticated(true);
         context.setAuthenticationToken(token);
@@ -201,43 +202,45 @@ class DefaultSecurityManager : SessionsSecurityManager {
      * @see #save(hunt.shiro.subject.Subject)
      * deprecated("") in favor of {@link #save(hunt.shiro.subject.Subject) save(subject)}.
      */
-    deprecated("")
-    protected void bind(Subject subject) {
+    deprecated("") protected void bind(Subject subject) {
         save(subject);
     }
 
-    protected void rememberMeSuccessfulLogin(AuthenticationToken token, AuthenticationInfo info, Subject subject) {
+    protected void rememberMeSuccessfulLogin(AuthenticationToken token,
+            AuthenticationInfo info, Subject subject) {
         RememberMeManager rmm = getRememberMeManager();
         if (rmm !is null) {
             try {
                 rmm.onSuccessfulLogin(subject, token, info);
             } catch (Exception e) {
-                version(HUNT_SHIRO_DEBUG)  {
-                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(cast(Object)rmm).name ~
-                            "] threw an exception during onSuccessfulLogin.  RememberMe services will not be " ~
-                            "performed for account [" ~ typeid(cast(Object)info).name ~ "].";
+                version (HUNT_SHIRO_DEBUG) {
+                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(cast(Object) rmm)
+                        .name ~ "] threw an exception during onSuccessfulLogin.  RememberMe services will not be "
+                        ~ "performed for account [" ~ typeid(cast(Object) info).name ~ "].";
                     warning(msg, e);
                 }
             }
         } else {
-            version(HUNT_SHIRO_DEBUG)  {
-                tracef("This " ~ typeid(this).name ~ " instance does not have a " ~
-                        "[" ~ typeid(RememberMeManager).toString() ~ "] instance configured.  RememberMe services " ~
-                        "will not be performed for account [" ~ (cast(Object)info).toString() ~ "].");
+            version (HUNT_SHIRO_DEBUG) {
+                tracef("This " ~ typeid(this)
+                        .name ~ " instance does not have a " ~ "[" ~ typeid(RememberMeManager)
+                        .toString() ~ "] instance configured.  RememberMe services " ~ "will not be performed for account [" ~ (
+                            cast(Object) info).toString() ~ "].");
             }
         }
     }
 
-    protected void rememberMeFailedLogin(AuthenticationToken token, AuthenticationException ex, Subject subject) {
+    protected void rememberMeFailedLogin(AuthenticationToken token,
+            AuthenticationException ex, Subject subject) {
         RememberMeManager rmm = getRememberMeManager();
         if (rmm !is null) {
             try {
                 rmm.onFailedLogin(subject, token, ex);
             } catch (Exception e) {
-                version(HUNT_SHIRO_DEBUG)  {
-                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(cast(Object)rmm).name ~
-                            "] threw an exception during onFailedLogin for AuthenticationToken [" ~
-                            typeid(cast(Object)token).name ~ "].";
+                version (HUNT_SHIRO_DEBUG) {
+                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(cast(Object) rmm)
+                        .name ~ "] threw an exception during onFailedLogin for AuthenticationToken [" ~ typeid(
+                                cast(Object) token).name ~ "].";
                     warning(msg, e);
                 }
             }
@@ -250,11 +253,11 @@ class DefaultSecurityManager : SessionsSecurityManager {
             try {
                 rmm.onLogout(subject);
             } catch (Exception e) {
-                version(HUNT_SHIRO_DEBUG)  {
+                version (HUNT_SHIRO_DEBUG) {
                     PrincipalCollection pc = (subject !is null ? subject.getPrincipals() : null);
-                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(rmm).toString() ~
-                            "] threw an exception during onLogout for subject with principals [" ~
-                             pc.to!string() ~ "]";
+                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(rmm).toString()
+                        ~ "] threw an exception during onLogout for subject with principals [" ~ pc.to!string()
+                        ~ "]";
                     warning(msg, e);
                 }
             }
@@ -272,7 +275,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
      * @return a Subject representing the authenticated user.
      * @throws AuthenticationException if there is a problem authenticating the specified {@code token}.
      */
-     Subject login(Subject subject, AuthenticationToken token){
+    Subject login(Subject subject, AuthenticationToken token) {
         AuthenticationInfo info;
         try {
             info = authenticate(token);
@@ -280,9 +283,10 @@ class DefaultSecurityManager : SessionsSecurityManager {
             try {
                 onFailedLogin(token, ae, subject);
             } catch (Exception e) {
-                version(HUNT_SHIRO_DEBUG)  {
-                    infof("onFailedLogin method threw an " ~
-                            "exception.  Logging and propagating original AuthenticationException.", e);
+                version (HUNT_SHIRO_DEBUG) {
+                    infof("onFailedLogin method threw an "
+                            ~ "exception.  Logging and propagating original AuthenticationException.",
+                            e);
                 }
             }
             throw ae; //propagate
@@ -295,11 +299,13 @@ class DefaultSecurityManager : SessionsSecurityManager {
         return loggedIn;
     }
 
-    protected void onSuccessfulLogin(AuthenticationToken token, AuthenticationInfo info, Subject subject) {
+    protected void onSuccessfulLogin(AuthenticationToken token,
+            AuthenticationInfo info, Subject subject) {
         rememberMeSuccessfulLogin(token, info, subject);
     }
 
-    protected void onFailedLogin(AuthenticationToken token, AuthenticationException ae, Subject subject) {
+    protected void onFailedLogin(AuthenticationToken token,
+            AuthenticationException ae, Subject subject) {
         rememberMeFailedLogin(token, ae, subject);
     }
 
@@ -332,7 +338,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
      * @see #doCreateSubject(hunt.shiro.subject.SubjectContext)
      * @see #save(hunt.shiro.subject.Subject)
      */
-     Subject createSubject(SubjectContext subjectContext) {
+    Subject createSubject(SubjectContext subjectContext) {
         //create a copy so we don't modify the argument's backing map:
         SubjectContext context = copy(subjectContext);
 
@@ -412,10 +418,12 @@ class DefaultSecurityManager : SessionsSecurityManager {
     //@SuppressWarnings({"unchecked"})
     protected SubjectContext ensureSecurityManager(SubjectContext context) {
         if (context.resolveSecurityManager() !is null) {
-            version(HUNT_SHIRO_DEBUG) tracef("Context already contains a SecurityManager instance.  Returning.");
+            version (HUNT_SHIRO_DEBUG)
+                tracef("Context already contains a SecurityManager instance.  Returning.");
             return context;
         }
-        version(HUNT_SHIRO_DEBUG) tracef("No SecurityManager found in context.  Adding self reference.");
+        version (HUNT_SHIRO_DEBUG)
+            tracef("No SecurityManager found in context.  Adding self reference.");
         context.setSecurityManager(this);
         return context;
     }
@@ -435,7 +443,8 @@ class DefaultSecurityManager : SessionsSecurityManager {
     //@SuppressWarnings({"unchecked"})
     protected SubjectContext resolveSession(SubjectContext context) {
         if (context.resolveSession() !is null) {
-            version(HUNT_SHIRO_DEBUG) tracef("Context already contains a session.  Returning.");
+            version (HUNT_SHIRO_DEBUG)
+                tracef("Context already contains a session.  Returning.");
             return context;
         }
         try {
@@ -446,13 +455,13 @@ class DefaultSecurityManager : SessionsSecurityManager {
                 context.setSession(session);
             }
         } catch (InvalidSessionException e) {
-            warningf("Resolved SubjectContext context session is invalid.  Ignoring and creating an anonymous " ~
-                    "(session-less) Subject instance.", e);
+            warningf("Resolved SubjectContext context session is invalid.  Ignoring and creating an anonymous "
+                    ~ "(session-less) Subject instance.", e);
         }
         return context;
     }
 
-    protected Session resolveContextSession(SubjectContext context){
+    protected Session resolveContextSession(SubjectContext context) {
         SessionKey key = getSessionKey(context);
         if (key !is null) {
             return getSession(key);
@@ -469,7 +478,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
     }
 
     private static bool isEmpty(PrincipalCollection pc) {
-        return pc  is null || pc.isEmpty();
+        return pc is null || pc.isEmpty();
     }
 
     /**
@@ -492,15 +501,16 @@ class DefaultSecurityManager : SessionsSecurityManager {
         PrincipalCollection principals = context.resolvePrincipals();
 
         if (isEmpty(principals)) {
-            version(HUNT_SHIRO_DEBUG) 
-                tracef("No identity (PrincipalCollection) found in the context.  Looking for a remembered identity.");
+            version (HUNT_SHIRO_DEBUG)
+                tracef(
+                        "No identity (PrincipalCollection) found in the context.  Looking for a remembered identity.");
 
             principals = getRememberedIdentity(context);
 
             if (!isEmpty(principals)) {
-                version(HUNT_SHIRO_DEBUG) 
-                tracef("Found remembered PrincipalCollection.  Adding to the context to be used " ~
-                        "for subject construction by the SubjectFactory.");
+                version (HUNT_SHIRO_DEBUG)
+                    tracef("Found remembered PrincipalCollection.  Adding to the context to be used "
+                            ~ "for subject construction by the SubjectFactory.");
 
                 context.setPrincipals(principals);
 
@@ -520,7 +530,8 @@ class DefaultSecurityManager : SessionsSecurityManager {
                 // bindPrincipalsToSession(principals, context);
 
             } else {
-                version(HUNT_SHIRO_DEBUG) tracef("No remembered identity found.  Returning original context.");
+                version (HUNT_SHIRO_DEBUG)
+                    tracef("No remembered identity found.  Returning original context.");
             }
         }
 
@@ -528,7 +539,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
     }
 
     protected SessionContext createSessionContext(SubjectContext subjectContext) {
-        Map!(string, Object) contextMap = cast(Map!(string, Object))subjectContext;
+        Map!(string, Object) contextMap = cast(Map!(string, Object)) subjectContext;
         DefaultSessionContext sessionContext = new DefaultSessionContext();
         if (!CollectionUtils.isEmpty(contextMap)) {
             sessionContext.putAll(contextMap);
@@ -544,9 +555,9 @@ class DefaultSecurityManager : SessionsSecurityManager {
         return sessionContext;
     }
 
-     void logout(Subject subject) {
+    void logout(Subject subject) {
 
-        if (subject  is null) {
+        if (subject is null) {
             throw new IllegalArgumentException("Subject method argument cannot be null.");
         }
 
@@ -554,8 +565,9 @@ class DefaultSecurityManager : SessionsSecurityManager {
 
         PrincipalCollection principals = subject.getPrincipals();
         if (principals !is null && !principals.isEmpty()) {
-            version(HUNT_SHIRO_DEBUG)  {
-                tracef("Logging out subject with primary principal %s", principals.getPrimaryPrincipal());
+            version (HUNT_SHIRO_DEBUG) {
+                tracef("Logging out subject with primary principal %s",
+                        principals.getPrimaryPrincipal());
             }
             Authenticator authc = getAuthenticator();
             LogoutAware la = cast(LogoutAware) authc;
@@ -569,18 +581,17 @@ class DefaultSecurityManager : SessionsSecurityManager {
         } catch (Exception e) {
             string msg = "Unable to cleanly unbind Subject.  Ignoring (logging out).";
             warning(msg);
-            version(HUNT_SHIRO_DEBUG)  {
+            version (HUNT_SHIRO_DEBUG) {
                 warning(e);
             }
-        } 
+        }
 
         try {
             stopSession(subject);
         } catch (Exception e) {
-            version(HUNT_SHIRO_DEBUG)  {
-                string msg = "Unable to cleanly stop Session for Subject [" ~ 
-                        subject.getPrincipal().toString() ~ "] " ~
-                        "Ignoring (logging out).";
+            version (HUNT_SHIRO_DEBUG) {
+                string msg = "Unable to cleanly stop Session for Subject [" ~ subject.getPrincipal()
+                    .toString() ~ "] " ~ "Ignoring (logging out).";
                 tracef(msg, e);
             }
         }
@@ -602,8 +613,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
      * @param subject the subject to unbind from the application as it will no longer be used.
      * deprecated("") in Shiro 1.2 in favor of {@link #remove(hunt.shiro.subject.Subject)}
      */
-    deprecated("")
-    //@SuppressWarnings({"UnusedDeclaration"})
+    deprecated("") //@SuppressWarnings({"UnusedDeclaration"})
     protected void unbind(Subject subject) {
         remove(subject);
     }
@@ -614,9 +624,9 @@ class DefaultSecurityManager : SessionsSecurityManager {
             try {
                 return rmm.getRememberedPrincipals(subjectContext);
             } catch (Exception e) {
-                version(HUNT_SHIRO_DEBUG)  {
-                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(cast(Object)rmm).name ~
-                            "] threw an exception during getRememberedPrincipals().";
+                version (HUNT_SHIRO_DEBUG) {
+                    string msg = "Delegate RememberMeManager instance of type [" ~ typeid(cast(Object) rmm)
+                        .name ~ "] threw an exception during getRememberedPrincipals().";
                     warning(msg, e);
                 }
             }

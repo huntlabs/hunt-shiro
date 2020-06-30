@@ -222,6 +222,9 @@ interface Authorizer {
      */
     bool[] hasRoles(PrincipalCollection subjectPrincipal, List!(string) roleIdentifiers);
 
+    /// ditto
+    bool[] hasRoles(PrincipalCollection subjectPrincipal, string[] roleIdentifiers);
+
     /**
      * Returns <tt>true</tt> if the corresponding Subject/user has all of the specified roles, <tt>false</tt> otherwise.
      *
@@ -230,6 +233,9 @@ interface Authorizer {
      * @return true if the user has all the roles, false otherwise.
      */
     bool hasAllRoles(PrincipalCollection subjectPrincipal, Collection!(string) roleIdentifiers);
+
+    /// ditto
+    bool hasAllRoles(PrincipalCollection subjectPrincipal, string[] roleIdentifiers);
 
     /**
      * Asserts the corresponding Subject/user has the specified role by returning quietly if they do or throwing an

@@ -32,7 +32,7 @@ import hunt.Exceptions;
 import hunt.collection;
 import hunt.logging;
 
-
+import std.range;
 
 /**
  * A <tt>ModularRealmAuthorizer</tt> is an <tt>Authorizer</tt> implementation that consults one or more configured
@@ -61,7 +61,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
     /**
      * Default no-argument constructor, does nothing.
      */
-     this() {
+    this() {
     }
 
     /**
@@ -70,7 +70,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      *
      * @param realms the realms to consult during an authorization check.
      */
-     this(Collection!(Realm) realms) {
+    this(Collection!(Realm) realms) {
         setRealms(realms);
     }
 
@@ -79,7 +79,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      *
      * @return the realms wrapped by this <code>Authorizer</code> which are consulted during an authorization check.
      */
-     Collection!(Realm) getRealms() {
+    Collection!(Realm) getRealms() {
         return this.realms;
     }
 
@@ -88,7 +88,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      *
      * @param realms the realms wrapped by this <code>Authorizer</code> which are consulted during an authorization check.
      */
-     void setRealms(Collection!(Realm) realms) {
+    void setRealms(Collection!(Realm) realms) {
         this.realms = realms;
         applyPermissionResolverToRealms();
         applyRolePermissionResolverToRealms();
@@ -101,7 +101,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * @return the PermissionResolver to be used on <em>all</em> configured realms, or <code>null</code (the default)
      *         if realm instances will each configure their own permission resolver.
      */
-     PermissionResolver getPermissionResolver() {
+    PermissionResolver getPermissionResolver() {
         return this.permissionResolver;
     }
 
@@ -116,7 +116,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * @param permissionResolver the permissionResolver to set on all of the wrapped realms that implement the
      *                           {@link hunt.shiro.authz.permission.PermissionResolverAware PermissionResolverAware} interface.
      */
-     void setPermissionResolver(PermissionResolver permissionResolver) {
+    void setPermissionResolver(PermissionResolver permissionResolver) {
         this.permissionResolver = permissionResolver;
         applyPermissionResolverToRealms();
     }
@@ -136,8 +136,8 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
         PermissionResolver resolver = getPermissionResolver();
         Collection!(Realm) realms = getRealms();
         if (resolver !is null && realms !is null && !realms.isEmpty()) {
-            foreach(Realm realm ; realms) {
-                auto realmCast = cast(PermissionResolverAware)realm;
+            foreach (Realm realm; realms) {
+                auto realmCast = cast(PermissionResolverAware) realm;
                 if (realmCast !is null) {
                     realmCast.setPermissionResolver(resolver);
                 }
@@ -152,7 +152,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * @return the RolePermissionResolver to be used on <em>all</em> configured realms, or <code>null</code (the default)
      *         if realm instances will each configure their own role permission resolver.
      */
-     RolePermissionResolver getRolePermissionResolver() {
+    RolePermissionResolver getRolePermissionResolver() {
         return this.rolePermissionResolver;
     }
 
@@ -167,11 +167,10 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * @param rolePermissionResolver the rolePermissionResolver to set on all of the wrapped realms that implement the
      *                               {@link hunt.shiro.authz.permission.RolePermissionResolverAware RolePermissionResolverAware} interface.
      */
-     void setRolePermissionResolver(RolePermissionResolver rolePermissionResolver) {
+    void setRolePermissionResolver(RolePermissionResolver rolePermissionResolver) {
         this.rolePermissionResolver = rolePermissionResolver;
         applyRolePermissionResolverToRealms();
     }
-
 
     /**
      * Sets the internal {@link #getRolePermissionResolver} on any internal configured
@@ -188,8 +187,8 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
         RolePermissionResolver resolver = getRolePermissionResolver();
         Collection!(Realm) realms = getRealms();
         if (resolver !is null && realms !is null && !realms.isEmpty()) {
-            foreach(Realm realm ; realms) {
-                auto realmCast = cast(RolePermissionResolverAware)realm;
+            foreach (Realm realm; realms) {
+                auto realmCast = cast(RolePermissionResolverAware) realm;
                 if (realmCast !is null) {
                     realmCast.setRolePermissionResolver(resolver);
                 }
@@ -197,18 +196,17 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
         }
     }
 
-
     /**
      * Used by the {@link Authorizer Authorizer} implementation methods to ensure that the {@link #setRealms realms}
      * has been set.  The default implementation ensures the property is not null and not empty.
      *
      * @throws IllegalStateException if the <tt>realms</tt> property is configured incorrectly.
      */
-    protected void assertRealmsConfigured(){
+    protected void assertRealmsConfigured() {
         Collection!(Realm) realms = getRealms();
-        if (realms  is null || realms.isEmpty()) {
-            string msg = "Configuration error:  No realms have been configured!  One or more realms must be " ~
-                    "present to execute an authorization operation.";
+        if (realms is null || realms.isEmpty()) {
+            string msg = "Configuration error:  No realms have been configured!  One or more realms must be "
+                ~ "present to execute an authorization operation.";
             throw new IllegalStateException(msg);
         }
     }
@@ -218,11 +216,12 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * {@link #isPermitted(hunt.shiro.subject.PrincipalCollection, string)} returns <code>true</code>,
      * <code>false</code> otherwise.
      */
-     bool isPermitted(PrincipalCollection principals, string permission) {
+    bool isPermitted(PrincipalCollection principals, string permission) {
         assertRealmsConfigured();
-        foreach(Realm realm ; getRealms()) {
+        foreach (Realm realm; getRealms()) {
             auto realmCast = cast(Authorizer) realm;
-            if (realmCast is null) continue;
+            if (realmCast is null)
+                continue;
             if (realmCast.isPermitted(principals, permission)) {
                 return true;
             }
@@ -235,11 +234,12 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * {@link #isPermitted(hunt.shiro.subject.PrincipalCollection, Permission)} call returns <code>true</code>,
      * <code>false</code> otherwise.
      */
-     bool isPermitted(PrincipalCollection principals, Permission permission) {
+    bool isPermitted(PrincipalCollection principals, Permission permission) {
         assertRealmsConfigured();
-        foreach(Realm realm ; getRealms()) {
+        foreach (Realm realm; getRealms()) {
             auto realmCast = cast(Authorizer) realm;
-            if (realmCast is null) continue;
+            if (realmCast is null)
+                continue;
             if (realmCast.isPermitted(principals, permission)) {
                 return true;
             }
@@ -252,11 +252,11 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * {@link #isPermittedAll(hunt.shiro.subject.PrincipalCollection, string...)} call returns
      * <code>true</code>, <code>false</code> otherwise.
      */
-     bool[] isPermitted(PrincipalCollection principals, string[] permissions...) {
+    bool[] isPermitted(PrincipalCollection principals, string[] permissions...) {
         assertRealmsConfigured();
         if (permissions !is null && permissions.length > 0) {
             bool[] r = new bool[permissions.length];
-            for(int i = 0; i < permissions.length; i++) {
+            for (int i = 0; i < permissions.length; i++) {
                 r[i] = isPermitted(principals, permissions[i]);
             }
             return r;
@@ -269,12 +269,12 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * {@link #isPermitted(hunt.shiro.subject.PrincipalCollection, List)} call returns <code>true</code>,
      * <code>false</code> otherwise.
      */
-     bool[] isPermitted(PrincipalCollection principals, List!(Permission) permissions) {
+    bool[] isPermitted(PrincipalCollection principals, List!(Permission) permissions) {
         assertRealmsConfigured();
         if (permissions !is null && !permissions.isEmpty()) {
             bool[] r = new bool[permissions.size()];
             int i = 0;
-            foreach(Permission p ; permissions) {
+            foreach (Permission p; permissions) {
                 r[i++] = isPermitted(principals, p);
             }
             return r;
@@ -288,10 +288,10 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * {@link #isPermitted(hunt.shiro.subject.PrincipalCollection, string)} call returns <code>true</code>
      * for <em>all</em> of the specified string permissions, <code>false</code> otherwise.
      */
-     bool isPermittedAll(PrincipalCollection principals, string[] permissions...) {
+    bool isPermittedAll(PrincipalCollection principals, string[] permissions...) {
         assertRealmsConfigured();
         if (permissions !is null && permissions.length > 0) {
-            foreach(string perm ; permissions) {
+            foreach (string perm; permissions) {
                 if (!isPermitted(principals, perm)) {
                     return false;
                 }
@@ -305,10 +305,10 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * {@link #isPermitted(hunt.shiro.subject.PrincipalCollection, Permission)} call returns <code>true</code>
      * for <em>all</em> of the specified Permissions, <code>false</code> otherwise.
      */
-     bool isPermittedAll(PrincipalCollection principals, Collection!(Permission) permissions) {
+    bool isPermittedAll(PrincipalCollection principals, Collection!(Permission) permissions) {
         assertRealmsConfigured();
         if (permissions !is null && !permissions.isEmpty()) {
-            foreach(Permission permission ; permissions) {
+            foreach (Permission permission; permissions) {
                 if (!isPermitted(principals, permission)) {
                     return false;
                 }
@@ -321,7 +321,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * If !{@link #isPermitted(hunt.shiro.subject.PrincipalCollection, string) isPermitted(permission)}, throws
      * an <code>UnauthorizedException</code> otherwise returns quietly.
      */
-     void checkPermission(PrincipalCollection principals, string permission){
+    void checkPermission(PrincipalCollection principals, string permission) {
         assertRealmsConfigured();
         if (!isPermitted(principals, permission)) {
             throw new UnauthorizedException("Subject does not have permission [" ~ permission ~ "]");
@@ -332,11 +332,11 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * If !{@link #isPermitted(hunt.shiro.subject.PrincipalCollection, Permission) isPermitted(permission)}, throws
      * an <code>UnauthorizedException</code> otherwise returns quietly.
      */
-     void checkPermission(PrincipalCollection principals, Permission permission){
+    void checkPermission(PrincipalCollection principals, Permission permission) {
         assertRealmsConfigured();
         if (!isPermitted(principals, permission)) {
-            throw new UnauthorizedException("Subject does not have permission [" ~ 
-                (cast(Object)permission).toString() ~ "]");
+            throw new UnauthorizedException("Subject does not have permission [" ~ (cast(Object) permission)
+                    .toString() ~ "]");
         }
     }
 
@@ -344,10 +344,10 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * If !{@link #isPermitted(hunt.shiro.subject.PrincipalCollection, string...) isPermitted(permission)},
      *<code>UnauthorizedException</code> otherwise returns quietly.
      */
-     void checkPermissions(PrincipalCollection principals, string[] permissions...){
+    void checkPermissions(PrincipalCollection principals, string[] permissions...) {
         assertRealmsConfigured();
         if (permissions !is null && permissions.length > 0) {
-            foreach(string perm ; permissions) {
+            foreach (string perm; permissions) {
                 checkPermission(principals, perm);
             }
         }
@@ -358,10 +358,10 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * <em>all</em> the given Permissions, throws
      * an <code>UnauthorizedException</code> otherwise returns quietly.
      */
-     void checkPermissions(PrincipalCollection principals, Collection!(Permission) permissions){
+    void checkPermissions(PrincipalCollection principals, Collection!(Permission) permissions) {
         assertRealmsConfigured();
         if (permissions !is null) {
-            foreach(Permission permission ; permissions) {
+            foreach (Permission permission; permissions) {
                 checkPermission(principals, permission);
             }
         }
@@ -373,11 +373,13 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * <code>false</code> otherwise.
      */
     bool hasRole(PrincipalCollection principals, string roleIdentifier) {
-        version(HUNT_DEBUG) tracef("checking: %s", roleIdentifier);
+        version (HUNT_DEBUG)
+            tracef("checking: %s", roleIdentifier);
         assertRealmsConfigured();
-        foreach(Realm realm ; getRealms()) {
-            Authorizer realmCast = cast(Authorizer)realm;
-            if (realmCast is null) continue;
+        foreach (Realm realm; getRealms()) {
+            Authorizer realmCast = cast(Authorizer) realm;
+            if (realmCast is null)
+                continue;
             if (realmCast.hasRole(principals, roleIdentifier)) {
                 return true;
             }
@@ -390,17 +392,29 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * collection and places the return value from each call at the respective location in the returned array.
      */
     bool[] hasRoles(PrincipalCollection principals, List!(string) roleIdentifiers) {
-        assertRealmsConfigured();
-        if (roleIdentifiers !is null && !roleIdentifiers.isEmpty()) {
-            bool[] hasRoles = new bool[roleIdentifiers.size()];
-            int i = 0;
-            foreach(string roleId ; roleIdentifiers) {
-                hasRoles[i++] = hasRole(principals, roleId);
-            }
-            return hasRoles;
+        if (roleIdentifiers is null || roleIdentifiers.isEmpty()) {
+            assertRealmsConfigured();
+            return new bool[0];
         }
 
-        return new bool[0];
+        return hasRoles(principals, roleIdentifiers.toArray());
+
+    }
+
+    /// ditto
+    bool[] hasRoles(PrincipalCollection principals, string[] roleIdentifiers) {
+        assertRealmsConfigured();
+
+        if (roleIdentifiers.empty) {
+            return new bool[0];
+        }
+
+        bool[] hasRoles = new bool[roleIdentifiers.length];
+        int i = 0;
+        foreach (string roleId; roleIdentifiers) {
+            hasRoles[i++] = hasRole(principals, roleId);
+        }
+        return hasRoles;
     }
 
     /**
@@ -408,9 +422,13 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * {@link #hasRole(hunt.shiro.subject.PrincipalCollection, string)} call returns <code>true</code> for
      * <em>all</em> roles specified, <code>false</code> otherwise.
      */
-     bool hasAllRoles(PrincipalCollection principals, Collection!(string) roleIdentifiers) {
+    bool hasAllRoles(PrincipalCollection principals, Collection!(string) roleIdentifiers) {
+        return hasAllRoles(principals, roleIdentifiers.toArray());
+    }
+
+    bool hasAllRoles(PrincipalCollection principals, string[] roleIdentifiers) {
         assertRealmsConfigured();
-        foreach(string roleIdentifier ; roleIdentifiers) {
+        foreach (string roleIdentifier; roleIdentifiers) {
             if (!hasRole(principals, roleIdentifier)) {
                 return false;
             }
@@ -422,7 +440,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * If !{@link #hasRole(hunt.shiro.subject.PrincipalCollection, string) hasRole(role)}, throws
      * an <code>UnauthorizedException</code> otherwise returns quietly.
      */
-     void checkRole(PrincipalCollection principals, string role){
+    void checkRole(PrincipalCollection principals, string role) {
         assertRealmsConfigured();
         if (!hasRole(principals, role)) {
             throw new UnauthorizedException("Subject does not have role [" ~ role ~ "]");
@@ -432,7 +450,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
     /**
      * Calls {@link #checkRoles(PrincipalCollection principals, string... roles) checkRoles(PrincipalCollection principals, string... roles) }.
      */
-     void checkRoles(PrincipalCollection principals, Collection!(string) roles){
+    void checkRoles(PrincipalCollection principals, Collection!(string) roles) {
         //SHIRO-234 - roles.toArray() -> roles.toArray(new string[roles.size()])
         if (roles !is null && !roles.isEmpty()) {
             checkRoles(principals, roles.toArray());
@@ -442,10 +460,10 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
     /**
      * Calls {@link #checkRole(hunt.shiro.subject.PrincipalCollection, string) checkRole} for each role specified.
      */
-     void checkRoles(PrincipalCollection principals, string[] roles...){
+    void checkRoles(PrincipalCollection principals, string[] roles...) {
         assertRealmsConfigured();
         if (roles !is null) {
-            foreach(string role ; roles) {
+            foreach (string role; roles) {
                 checkRole(principals, role);
             }
         }

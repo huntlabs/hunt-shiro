@@ -37,6 +37,7 @@ import hunt.util.Common;
 import hunt.util.Runnable;
 
 import std.array;
+import std.range;
 import std.traits;
 
 /**
@@ -803,10 +804,11 @@ class SubjectBuilder {
      * @see SubjectFactory#createSubject(SubjectContext)
      */
     SubjectBuilder contextAttribute(string attributeKey, Object attributeValue) {
-        if (attributeKey  is null) {
+        if (attributeKey.empty) {
             string msg = "Subject context map key cannot be null.";
             throw new IllegalArgumentException(msg);
         }
+
         Map!(string, Object) contextMap = cast(Map!(string, Object))subjectContext;
         if (attributeValue is null) {
             contextMap.remove(attributeKey);

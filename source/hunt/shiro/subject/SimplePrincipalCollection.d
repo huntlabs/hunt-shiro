@@ -250,7 +250,7 @@ class SimplePrincipalCollection : MutablePrincipalCollection {
     // }
 
     override bool opEquals(Object o) {
-        if (o == this) {
+        if (o is this) {
             return true;
         }
         

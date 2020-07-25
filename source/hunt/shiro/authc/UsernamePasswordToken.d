@@ -18,7 +18,7 @@
  */
 module hunt.shiro.authc.UsernamePasswordToken;
 
-
+import hunt.shiro.authc.AuthenticationToken;
 import hunt.shiro.authc.RememberMeAuthenticationToken;
 import hunt.shiro.authc.HostAuthenticationToken;
 
@@ -77,6 +77,8 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
      * omitted.
      */
     private string host;
+
+    private string _name = DEFAULT_AUTH_TOKEN_NAME;
 
     /*--------------------------------------------
     |         C O N S T R U C T O R S           |
@@ -209,6 +211,14 @@ class UsernamePasswordToken : HostAuthenticationToken, RememberMeAuthenticationT
     /*--------------------------------------------
     |  A C C E S S O R S / M O D I F I E R S    |
     ============================================*/
+
+    string name() {
+        return _name;
+    }
+
+    void name(string value) {
+        _name = value;
+    }
 
     /**
      * Returns the username submitted during an authentication attempt.

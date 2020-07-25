@@ -18,7 +18,7 @@
  */
 module hunt.shiro.authc.AuthenticationToken;
 
-import hunt.util.Common;
+enum DEFAULT_AUTH_TOKEN_NAME = "default";
 
 /**
  * <p>An <tt>AuthenticationToken</tt> is a consolidation of an account's principals and supporting

@@ -494,7 +494,7 @@ abstract class AuthorizingRealm : AuthenticatingRealm,
             return isPermitted(permission, info);
         } catch(Exception ex) {
             warning(ex.msg);
-            version(HUNT_DEBUG) warning(ex);
+            version(HUNT_SHIRO_DEBUG) warning(ex);
             return false;
         }
     }

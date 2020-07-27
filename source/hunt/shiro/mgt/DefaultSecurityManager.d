@@ -418,12 +418,14 @@ class DefaultSecurityManager : SessionsSecurityManager {
     //@SuppressWarnings({"unchecked"})
     protected SubjectContext ensureSecurityManager(SubjectContext context) {
         if (context.resolveSecurityManager() !is null) {
-            version (HUNT_SHIRO_DEBUG)
+            version (HUNT_SHIRO_DEBUG) {
                 tracef("Context already contains a SecurityManager instance.  Returning.");
+            }
             return context;
         }
-        version (HUNT_SHIRO_DEBUG)
-            tracef("No SecurityManager found in context.  Adding self reference.");
+        version (HUNT_SHIRO_DEBUG) {
+            warning("No SecurityManager found in context.  Adding self reference.");
+        }
         context.setSecurityManager(this);
         return context;
     }

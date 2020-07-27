@@ -25,8 +25,9 @@ import hunt.shiro.util.ThreadContext;
 import hunt.shiro.Exceptions;
 
 import core.thread;
+import std.format;
 
-enum DEFAULT_NAME = "default";
+// enum DEFAULT_NAME = "default";
 
 /**
  * Accesses the currently accessible {@code Subject} for the calling code depending on runtime environment.
@@ -68,9 +69,9 @@ struct SecurityUtils {
 
     static Subject getSubject(string managerName) {
         SecurityManager sm = getSecurityManager(managerName);
-        assert(sm !is null);
+        assert(sm !is null, format("No manager found for: %s", managerName));
         Subject subject = ThreadContext.getSubject(managerName);
-        if (subject  is null) {
+        if (subject is null) {
             subject = (new SubjectBuilder(sm)).buildSubject();
             ThreadContext.bind(managerName, subject);
         }

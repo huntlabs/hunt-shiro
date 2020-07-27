@@ -48,7 +48,7 @@ abstract class RealmSecurityManager : CachingSecurityManager {
     /**
      * Default no-arg constructor.
      */
-     this() {
+    this() {
         super();
     }
 

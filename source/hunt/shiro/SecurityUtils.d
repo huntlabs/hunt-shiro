@@ -24,6 +24,8 @@ import hunt.shiro.util.ThreadContext;
 
 import hunt.shiro.Exceptions;
 
+import hunt.logging.ConsoleLogger;
+
 import core.thread;
 import std.format;
 
@@ -69,7 +71,13 @@ struct SecurityUtils {
 
     static Subject getSubject(string managerName) {
         SecurityManager sm = getSecurityManager(managerName);
-        assert(sm !is null, format("No manager found for: %s", managerName));
+        if(sm is null) {
+            warningf("No manager found for: %s. Create it now.", managerName);
+            import hunt.shiro.mgt.DefaultSecurityManager;
+            sm = new DefaultSecurityManager();
+            setSecurityManager(managerName, securityManager);
+        }
+
         Subject subject = ThreadContext.getSubject(managerName);
         if (subject is null) {
             subject = (new SubjectBuilder(sm)).buildSubject();
@@ -145,7 +153,7 @@ struct SecurityUtils {
      *          if there is no {@code SecurityManager} instance available to the
      *          calling code, which typically indicates an invalid application configuration.
      */
-     static SecurityManager getSecurityManager(){
+     static SecurityManager getSecurityManager() {
         SecurityManager securityManager = ThreadContext.getSecurityManager();
         if (securityManager is null) {
             securityManager = SecurityUtils.securityManager;

@@ -110,7 +110,7 @@ class DefaultSubjectContext : MapContext, SubjectContext {
             try {
                 securityManager = SecurityUtils.getSecurityManager();
             } catch (UnavailableSecurityManagerException e) {
-                version(HUNT_DEBUG) {
+                version(HUNT_AUTH_DEBUG) {
                     warningf("No SecurityManager available via SecurityUtils." ~ 
                         " Heuristics exhausted. The reason is: %s", e.msg);
                 } 

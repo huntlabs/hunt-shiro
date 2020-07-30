@@ -187,15 +187,15 @@ class SimpleSession : ValidatingSession {
         return attributes;
     }
 
-     void setAttributes(Map!(Object, Object) attributes) {
+    void setAttributes(Map!(Object, Object) attributes) {
         this.attributes = attributes;
     }
 
-     void touch() {
+    void touch() {
         this.lastAccessTime = DateTime.currentTimeMillis();
     }
 
-     void stop() {
+    void stop() {
         if (this.stopTimestamp is null) {
             this.stopTimestamp = new Long(DateTime.currentTimeMillis());
         }
@@ -285,7 +285,7 @@ class SimpleSession : ValidatingSession {
             import std.conv;
             string msg = "Session with id [" ~ sessionId ~ "] has expired. " ~
                     "Last access time: " ~ lastAccessTime.to!string() ~
-                    ".  Current time: " ~ DateTime.getTimeAsGMT() ~
+                    ".  Current time: " ~ DateTime.currentTimeMillis().to!string() ~
                     ".  Session timeout is set to " ~ to!string(timeout / MILLIS_PER_SECOND) ~ " seconds (" ~
                     to!string(timeout / MILLIS_PER_MINUTE) ~ " minutes)";
             version(HUNT_DEBUG) {

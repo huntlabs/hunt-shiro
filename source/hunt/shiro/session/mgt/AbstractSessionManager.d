@@ -42,7 +42,7 @@ abstract class AbstractSessionManager : SessionManager {
     /**
      * Default main session timeout value, equal to {@code 30} minutes.
      */
-    enum long DEFAULT_GLOBAL_SESSION_TIMEOUT = 30 * MILLIS_PER_MINUTE;
+    enum long DEFAULT_GLOBAL_SESSION_TIMEOUT =  30 * MILLIS_PER_MINUTE; // 60 * MILLIS_PER_SECOND; // 
 
     private long globalSessionTimeout = DEFAULT_GLOBAL_SESSION_TIMEOUT;
 

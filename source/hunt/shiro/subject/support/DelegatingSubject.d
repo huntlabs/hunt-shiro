@@ -392,6 +392,9 @@ class DelegatingSubject : Subject {
         try {
             clearRunAsIdentitiesInternal();
             this.securityManager.logout(this);
+        } catch(Exception ex) {
+            warning(ex.msg);
+            version(HUNT_SHIRO_DEBUG) warning(ex);
         } finally {
             this.session = null;
             this.principals = null;

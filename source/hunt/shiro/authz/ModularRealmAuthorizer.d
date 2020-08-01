@@ -373,8 +373,6 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * <code>false</code> otherwise.
      */
     bool hasRole(PrincipalCollection principals, string roleIdentifier) {
-        version (HUNT_DEBUG)
-            tracef("checking: %s", roleIdentifier);
         assertRealmsConfigured();
         foreach (Realm realm; getRealms()) {
             Authorizer realmCast = cast(Authorizer) realm;

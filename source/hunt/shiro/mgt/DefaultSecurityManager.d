@@ -292,7 +292,9 @@ class DefaultSecurityManager : SessionsSecurityManager {
             throw ae; //propagate
         }
 
-        Subject loggedIn = createSubject(token, info, subject);
+        // Subject loggedIn = createSubject(token, info, subject);
+        // Always create a new subject whithout refering to the existing one.
+        Subject loggedIn = createSubject(token, info, null);
 
         onSuccessfulLogin(token, info, loggedIn);
 
@@ -504,8 +506,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
 
         if (isEmpty(principals)) {
             version (HUNT_SHIRO_DEBUG)
-                tracef(
-                        "No identity (PrincipalCollection) found in the context.  Looking for a remembered identity.");
+                tracef("No identity (PrincipalCollection) found in the context.  Looking for a remembered identity.");
 
             principals = getRememberedIdentity(context);
 

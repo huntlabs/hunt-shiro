@@ -27,6 +27,8 @@ import hunt.shiro.subject.Subject;
 import hunt.shiro.subject.SubjectContext;
 import hunt.shiro.subject.support.DelegatingSubject;
 
+import hunt.logging.ConsoleLogger;
+
 
 /**
  * Default {@link SubjectFactory SubjectFactory} implementation that creates {@link hunt.shiro.subject.support.DelegatingSubject DelegatingSubject}
@@ -44,7 +46,16 @@ class DefaultSubjectFactory : SubjectFactory {
         bool sessionCreationEnabled = context.isSessionCreationEnabled();
         PrincipalCollection principals = context.resolvePrincipals();
         bool authenticated = context.resolveAuthenticated();
-        string host = context.resolveHost();
+        string host;
+
+        try {
+            host = context.resolveHost();
+        } catch(Throwable t) {
+            warning(t.msg);
+            version(HUNT_AUTH_DEBUG) warning(t);
+        }
+
+        warningf("Creating a new subject: authenticated=%s, host=%s, ", authenticated, host);
 
         return new DelegatingSubject(principals, authenticated, host, session, sessionCreationEnabled, securityManager);
     }

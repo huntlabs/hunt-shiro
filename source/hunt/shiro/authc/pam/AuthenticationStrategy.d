@@ -56,7 +56,7 @@ interface AuthenticationStrategy {
      * @return an empty AuthenticationInfo object that will populated with data from multiple realms.
      * @throws AuthenticationException if the strategy implementation does not wish the Authentication attempt to execute.
      */
-    AuthenticationInfo beforeAllAttempts(Collection!Realm realms, AuthenticationToken token);
+    AuthenticationInfo beforeAllAttempts(Realm[] realms, AuthenticationToken token);
 
     /**
      * Method invoked by the ModularAuthenticator just prior to the realm being consulted for account data,

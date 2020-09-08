@@ -49,6 +49,6 @@ interface RealmFactory {
      * @return the <code>Collection</code> of Realms that the application's <code>SecurityManager</code> will use
      *         for security data access.
      */
-    Collection!(Realm) getRealms();
+    Realm[] getRealms();
 
 }

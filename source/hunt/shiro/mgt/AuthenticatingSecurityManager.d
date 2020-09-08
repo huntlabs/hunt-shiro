@@ -97,7 +97,7 @@ abstract class AuthenticatingSecurityManager : RealmSecurityManager {
      */
     override protected void afterRealmsSet() {
         super.afterRealmsSet();
-        auto authenticatorCast = cast(ModularRealmAuthenticator) this.authenticator;
+        ModularRealmAuthenticator authenticatorCast = cast(ModularRealmAuthenticator) this.authenticator;
         if (authenticatorCast !is null) {
             authenticatorCast.setRealms(getRealms());
         }

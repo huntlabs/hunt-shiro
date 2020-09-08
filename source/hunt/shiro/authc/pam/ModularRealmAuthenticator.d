@@ -89,7 +89,7 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
     /**
      * List of realms that will be iterated through when a user authenticates.
      */
-    private Collection!(Realm) realms;
+    private Realm[] realms;
 
     /**
      * The authentication strategy to use during authentication attempts, defaults to a
@@ -130,8 +130,8 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
      *
      * @param realms the realms to consult during authentication attempts.
      */
-     void setRealms(Collection!(Realm) realms) {
-        if (CollectionUtils.isEmpty(realms)) {
+     void setRealms(Realm[] realms) {
+        if (realms.empty()) {
             warningf("xxxx=> %s, name: %s", cast(void*)this, _name);
         } else {
             infof("oooooook => %s, name: %s", cast(void*)this, _name);
@@ -144,8 +144,8 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
      *
      * @return the realm(s) used by this {@code Authenticator} during an authentication attempt.
      */
-    protected Collection!(Realm) getRealms() {
-        if (CollectionUtils.isEmpty(realms)) {
+    protected Realm[] getRealms() {
+        if (realms.empty()) {
             warningf("xxxx=> %s, name: %s", cast(void*)this, _name);
         } else {
             infof("oooooook => %s, name: %s", cast(void*)this, _name);
@@ -190,8 +190,8 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
      */
 
     protected void assertRealmsConfigured(){
-        Collection!(Realm) realms = getRealms();
-        if (CollectionUtils.isEmpty(realms)) {
+        Realm[] realms = getRealms();
+        if (realms.empty()) {
             warningf("No realms have been configured! %s,  %s, name: %s", cast(void*)this, typeid(cast(Object)this), _name);
             string msg = "Configuration error:  No realms have been configured!  One or more realms must be " ~
                     "present to execute an authentication attempt.";
@@ -232,7 +232,7 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
      * @return an aggregated AuthenticationInfo instance representing account data across all the successfully
      *         consulted realms.
      */
-    protected AuthenticationInfo doMultiRealmAuthentication(Collection!(Realm) realms, AuthenticationToken token) {
+    protected AuthenticationInfo doMultiRealmAuthentication(Realm[] realms, AuthenticationToken token) {
 
         AuthenticationStrategy strategy = getAuthenticationStrategy();
         AuthenticationInfo aggregate = strategy.beforeAllAttempts(realms, token);
@@ -305,9 +305,9 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
      */
     override protected AuthenticationInfo doAuthenticate(AuthenticationToken authenticationToken){
         assertRealmsConfigured();
-        Collection!(Realm) realms = getRealms();
-        if (realms.size() == 1) {
-            return doSingleRealmAuthentication(realms.toArray()[0], authenticationToken);
+        Realm[] realms = getRealms();
+        if (realms.length == 1) {
+            return doSingleRealmAuthentication(realms[0], authenticationToken);
         } else {
             return doMultiRealmAuthentication(realms, authenticationToken);
         }
@@ -326,8 +326,8 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
      */
     override void onLogout(PrincipalCollection principals) {
         super.onLogout(principals);
-        Collection!(Realm) realms = getRealms();
-        if (!CollectionUtils.isEmpty(realms)) {
+        Realm[] realms = getRealms();
+        if (!realms.empty()) {
             foreach(Realm realm ; realms) {
                 LogoutAware realmCast = cast(LogoutAware) realm;
                 if (realmCast !is null) {

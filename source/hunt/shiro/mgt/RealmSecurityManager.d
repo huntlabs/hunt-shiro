@@ -45,7 +45,8 @@ abstract class RealmSecurityManager : CachingSecurityManager {
     /**
      * Internal collection of <code>Realm</code>s used for all authentication and authorization operations.
      */
-    private Collection!(Realm) realms;
+    // private Realm[] realms;
+    private Realm[] realms;
 
     /**
      * Default no-arg constructor.
@@ -64,9 +65,9 @@ abstract class RealmSecurityManager : CachingSecurityManager {
         if (realm  is null) {
             throw new IllegalArgumentException("Realm argument cannot be null");
         }
-        Collection!(Realm) realms = new ArrayList!(Realm)(1);
-        realms.add(realm);
-        setRealms(realms);
+        // Realm[] realms = new ArrayList!(Realm)(1);
+        // realms.add(realm);
+        setRealms([realm]);
     }
 
     /**
@@ -75,24 +76,24 @@ abstract class RealmSecurityManager : CachingSecurityManager {
      * @param realms the realms managed by this <tt>SecurityManager</tt> instance.
      * @throws IllegalArgumentException if the realms collection is null or empty.
      */
-     void setRealms(Collection!(Realm) realms) {
-        if (realms  is null) {
-            throw new IllegalArgumentException("Realms collection argument cannot be null.");
-        }
-        if (realms.isEmpty()) {
-            throw new IllegalArgumentException("Realms collection argument cannot be empty.");
-        }
-        this.realms = realms;
-        afterRealmsSet();
-    }
+    //  void setRealms(Realm[] realms) {
+    //     if (realms  is null) {
+    //         throw new IllegalArgumentException("Realms collection argument cannot be null.");
+    //     }
+    //     if (realms.isEmpty()) {
+    //         throw new IllegalArgumentException("Realms collection argument cannot be empty.");
+    //     }
+    //     this.realms = realms;
+    //     afterRealmsSet();
+    // }
 
     void setRealms(Realm[] realms) {
         if (realms.empty) {
             throw new IllegalArgumentException("Realms collection argument cannot be empty.");
         }
         
-        Collection!(Realm) r = new ArrayList!(Realm)(realms);
-        this.realms = r;
+        // Realm[] r = new ArrayList!(Realm)(realms);
+        this.realms = realms;
         afterRealmsSet();
     }
 
@@ -106,7 +107,7 @@ abstract class RealmSecurityManager : CachingSecurityManager {
      *
      * @return the {@link Realm Realm}s managed by this SecurityManager instance.
      */
-    Collection!(Realm) getRealms() {
+    Realm[] getRealms() {
         return realms;
     }
 
@@ -124,8 +125,8 @@ abstract class RealmSecurityManager : CachingSecurityManager {
      */
     protected void applyCacheManagerToRealms() {
         CacheManager cacheManager = getCacheManager();
-        Collection!(Realm) realms = getRealms();
-        if (cacheManager !is null && realms !is null && !realms.isEmpty()) {
+        Realm[] realms = getRealms();
+        if (cacheManager !is null && !realms.empty()) {
             foreach(Realm realm ; realms) {
                 CacheManagerAware ca = cast(CacheManagerAware) realm;
                 if (ca !is null) {
@@ -150,8 +151,8 @@ abstract class RealmSecurityManager : CachingSecurityManager {
      */
     protected void applyEventBusToRealms() {
         EventBus eventBus = getEventBus();
-        Collection!(Realm) realms = getRealms();
-        if (eventBus !is null && realms !is null && !realms.isEmpty()) {
+        Realm[] realms = getRealms();
+        if (eventBus !is null && !realms.empty()) {
             foreach(Realm realm ; realms) {
                 EventBusAware eba = cast(EventBusAware)realm;
                 if (eba !is null) {
@@ -180,9 +181,9 @@ abstract class RealmSecurityManager : CachingSecurityManager {
     override void destroy() {
         // LifecycleUtils.destroy(getRealms());
         
-        Collection!(Realm) realms = getRealms();
+        Realm[] realms = getRealms();
         
-        warningf("xxxxxxx => %d", realms.size());
+        warningf("xxxxxxx => %d", realms.length);
 
         if(realms !is null) {
             foreach(Realm r; realms) {

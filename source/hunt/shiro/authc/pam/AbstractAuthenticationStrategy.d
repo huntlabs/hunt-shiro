@@ -43,7 +43,7 @@ abstract class AbstractAuthenticationStrategy : AuthenticationStrategy {
      * Simply returns <code>new {@link hunt.shiro.authc.SimpleAuthenticationInfo SimpleAuthenticationInfo}();</code>, which supports
      * aggregating account data across realms.
      */
-     AuthenticationInfo beforeAllAttempts(Collection!Realm realms, AuthenticationToken token){
+     AuthenticationInfo beforeAllAttempts(Realm[] realms, AuthenticationToken token){
         return new SimpleAuthenticationInfo();
     }
 

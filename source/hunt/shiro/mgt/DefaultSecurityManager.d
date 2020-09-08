@@ -113,7 +113,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
      *
      * @param realms the realm instances backing this SecurityManager.
      */
-    this(Collection!(Realm) realms) {
+    this(Realm[] realms) {
         warning("333333");
         this();
         setRealms(realms);

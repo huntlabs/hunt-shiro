@@ -53,7 +53,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
     /**
      * The realms to consult during any authorization check.
      */
-    protected Collection!(Realm) realms;
+    protected Realm[] realms;
 
     /**
      * A PermissionResolver to be used by <em>all</em> configured realms.  Leave <code>null</code> if you wish
@@ -87,7 +87,7 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      *
      * @param realms the realms to consult during an authorization check.
      */
-    this(Collection!(Realm) realms) {
+    this(Realm[] realms) {
         setRealms(realms);
         
         int c = atomicOp!("+=")(count, 1);
@@ -104,9 +104,9 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      *
      * @return the realms wrapped by this <code>Authorizer</code> which are consulted during an authorization check.
      */
-    Collection!(Realm) getRealms() {
+    Realm[] getRealms() {
         
-        if (CollectionUtils.isEmpty(realms)) {
+        if (realms.empty()) {
             warningf("xxxx=> %s, name: %s", cast(void*)this, _name);
         } else {
             infof("oooooook => %s, name: %s", cast(void*)this, _name);
@@ -120,9 +120,9 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      *
      * @param realms the realms wrapped by this <code>Authorizer</code> which are consulted during an authorization check.
      */
-    void setRealms(Collection!(Realm) realms) {
+    void setRealms(Realm[] realms) {
         
-        if (CollectionUtils.isEmpty(realms)) {
+        if (realms.empty()) {
             warningf("xxxx=> %s, name: %s", cast(void*)this, _name);
         } else {
             infof("oooooook => %s, name: %s", cast(void*)this, _name);
@@ -173,8 +173,8 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      */
     protected void applyPermissionResolverToRealms() {
         PermissionResolver resolver = getPermissionResolver();
-        Collection!(Realm) realms = getRealms();
-        if (resolver !is null && realms !is null && !realms.isEmpty()) {
+        Realm[] realms = getRealms();
+        if (resolver !is null && !realms.empty()) {
             foreach (Realm realm; realms) {
                 auto realmCast = cast(PermissionResolverAware) realm;
                 if (realmCast !is null) {
@@ -224,8 +224,8 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      */
     protected void applyRolePermissionResolverToRealms() {
         RolePermissionResolver resolver = getRolePermissionResolver();
-        Collection!(Realm) realms = getRealms();
-        if (resolver !is null && realms !is null && !realms.isEmpty()) {
+        Realm[] realms = getRealms();
+        if (resolver !is null && realms.empty()) {
             foreach (Realm realm; realms) {
                 auto realmCast = cast(RolePermissionResolverAware) realm;
                 if (realmCast !is null) {
@@ -242,8 +242,8 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * @throws IllegalStateException if the <tt>realms</tt> property is configured incorrectly.
      */
     protected void assertRealmsConfigured() {
-        Collection!(Realm) realms = getRealms();
-        if (realms is null || realms.isEmpty()) {
+        Realm[] realms = getRealms();
+        if (realms.empty()) {
             string msg = "Configuration error:  No realms have been configured!  One or more realms must be "
                 ~ "present to execute an authorization operation.";
             throw new IllegalStateException(msg);

@@ -126,8 +126,8 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
         if (securityManagerCast !is null) {
             //only apply realms if they haven't been explicitly set by the user:
             RealmSecurityManager realmSecurityManager = securityManagerCast;
-            Collection!(Realm) realms = realmSecurityManager.getRealms();
-            if (!CollectionUtils.isEmpty(realms)) {
+            Realm[] realms = realmSecurityManager.getRealms();
+            if (!realms.empty()) {
                 info("Realms have been explicitly set on the SecurityManager instance - auto-setting of " ~
                         "realms will not occur.");
                 autoApply = false;
@@ -149,10 +149,10 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
         if (autoApplyRealms) {
             //realms and realm factory might have been created - pull them out first so we can
             //initialize the securityManager:
-            Collection!(Realm) realms = getRealms(objects);
-            version(HUNT_DEBUG) infof("realms=%d, objects=%d", realms.size(), objects.size());
+            Realm[] realms = getRealms(objects);
+            version(HUNT_DEBUG) infof("realms=%d, objects=%d", realms.length, objects.size());
             //set them on the SecurityManager
-            if (!CollectionUtils.isEmpty(realms)) {
+            if (!realms.empty()) {
                 applyRealmsToSecurityManager(realms, securityManager);
             }
         }
@@ -187,20 +187,21 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
         return getReflectionBuilder().buildObjects(section);
     }
 
-    private void addToRealms(Collection!(Realm) realms, RealmFactory factory) {
+    private void addToRealms(ref Realm[] realms, RealmFactory factory) {
         LifecycleUtils.init(cast(Object)factory);
-        Collection!(Realm) factoryRealms = factory.getRealms();
+        Realm[] factoryRealms = factory.getRealms();
         //SHIRO-238: check factoryRealms (was 'realms'):
-        if (!CollectionUtils.isEmpty(factoryRealms)) {
-            realms.addAll(factoryRealms);
+        if (!factoryRealms.empty()) {
+            realms ~= factoryRealms;
         }
     }
 
-    private Collection!(Realm) getRealms(Map!(string, Object) instances) {
+    private Realm[] getRealms(Map!(string, Object) instances) {
 
         //realms and realm factory might have been created - pull them out first so we can
         //initialize the securityManager:
-        List!(Realm) realms = new ArrayList!(Realm)();
+        // List!(Realm) realms = new ArrayList!(Realm)();
+        Realm[] realms;
 
         //iterate over the map entries to pull out the realm factory(s):
         foreach (string name, Object value; instances) {
@@ -221,7 +222,7 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
                                 fullyQualifiedName!(Nameable));
                     }
                 }
-                realms.add(realm);
+                realms ~=  realm;
             }
         }
 
@@ -240,7 +241,7 @@ class IniSecurityManagerFactory : IniFactorySupport!(SecurityManager) {
         }
     }
 
-    protected void applyRealmsToSecurityManager(Collection!(Realm) realms, SecurityManager securityManager) {
+    protected void applyRealmsToSecurityManager(Realm[] realms, SecurityManager securityManager) {
         assertRealmSecurityManager(securityManager);
         (cast(RealmSecurityManager) securityManager).setRealms(realms);
     }

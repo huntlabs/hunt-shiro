@@ -616,9 +616,9 @@ class SubjectBuilder {
      * to the calling code as determined by a call to {@link hunt.shiro.SecurityUtils#getSecurityManager()}
      * to build the {@code Subject} instance.
      */
-    this() {
-        this(SecurityUtils.getSecurityManager());
-    }
+    // this() {
+    //     this(SecurityUtils.getSecurityManager());
+    // }
 
     /**
      * Constructs a new {@link Subject.Builder} instance which will use the specified {@code SecurityManager} when

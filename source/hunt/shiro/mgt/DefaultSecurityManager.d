@@ -50,6 +50,8 @@ import hunt.util.Common;
 
 import std.conv;
 
+
+
 /**
  * The Shiro framework's default concrete implementation of the {@link SecurityManager} interface,
  * based around a collection of {@link hunt.shiro.realm.Realm}s.  This implementation delegates its
@@ -89,6 +91,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
      * Default no-arg constructor.
      */
     this() {
+        warning("xxx111");
         super();
         this.subjectFactory = new DefaultSubjectFactory();
         this.subjectDAO = new DefaultSubjectDAO();
@@ -100,6 +103,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
      * @param singleRealm the single realm used by this SecurityManager.
      */
     this(Realm singleRealm) {
+        warning("22222");
         this();
         setRealm(singleRealm);
     }
@@ -110,6 +114,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
      * @param realms the realm instances backing this SecurityManager.
      */
     this(Collection!(Realm) realms) {
+        warning("333333");
         this();
         setRealms(realms);
     }
@@ -292,9 +297,9 @@ class DefaultSecurityManager : SessionsSecurityManager {
             throw ae; //propagate
         }
 
-        // Subject loggedIn = createSubject(token, info, subject);
+        Subject loggedIn = createSubject(token, info, subject);
         // Always create a new subject whithout refering to the existing one.
-        Subject loggedIn = createSubject(token, info, null);
+        // Subject loggedIn = createSubject(token, info, null);
 
         onSuccessfulLogin(token, info, loggedIn);
 
@@ -316,6 +321,7 @@ class DefaultSecurityManager : SessionsSecurityManager {
     }
 
     protected SubjectContext copy(SubjectContext subjectContext) {
+        // warning((cast(Object)subjectContext).toString());
         return new DefaultSubjectContext(subjectContext);
     }
 

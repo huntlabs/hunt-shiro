@@ -52,7 +52,8 @@ class DefaultSubjectContext : MapContext, SubjectContext {
 
     
 
-    private enum string SECURITY_MANAGER = fullyQualifiedName!(DefaultSubjectContext) ~ ".SECURITY_MANAGER";
+    // private enum string SECURITY_MANAGER = fullyQualifiedName!(DefaultSubjectContext) ~ ".SECURITY_MANAGER";
+    private enum string SECURITY_MANAGER = "xxx-manager";
 
     private enum string SESSION_ID = fullyQualifiedName!(DefaultSubjectContext) ~ ".SESSION_ID";
 
@@ -102,22 +103,22 @@ class DefaultSubjectContext : MapContext, SubjectContext {
 
     SecurityManager resolveSecurityManager() {
         SecurityManager securityManager = getSecurityManager();
-        if (securityManager  is null) {
-            version(HUNT_SHIRO_DEBUG) {
+        if (securityManager is null) {
+            version(HUNT_AUTH_DEBUG) {
                 warningf("No SecurityManager available in subject context map.  " ~
                         "Falling back to SecurityUtils.getSecurityManager() lookup.");
             }
-            try {
-                securityManager = SecurityUtils.getSecurityManager();
-            } catch (UnavailableSecurityManagerException e) {
-                version(HUNT_AUTH_DEBUG) {
-                    warningf("No SecurityManager available via SecurityUtils." ~ 
-                        " Heuristics exhausted. The reason is: %s", e.msg);
-                } 
-                version(HUNT_SHIRO_DEBUG) {
-                    warning(e);
-                }
-            }
+            // try {
+            //     securityManager = SecurityUtils.getSecurityManager();
+            // } catch (UnavailableSecurityManagerException e) {
+            //     version(HUNT_AUTH_DEBUG) {
+            //         warningf("No SecurityManager available via SecurityUtils." ~ 
+            //             " Heuristics exhausted. The reason is: %s", e.msg);
+            //     } 
+            //     version(HUNT_SHIRO_DEBUG) {
+            //         warning(e);
+            //     }
+            // }
         }
         return securityManager;
     }

@@ -209,7 +209,7 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
             }
         } catch (Throwable t) {
             warning(t.msg);
-            version(HUNT_SHIRO_DEBUG) warning(t);
+            version(HUNT_DEBUG) warning(t);
             AuthenticationException ae = null;
             auto tCast = cast(AuthenticationException)t;
             if (tCast !is null) {

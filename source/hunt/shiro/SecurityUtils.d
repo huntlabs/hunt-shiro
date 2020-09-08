@@ -29,7 +29,7 @@ import hunt.logging.ConsoleLogger;
 import core.thread;
 import std.format;
 
-// enum DEFAULT_NAME = "default";
+enum DEFAULT_NAME = "default";
 
 /**
  * Accesses the currently accessible {@code Subject} for the calling code depending on runtime environment.
@@ -44,7 +44,7 @@ struct SecurityUtils {
      * ONLY used as a 'backup' in VM Singleton environments (that is, standalone environments), since the
      * ThreadContext should always be the primary source for Subject instances when possible.
      */
-    private __gshared SecurityManager securityManager;
+    // private __gshared SecurityManager securityManager;
 
     /**
      * Returns the currently accessible {@code Subject} available to the calling code depending on
@@ -60,26 +60,33 @@ struct SecurityUtils {
      *                               a {@code Subject}, which which is considered an invalid application configuration
      *                               - a Subject should <em>always</em> be available to the caller.
      */
-    static Subject getSubject() {
-        Subject subject = ThreadContext.getSubject();
-        if (subject  is null) {
-            subject = (new SubjectBuilder()).buildSubject();
-            ThreadContext.bind(subject);
-        }
-        return subject;
-    }
+    // static Subject getSubject() {
+    //     Subject subject = ThreadContext.getSubject();
+    //     if (subject  is null) {
+    //         subject = (new SubjectBuilder()).buildSubject();
+    //         ThreadContext.bind(subject);
+    //     }
+    //     return subject;
+    // }
 
     static Subject getSubject(string managerName) {
         SecurityManager sm = getSecurityManager(managerName);
         if(sm is null) {
-            warningf("No manager found for: %s. Create it now.", managerName);
-            import hunt.shiro.mgt.DefaultSecurityManager;
-            sm = new DefaultSecurityManager();
-            setSecurityManager(managerName, securityManager);
+            string msg = format("No manager found for: %s. Create it now.", managerName);
+            warningf(msg);
+            throw new Exception(msg);
+            // warningf("No manager found for: %s. Create it now.", managerName);
+
+            // throw new Exception("xxxxxx");
+            // return null;
+            // import hunt.shiro.mgt.DefaultSecurityManager;
+            // sm = new DefaultSecurityManager();
+            // setSecurityManager(managerName, sm);
         }
 
         Subject subject = ThreadContext.getSubject(managerName);
         if (subject is null) {
+            warningf("bind a subject for manager %s", managerName);
             subject = (new SubjectBuilder(sm)).buildSubject();
             ThreadContext.bind(managerName, subject);
         }
@@ -92,9 +99,9 @@ struct SecurityUtils {
         return new SubjectBuilder(sm).sessionId(sessionId).host(host).buildSubject();
     }
 
-    static Subject newSubject(string sessionId, string host = "") {
-        return new SubjectBuilder().sessionId(sessionId).host(host).buildSubject();
-    }
+    // static Subject newSubject(string sessionId, string host = "") {
+    //     return new SubjectBuilder().sessionId(sessionId).host(host).buildSubject();
+    // }
 
     /**
      * Sets a VM (static) singleton SecurityManager, specifically for transparent use in the
@@ -129,8 +136,8 @@ struct SecurityUtils {
      * @param securityManager the securityManager instance to set as a VM static singleton.
      */
     static void setSecurityManager(SecurityManager securityManager) {
-        SecurityUtils.securityManager = securityManager;
-        // setSecurityManager(DEFAULT_NAME, securityManager);
+        // SecurityUtils.securityManager = securityManager;
+        setSecurityManager(DEFAULT_NAME, securityManager);
     }
     
     static void setSecurityManager(string name, SecurityManager securityManager) {
@@ -153,21 +160,31 @@ struct SecurityUtils {
      *          if there is no {@code SecurityManager} instance available to the
      *          calling code, which typically indicates an invalid application configuration.
      */
-     static SecurityManager getSecurityManager() {
-        SecurityManager securityManager = ThreadContext.getSecurityManager();
-        if (securityManager is null) {
-            securityManager = SecurityUtils.securityManager;
-        }
-        if (securityManager is null) {
-            string msg = "No SecurityManager accessible to the calling code, either bound to the " ~
-            Thread.getThis().name() ~ " or as a vm static singleton.  This is an invalid application " ~
-                    "configuration.";
-            throw new UnavailableSecurityManagerException(msg);
-        }
-        return securityManager;
-    }
+    //  static SecurityManager getSecurityManager() {
+    //     // SecurityManager securityManager = ThreadContext.getSecurityManager();
+    //     // if (securityManager is null) {
+    //     //     securityManager = SecurityUtils.securityManager;
+    //     // }
+    //     // if (securityManager is null) {
+    //     //     string msg = "No SecurityManager accessible to the calling code, either bound to the " ~
+    //     //     Thread.getThis().name() ~ " or as a vm static singleton.  This is an invalid application " ~
+    //     //             "configuration.";
+    //     //     throw new UnavailableSecurityManagerException(msg);
+    //     // }
+    //     // return securityManager;
+    //     return getSecurityManager(DEFAULT_NAME);
+    // }
 
-    static SecurityManager getSecurityManager(string name){
-        return securityManagers.get(name, null);
+    static SecurityManager getSecurityManager(string name) {
+
+        auto itemPtr = name in securityManagers;
+        if(itemPtr is null) {
+            warningf("No SecurityManager found for %s", name);
+            // throw new Exception("vvvvvvvvvvv");
+            return null;
+        }
+        
+        return *itemPtr;
+        // return securityManagers.get(name, null);
     }
 }

@@ -27,12 +27,18 @@ import hunt.shiro.authz.permission.RolePermissionResolverAware;
 import hunt.shiro.Exceptions;
 import hunt.shiro.realm.Realm;
 import hunt.shiro.subject.PrincipalCollection;
+import hunt.shiro.util.CollectionUtils;
 
 import hunt.Exceptions;
 import hunt.collection;
 import hunt.logging;
 
+import std.conv;
+import std.string;
+import core.atomic;
 import std.range;
+
+private shared int count;
 
 /**
  * A <tt>ModularRealmAuthorizer</tt> is an <tt>Authorizer</tt> implementation that consults one or more configured
@@ -40,6 +46,9 @@ import std.range;
  *
  */
 class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissionResolverAware {
+
+
+    private string _name;
 
     /**
      * The realms to consult during any authorization check.
@@ -62,6 +71,14 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * Default no-argument constructor, does nothing.
      */
     this() {
+        
+        int c = atomicOp!("+=")(count, 1);
+        warningf("xxx333! %s,  %s, counter: %d", cast(void*)this, typeid(cast(Object)this), c);
+
+        _name = "test=>" ~ to!string(c);
+
+        if(c > 3)
+            throw new Exception("vvvv");
     }
 
     /**
@@ -72,6 +89,14 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      */
     this(Collection!(Realm) realms) {
         setRealms(realms);
+        
+        int c = atomicOp!("+=")(count, 1);
+        warningf("xxx333! %s,  %s, counter: %d", cast(void*)this, typeid(cast(Object)this), c);
+
+        _name = "test=>" ~ to!string(c);
+
+        if(c > 3)
+            throw new Exception("vvvv");
     }
 
     /**
@@ -80,6 +105,13 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * @return the realms wrapped by this <code>Authorizer</code> which are consulted during an authorization check.
      */
     Collection!(Realm) getRealms() {
+        
+        if (CollectionUtils.isEmpty(realms)) {
+            warningf("xxxx=> %s, name: %s", cast(void*)this, _name);
+        } else {
+            infof("oooooook => %s, name: %s", cast(void*)this, _name);
+        }
+
         return this.realms;
     }
 
@@ -89,6 +121,13 @@ class ModularRealmAuthorizer : Authorizer, PermissionResolverAware, RolePermissi
      * @param realms the realms wrapped by this <code>Authorizer</code> which are consulted during an authorization check.
      */
     void setRealms(Collection!(Realm) realms) {
+        
+        if (CollectionUtils.isEmpty(realms)) {
+            warningf("xxxx=> %s, name: %s", cast(void*)this, _name);
+        } else {
+            infof("oooooook => %s, name: %s", cast(void*)this, _name);
+        }
+
         this.realms = realms;
         applyPermissionResolverToRealms();
         applyRolePermissionResolverToRealms();

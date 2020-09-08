@@ -31,6 +31,8 @@ import hunt.collection;
 import hunt.Exceptions;
 import std.range;
 
+import hunt.logging.ConsoleLogger;
+
 
 /**
  * Shiro support of a {@link SecurityManager} class hierarchy based around a collection of
@@ -177,9 +179,13 @@ abstract class RealmSecurityManager : CachingSecurityManager {
 
     override void destroy() {
         // LifecycleUtils.destroy(getRealms());
+        
         Collection!(Realm) realms = getRealms();
+        
+        warningf("xxxxxxx => %d", realms.size());
+
         if(realms !is null) {
-            foreach(Realm r; getRealms()) {
+            foreach(Realm r; realms) {
                 LifecycleUtils.destroy(cast(Object)r);
             }
         }

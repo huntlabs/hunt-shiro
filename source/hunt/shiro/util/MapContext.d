@@ -24,6 +24,7 @@ import hunt.shiro.util.Common;
 import hunt.collection.HashMap;
 import hunt.collection.Map;
 import hunt.Exceptions;
+import hunt.logging.ConsoleLogger;
 import hunt.Object;
 import hunt.util.Common;
 import hunt.util.ObjectUtils;
@@ -65,9 +66,16 @@ class MapContext : Map!(string, Object) {
      */
     //@SuppressWarnings({"unchecked"})
     protected E getTypedValue(E)(string key) {
+        // tracef("object: %s, key %s", cast(void*)this, key);
+
+        // tracef(toString());
+
         E found = null;
         Object o = backingMap.get(key);
-        if (o !is null) {
+        if (o is null) {
+            // warningf("No value found for %s", key);
+            // tracef(toString());
+        } else {
             found = cast(E) o;
             if (found is null) {
                 string msg = "Invalid object found in SubjectContext Map under key [" ~ key ~ "].  Expected type " ~
@@ -76,6 +84,7 @@ class MapContext : Map!(string, Object) {
                 throw new IllegalArgumentException(msg);
             }
         }
+        // warningf("object: %s, key %s, null: %s", cast(void*)this, key, found is null);
         return found;
     }
 
@@ -86,6 +95,8 @@ class MapContext : Map!(string, Object) {
      * @param value the non-null value to store.  If {@code null}, this method does nothing and returns immediately.
      */
     protected void nullSafePut(string key, Object value) {
+        // warningf("object: %s, puting %s, null: %s", cast(void*)this, key, value is null);
+        // warning(toString());
         if (value !is null) {
             put(key, value);
         }
@@ -157,16 +168,16 @@ class MapContext : Map!(string, Object) {
             return "{}";
 
         Appender!string sb;
-        sb.put("{");
+        sb.put("{\n");
         bool isFirst = true;
         foreach (string key, Object value; this) {
             if (!isFirst) {
-                sb.put(", ");
+                sb.put(";\n");
             }
             sb.put(key ~ "=" ~ value.toString());
             isFirst = false;
         }
-        sb.put("}");
+        sb.put("\n}");
 
         return sb.data;
     }

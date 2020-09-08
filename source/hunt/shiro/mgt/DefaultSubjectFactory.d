@@ -55,7 +55,7 @@ class DefaultSubjectFactory : SubjectFactory {
             version(HUNT_AUTH_DEBUG) warning(t);
         }
 
-        warningf("Creating a new subject: authenticated=%s, host=%s, ", authenticated, host);
+        version(HUNT_AUTH_DEBUG) warningf("Creating a new subject: authenticated=%s, host=%s, ", authenticated, host);
 
         return new DelegatingSubject(principals, authenticated, host, session, sessionCreationEnabled, securityManager);
     }

@@ -18,55 +18,55 @@
  */
 module hunt.shiro.web.subject.WebSubjectContext;
 
-import hunt.shiro.subject.SubjectContext;
-import hunt.shiro.web.RequestPairSource;
+// import hunt.shiro.subject.SubjectContext;
+// import hunt.shiro.web.RequestPairSource;
 
-// import javax.servlet.ServletRequest;
-// import javax.servlet.ServletResponse;
+// // import javax.servlet.ServletRequest;
+// // import javax.servlet.ServletResponse;
 
-/**
- * A {@code WebSubjectContext} is a {@link SubjectContext} that additionally provides for type-safe
- * methods to set and retrieve a {@link ServletRequest} and {@link ServletResponse}.
- *
- * @since 1.0
- */
-interface WebSubjectContext : SubjectContext, RequestPairSource {
+// /**
+//  * A {@code WebSubjectContext} is a {@link SubjectContext} that additionally provides for type-safe
+//  * methods to set and retrieve a {@link ServletRequest} and {@link ServletResponse}.
+//  *
+//  * @since 1.0
+//  */
+// interface WebSubjectContext : SubjectContext, RequestPairSource {
 
-    /**
-     * Returns the {@code ServletRequest} received by the servlet container triggering the creation of the
-     * {@code Subject} instance.
-     *
-     * @return the {@code ServletRequest} received by the servlet container triggering the creation of the
-     *         {@code Subject} instance.
-     */
-    ServletRequest getServletRequest();
+//     /**
+//      * Returns the {@code ServletRequest} received by the servlet container triggering the creation of the
+//      * {@code Subject} instance.
+//      *
+//      * @return the {@code ServletRequest} received by the servlet container triggering the creation of the
+//      *         {@code Subject} instance.
+//      */
+//     ServletRequest getServletRequest();
 
-    /**
-     * Sets the {@code ServletRequest} received by the servlet container triggering the creation of the
-     * {@code Subject} instance.
-     *
-     * @param request the {@code ServletRequest} received by the servlet container triggering the creation of the
-     *                {@code Subject} instance.
-     */
-    void setServletRequest(ServletRequest request);
+//     /**
+//      * Sets the {@code ServletRequest} received by the servlet container triggering the creation of the
+//      * {@code Subject} instance.
+//      *
+//      * @param request the {@code ServletRequest} received by the servlet container triggering the creation of the
+//      *                {@code Subject} instance.
+//      */
+//     void setServletRequest(ServletRequest request);
 
-    ServletRequest resolveServletRequest();
+//     ServletRequest resolveServletRequest();
 
-    /**
-     * The paired {@code ServletResponse} corresponding to the associated {@link #getServletRequest servletRequest}.
-     *
-     * @return the paired {@code ServletResponse} corresponding to the associated
-     *         {@link #getServletRequest servletRequest}.
-     */
-    ServletResponse getServletResponse();
+//     /**
+//      * The paired {@code ServletResponse} corresponding to the associated {@link #getServletRequest servletRequest}.
+//      *
+//      * @return the paired {@code ServletResponse} corresponding to the associated
+//      *         {@link #getServletRequest servletRequest}.
+//      */
+//     ServletResponse getServletResponse();
 
-    /**
-     * Sets the paired {@code ServletResponse} corresponding to the associated {@link #getServletRequest servletRequest}.
-     *
-     * @param response The paired {@code ServletResponse} corresponding to the associated
-     *                 {@link #getServletRequest servletRequest}.
-     */
-    void setServletResponse(ServletResponse response);
+//     /**
+//      * Sets the paired {@code ServletResponse} corresponding to the associated {@link #getServletRequest servletRequest}.
+//      *
+//      * @param response The paired {@code ServletResponse} corresponding to the associated
+//      *                 {@link #getServletRequest servletRequest}.
+//      */
+//     void setServletResponse(ServletResponse response);
 
-    ServletResponse resolveServletResponse();
-}
+//     ServletResponse resolveServletResponse();
+// }

@@ -99,9 +99,9 @@ class SubjectAwareExecutor : Executor {
      * @return the currently Subject instance that should be associated with Runnable or Callable instances before
      *         being dispatched to the target {@code Executor} instance.
      */
-    protected Subject getSubject() {
-        return SecurityUtils.getSubject();
-    }
+    // protected Subject getSubject() {
+    //     return SecurityUtils.getSubject();
+    // }
 
     /**
      * Utility method for subclasses to associate the argument {@code Runnable} with the currently executing subject
@@ -114,10 +114,10 @@ class SubjectAwareExecutor : Executor {
      * @param r the argument runnable to be associated with the current subject
      * @return the associated runnable instance reflecting the current subject
      */
-    protected Runnable associateWithSubject(Runnable r) {
-        Subject subject = getSubject();
-        return subject.associateWith(r);
-    }
+    // protected Runnable associateWithSubject(Runnable r) {
+    //     Subject subject = getSubject();
+    //     return subject.associateWith(r);
+    // }
 
     /**
      * Executes the specified runnable by first associating it with the currently executing {@code Subject} and then
@@ -127,7 +127,9 @@ class SubjectAwareExecutor : Executor {
      *                {@code Executor} instance.
      */
      void execute(Runnable command) {
-        Runnable associated = associateWithSubject(command);
-        getTargetExecutor().execute(associated);
+        import hunt.logging.ConsoleLogger;
+        warning("dddddddddddddddddddddd");
+        // Runnable associated = associateWithSubject(command);
+        // getTargetExecutor().execute(associated);
     }
 }

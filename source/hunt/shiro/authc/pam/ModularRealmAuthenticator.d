@@ -38,10 +38,7 @@ import hunt.logging.ConsoleLogger;
 
 import std.conv;
 import std.string;
-import core.atomic;
 
-// __gshared int count;
-private shared int count;
 
 /**
  * A {@code ModularRealmAuthenticator} delegates account lookups to a pluggable (modular) collection of
@@ -97,8 +94,6 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
      */
     private AuthenticationStrategy authenticationStrategy;
 
-    private string _name;
-
     /*--------------------------------------------
     |         C O N S T R U C T O R S           |
     ============================================*/
@@ -109,15 +104,6 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
      * {@link hunt.shiro.authc.pam.AtLeastOneSuccessfulStrategy} by default.
      */
      this() {
-         
-        int c = atomicOp!("+=")(count, 1);
-        warningf("xxx333! %s,  %s, counter: %d", cast(void*)this, typeid(cast(Object)this), c);
-
-        _name = "test=>" ~ to!string(c);
-
-        if(c > 3)
-            throw new Exception("vvvv");
-
         this.authenticationStrategy = new AtLeastOneSuccessfulStrategy();
     }
 
@@ -131,11 +117,6 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
      * @param realms the realms to consult during authentication attempts.
      */
      void setRealms(Realm[] realms) {
-        if (realms.empty()) {
-            warningf("xxxx=> %s, name: %s", cast(void*)this, _name);
-        } else {
-            infof("oooooook => %s, name: %s", cast(void*)this, _name);
-        }
         this.realms = realms;
     }
 
@@ -145,12 +126,6 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
      * @return the realm(s) used by this {@code Authenticator} during an authentication attempt.
      */
     protected Realm[] getRealms() {
-        if (realms.empty()) {
-            warningf("xxxx=> %s, name: %s", cast(void*)this, _name);
-        } else {
-            infof("oooooook => %s, name: %s", cast(void*)this, _name);
-        }
-        
         return this.realms;
     }
 
@@ -192,7 +167,7 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
     protected void assertRealmsConfigured(){
         Realm[] realms = getRealms();
         if (realms.empty()) {
-            warningf("No realms have been configured! %s,  %s, name: %s", cast(void*)this, typeid(cast(Object)this), _name);
+            warningf("No realms have been configured!");
             string msg = "Configuration error:  No realms have been configured!  One or more realms must be " ~
                     "present to execute an authentication attempt.";
             throw new IllegalStateException(msg);

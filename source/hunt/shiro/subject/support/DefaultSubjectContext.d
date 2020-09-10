@@ -50,10 +50,7 @@ import std.traits;
  */
 class DefaultSubjectContext : MapContext, SubjectContext {
 
-    
-
-    // private enum string SECURITY_MANAGER = fullyQualifiedName!(DefaultSubjectContext) ~ ".SECURITY_MANAGER";
-    private enum string SECURITY_MANAGER = "xxx-manager";
+    private enum string SECURITY_MANAGER = fullyQualifiedName!(DefaultSubjectContext) ~ ".SECURITY_MANAGER";
 
     private enum string SESSION_ID = fullyQualifiedName!(DefaultSubjectContext) ~ ".SESSION_ID";
 

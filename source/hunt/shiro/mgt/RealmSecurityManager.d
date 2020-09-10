@@ -183,8 +183,6 @@ abstract class RealmSecurityManager : CachingSecurityManager {
         
         Realm[] realms = getRealms();
         
-        warningf("xxxxxxx => %d", realms.length);
-
         if(realms !is null) {
             foreach(Realm r; realms) {
                 LifecycleUtils.destroy(cast(Object)r);

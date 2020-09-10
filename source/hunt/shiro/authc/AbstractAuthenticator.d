@@ -222,7 +222,6 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
                         (cast(Object)token).toString() ~ "].  Possible unexpected " ~
                         "error? (Typical or expected login exceptions should extend from AuthenticationException).";
                 ae = new AuthenticationException(msg, t);
-                // version(HUNT_DEBUG) warning(msg, t);
             }
             try {
                 notifyFailure(token, ae);

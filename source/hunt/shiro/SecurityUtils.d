@@ -29,14 +29,13 @@ import hunt.logging.ConsoleLogger;
 import core.thread;
 import std.format;
 
-enum DEFAULT_NAME = "default";
+// enum DEFAULT_NAME = "default";
 
 /**
  * Accesses the currently accessible {@code Subject} for the calling code depending on runtime environment.
  *
  */
 struct SecurityUtils {
-
     
     private __gshared SecurityManager[string] securityManagers;
 
@@ -75,18 +74,11 @@ struct SecurityUtils {
             string msg = format("No manager found for: %s. Create it now.", managerName);
             warningf(msg);
             throw new Exception(msg);
-            // warningf("No manager found for: %s. Create it now.", managerName);
-
-            // throw new Exception("xxxxxx");
-            // return null;
-            // import hunt.shiro.mgt.DefaultSecurityManager;
-            // sm = new DefaultSecurityManager();
-            // setSecurityManager(managerName, sm);
         }
 
         Subject subject = ThreadContext.getSubject(managerName);
         if (subject is null) {
-            warningf("bind a subject for manager %s", managerName);
+            version(HUNT_SHIRO_DEBUG) warningf("bind a subject for manager %s", managerName);
             subject = (new SubjectBuilder(sm)).buildSubject();
             ThreadContext.bind(managerName, subject);
         }
@@ -135,10 +127,10 @@ struct SecurityUtils {
      *
      * @param securityManager the securityManager instance to set as a VM static singleton.
      */
-    static void setSecurityManager(SecurityManager securityManager) {
-        // SecurityUtils.securityManager = securityManager;
-        setSecurityManager(DEFAULT_NAME, securityManager);
-    }
+    // static void setSecurityManager(SecurityManager securityManager) {
+    //     // SecurityUtils.securityManager = securityManager;
+    //     setSecurityManager(DEFAULT_NAME, securityManager);
+    // }
     
     static void setSecurityManager(string name, SecurityManager securityManager) {
         securityManagers[name] = securityManager;
@@ -180,11 +172,9 @@ struct SecurityUtils {
         auto itemPtr = name in securityManagers;
         if(itemPtr is null) {
             warningf("No SecurityManager found for %s", name);
-            // throw new Exception("vvvvvvvvvvv");
             return null;
         }
         
         return *itemPtr;
-        // return securityManagers.get(name, null);
     }
 }

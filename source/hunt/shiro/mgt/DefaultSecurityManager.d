@@ -91,7 +91,6 @@ class DefaultSecurityManager : SessionsSecurityManager {
      * Default no-arg constructor.
      */
     this() {
-        warning("xxx111");
         super();
         this.subjectFactory = new DefaultSubjectFactory();
         this.subjectDAO = new DefaultSubjectDAO();
@@ -103,7 +102,6 @@ class DefaultSecurityManager : SessionsSecurityManager {
      * @param singleRealm the single realm used by this SecurityManager.
      */
     this(Realm singleRealm) {
-        warning("22222");
         this();
         setRealm(singleRealm);
     }
@@ -114,7 +112,6 @@ class DefaultSecurityManager : SessionsSecurityManager {
      * @param realms the realm instances backing this SecurityManager.
      */
     this(Realm[] realms) {
-        warning("333333");
         this();
         setRealms(realms);
     }

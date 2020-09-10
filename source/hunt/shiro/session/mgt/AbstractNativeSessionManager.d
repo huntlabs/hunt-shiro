@@ -276,7 +276,7 @@ abstract class AbstractNativeSessionManager :
      void stop(SessionKey key){
         Session session = lookupRequiredSession(key);
         try {
-            version(HUNT_DEBUG) {
+            version(HUNT_SHIRO_DEBUG) {
                 tracef("Stopping session with id [" ~ session.getId() ~ "]");
             }
             session.stop();

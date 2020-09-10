@@ -29,8 +29,6 @@ import hunt.logging.ConsoleLogger;
 import core.thread;
 import std.format;
 
-// enum DEFAULT_NAME = "default";
-
 /**
  * Accesses the currently accessible {@code Subject} for the calling code depending on runtime environment.
  *
@@ -38,12 +36,6 @@ import std.format;
 struct SecurityUtils {
     
     private __gshared SecurityManager[string] securityManagers;
-
-    /**
-     * ONLY used as a 'backup' in VM Singleton environments (that is, standalone environments), since the
-     * ThreadContext should always be the primary source for Subject instances when possible.
-     */
-    // private __gshared SecurityManager securityManager;
 
     /**
      * Returns the currently accessible {@code Subject} available to the calling code depending on
@@ -59,15 +51,6 @@ struct SecurityUtils {
      *                               a {@code Subject}, which which is considered an invalid application configuration
      *                               - a Subject should <em>always</em> be available to the caller.
      */
-    // static Subject getSubject() {
-    //     Subject subject = ThreadContext.getSubject();
-    //     if (subject  is null) {
-    //         subject = (new SubjectBuilder()).buildSubject();
-    //         ThreadContext.bind(subject);
-    //     }
-    //     return subject;
-    // }
-
     static Subject getSubject(string managerName) {
         SecurityManager sm = getSecurityManager(managerName);
         if(sm is null) {
@@ -90,10 +73,6 @@ struct SecurityUtils {
         assert(sm !is null);
         return new SubjectBuilder(sm).sessionId(sessionId).host(host).buildSubject();
     }
-
-    // static Subject newSubject(string sessionId, string host = "") {
-    //     return new SubjectBuilder().sessionId(sessionId).host(host).buildSubject();
-    // }
 
     /**
      * Sets a VM (static) singleton SecurityManager, specifically for transparent use in the
@@ -127,11 +106,6 @@ struct SecurityUtils {
      *
      * @param securityManager the securityManager instance to set as a VM static singleton.
      */
-    // static void setSecurityManager(SecurityManager securityManager) {
-    //     // SecurityUtils.securityManager = securityManager;
-    //     setSecurityManager(DEFAULT_NAME, securityManager);
-    // }
-    
     static void setSecurityManager(string name, SecurityManager securityManager) {
         securityManagers[name] = securityManager;
     }
@@ -152,21 +126,6 @@ struct SecurityUtils {
      *          if there is no {@code SecurityManager} instance available to the
      *          calling code, which typically indicates an invalid application configuration.
      */
-    //  static SecurityManager getSecurityManager() {
-    //     // SecurityManager securityManager = ThreadContext.getSecurityManager();
-    //     // if (securityManager is null) {
-    //     //     securityManager = SecurityUtils.securityManager;
-    //     // }
-    //     // if (securityManager is null) {
-    //     //     string msg = "No SecurityManager accessible to the calling code, either bound to the " ~
-    //     //     Thread.getThis().name() ~ " or as a vm static singleton.  This is an invalid application " ~
-    //     //             "configuration.";
-    //     //     throw new UnavailableSecurityManagerException(msg);
-    //     // }
-    //     // return securityManager;
-    //     return getSecurityManager(DEFAULT_NAME);
-    // }
-
     static SecurityManager getSecurityManager(string name) {
 
         auto itemPtr = name in securityManagers;

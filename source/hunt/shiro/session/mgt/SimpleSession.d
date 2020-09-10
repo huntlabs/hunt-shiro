@@ -49,9 +49,6 @@ class SimpleSession : ValidatingSession {
     // changes do not require a change to this number.  If you need to generate
     // a new number in this case, use the JDK's 'serialver' program to generate it.
 
-    //TODO - complete JavaDoc
-
-
     protected enum long MILLIS_PER_SECOND = 1000;
     protected enum long MILLIS_PER_MINUTE = 60 * MILLIS_PER_SECOND;
     protected enum long MILLIS_PER_HOUR = 60 * MILLIS_PER_MINUTE;
@@ -95,7 +92,7 @@ class SimpleSession : ValidatingSession {
 
     this() {
         this.timeout = DefaultSessionManager.DEFAULT_GLOBAL_SESSION_TIMEOUT; //TODO - remove concrete reference to DefaultSessionManager
-        this.startTimestamp = DateTime.currentTimeMillis(); // new Date();
+        this.startTimestamp = DateTime.currentTimeMillis();
         this.lastAccessTime = this.startTimestamp;
     }
 
@@ -248,11 +245,9 @@ class SimpleSession : ValidatingSession {
             // be inactive before expiring.  If the session was last accessed
             // before this time, it is expired.
             long expireTimeMillis = DateTime.currentTimeMillis() - timeout;
-            // Date expireTime = new Date(expireTimeMillis);
-            // return lastAccessTime.before(expireTime);
             return lastAccessTime < expireTimeMillis;
         } else {
-            version(HUNT_DEBUG) {
+            version(HUNT_SHIRO_DEBUG) {
                 tracef("No timeout for session with id [" ~ getId() ~
                         "].  Session is not considered expired.");
             }
@@ -278,7 +273,6 @@ class SimpleSession : ValidatingSession {
             //throw an exception explaining details of why it expired:
             Date lastAccessTime = getLastAccessTime();
             long timeout = getTimeout();
-
             string sessionId = getId();
 
             // DateFormat df = DateFormat.getInstance();
@@ -289,7 +283,7 @@ class SimpleSession : ValidatingSession {
                     ".  Session timeout is set to " ~ to!string(timeout / MILLIS_PER_SECOND) ~ " seconds (" ~
                     to!string(timeout / MILLIS_PER_MINUTE) ~ " minutes)";
             version(HUNT_DEBUG) {
-                tracef(msg);
+                warningf(msg);
             }
             throw new ExpiredSessionException(msg);
         }
@@ -432,100 +426,6 @@ class SimpleSession : ValidatingSession {
         sb.append(typeid(this).name).append(", id=").append(id);
         return sb.toString();
     }
-
-    /**
-     * Serializes this object to the specified output stream for JDK Serialization.
-     *
-     * @param out output stream used for Object serialization.
-     * @throws IOException if any of this object's fields cannot be written to the stream.
-     */
-    // private void writeObject(ObjectOutputStream out){
-    //     out.defaultWriteObject();
-    //     short alteredFieldsBitMask = getAlteredFieldsBitMask();
-    //     out.writeShort(alteredFieldsBitMask);
-    //     if (id !is null) {
-    //         out.writeObject(id);
-    //     }
-    //     if (startTimestamp !is null) {
-    //         out.writeObject(startTimestamp);
-    //     }
-    //     if (stopTimestamp !is null) {
-    //         out.writeObject(stopTimestamp);
-    //     }
-    //     if (lastAccessTime !is null) {
-    //         out.writeObject(lastAccessTime);
-    //     }
-    //     if (timeout != 0l) {
-    //         out.writeLong(timeout);
-    //     }
-    //     if (expired) {
-    //         out.writebool(expired);
-    //     }
-    //     if (host !is null) {
-    //         out.writeUTF(host);
-    //     }
-    //     if (!CollectionUtils.isEmpty(attributes)) {
-    //         out.writeObject(attributes);
-    //     }
-    // }
-
-    /**
-     * Reconstitutes this object based on the specified InputStream for JDK Serialization.
-     *
-     * @param in the input stream to use for reading data to populate this object.
-     * @throws IOException            if the input stream cannot be used.
-     * @throws ClassNotFoundException if a required class needed for instantiation is not available in the present JVM
-     */
-    //@SuppressWarnings({"unchecked"})
-    // private void readObject(ObjectInputStream in){
-    //     in.defaultReadObject();
-    //     short bitMask = in.readShort();
-
-    //     if (isFieldPresent(bitMask, ID_BIT_MASK)) {
-    //         this.id = (Serializable) in.readObject();
-    //     }
-    //     if (isFieldPresent(bitMask, START_TIMESTAMP_BIT_MASK)) {
-    //         this.startTimestamp = (Date) in.readObject();
-    //     }
-    //     if (isFieldPresent(bitMask, STOP_TIMESTAMP_BIT_MASK)) {
-    //         this.stopTimestamp = (Date) in.readObject();
-    //     }
-    //     if (isFieldPresent(bitMask, LAST_ACCESS_TIME_BIT_MASK)) {
-    //         this.lastAccessTime = (Date) in.readObject();
-    //     }
-    //     if (isFieldPresent(bitMask, TIMEOUT_BIT_MASK)) {
-    //         this.timeout = in.readLong();
-    //     }
-    //     if (isFieldPresent(bitMask, EXPIRED_BIT_MASK)) {
-    //         this.expired = in.readbool();
-    //     }
-    //     if (isFieldPresent(bitMask, HOST_BIT_MASK)) {
-    //         this.host = in.readUTF();
-    //     }
-    //     if (isFieldPresent(bitMask, ATTRIBUTES_BIT_MASK)) {
-    //         this.attributes = (Map!(Object, Object)) in.readObject();
-    //     }
-    // }
-
-    /**
-     * Returns a bit mask used during serialization indicating which fields have been serialized. Fields that have been
-     * altered (not null and/or not retaining the class defaults) will be serialized and have 1 in their respective
-     * index, fields that are null and/or retain class default values have 0.
-     *
-     * @return a bit mask used during serialization indicating which fields have been serialized.
-     */
-    // private short getAlteredFieldsBitMask() {
-    //     int bitMask = 0;
-    //     bitMask = id !is null ? bitMask | ID_BIT_MASK : bitMask;
-    //     bitMask = startTimestamp !is null ? bitMask | START_TIMESTAMP_BIT_MASK : bitMask;
-    //     bitMask = stopTimestamp !is null ? bitMask | STOP_TIMESTAMP_BIT_MASK : bitMask;
-    //     bitMask = lastAccessTime !is null ? bitMask | LAST_ACCESS_TIME_BIT_MASK : bitMask;
-    //     bitMask = timeout != 0l ? bitMask | TIMEOUT_BIT_MASK : bitMask;
-    //     bitMask = expired ? bitMask | EXPIRED_BIT_MASK : bitMask;
-    //     bitMask = host !is null ? bitMask | HOST_BIT_MASK : bitMask;
-    //     bitMask = !CollectionUtils.isEmpty(attributes) ? bitMask | ATTRIBUTES_BIT_MASK : bitMask;
-    //     return (short) bitMask;
-    // }
 
     /**
      * Returns {@code true} if the given {@code bitMask} argument indicates that the specified field has been

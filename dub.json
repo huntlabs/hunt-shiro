@@ -1,10 +1,10 @@
 {
 	"name": "hunt-shiro",
 	"description": "A powerful and easy-to-use D security framework that performs authentication, authorization, cryptography, and session management.",
-	"copyright": "Copyright (C) 2018-2020, HuntLabs",
+	"copyright": "Copyright (C) 2018-2021, HuntLabs",
 	"homepage": "https://www.huntlabs.net",
 	"license": "Apache-2.0",
 	"dependencies": {
-		"hunt-security": "~>0.4.0"
+		"hunt-security": "~>0.5.0"
 	}
 }

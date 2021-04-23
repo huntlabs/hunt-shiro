@@ -29,7 +29,6 @@ import hunt.shiro.subject.PrincipalCollection;
 
 import hunt.Exceptions;
 import hunt.logging.ConsoleLogger;
-import hunt.collection;
 
 
 /**
@@ -61,7 +60,7 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
     /**
      * Any registered listeners that wish to know about things during the authentication process.
      */
-    private Collection!(AuthenticationListener) listeners;
+    private AuthenticationListener[] listeners;
 
     /*-------------------------------------------
     |         C O N S T R U C T O R S           |
@@ -71,8 +70,7 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
      * Default no-argument constructor. Ensures the internal
      * {@link AuthenticationListener AuthenticationListener} collection is a non-null {@code ArrayList}.
      */
-     this() {
-        listeners = new ArrayList!(AuthenticationListener)();
+    this() {
     }
 
     /*--------------------------------------------
@@ -87,12 +85,8 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
      *                  authentication attempt.
      */
     //@SuppressWarnings({"UnusedDeclaration"})
-     void setAuthenticationListeners(Collection!(AuthenticationListener) listeners) {
-        if (listeners is null) {
-            this.listeners = new ArrayList!(AuthenticationListener)();
-        } else {
-            this.listeners = listeners;
-        }
+    void setAuthenticationListeners(AuthenticationListener[] listeners) {
+        this.listeners = listeners;
     }
 
     /**
@@ -103,7 +97,7 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
      *         attempts.
      */
     //@SuppressWarnings({"UnusedDeclaration"})
-     Collection!(AuthenticationListener) getAuthenticationListeners() {
+    AuthenticationListener[] getAuthenticationListeners() {
         return this.listeners;
     }
 
@@ -123,7 +117,8 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
      */
     protected void notifySuccess(AuthenticationToken token, AuthenticationInfo info) {
         foreach(AuthenticationListener listener ; this.listeners) {
-            listener.onSuccess(token, info);
+            if(listener !is null)
+                listener.onSuccess(token, info);
         }
     }
 
@@ -140,7 +135,8 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
      */
     protected void notifyFailure(AuthenticationToken token, AuthenticationException ae) {
         foreach(AuthenticationListener listener ; this.listeners) {
-            listener.onFailure(token, ae);
+            if(listener !is null)
+                listener.onFailure(token, ae);
         }
     }
 
@@ -155,7 +151,8 @@ abstract class AbstractAuthenticator : Authenticator, LogoutAware {
      */
     protected void notifyLogout(PrincipalCollection principals) {
         foreach(AuthenticationListener listener ; this.listeners) {
-            listener.onLogout(principals);
+            if(listener !is null)
+                listener.onLogout(principals);
         }
     }
 

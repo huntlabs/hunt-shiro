@@ -213,7 +213,7 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
         AuthenticationInfo aggregate = strategy.beforeAllAttempts(realms, token);
 
         version(HUNT_SHIRO_DEBUG) {
-            tracef("Iterating through %s realms for PAM authentication", realms.size());
+            tracef("Iterating through %s realms for PAM authentication", realms.length);
         }
 
         foreach(Realm realm ; realms) {
@@ -232,8 +232,8 @@ class ModularRealmAuthenticator : AbstractAuthenticator {
                     t = throwable;
                     version(HUNT_DEBUG) {
                         string msg = "Realm [" ~ (cast(Object)realm).toString() ~ 
-                            "] threw an exception during a multi-realm authentication attempt: ";
-                        warning(msg, t.msg);
+                            "] threw an exception during a multi-realm authentication attempt: %s";
+                        warningf(msg, t.msg);
                     }
                     
                     version(HUNT_SHIRO_DEBUG) {

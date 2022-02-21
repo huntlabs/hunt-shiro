@@ -26,7 +26,7 @@ import hunt.shiro.util.ThreadContext;
 import hunt.shiro.util.ThreadState;
 
 import hunt.Assert;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 import hunt.util.Common;
 import hunt.util.UnitTest;
 

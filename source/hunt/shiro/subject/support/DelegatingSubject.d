@@ -40,7 +40,7 @@ import hunt.shiro.subject.Subject;
 import hunt.shiro.util.CollectionUtils;
 
 // import hunt.shiro.util.StringUtils;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 
 import hunt.collection;
 import hunt.concurrency.thread;

@@ -23,7 +23,7 @@ module hunt.shiro.util.JdbcUtils;
 // import java.sql.SQLException;
 // import java.sql.Statement;
 
-// import hunt.logging.ConsoleLogger;
+// import hunt.logging.Logger;
 
 // /**
 //  * A set of static helper methods for managing JDBC API objects.

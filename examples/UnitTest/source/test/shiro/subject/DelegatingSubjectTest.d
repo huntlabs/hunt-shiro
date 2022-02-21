@@ -35,7 +35,7 @@ import hunt.shiro.util.LifecycleUtils;
 import hunt.shiro.util.ThreadContext;
 
 import hunt.Assert;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 import hunt.String;
 import hunt.util.Common;
 import hunt.util.UnitTest;

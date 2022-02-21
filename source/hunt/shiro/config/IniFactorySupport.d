@@ -27,7 +27,7 @@ import hunt.shiro.util.AbstractFactory;
 import hunt.collection.HashMap;
 import hunt.collection.Map;
 import hunt.Exceptions;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 
 /**
  * Base support class for {@link Factory} implementations that generate their instance(s) based on

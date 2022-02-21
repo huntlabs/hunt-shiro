@@ -31,7 +31,7 @@ import hunt.shiro.realm.text.IniRealm;
 import hunt.shiro.util.CollectionUtils;
 import hunt.shiro.util.Common;
 import hunt.shiro.util.LifecycleUtils;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 
 import hunt.collection;
 import hunt.Exceptions;

@@ -23,7 +23,7 @@ import hunt.shiro.authc.credential.HashingPasswordService;
 import hunt.shiro.crypto.hash;
 import hunt.shiro.util.ByteSource;
 import hunt.shiro.util.SimpleByteSource;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 
 import std.array;
 

@@ -127,7 +127,7 @@ class SubjectAwareExecutor : Executor {
      *                {@code Executor} instance.
      */
      void execute(Runnable command) {
-        import hunt.logging.ConsoleLogger;
+        import hunt.logging.Logger;
         warning("dddddddddddddddddddddd");
         // Runnable associated = associateWithSubject(command);
         // getTargetExecutor().execute(associated);

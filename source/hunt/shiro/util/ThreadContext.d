@@ -22,7 +22,7 @@ import hunt.shiro.util.CollectionUtils;
 
 import hunt.shiro.mgt.SecurityManager;
 import hunt.shiro.subject.Subject;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 
 import hunt.collection.Collections;
 import hunt.collection.HashMap;

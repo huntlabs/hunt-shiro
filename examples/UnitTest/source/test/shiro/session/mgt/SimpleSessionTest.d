@@ -19,7 +19,7 @@
 module test.shiro.session.mgt.SimpleSessionTest;
 
 import hunt.Assert;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 import hunt.String;
 import hunt.util.Common;
 import hunt.util.UnitTest;

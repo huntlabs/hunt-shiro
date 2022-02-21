@@ -3,7 +3,7 @@ module test.shiro.config.IniTest;
 import hunt.shiro.config.Ini;
 
 import hunt.Assert;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 import hunt.util.Common;
 import hunt.util.UnitTest;
 

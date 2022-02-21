@@ -37,7 +37,7 @@ import hunt.shiro.subject.SimplePrincipalCollection;
 import hunt.Assert;
 import hunt.collection;
 import hunt.Exceptions;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 import hunt.String;
 import hunt.Byte;
 import hunt.security.Principal;

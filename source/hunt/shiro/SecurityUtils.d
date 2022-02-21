@@ -24,7 +24,7 @@ import hunt.shiro.util.ThreadContext;
 
 import hunt.shiro.Exceptions;
 
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 
 import core.thread;
 import std.format;

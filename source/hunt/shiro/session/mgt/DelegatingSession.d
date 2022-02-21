@@ -26,7 +26,7 @@ import hunt.shiro.session.Session;
 
 import hunt.Exceptions;
 import hunt.collection;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 import hunt.util.Common;
 
 /**

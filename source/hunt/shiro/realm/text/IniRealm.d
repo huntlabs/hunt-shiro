@@ -23,7 +23,7 @@ import hunt.shiro.realm.text.TextConfigurationRealm;
 import hunt.shiro.config.Ini;
 import hunt.shiro.util.CollectionUtils;
 // import hunt.shiro.util.StringUtils;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 import hunt.util.Configuration;
 
 import hunt.Exceptions;

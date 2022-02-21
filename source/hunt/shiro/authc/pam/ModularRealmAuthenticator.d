@@ -34,7 +34,7 @@ import hunt.shiro.util.CollectionUtils;
 
 import hunt.Exceptions;
 import hunt.collection;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 
 import std.conv;
 import std.string;

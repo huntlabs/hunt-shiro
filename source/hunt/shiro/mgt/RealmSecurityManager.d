@@ -31,7 +31,7 @@ import hunt.collection;
 import hunt.Exceptions;
 import std.range;
 
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 
 
 /**

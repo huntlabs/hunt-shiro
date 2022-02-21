@@ -35,7 +35,7 @@ import hunt.shiro.subject.SubjectContext;
 import hunt.shiro.util.ByteSource;
 
 import hunt.Exceptions;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 
 /**
  * Abstract implementation of the {@code RememberMeManager} interface that handles

@@ -19,7 +19,7 @@
 module hunt.shiro.session.mgt.eis.RandomSessionIdGenerator;
 
 // import hunt.shiro.session.Session;
-// import hunt.logging.ConsoleLogger;
+// import hunt.logging.Logger;
 
 // import hunt.util.Common;
 // import java.util.Random;

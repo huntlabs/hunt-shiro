@@ -34,7 +34,7 @@ import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.Common;
 
 import hunt.Exceptions;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 import hunt.String;
 
 import core.atomic;

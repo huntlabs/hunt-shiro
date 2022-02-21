@@ -20,7 +20,7 @@ module hunt.shiro.authc.pam.AllSuccessfulStrategy;
 
 import hunt.shiro.authc.pam.AbstractAuthenticationStrategy;
 
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 
 import hunt.shiro.Exceptions;
 import hunt.shiro.authc.AuthenticationInfo;

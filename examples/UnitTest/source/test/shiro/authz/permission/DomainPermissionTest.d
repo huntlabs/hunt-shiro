@@ -22,7 +22,7 @@ import hunt.shiro.authz.permission.DomainPermission;
 
 import hunt.Assert;
 import hunt.collection;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 import hunt.util.Common;
 import hunt.util.UnitTest;
 

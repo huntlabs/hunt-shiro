@@ -27,7 +27,7 @@ import hunt.shiro.subject.Subject;
 import hunt.shiro.subject.SubjectContext;
 import hunt.shiro.subject.support.DelegatingSubject;
 
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 
 
 /**

@@ -22,7 +22,7 @@ import hunt.shiro.event.support.EventListener;
 import hunt.shiro.event.support.EventClassComparator;
 import hunt.shiro.event.support.TypedEventListener;
 
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 import hunt.util.Comparator;
 
 import std.concurrency : initOnce;

@@ -21,7 +21,7 @@ module test.shiro.subject.SimplePrincipalCollectionTest;
 import hunt.shiro.subject.SimplePrincipalCollection;
 
 import hunt.util.UnitTest;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 
 
 /**

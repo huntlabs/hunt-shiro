@@ -21,7 +21,7 @@ module test.shiro.authz.permission.AllPermissionTest;
 import hunt.shiro.authz.permission.AllPermission;
 
 import hunt.Assert;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 import hunt.util.Common;
 import hunt.util.UnitTest;
 

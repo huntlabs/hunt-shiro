@@ -26,7 +26,7 @@ import hunt.shiro.cache.CacheManagerAware;
 import hunt.shiro.subject.PrincipalCollection;
 import hunt.shiro.util.CollectionUtils;
 import hunt.shiro.util.Common;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 
 import hunt.collection;
 
@@ -165,7 +165,7 @@ abstract class CachingRealm : Realm, Nameable, CacheManagerAware, LogoutAware {
     protected void clearCache(PrincipalCollection principals) {
         if (!isEmpty(principals)) {
             doClearCache(principals);
-            tracef("Cleared cache entries for account with principals [%s]", principals);
+            version(HUNT_SHIRO_DEBUG) tracef("Cleared cache entries for account with principals [%s]", principals);
         }
     }
 

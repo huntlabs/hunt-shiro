@@ -25,7 +25,7 @@ import hunt.shiro.util.CollectionUtils;
 import hunt.shiro.subject.MutablePrincipalCollection;
 
 import hunt.collection;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 import hunt.Exceptions;
 import hunt.String;
 import hunt.text.StringUtils;

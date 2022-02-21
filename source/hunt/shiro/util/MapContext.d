@@ -24,7 +24,7 @@ import hunt.shiro.util.Common;
 import hunt.collection.HashMap;
 import hunt.collection.Map;
 import hunt.Exceptions;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 import hunt.Object;
 import hunt.util.Common;
 import hunt.util.ObjectUtils;

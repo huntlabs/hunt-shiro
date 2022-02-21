@@ -20,7 +20,7 @@ module hunt.shiro.config.Ini;
 
 import hunt.collection;
 import hunt.Exceptions;
-import hunt.logging.ConsoleLogger;
+import hunt.logging.Logger;
 import hunt.Object;
 import hunt.util.StringBuilder;
 import hunt.util.ObjectUtils;
